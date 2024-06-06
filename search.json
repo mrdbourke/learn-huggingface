@@ -74,10 +74,10 @@
     "text": "Website dedicated to teaching the Hugging Face ecosystem with practical examples.\nTODO:"
   },
   {
-    "objectID": "index.html#how-is-this-page-website-made",
-    "href": "index.html#how-is-this-page-website-made",
+    "objectID": "index.html#how-is-this-website-made",
+    "href": "index.html#how-is-this-website-made",
     "title": "Learn Hugging Face 🤗 (work in progress)",
-    "section": "How is this page website made?",
-    "text": "How is this page website made?\nThis is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "section": "How is this website made?",
+    "text": "How is this website made?\nThis is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
   }
 ]
