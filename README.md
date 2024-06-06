@@ -1,10 +1,10 @@
 # Learn Hugging Face 🤗 (work in progress)
 
-Repo designed to help learn the Hugging Face ecosystem (transformers, datasets, accelerate + more).
+I'd like to learn the Hugging Face ecosystem better (transformers, datasets, accelerate + more).
+
+So this repo is to  help me learn it and simulatenously teach others.
 
 Think of it as a small version of the [Hugging Face cookbook](https://github.com/huggingface/cookbook) with a series of practical examples and tutorials.
-
-
 
 Repo outline:
 - Most of the materials will be in the form of runnable Jupyter notebooks with explanations + code snippets you can run for yourself.
