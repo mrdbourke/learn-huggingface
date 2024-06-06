@@ -13,6 +13,7 @@ Repo outline:
 - All will come in a nicely formatted online book/documentation website.
 
 ## TODO
+- [ ] Prerequisites
 - [ ] Ecosystem overview (transformers, datasets, accelerate, tokenizers, Spaces, demos, models, hub etc.)
 - [ ] Text classification
 - [ ] Named entity recognition
