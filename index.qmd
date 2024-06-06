@@ -11,7 +11,7 @@ TODO:
     * [ ] Text classification
     * [ ] More to come...
 
-## How is this page website made?
+## How is this website made?
 
 This is a Quarto website.
 
