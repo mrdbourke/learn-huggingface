@@ -64,7 +64,7 @@
     "href": "index.html",
     "title": "Learn Hugging Face 🤗 (work in progress)",
     "section": "",
-    "text": "Website dedicated to teaching the Hugging Face ecosystem with practical examples.\nTODO: - [ ] Ecosystem overview: transformers, datasets, accelerate, Spaces, Hub, models etc - [ ] Practical tutorials - [ ] Text classification - [ ] More to come…"
+    "text": "Website dedicated to teaching the Hugging Face ecosystem with practical examples.\nTODO:"
   },
   {
     "objectID": "index.html#how-is-this-page-website-made",
@@ -78,6 +78,6 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "I’d like to learn the Hugging Face ecosystem more.\nSo this website is dedicated to documenting my learning journey + creating usable resources and tutorials for others.\nIt’s made by Daniel Bourke and will be in a similiar style to learnpytorch.io.\nYou can see more of my tutorials on: - YouTube - GitHub"
+    "text": "I’d like to learn the Hugging Face ecosystem more.\nSo this website is dedicated to documenting my learning journey + creating usable resources and tutorials for others.\nIt’s made by Daniel Bourke and will be in a similiar style to learnpytorch.io.\nYou can see more of my tutorials on:\n\nYouTube\nGitHub"
   }
 ]

@@ -17,7 +17,7 @@ website:
       - section: "Natural Language Processing (NLP)"
         contents:
           - href: notebooks/hugging_face_text_classification_tutorial.ipynb
-            text: Text Classification
+            text: Text Classification (work in progress)
 
 format:
   html:

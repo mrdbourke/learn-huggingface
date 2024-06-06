@@ -5,10 +5,11 @@ title: "Learn Hugging Face 🤗 (work in progress)"
 Website dedicated to teaching the Hugging Face ecosystem with practical examples.
 
 TODO:
-- [ ] Ecosystem overview: transformers, datasets, accelerate, Spaces, Hub, models etc
-- [ ] Practical tutorials
-    - [ ] Text classification
-    - [ ] More to come...
+
+* [ ] Ecosystem overview: transformers, datasets, accelerate, Spaces, Hub, models etc
+* [ ] Practical tutorials
+    * [ ] Text classification
+    * [ ] More to come...
 
 ## How is this page website made?
 
