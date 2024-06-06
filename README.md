@@ -2,7 +2,9 @@
 
 Repo designed to help learn the Hugging Face ecosystem (transformers, datasets, accelerate + more).
 
-Think of it as a small Hugging Face cookbook with a series of practical examples and tutorials.
+Think of it as a small version of the [Hugging Face cookbook](https://github.com/huggingface/cookbook) with a series of practical examples and tutorials.
+
+
 
 Repo outline:
 - Most of the materials will be in the form of runnable Jupyter notebooks with explanations + code snippets you can run for yourself.
@@ -24,3 +26,8 @@ Repo outline:
 Notebooks are designed to be run in Google Colab but can also work locally.
 
 TODO: Add setup instructions
+
+## Resources
+
+* Hugging Face documentation - https://huggingface.co/
+* Hugging Face cookbook - https://github.com/huggingface/cookbook

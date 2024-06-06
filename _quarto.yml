@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Learn Hugging Face 🤗"
+  title: "Learn Hugging Face"
   navbar:
     left:
       - href: index.qmd
