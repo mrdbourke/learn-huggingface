@@ -1,5 +1,5 @@
 ---
-title: "Learn Hugging Face (work in progress)"
+title: "Learn Hugging Face 🤗 (work in progress)"
 ---
 
 Work in progress.

@@ -18,7 +18,7 @@ Repo outline:
 - [ ] Named entity recognition
 - [ ] LLM fine-tuning
 - [ ] RAG workflow
-- [ ] Zero-shot image classification
+- [ ] Zero-shot image classification/multi-modal workflows (CLIP)
 - [ ] Object detection
 
 ## Setup
