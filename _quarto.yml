@@ -1,0 +1,29 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Learn Hugging Face 🤗"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - section: "Natural Language Processing (NLP)"
+        contents:
+          - href: notebooks/hugging_face_text_classification_tutorial.ipynb
+            text: Text Classification
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+
+
