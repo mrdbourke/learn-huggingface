@@ -2,4 +2,12 @@
 title: "About"
 ---
 
-About this site
+I'd like to learn the Hugging Face ecosystem more.
+
+So this website is dedicated to documenting my learning journey + creating usable resources and tutorials for others.
+
+It's made by [Daniel Bourke](https://www.mrdbourke.com) and will be in a similiar style to [learnpytorch.io](https://www.learnpytorch.io).
+
+You can see more of my tutorials on:
+- [YouTube](https://www.youtube.com/channel/UCr8O8l5cCX85Oem1d18EezQ)
+- [GitHub](https://www.github.com/mrdbourke)

@@ -2,7 +2,15 @@
 title: "Learn Hugging Face 🤗 (work in progress)"
 ---
 
-Work in progress.
+Website dedicated to teaching the Hugging Face ecosystem with practical examples.
+
+TODO:
+- [ ] Ecosystem overview: transformers, datasets, accelerate, Spaces, Hub, models etc
+- [ ] Practical tutorials
+    - [ ] Text classification
+    - [ ] More to come...
+
+## How is this page website made?
 
 This is a Quarto website.
 
