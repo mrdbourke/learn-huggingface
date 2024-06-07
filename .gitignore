@@ -1,5 +1,11 @@
+# Folders
 /.quarto/
 /_site/
+/notebooks/food_not_food_text_model/
+/notebooks/learn_hf_food_not_food_text_classifier_model/
+
+# Tracking
+*/wandb/* 
 
 # Misc
 *.DS_Store
