@@ -225,7 +225,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="cell-1" class="cell" data-execution_count="1">
+<p><a target="_blank" href="https://colab.research.google.com/github/mrdbourke/learn-huggingface/blob/main/notebooks/hugging_face_text_classification_tutorial.ipynb"> <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"> </a></p>
+<div id="cell-2" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Goal</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Start with dataset</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Could generate this dataset or pre-existing</span></span>
@@ -234,7 +235,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a custom text classifier on labelled data</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Test text classifier on labelled data vs zero-shot model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-2" class="cell" data-execution_count="2">
+<div id="cell-3" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Next:</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a> <span class="co"># Create a small dataset with GPT4o, e.g. 50x spam/not_spam emails and train a classifier on it ✅</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Done, see notebook: https://colab.research.google.com/drive/14xr3KN_HINY5LjV0s2E-4i7v0o_XI3U8?usp=sharing </span></span>
@@ -244,7 +245,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a> <span class="co"># Save the model to the Hugging Face Model Hub</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a> <span class="co"># Create a with Gradio and test the model in the wild </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-3" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:true}" data-outputid="ccd72531-249d-402f-91b0-7b701b2dc7eb" data-scrolled="true" data-execution_count="5">
+<div id="cell-4" class="cell" data-jupyter="{&quot;outputs_hidden&quot;:true}" data-outputid="ccd72531-249d-402f-91b0-7b701b2dc7eb" data-scrolled="true" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> datasets, evaluate, accelerate</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
@@ -262,11 +263,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># from google.colab import drive</span></span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># drive.mount('/content/drive')</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-4" class="cell" data-outputid="2f45489c-02e8-4c03-bb7c-d73faa46c5b1" data-execution_count="11">
+<div id="cell-5" class="cell" data-outputid="2f45489c-02e8-4c03-bb7c-d73faa46c5b1" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the dataset</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> datasets.load_dataset(<span class="st">"mrdbourke/learn_hf_food_not_food_image_captions"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-5" class="cell" data-execution_count="12">
+<div id="cell-6" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>random_idx <span class="op">=</span> random.randint(<span class="dv">0</span>, <span class="bu">len</span>(dataset[<span class="st">"train"</span>]))</span>
@@ -278,7 +279,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 {'text': 'Barbecue grill waiting on a patio', 'label': 'not_food'}</code></pre>
 </div>
 </div>
-<div id="cell-6" class="cell" data-outputid="eba840c3-7652-41a8-a121-546cb9a8147f" data-execution_count="13">
+<div id="cell-7" class="cell" data-outputid="eba840c3-7652-41a8-a121-546cb9a8147f" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn labels into 0 or 1 (e.g. 0 for "not_food", 1 for "food"), see: https://huggingface.co/docs/datasets/en/process#map</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> map_labels_to_number(example):</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  example[<span class="st">"label"</span>] <span class="op">=</span> <span class="dv">0</span> <span class="cf">if</span> example[<span class="st">"label"</span>] <span class="op">==</span> <span class="st">"not_food"</span> <span class="cf">else</span> <span class="dv">1</span></span>
@@ -295,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  'label': [1, 0, 0, 0, 0]}</code></pre>
 </div>
 </div>
-<div id="cell-7" class="cell" data-outputid="8089bfe3-2322-4bac-d2fd-89f626d0a1e6" data-execution_count="15">
+<div id="cell-8" class="cell" data-outputid="8089bfe3-2322-4bac-d2fd-89f626d0a1e6" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dataset.shuffle()[:<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>{'text': ['Silverware organizer keeping cutlery tidy in a kitchen drawer',
@@ -306,11 +307,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  'label': [0, 1, 1, 1, 0]}</code></pre>
 </div>
 </div>
-<div id="cell-8" class="cell" data-execution_count="16">
+<div id="cell-9" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create train/test splits, see: https://huggingface.co/docs/datasets/en/process#split</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> dataset.train_test_split(test_size<span class="op">=</span><span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-9" class="cell" data-outputid="edd2323a-1561-4c7b-9d57-a7ba810f1349" data-execution_count="17">
+<div id="cell-10" class="cell" data-outputid="edd2323a-1561-4c7b-9d57-a7ba810f1349" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dataset</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>DatasetDict({
@@ -325,7 +326,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 })</code></pre>
 </div>
 </div>
-<div id="cell-10" class="cell" data-outputid="35f0da00-ab15-42e0-9d81-757ad3da1618" data-execution_count="21">
+<div id="cell-11" class="cell" data-outputid="35f0da00-ab15-42e0-9d81-757ad3da1618" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>random_idx_train <span class="op">=</span> random.randint(<span class="dv">0</span>, <span class="bu">len</span>(dataset[<span class="st">"train"</span>]))</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>random_sample_train <span class="op">=</span> dataset[<span class="st">"train"</span>][random_idx_train]</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -343,8 +344,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="preprocess" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="preprocess"><span class="header-section-number">1</span> Preprocess</h2>
-<p>See: https://huggingface.co/docs/transformers/en/tasks/sequence_classification#preprocess</p>
-<div id="cell-12" class="cell" data-outputid="f277b622-267d-4d06-b2cb-6bc204b2f62d" data-execution_count="22">
+<p>See docs: https://huggingface.co/docs/transformers/en/tasks/sequence_classification#preprocess</p>
+<div id="cell-13" class="cell" data-outputid="f277b622-267d-4d06-b2cb-6bc204b2f62d" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(<span class="st">"distilbert/distilbert-base-uncased"</span>)</span>
@@ -376,7 +377,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </script>
 </div>
 </div>
-<div id="cell-13" class="cell" data-outputid="d72b4325-b4de-4f65-f930-50007d45c8d5" data-execution_count="23">
+<div id="cell-14" class="cell" data-outputid="d72b4325-b4de-4f65-f930-50007d45c8d5" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>tokenized_dataset <span class="op">=</span> dataset.<span class="bu">map</span>(preprocess_function, batched<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>tokenized_dataset</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -402,7 +403,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 })</code></pre>
 </div>
 </div>
-<div id="cell-14" class="cell" data-outputid="c1b0b958-b9a5-4274-e8c1-eaf0ac4cdf3a" data-execution_count="24">
+<div id="cell-15" class="cell" data-outputid="c1b0b958-b9a5-4274-e8c1-eaf0ac4cdf3a" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>tokenized_dataset[<span class="st">"train"</span>][<span class="dv">0</span>], tokenized_dataset[<span class="st">"test"</span>][<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="24">
 <pre><code>({'text': 'Set of books stacked on a desk',
@@ -415,7 +416,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]})</code></pre>
 </div>
 </div>
-<div id="cell-15" class="cell" data-outputid="1e3640b5-b13b-44d1-adae-1064deece079" data-execution_count="25">
+<div id="cell-16" class="cell" data-outputid="1e3640b5-b13b-44d1-adae-1064deece079" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collate examples and pad them each batch</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> DataCollatorWithPadding</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>data_collator <span class="op">=</span> DataCollatorWithPadding(tokenizer<span class="op">=</span>tokenizer)</span>
@@ -434,7 +435,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="evaluation" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="evaluation"><span class="header-section-number">2</span> Evaluation</h2>
 <p>See: https://huggingface.co/docs/transformers/en/tasks/sequence_classification#evaluate</p>
-<div id="cell-17" class="cell" data-outputid="4a2b0f85-db47-4f0f-cbc3-fa148c19a646" data-execution_count="26">
+<div id="cell-18" class="cell" data-outputid="4a2b0f85-db47-4f0f-cbc3-fa148c19a646" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> evaluate</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -461,12 +462,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Pass training arguments to Trainer</li>
 <li>Call <code>train()</code></li>
 </ol>
-<div id="cell-19" class="cell" data-execution_count="27">
+<div id="cell-20" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create mapping from id2label and label2id</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>id2label <span class="op">=</span> {<span class="dv">0</span>: <span class="st">"not_food"</span>, <span class="dv">1</span>: <span class="st">"food"</span>}</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>label2id <span class="op">=</span> {<span class="st">"not_food"</span>: <span class="dv">0</span>, <span class="st">"food"</span>: <span class="dv">1</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-20" class="cell" data-outputid="ed01beb4-3cf7-4209-eaea-444e5aa51c5b" data-execution_count="28">
+<div id="cell-21" class="cell" data-outputid="ed01beb4-3cf7-4209-eaea-444e5aa51c5b" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoModelForSequenceClassification, Trainer, TrainingArguments</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> AutoModelForSequenceClassification.from_pretrained(</span>
@@ -485,7 +486,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.</code></pre>
 </div>
 </div>
-<div id="cell-21" class="cell" data-execution_count="38">
+<div id="cell-22" class="cell" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create training arguments</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># See: https://huggingface.co/docs/transformers/v4.40.2/en/main_classes/trainer#transformers.TrainingArguments</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: Turn off Weights &amp; Biases logging? Or add it in?</span></span>
@@ -502,7 +503,7 @@ You should probably TRAIN this model on a down-stream task to be able to use it 
 <span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># push_to_hub=True</span></span>
 <span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-22" class="cell" data-execution_count="39">
+<div id="cell-23" class="cell" data-execution_count="39">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setup Trainer</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: Trainer applies dynamic padding by default when you pass `tokenizer` to it.</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># In this case, you don't need to specify a data collator explicitly.</span></span>
@@ -516,7 +517,7 @@ You should probably TRAIN this model on a down-stream task to be able to use it 
 <span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    compute_metrics<span class="op">=</span>compute_metrics</span>
 <span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-23" class="cell" data-execution_count="40">
+<div id="cell-24" class="cell" data-execution_count="40">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Batch size 16</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  [ 391/15234 00:22 &lt; 14:27, 17.12 it/s, Epoch 0.05/2]</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -526,7 +527,7 @@ You should probably TRAIN this model on a down-stream task to be able to use it 
 <span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Batch size 64</span></span>
 <span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co">#  [ 150/3810 00:31 &lt; 12:52, 4.74 it/s, Epoch 0.08/2]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-24" class="cell" data-outputid="22937d9f-a794-4579-bc67-70ba6cb05dcd" data-execution_count="41">
+<div id="cell-25" class="cell" data-outputid="22937d9f-a794-4579-bc67-70ba6cb05dcd" data-execution_count="41">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>trainer.train()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 
@@ -614,18 +615,18 @@ You should probably TRAIN this model on a down-stream task to be able to use it 
 <pre><code>TrainOutput(global_step=70, training_loss=0.0031478273017065865, metrics={'train_runtime': 7.0065, 'train_samples_per_second': 285.449, 'train_steps_per_second': 9.991, 'total_flos': 17222831628384.0, 'train_loss': 0.0031478273017065865, 'epoch': 10.0})</code></pre>
 </div>
 </div>
-<div id="cell-25" class="cell" data-execution_count="42">
+<div id="cell-26" class="cell" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional: push the model to Hugging Face Hub for re-use later</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: Requires Hugging Face login</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># trainer.push_to_hub()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-26" class="cell" data-execution_count="43">
+<div id="cell-27" class="cell" data-execution_count="43">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save model</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># See: https://discuss.huggingface.co/t/how-to-save-my-model-to-use-it-later/20568/4</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: Make a models/ dir to save models to (so we don't have to commit them to git)</span></span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>trainer.save_model(<span class="st">"learn_hf_food_not_food_text_classifier_model"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-27" class="cell" data-execution_count="55">
+<div id="cell-28" class="cell" data-execution_count="55">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># TK - Push model to hub (for later re-use)</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: Push this model to the hub to be able to use it later</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -634,12 +635,12 @@ You should probably TRAIN this model on a down-stream task to be able to use it 
 <h2 data-number="4" class="anchored" data-anchor-id="inference"><span class="header-section-number">4</span> Inference</h2>
 <p>Making predictions on our own text options.</p>
 <p>See: https://huggingface.co/docs/transformers/en/tasks/sequence_classification#inference</p>
-<div id="cell-29" class="cell" data-execution_count="44">
+<div id="cell-30" class="cell" data-execution_count="44">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>sample_text <span class="op">=</span> <span class="st">"A delicious photo of a plate of scrambled eggs, bacon and toast"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="pipeline-mode" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="pipeline-mode"><span class="header-section-number">4.1</span> Pipeline mode</h3>
-<div id="cell-31" class="cell" data-outputid="fb71c373-8dc5-42c3-9749-c58ab59253c3" data-execution_count="46">
+<div id="cell-32" class="cell" data-outputid="fb71c373-8dc5-42c3-9749-c58ab59253c3" data-execution_count="46">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>food_not_food_classifier <span class="op">=</span> pipeline(task<span class="op">=</span><span class="st">"text-classification"</span>, model<span class="op">=</span><span class="st">"./learn_hf_food_not_food_text_classifier_model"</span>)</span>
@@ -648,14 +649,14 @@ You should probably TRAIN this model on a down-stream task to be able to use it 
 <pre><code>[{'label': 'food', 'score': 0.9857270121574402}]</code></pre>
 </div>
 </div>
-<div id="cell-32" class="cell" data-outputid="7d9f1336-883e-474a-cc9a-aa605ba2afc1" data-execution_count="47">
+<div id="cell-33" class="cell" data-outputid="7d9f1336-883e-474a-cc9a-aa605ba2afc1" data-execution_count="47">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>sample_text_not_food <span class="op">=</span> <span class="st">"A yellow tractor driving over the hill"</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>food_not_food_classifier(sample_text_not_food)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="47">
 <pre><code>[{'label': 'not_food', 'score': 0.9952113032341003}]</code></pre>
 </div>
 </div>
-<div id="cell-33" class="cell" data-outputid="3a50b522-c155-49fd-8c0e-27541486bca4" data-execution_count="48">
+<div id="cell-34" class="cell" data-outputid="3a50b522-c155-49fd-8c0e-27541486bca4" data-execution_count="48">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predicting works with lists</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Can find the examples with highest confidence and keep those</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>sentences <span class="op">=</span> [</span>
@@ -688,13 +689,13 @@ You should probably TRAIN this model on a down-stream task to be able to use it 
 </section>
 <section id="pytorch-mode" class="level3" data-number="4.2">
 <h3 data-number="4.2" class="anchored" data-anchor-id="pytorch-mode"><span class="header-section-number">4.2</span> PyTorch mode</h3>
-<div id="cell-35" class="cell" data-execution_count="50">
+<div id="cell-36" class="cell" data-execution_count="50">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(<span class="st">"learn_hf_food_not_food_text_classifier_model"</span>)</span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>inputs <span class="op">=</span> tokenizer(sample_text, return_tensors<span class="op">=</span><span class="st">"pt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-36" class="cell" data-execution_count="53">
+<div id="cell-37" class="cell" data-execution_count="53">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoModelForSequenceClassification</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -702,7 +703,7 @@ You should probably TRAIN this model on a down-stream task to be able to use it 
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
 <span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  logits <span class="op">=</span> model(<span class="op">**</span>inputs).logits</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-37" class="cell" data-outputid="bfc30a2d-9a47-441f-f2e9-7cee7fd4989d" data-execution_count="54">
+<div id="cell-38" class="cell" data-outputid="bfc30a2d-9a47-441f-f2e9-7cee7fd4989d" data-execution_count="54">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get predicted class</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>predicted_class_id <span class="op">=</span> logits.argmax().item()</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Text: </span><span class="sc">{</span>sample_text<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -712,7 +713,7 @@ You should probably TRAIN this model on a down-stream task to be able to use it 
 Predicted label: food</code></pre>
 </div>
 </div>
-<div id="cell-38" class="cell" data-execution_count="56">
+<div id="cell-39" class="cell" data-execution_count="56">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: Make a demo of the model with Gradio and test it in the wild</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
