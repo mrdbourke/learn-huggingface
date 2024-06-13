@@ -4,6 +4,9 @@
 /notebooks/food_not_food_text_model/
 /notebooks/learn_hf_food_not_food_text_classifier_model/
 
+# Models
+*models*
+
 # Tracking
 */wandb/* 
 
