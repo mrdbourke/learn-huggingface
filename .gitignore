@@ -6,6 +6,7 @@
 
 # Models
 *models*
+*.pt*
 
 # Tracking
 */wandb/* 
