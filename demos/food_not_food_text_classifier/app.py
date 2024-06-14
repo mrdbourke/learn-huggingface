@@ -6,7 +6,7 @@ from transformers import pipeline
 def food_not_food_classifier(text):
     # Set up text classification pipeline
     food_not_food_classifier = pipeline(task="text-classification", 
-                                        model="mrdbourke/learn_hf_food_not_food_text_classifier-distilbert-base-uncased",
+                                        model="mrdbourke/learn_hf_food_not_food_text_classifier-distilbert-base-uncased", # link to model on HF Hub
                                         device="cuda" if torch.cuda.is_available() else "cpu",
                                         top_k=None) # return all possible scores (not just top-1)
     
