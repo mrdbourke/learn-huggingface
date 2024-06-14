@@ -1,0 +1,1 @@
+* [ ] Add text classification dataset creation notebook (so people can see where the data comes from)
