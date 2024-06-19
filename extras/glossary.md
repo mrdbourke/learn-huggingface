@@ -1,6 +1,8 @@
 # Glossary
 
 * Transformer = A deep learning model that adopts the attention mechanism to draw global dependencies between input and output
+* Tokenization = turning a series of data (text or image) into a series of tokens, where a token is a numerical representation of the input data, for example, in the case of text, tokenization could mean turning the words in a sentence into numbers (e.g. "hello world" -> [101, 102])
+* Tokens = a token is a letter, word or word-piece (word) that a model uses to represent input data, for example, in the case of text, a token could be a word (e.g. "hello") or a word-piece (e.g. "hell" and "o"), see: https://platform.openai.com/tokenizer for an example
 * `transformers` = A Python library by Hugging Face that provides a wide range of pre-trained transformer models, fine-tuning tools, and utilities to use them 
 * `datasets` = A Python library by Hugging Face that provides a wide range of datasets for NLP and CV tasks
 * `tokenizers` = A Python library by Hugging Face that provides a wide range of tokenizers for NLP tasks
