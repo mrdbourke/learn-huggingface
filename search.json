@@ -157,7 +157,7 @@
     "href": "index.html",
     "title": "Learn Hugging Face 🤗 (work in progress)",
     "section": "",
-    "text": "Website dedicated to teaching the Hugging Face ecosystem with practical examples.\nTODO:"
+    "text": "Website dedicated to teaching the Hugging Face ecosystem with practical examples.\nTeaching style: A machine learning cooking show!\nMottos:\nTODO:"
   },
   {
     "objectID": "index.html#how-is-this-website-made",
@@ -185,6 +185,13 @@
     "href": "extras/todo.html",
     "title": "Learn Hugging Face 🤗",
     "section": "",
-    "text": "Add text classification dataset creation notebook (so people can see where the data comes from)"
+    "text": "Add “getting setup” file to get started locally with the required dependencies\nAdd text classification dataset creation notebook (so people can see where the data comes from)\nAdd a Hugging Face ecosystem overview (transformers, datasets, tokenizers, torch, Hugging Face Hub, Hugging Face Spaces, etc.)"
+  },
+  {
+    "objectID": "extras/todo.html#quarto-misc",
+    "href": "extras/todo.html#quarto-misc",
+    "title": "Learn Hugging Face 🤗",
+    "section": "Quarto misc",
+    "text": "Quarto misc\n\nCreate share cards - https://quarto.org/docs/websites/website-tools.html#twitter-cards\n\nSee here for share image - https://quarto.org/docs/websites/website-tools.html#preview-images"
   }
 ]
