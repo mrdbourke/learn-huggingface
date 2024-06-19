@@ -4,6 +4,14 @@ title: "Learn Hugging Face 🤗 (work in progress)"
 
 Website dedicated to teaching the Hugging Face ecosystem with practical examples.
 
+Teaching style: A machine learning cooking show!
+
+Mottos:
+
+* *If in doubt, run the code.*
+* *Visualize, visualize, visualize!*
+* *Experiment, experiment, experiment!*
+
 TODO:
 
 * [ ] Ecosystem overview: transformers, datasets, accelerate, Spaces, Hub, models etc
