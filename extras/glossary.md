@@ -6,6 +6,7 @@
 * `transformers` = A Python library by Hugging Face that provides a wide range of pre-trained transformer models, fine-tuning tools, and utilities to use them 
 * `datasets` = A Python library by Hugging Face that provides a wide range of datasets for NLP and CV tasks
 * `tokenizers` = A Python library by Hugging Face that provides a wide range of tokenizers for NLP tasks
+* `evaluate` = A Python library by Hugging Face with premade evaluation functions for various tasks
 * `torch` = PyTorch, an open-source machine learning library
 * Hugging Face Hub = Place to store datasets, models, and other resources of your own + find existing datasets, models & scripts others have shared
 * Hugging Face Spaces = A platform to share and run machine learning apps/demos, usually built with Gradio or Streamlit

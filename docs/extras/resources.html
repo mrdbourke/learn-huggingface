@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Learn Hugging Face 🤗 – glossary</title>
+<title>Learn Hugging Face 🤗 – resources</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -149,14 +149,8 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#glossary" id="toc-glossary" class="nav-link active" data-scroll-target="#glossary">Glossary</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -164,30 +158,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="glossary" class="level1">
-<h1>Glossary</h1>
-<ul>
-<li>Transformer = A deep learning model that adopts the attention mechanism to draw global dependencies between input and output</li>
-<li>Tokenization = turning a series of data (text or image) into a series of tokens, where a token is a numerical representation of the input data, for example, in the case of text, tokenization could mean turning the words in a sentence into numbers (e.g.&nbsp;“hello world” -&gt; [101, 102])</li>
-<li>Tokens = a token is a letter, word or word-piece (word) that a model uses to represent input data, for example, in the case of text, a token could be a word (e.g.&nbsp;“hello”) or a word-piece (e.g.&nbsp;“hell” and “o”), see: https://platform.openai.com/tokenizer for an example</li>
-<li><code>transformers</code> = A Python library by Hugging Face that provides a wide range of pre-trained transformer models, fine-tuning tools, and utilities to use them</li>
-<li><code>datasets</code> = A Python library by Hugging Face that provides a wide range of datasets for NLP and CV tasks</li>
-<li><code>tokenizers</code> = A Python library by Hugging Face that provides a wide range of tokenizers for NLP tasks</li>
-<li><code>evaluate</code> = A Python library by Hugging Face with premade evaluation functions for various tasks</li>
-<li><code>torch</code> = PyTorch, an open-source machine learning library</li>
-<li>Hugging Face Hub = Place to store datasets, models, and other resources of your own + find existing datasets, models &amp; scripts others have shared</li>
-<li>Hugging Face Spaces = A platform to share and run machine learning apps/demos, usually built with Gradio or Streamlit</li>
-<li>HF = Hugging Face</li>
-<li>NLP = Natural Language Processing</li>
-<li>CV = Computer Vision</li>
-<li>TPU = Tensor Processing Unit</li>
-<li>GPU = Graphics Processing Unit</li>
-<li>Prediction probability = the probability of a model’s prediction for a given input, is a score between 0 and 1 with 1 being the highest, for example, a model may have a prediction probability of 0.95, this would mean it’s quite confident with its prediction but it doesn’t mean it’s correct. A good way to inspect potential issues with a dataset is to show examples in the test set which have a high prediction probability but are wrong (e.g.&nbsp;pred prob = 0.98 but the prediction was incorrect).</li>
-<li>Hugging Face Pipeline (<code>pipeline</code>) = A high-level API for using model for various tasks (e.g.&nbsp;<code>text-classification</code>, <code>audio-classification</code>, <code>image-classification</code>, <code>object-detection</code> and more), see the docs: https://huggingface.co/docs/transformers/v4.41.3/en/main_classes/pipelines#transformers.pipeline</li>
-</ul>
+<p>See the Pytorch extra resources for some ideas: https://www.learnpytorch.io/pytorch_extra_resources/</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
