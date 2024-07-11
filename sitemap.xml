@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://mrdbourke.github.io/learn-huggingface/about.html</loc>
-    <lastmod>2024-07-10T04:25:57.444Z</lastmod>
+    <loc>https://mrdbourke.github.io/learn-huggingface/index.html</loc>
+    <lastmod>2024-07-11T20:34:24.888Z</lastmod>
   </url>
   <url>
-    <loc>https://mrdbourke.github.io/learn-huggingface/extras/todo.html</loc>
-    <lastmod>2024-07-10T04:25:57.456Z</lastmod>
+    <loc>https://mrdbourke.github.io/learn-huggingface/about.html</loc>
+    <lastmod>2024-07-11T20:34:24.880Z</lastmod>
   </url>
   <url>
     <loc>https://mrdbourke.github.io/learn-huggingface/extras/setup.html</loc>
-    <lastmod>2024-07-10T04:25:57.456Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mrdbourke.github.io/learn-huggingface/notebooks/hugging_face_text_classification_tutorial.html</loc>
-    <lastmod>2024-07-10T04:25:57.456Z</lastmod>
+    <lastmod>2024-07-11T20:34:24.888Z</lastmod>
   </url>
   <url>
     <loc>https://mrdbourke.github.io/learn-huggingface/extras/glossary.html</loc>
-    <lastmod>2024-07-10T04:25:57.456Z</lastmod>
+    <lastmod>2024-07-11T20:34:24.888Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mrdbourke.github.io/learn-huggingface/extras/todo.html</loc>
+    <lastmod>2024-07-11T20:34:24.888Z</lastmod>
   </url>
   <url>
     <loc>https://mrdbourke.github.io/learn-huggingface/extras/resources.html</loc>
-    <lastmod>2024-07-10T04:25:57.456Z</lastmod>
+    <lastmod>2024-07-11T20:34:24.888Z</lastmod>
   </url>
   <url>
-    <loc>https://mrdbourke.github.io/learn-huggingface/index.html</loc>
-    <lastmod>2024-07-10T04:25:57.456Z</lastmod>
+    <loc>https://mrdbourke.github.io/learn-huggingface/notebooks/hugging_face_text_classification_tutorial.html</loc>
+    <lastmod>2024-07-11T20:34:24.888Z</lastmod>
   </url>
 </urlset>
