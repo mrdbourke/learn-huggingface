@@ -8,6 +8,7 @@
 * `tokenizers` = A Python library by Hugging Face that provides a wide range of tokenizers for NLP tasks
 * `evaluate` = A Python library by Hugging Face with premade evaluation functions for various tasks
 * `torch` = PyTorch, an open-source machine learning library
+* `transformers.pipeline` = an abstraction to get a machine learning pipeline up and running in a few lines of code, handles data preprocessing and device placement behind the scences. For example, `transformers.pipeline("text-classification")` can be used to tokenize input text and classify it.
 * transfer learning = taking what one model has learned and applying it to another task (e.g. a model which has learned across many millions of words of text from the internet and then adjusting it to work with your smaller dataset)
 * fine-tuning = a type of transfer learning where you take the existing patterns of one model (usually trained on a very large dataset) and customize them to work for your smaller dataset 
 * hyperparameters = values you can set to adjust training settings, for example, learning rate is a hyperparameter that is adjustable 

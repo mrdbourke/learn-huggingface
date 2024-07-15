@@ -4,13 +4,23 @@ title: "Learn Hugging Face 🤗 (work in progress)"
 
 Website dedicated to teaching the Hugging Face ecosystem with practical examples.
 
-Teaching style: A machine learning cooking show!
+Each example will include an end-to-end approach of starting with a dataset (custom or existing), building and evaluating a model and creating a demo to share.
+
+Teaching style: 
+
+A machine learning cooking show! 👨‍🍳
 
 Mottos:
 
 * *If in doubt, run the code.*
 * *Visualize, visualize, visualize!*
 * *Experiment, experiment, experiment!*
+
+Project style:
+
+* Create/reuse a dataset
+* Train/evaluate a model
+* Build a demo to share
 
 TODO:
 
