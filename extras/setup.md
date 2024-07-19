@@ -2,10 +2,10 @@
 
 ## TK - Start here (universal steps)
 
-1. Create a free Hugging Face account at https://huggingface.co/join.
-2. Create a Hugging Face access token with read and write access at https://huggingface.co/settings/tokens.
+1. Create a free Hugging Face account at <https://huggingface.co/join>.
+2. Create a Hugging Face access token with read and write access at <https://huggingface.co/settings/tokens>.
     * You can create a read/write token using the fine-grained settings and selecting the appropriate options.
-    * Read more on Hugging Face access tokens at https://huggingface.co/docs/hub/en/security-tokens. 
+    * Read more on Hugging Face access tokens at <https://huggingface.co/docs/hub/en/security-tokens>. 
 
 ## TK - Getting setup on Google Colab
 
@@ -16,7 +16,7 @@ TK image - show image for loading a secret in Google Colab
 
 If you need to force relogin for a notebook session, you can run:
 
-```
+```python
 import huggingface_hub
 
 # Login to Hugging Face
@@ -29,7 +29,7 @@ And enter your token in the box that appears (**note:** this token will only be 
 
 1. Follow the steps in Start here.
 2. Install the Hugging Face CLI with `pip install -U "huggingface_hub[cli]"`.
-3. Follow the setup steps mentioned in https://huggingface.co/docs/huggingface_hub/en/guides/cli. 
+3. Follow the setup steps mentioned in <https://huggingface.co/docs/huggingface_hub/en/guides/cli>. 
 
 ## Installing Hugging Face libraries
 

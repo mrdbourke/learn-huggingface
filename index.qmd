@@ -12,15 +12,21 @@ A machine learning cooking show! 👨‍🍳
 
 Mottos:
 
-* *If in doubt, run the code.*
-* *Visualize, visualize, visualize!*
-* *Experiment, experiment, experiment!*
+* *If in doubt, run the code.* - Machine learning is very experimental. So it's good to get in the habit of continually trying things (even if you think they won't work).
+* *Visualize, visualize, visualize!* - If you're not sure of some dataset or some operation or some predictions, visualize it/them.
+* *Experiment, experiment, experiment!* - Again, machine learning is very experimental. So keep trying different things!
 
 Project style:
 
 * Create a new/reuse an existing dataset
 * Train/evaluate a model
 * Build a demo to share 
+
+Prerequisites:
+
+* 3-6 months Python experience
+* 1x begineer machine learning or deep learning course 
+* PyTorch experience is a bonus (see my Learn PyTorch in a Day video)
 
 TODO:
 
