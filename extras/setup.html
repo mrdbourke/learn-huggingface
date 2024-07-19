@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.54">
+<meta name="generator" content="quarto-1.5.55">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -154,7 +188,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#tk---add-a-getting-started-section-for-mac" id="toc-tk---add-a-getting-started-section-for-mac" class="nav-link active" data-scroll-target="#tk---add-a-getting-started-section-for-mac">TK - Add a getting started section for Mac</a></li>
+  <li><a href="#getting-setup-for-the-hugging-face-ecosystem" id="toc-getting-setup-for-the-hugging-face-ecosystem" class="nav-link active" data-scroll-target="#getting-setup-for-the-hugging-face-ecosystem">Getting setup for the Hugging Face ecosystem</a>
+  <ul class="collapse">
+  <li><a href="#tk---start-here-universal-steps" id="toc-tk---start-here-universal-steps" class="nav-link" data-scroll-target="#tk---start-here-universal-steps">TK - Start here (universal steps)</a></li>
+  <li><a href="#tk---getting-setup-on-google-colab" id="toc-tk---getting-setup-on-google-colab" class="nav-link" data-scroll-target="#tk---getting-setup-on-google-colab">TK - Getting setup on Google Colab</a></li>
+  <li><a href="#tk---getting-started-locally" id="toc-tk---getting-started-locally" class="nav-link" data-scroll-target="#tk---getting-started-locally">TK - Getting started locally</a></li>
+  <li><a href="#installing-hugging-face-libraries" id="toc-installing-hugging-face-libraries" class="nav-link" data-scroll-target="#installing-hugging-face-libraries">Installing Hugging Face libraries</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -164,6 +204,43 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<section id="getting-setup-for-the-hugging-face-ecosystem" class="level1">
+<h1>Getting setup for the Hugging Face ecosystem</h1>
+<section id="tk---start-here-universal-steps" class="level2">
+<h2 class="anchored" data-anchor-id="tk---start-here-universal-steps">TK - Start here (universal steps)</h2>
+<ol type="1">
+<li>Create a free Hugging Face account at <a href="https://huggingface.co/join" class="uri">https://huggingface.co/join</a>.</li>
+<li>Create a Hugging Face access token with read and write access at <a href="https://huggingface.co/settings/tokens" class="uri">https://huggingface.co/settings/tokens</a>.
+<ul>
+<li>You can create a read/write token using the fine-grained settings and selecting the appropriate options.</li>
+<li>Read more on Hugging Face access tokens at <a href="https://huggingface.co/docs/hub/en/security-tokens" class="uri">https://huggingface.co/docs/hub/en/security-tokens</a>.</li>
+</ul></li>
+</ol>
+</section>
+<section id="tk---getting-setup-on-google-colab" class="level2">
+<h2 class="anchored" data-anchor-id="tk---getting-setup-on-google-colab">TK - Getting setup on Google Colab</h2>
+<ol type="1">
+<li>Follow the steps in Start here.</li>
+<li>Add your Hugging Face read/write token as a Secret in Google Colab.</li>
+</ol>
+<p>TK image - show image for loading a secret in Google Colab</p>
+<p>If you need to force relogin for a notebook session, you can run:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> huggingface_hub</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Login to Hugging Face</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>huggingface_hub.login()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And enter your token in the box that appears (<strong>note:</strong> this token will only be active for the current notebook session and will delete when your Google Colab instance terminates).</p>
+</section>
+<section id="tk---getting-started-locally" class="level2">
+<h2 class="anchored" data-anchor-id="tk---getting-started-locally">TK - Getting started locally</h2>
+<ol type="1">
+<li>Follow the steps in Start here.</li>
+<li>Install the Hugging Face CLI with <code>pip install -U "huggingface_hub[cli]"</code>.</li>
+<li>Follow the setup steps mentioned in <a href="https://huggingface.co/docs/huggingface_hub/en/guides/cli" class="uri">https://huggingface.co/docs/huggingface_hub/en/guides/cli</a>.</li>
+</ol>
+</section>
+<section id="installing-hugging-face-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="installing-hugging-face-libraries">Installing Hugging Face libraries</h2>
 <p>We’ll need to install the following libraries from the Hugging Face ecosystem:</p>
 <ul>
 <li><a href="https://huggingface.co/docs/transformers/en/installation"><code>transformers</code></a> - comes pre-installed on Google Colab but if you’re running on your local machine, you can install it via <code>pip install transformers</code>.</li>
@@ -172,12 +249,9 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="https://huggingface.co/docs/accelerate/basic_tutorials/install"><code>accelerate</code></a> - a library for training machine learning models faster, you can install it via <code>pip install accelerate</code>.</li>
 <li><a href="https://www.gradio.app/guides/quickstart#installation"><code>gradio</code></a> - a library for creating interactive demos of machine learning models, you can install it via <code>pip install gradio</code>.</li>
 </ul>
-<section id="tk---add-a-getting-started-section-for-mac" class="level2">
-<h2 class="anchored" data-anchor-id="tk---add-a-getting-started-section-for-mac">TK - Add a getting started section for Mac</h2>
-<p>I could make this into a YouTube video for running on your own Mac.</p>
-<p>TK - Getting setup for Hugging Face Transformers on a Mac.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
