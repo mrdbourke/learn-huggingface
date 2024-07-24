@@ -278,7 +278,7 @@ window.Quarto = {
   <li><a href="#testing-our-hosted-demo" id="toc-testing-our-hosted-demo" class="nav-link" data-scroll-target="#testing-our-hosted-demo"><span class="header-section-number">10.5</span> Testing our hosted demo</a></li>
   </ul></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">11</span> Summary</a></li>
-  <li><a href="#tk---exercises-and-extensions" id="toc-tk---exercises-and-extensions" class="nav-link" data-scroll-target="#tk---exercises-and-extensions"><span class="header-section-number">12</span> TK - Exercises and Extensions</a></li>
+  <li><a href="#exercises-and-extensions" id="toc-exercises-and-extensions" class="nav-link" data-scroll-target="#exercises-and-extensions"><span class="header-section-number">12</span> Exercises and Extensions</a></li>
   <li><a href="#extra-resources" id="toc-extra-resources" class="nav-link" data-scroll-target="#extra-resources"><span class="header-section-number">13</span> Extra resources</a></li>
   </ul>
 </nav>
@@ -895,20 +895,20 @@ ID to Label mapping: {0: 'not_food', 1: 'food'}</code></pre>
 <p>And we will evaluate those learned patterns on the test data.</p>
 <p>We can split our data using the <a href="https://huggingface.co/docs/datasets/v2.20.0/en/package_reference/main_classes#datasets.Dataset.train_test_split"><code>datasets.Dataset.train_test_split</code></a> method.</p>
 <p>We can use the <code>test_size</code> parameter to define the percentage of data we’d like to use in our test set (e.g.&nbsp;<code>test_size=0.2</code> would mean 20% of the data goes to the test set).</p>
-<div id="cell-44" class="cell" data-execution_count="109">
+<div id="cell-44" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create train/test splits</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> dataset.train_test_split(test_size<span class="op">=</span><span class="fl">0.2</span>, seed<span class="op">=</span><span class="dv">42</span>) <span class="co"># note: seed isn't needed, just here for reproducibility, without it you will get different splits each time you run the cell</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>dataset</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <div class="ansi-escaped-output">
 <pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[109], line 2</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[1], line 2</span>
 <span class="ansi-green-fg ansi-bold">      1</span> <span style="font-style:italic;color:rgb(95,135,135)"># Create train/test splits</span>
-<span class="ansi-green-fg">----&gt; 2</span> dataset <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">dataset</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">train_test_split</span>(test_size<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(98,98,98)">0.2</span>, seed<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(98,98,98)">42</span>) <span style="font-style:italic;color:rgb(95,135,135)"># note: seed isn't needed, just here for reproducibility, without it you will get different splits each time you run the cell</span>
+<span class="ansi-green-fg">----&gt; 2</span> dataset <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">dataset</span><span style="color:rgb(98,98,98)">.</span>train_test_split(test_size<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(98,98,98)">0.2</span>, seed<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(98,98,98)">42</span>) <span style="font-style:italic;color:rgb(95,135,135)"># note: seed isn't needed, just here for reproducibility, without it you will get different splits each time you run the cell</span>
 <span class="ansi-green-fg ansi-bold">      3</span> dataset
 
-<span class="ansi-red-fg">AttributeError</span>: 'DatasetDict' object has no attribute 'train_test_split'</pre>
+<span class="ansi-red-fg">NameError</span>: name 'dataset' is not defined</pre>
 </div>
 </div>
 </div>
@@ -3664,8 +3664,8 @@ Note
 <p>Training your own model can often result in faster predictions and far less running costs over time.</p>
 <p>The Hugging Face ecosystem enables the creation of custom models for almost any kind of machine learning problem.</p>
 </section>
-<section id="tk---exercises-and-extensions" class="level2" data-number="12">
-<h2 data-number="12" class="anchored" data-anchor-id="tk---exercises-and-extensions"><span class="header-section-number">12</span> TK - Exercises and Extensions</h2>
+<section id="exercises-and-extensions" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="exercises-and-extensions"><span class="header-section-number">12</span> Exercises and Extensions</h2>
 <p>There’s no better way to improve other than practicing what you’ve learned.</p>
 <p>The following exercises and extensions are designed for you to practice the things we’ve covered in this project.</p>
 <ol type="1">
