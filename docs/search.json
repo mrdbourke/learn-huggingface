@@ -588,5 +588,17 @@
       "Natural Language Processing (NLP)",
       "Text Classification (work in progress)"
     ]
+  },
+  {
+    "objectID": "notebooks/hugging_face_text_classification_tutorial.html#exercises-and-extensions",
+    "href": "notebooks/hugging_face_text_classification_tutorial.html#exercises-and-extensions",
+    "title": "Text Classification with Hugging Face Transformers",
+    "section": "12 Exercises and Extensions",
+    "text": "12 Exercises and Extensions\nThere’s no better way to improve other than practicing what you’ve learned.\nThe following exercises and extensions are designed for you to practice the things we’ve covered in this project.\n\nOur text classification model works on food/not_food text samples. How would you create your own binary text classification model on different classes?\n\nCreate ~10 or samples of your own text classes (e.g. 10 samples each of spam/not_spam emails) and retrain a text classification model.\nBonus: Share the model you’ve made in a demo just like we did here. Send it to me, I’d love to see it! My email is on my website.\n\nWe’ve trained our model on two classes (binary classification) but how might we increase that to 3 or more classes (multi-class classification)?\n\nHint: see the num_labels parameter in transformers.AutoModelForSequenceClassification.\n\nOur model seems to work pretty good on our test data and on the few number of examples we tried manually. Can you find any examples where our model fails? For example, what kind of sentences does it struggle with? How could you fix this?\n\nHint: Our model has been trained on examples with at least 5-12 words, does it still work with short sentences? (e.g. “pie”).\nBonus: If you find any cases where our model doesn’t perform well, make an extra 10-20 examples of these and add them to the dataset and then retrain the model (you’ll have to lookup “how to add rows to an existing Hugging Face dataset”). How does the model perform after adding these additional samples?\n\nDatasets are fundamental to any machine learning project, getting to know how to process and interact with them is a fundamental skill. Spend 1 hour going through the Hugging Face Datasets tutorial.\n\nWrite 5 things you can do with Hugging Face Datasets and where they might come in handy.\n\nThe Hugging Face transformers library has many features. The following readings are to help understand a handful of them.\n\nSpend 10 minutes exploring the transformers.TrainingArguments documentation.\nSpend 10 minutes reading the transformers.Trainer documentation.\n\nSpend 10 minutes reading the Hugging Face model sharing documentation.\n\nSpend 10 minutes reading the Hugging Face transformers.pipeline documentation.\n\nWhat does a pipeline do?\nName 3 different kinds of pipelines and describe what they do in a sentence\n\n\nGradio is a powerful library for making machine learning demos, learning more about it will help you in future creations. Spend 10-15 minutes reading the Gradio quickstart documentation.\n\nWhat are 3 kinds of demos you can create?\nWhat are 3 different inputs and outputs you can make?",
+    "crumbs": [
+      "Home",
+      "Natural Language Processing (NLP)",
+      "Text Classification (work in progress)"
+    ]
   }
 ]

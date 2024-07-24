@@ -40,15 +40,14 @@ TODO:
 
 ### TK - What is Hugging Face?
 
-TK - perhaps put this in the front of the website? e.g. on the index page
-
 Hugging Face is a platform that offers access to many different kinds of open-source machine learning models and datasets.
 
 They're also the creators of the popular [`transformers` library](https://huggingface.co/docs/transformers/en/index) which is a Python-based library for working with pre-trained models as well as custom models.
 
 If you're getting into the world of AI and machine learning, you're going to come across Hugging Face.
 
-TK - add breakdown of the Hugging Face ecosystem, `transformers`, `datasets`
+* TK - add breakdown of the Hugging Face ecosystem, `transformers`, `datasets`
+* see many more: https://huggingface.co/docs
 
 ### TK - Why Hugging Face?
 
