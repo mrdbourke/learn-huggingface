@@ -5,6 +5,8 @@ project:
 website:
   title: "Learn Hugging Face 🤗"
   favicon: images/learn-hf-favicon.png
+  twitter-card: true
+  open-graph: true
   navbar:
     left:
       - href: index.qmd
