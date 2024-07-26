@@ -4,6 +4,7 @@ project:
 
 website:
   title: "Learn Hugging Face 🤗"
+  favicon: images/learn-hf-favicon.png
   navbar:
     left:
       - href: index.qmd
