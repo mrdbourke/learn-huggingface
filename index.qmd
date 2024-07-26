@@ -35,6 +35,9 @@ TODO:
     * [ ] Text classification
     * [ ] More to come...
 * [ ] Where to get help? HF forums, HF GitHub, etc
+* [ ] Finish setup page
+* [ ] Finish deployment to learnhuggingface.com page
+* [ ] Make index of different projects
 * [ ] Get started: text classification shows an end-to-end workflow with detailed steps, I'd advise starting here to get to know the ecosystem a bit
     * [ ] Other projects are more focused on specific tasks with less explanations but still complete code examples 
 
