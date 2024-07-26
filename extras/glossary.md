@@ -1,5 +1,8 @@
 # Glossary
 
+This is messy and a work in progress. Will tidy up later.
+
+* Predictive vs generative AI = predictive AI -> machine readable outputs, generative AI -> human readable outputs. Predictive style models take in data and map it to a fixed output space (e.g. a text classification model predicting whether an email is spam or not). Generative AI models take in data and generate an unbounded response (though theorectically this response *is* bounded by the training distribution), such as, a chat system taking in natural language instructions and producing natural language as output. Generative AI models can be turned into predictive-style models, for example a generative LLM could produce JSON outputs if instructed/constrained to do so.
 * Transformer = A deep learning model that adopts the attention mechanism to draw global dependencies between input and output
 * Tokenization = turning a series of data (text or image) into a series of tokens, where a token is a numerical representation of the input data, for example, in the case of text, tokenization could mean turning the words in a sentence into numbers (e.g. "hello world" -> [101, 102])
 * Tokens = a token is a letter, word or word-piece (word) that a model uses to represent input data, for example, in the case of text, a token could be a word (e.g. "hello") or a word-piece (e.g. "hell" and "o"), see: https://platform.openai.com/tokenizer for an example
