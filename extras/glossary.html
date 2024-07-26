@@ -71,8 +71,10 @@ ul.task-list li input[type="checkbox"] {
 
 <link rel="stylesheet" href="../styles.css">
 <meta property="og:title" content="Learn Hugging Face 🤗">
+<meta property="og:description" content="">
 <meta property="og:site_name" content="Learn Hugging Face 🤗">
 <meta name="twitter:title" content="Learn Hugging Face 🤗">
+<meta name="twitter:description" content="">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -179,7 +181,9 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="glossary" class="level1">
 <h1>Glossary</h1>
+<p>This is messy and a work in progress. Will tidy up later.</p>
 <ul>
+<li>Predictive vs generative AI = predictive AI -&gt; machine readable outputs, generative AI -&gt; human readable outputs. Predictive style models take in data and map it to a fixed output space (e.g.&nbsp;a text classification model predicting whether an email is spam or not). Generative AI models take in data and generate an unbounded response (though theorectically this response <em>is</em> bounded by the training distribution), such as, a chat system taking in natural language instructions and producing natural language as output. Generative AI models can be turned into predictive-style models, for example a generative LLM could produce JSON outputs if instructed/constrained to do so.</li>
 <li>Transformer = A deep learning model that adopts the attention mechanism to draw global dependencies between input and output</li>
 <li>Tokenization = turning a series of data (text or image) into a series of tokens, where a token is a numerical representation of the input data, for example, in the case of text, tokenization could mean turning the words in a sentence into numbers (e.g.&nbsp;“hello world” -&gt; [101, 102])</li>
 <li>Tokens = a token is a letter, word or word-piece (word) that a model uses to represent input data, for example, in the case of text, a token could be a word (e.g.&nbsp;“hello”) or a word-piece (e.g.&nbsp;“hell” and “o”), see: https://platform.openai.com/tokenizer for an example</li>
