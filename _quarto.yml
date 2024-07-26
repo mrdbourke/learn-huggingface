@@ -11,6 +11,10 @@ website:
         text: Home
       - href: about.qmd
         text: About
+      - href: extras/setup.md
+        text: Setup
+      - href: extras/glossary.md
+        text: Glossary
   sidebar:
     style: "docked"
     search: true
@@ -18,14 +22,14 @@ website:
       - section: "Natural Language Processing (NLP)"
         contents:
           - href: notebooks/hugging_face_text_classification_tutorial.ipynb
-            text: Text Classification (work in progress)
+            text: Text Classification
   
-
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
+    page-layout: full
 
 
 

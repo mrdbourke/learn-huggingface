@@ -46,7 +46,7 @@ They're also the creators of the popular [`transformers` library](https://huggin
 
 If you're getting into the world of AI and machine learning, you're going to come across Hugging Face.
 
-* TK - add breakdown of the Hugging Face ecosystem, `transformers`, `datasets`
+* TK image - add breakdown of the Hugging Face ecosystem, `transformers`, `datasets`
 * see many more: https://huggingface.co/docs
 
 ### TK - Why Hugging Face?
