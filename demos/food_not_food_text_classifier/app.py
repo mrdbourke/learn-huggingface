@@ -30,7 +30,7 @@ A text classifier to determine if a sentence is about food or not food.
 
 Fine-tuned from [DistilBERT](https://huggingface.co/distilbert/distilbert-base-uncased) on a [small dataset of food and not food text](https://huggingface.co/datasets/mrdbourke/learn_hf_food_not_food_image_captions).
 
-TK - See source code:
+See [source code](https://github.com/mrdbourke/learn-huggingface/blob/main/notebooks/hugging_face_text_classification_tutorial.ipynb).
 """
 
 demo = gr.Interface(fn=food_not_food_classifier, 

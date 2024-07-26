@@ -16,4 +16,4 @@ Small demo to showcase a text classifier to determine if a sentence is about foo
 
 DistillBERT model fine-tuned on a small synthetic dataset of 250 generated [Food or Not Food image captions](https://huggingface.co/datasets/mrdbourke/learn_hf_food_not_food_image_captions).
 
-TK - see the demo notebook on how to create this
+[Source code notebook](https://github.com/mrdbourke/learn-huggingface/blob/main/notebooks/hugging_face_text_classification_tutorial.ipynb).
