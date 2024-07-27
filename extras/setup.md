@@ -1,23 +1,42 @@
 # Getting setup for the Hugging Face ecosystem
 
-## TK - Start here (universal steps)
+The following steps are to help you get started with the Hugging Face ecosystem.
+
+Best to follow the "Start here" steps and then go through the other setup steps as necessary.
+
+## Start here (universal steps)
 
 1. Create a free Hugging Face account at <https://huggingface.co/join>.
 2. Create a Hugging Face access token with read and write access at <https://huggingface.co/settings/tokens>.
-    * You can create a read/write token using the fine-grained settings and selecting the appropriate options.
-    * Read more on Hugging Face access tokens at <https://huggingface.co/docs/hub/en/security-tokens>. 
+    * You can create a read/write token using the fine-grained settings and selecting all the appropriate options.
+    * Read more on Hugging Face access tokens at <https://huggingface.co/docs/hub/en/security-tokens>.
+
+<figure style="text-align: center;">
+    <!-- figtemplate -->
+    <img src="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/setup/00-creating-huggingface-token.png"
+     alt="Two screenshots of the Hugging Face website showing the process of creating an access token. The first screenshot displays the 'Access Tokens' page with an existing token and a highlighted '+ Create new token' button. The second screenshot shows the 'Create new Access Token' page, where the user can specify the token name and permissions for repositories, webhooks, inference, collections, discussions, posts, and billing." 
+     style="width: 120%; max-width: 1000px; height: auto;"/>
+     <figcaption>To read from and write to your Hugging Face Hub account, you'll need to set up an access token. You can have one token for reading and one for writing. However, I personally use a single token for reading and writing. **Note:** Do not share your token with others. Always keep it private and avoid saving it in raw text format.</figcaption>
+</figure>
 
 ## TK - Getting setup on Google Colab
 
 1. Follow the steps in Start here.
 2. Add your Hugging Face read/write token as a Secret in Google Colab.
+    * Naming this Secret `HF_TOKEN` will mean that Hugging Face libraries automatically recognize your token for future use.
 
-TK image - show image for loading a secret in Google Colab
+<figure style="text-align: center;">
+    <!-- figtemplate -->
+    <img src="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/setup/01-adding-huggingface-token-to-google-colab.png"
+     alt="Two screenshots illustrating how to add a Hugging Face token to Google Colab. The first screenshot shows the Hugging Face 'Access Token' page with an existing token and a highlighted token name. The second screenshot shows the Google Colab 'Secrets' tab with a list of stored secrets, including the Hugging Face token, with options to add new secrets or manage existing ones" 
+     style="width: 120%; max-width: 1000px; height: auto;"/>
+     <figcaption>For accessing models and datasets from the Hugging Face Hub (both read and write) inside Google Colab, you'll need to add your Hugging Face token as a Secret in Google Colab. Once you give your Google Colab notebook access to the token, it can be used by Hugging Face libraries to interact with the Hugging Face Hub.</figcaption>
+</figure>
 
-If you need to force relogin for a notebook session, you can run:
+Alternatively, if you need to force relogin for a notebook session, you can run:
 
 ```python
-import huggingface_hub
+import huggingface_hub # requires !pip install huggingface_hub
 
 # Login to Hugging Face
 huggingface_hub.login()
