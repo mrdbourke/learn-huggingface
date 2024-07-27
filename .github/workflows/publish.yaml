@@ -23,3 +23,12 @@ jobs:
                 target: gh-pages
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            
+            - name: Ensure CNAME file (for custom domain usage)
+              run: |
+                echo "your-custom-domain.com" > CNAME
+                git config --global user.name "github-actions[bot]"
+                git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                git add CNAME
+                git commit -m "Add CNAME file"
+                git push origin gh-pages
