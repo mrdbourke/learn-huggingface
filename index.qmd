@@ -32,7 +32,7 @@ TODO:
 
 * [ ] Ecosystem overview: transformers, datasets, accelerate, Spaces, Hub, models etc
 * [ ] Practical tutorials
-    * [ ] Text classification
+    * [ ] Text classification (this will be like a "start here" for the Hugging Face ecosystem)
     * [ ] More to come...
 * [ ] Where to get help? HF forums, HF GitHub, etc
 * [ ] Finish setup page
