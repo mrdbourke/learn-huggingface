@@ -13,14 +13,16 @@ Repo outline:
 - All will come in a nicely formatted online book/documentation website.
 
 ## TODO
+
 - [ ] Prerequisites
 - [ ] Ecosystem overview (transformers, datasets, accelerate, tokenizers, Spaces, demos, models, hub etc.)
 - [ ] Text classification
+- [ ] Object detection
 - [ ] Named entity recognition
 - [ ] LLM fine-tuning
+- [ ] VLM fine-tuning
 - [ ] RAG workflow
 - [ ] Zero-shot image classification/multi-modal workflows (CLIP)
-- [ ] Object detection
 
 ## Setup
 
