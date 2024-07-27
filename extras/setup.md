@@ -19,7 +19,7 @@ Best to follow the "Start here" steps and then go through the other setup steps 
      <figcaption>To read from and write to your Hugging Face Hub account, you'll need to set up an access token. You can have one token for reading and one for writing. However, I personally use a single token for reading and writing. **Note:** Do not share your token with others. Always keep it private and avoid saving it in raw text format.</figcaption>
 </figure>
 
-## TK - Getting setup on Google Colab
+## Getting setup on Google Colab
 
 1. Follow the steps in Start here.
 2. Add your Hugging Face read/write token as a Secret in Google Colab.

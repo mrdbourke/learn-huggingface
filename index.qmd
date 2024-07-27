@@ -19,6 +19,8 @@ Mottos:
 
 Project style:
 
+Data, model, demo!
+
 * Create a new/reuse an existing dataset
 * Train/evaluate a model
 * Build a demo to share 
@@ -26,7 +28,7 @@ Project style:
 Prerequisites:
 
 * 3-6 months Python experience
-* 1x begineer machine learning or deep learning course 
+* 1x beginner machine learning or deep learning course 
 * PyTorch experience is a bonus (see my [Learn PyTorch in a Day video](https://youtu.be/Z_ikDlimN6A?si=Glf8q383cV0P9hEO) or [learnpytorch.io](https://www.learnpytorch.io/))
 
 Who is it for?
@@ -35,14 +37,18 @@ Who is it for?
 
 TODO:
 
+* [ ] Finish outline of this (index.md) page
+    [ ] Copy a similar version to the README.md for GitHub
+    [ ] Make share image for the whole thing 
+* [ ] Make index of different projects
 * [ ] Ecosystem overview: transformers, datasets, accelerate, Spaces, Hub, models etc
 * [ ] Practical tutorials
     * [ ] Text classification (this will be like a "start here" for the Hugging Face ecosystem)
     * [ ] More to come...
 * [ ] Where to get help? HF forums, HF GitHub, etc
 * [ ] Finish setup page
-* [ ] Finish deployment to learnhuggingface.com page
-* [ ] Make index of different projects
+    [ ] Local setup
+* [x] Finish deployment to learnhuggingface.com page
 * [ ] Get started: text classification shows an end-to-end workflow with detailed steps, I'd advise starting here to get to know the ecosystem a bit
     * [ ] Other projects are more focused on specific tasks with less explanations but still complete code examples 
 
