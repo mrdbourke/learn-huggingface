@@ -5,6 +5,7 @@ project:
 website:
   title: "Learn Hugging Face 🤗"
   favicon: images/learn-hf-favicon.png
+  repo-url: https://github.com/mrdbourke/learn-huggingface 
   twitter-card: true
   open-graph: true
   navbar:
