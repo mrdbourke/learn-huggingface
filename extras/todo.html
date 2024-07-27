@@ -169,7 +169,7 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#quarto-misc" id="toc-quarto-misc" class="nav-link active" data-scroll-target="#quarto-misc">Quarto misc</a></li>
   </ul>
-</nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/mrdbourke/learn-huggingface/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
@@ -290,7 +290,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/mrdbourke\.github\.io\/learn-huggingface\/");
+      var filterRegex = new RegExp("https:\/\/www\.learnhuggingface\.com");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -623,4 +623,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/mrdbourke/learn-huggingface/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

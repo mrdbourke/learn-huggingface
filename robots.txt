@@ -1,1 +1,1 @@
-Sitemap: https://mrdbourke.github.io/learn-huggingface/sitemap.xml
+Sitemap: https://www.learnhuggingface.com/sitemap.xml
