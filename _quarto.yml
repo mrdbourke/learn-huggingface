@@ -5,6 +5,8 @@ project:
 website:
   title: "Learn Hugging Face 🤗"
   favicon: images/learn-hf-favicon.png
+  image: https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/misc/learn_hf_cover_image.png
+  description: "Practical hands-on machine learning tutorials using the Hugging Face ecosystem."
   site-url: https://www.learnhuggingface.com
   repo-url: https://github.com/mrdbourke/learn-huggingface 
   issue-url: https://github.com/mrdbourke/learn-huggingface/issues 
