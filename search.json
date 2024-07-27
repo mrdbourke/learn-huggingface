@@ -194,8 +194,8 @@
     "text": "Create a free Hugging Face account at https://huggingface.co/join.\nCreate a Hugging Face access token with read and write access at https://huggingface.co/settings/tokens.\n\nYou can create a read/write token using the fine-grained settings and selecting all the appropriate options.\nRead more on Hugging Face access tokens at https://huggingface.co/docs/hub/en/security-tokens.\n\n\n\n\n\n\nTo read from and write to your Hugging Face Hub account, you’ll need to set up an access token. You can have one token for reading and one for writing. However, I personally use a single token for reading and writing. Note: Do not share your token with others. Always keep it private and avoid saving it in raw text format."
   },
   {
-    "objectID": "extras/setup.html#tk---getting-setup-on-google-colab",
-    "href": "extras/setup.html#tk---getting-setup-on-google-colab",
+    "objectID": "extras/setup.html#getting-setup-on-google-colab",
+    "href": "extras/setup.html#getting-setup-on-google-colab",
     "title": "Getting setup for the Hugging Face ecosystem",
     "section": "",
     "text": "Follow the steps in Start here.\nAdd your Hugging Face read/write token as a Secret in Google Colab.\n\nNaming this Secret HF_TOKEN will mean that Hugging Face libraries automatically recognize your token for future use.\n\n\n\n\n\n\nFor accessing models and datasets from the Hugging Face Hub (both read and write) inside Google Colab, you’ll need to add your Hugging Face token as a Secret in Google Colab. Once you give your Google Colab notebook access to the token, it can be used by Hugging Face libraries to interact with the Hugging Face Hub.\n\n\nAlternatively, if you need to force relogin for a notebook session, you can run:\nimport huggingface_hub # requires !pip install huggingface_hub\n\n# Login to Hugging Face\nhuggingface_hub.login()\nAnd enter your token in the box that appears (note: this token will only be active for the current notebook session and will delete when your Google Colab instance terminates)."
@@ -233,7 +233,7 @@
     "href": "extras/resources.html",
     "title": "Learn Hugging Face 🤗",
     "section": "",
-    "text": "See the Pytorch extra resources for some ideas: https://www.learnpytorch.io/pytorch_extra_resources/\nHugging Face NLP course: https://huggingface.co/learn/nlp-course/chapter0/1"
+    "text": "See the Pytorch extra resources for some ideas: https://www.learnpytorch.io/pytorch_extra_resources/\nHugging Face NLP course: https://huggingface.co/learn/nlp-course/chapter0/1\nHugging Face forum: https://discuss.huggingface.co/"
   },
   {
     "objectID": "extras/todo.html",
@@ -254,7 +254,7 @@
     "href": "index.html",
     "title": "Learn Hugging Face 🤗 (work in progress)",
     "section": "",
-    "text": "Website dedicated to teaching the Hugging Face ecosystem with practical examples.\nEach example will include an end-to-end approach of starting with a dataset (custom or existing), building and evaluating a model and creating a demo to share.\nTeaching style:\nA machine learning cooking show! 👨‍🍳\nMottos:\nProject style:\nPrerequisites:\nWho is it for?\nTODO:"
+    "text": "Website dedicated to teaching the Hugging Face ecosystem with practical examples.\nEach example will include an end-to-end approach of starting with a dataset (custom or existing), building and evaluating a model and creating a demo to share.\nTeaching style:\nA machine learning cooking show! 👨‍🍳\nMottos:\nProject style:\nData, model, demo!\nPrerequisites:\nWho is it for?\nTODO:"
   },
   {
     "objectID": "index.html#faq",
