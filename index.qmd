@@ -15,6 +15,7 @@ Mottos:
 * *If in doubt, run the code.* - Machine learning is very experimental. So it's good to get in the habit of continually trying things (even if you think they won't work).
 * *Visualize, visualize, visualize!* - If you're not sure of some dataset or some operation or some predictions, visualize it/them.
 * *Experiment, experiment, experiment!* - Again, machine learning is very experimental. So keep trying different things!
+* *Data, model, demo!*
 
 Project style:
 
@@ -26,7 +27,11 @@ Prerequisites:
 
 * 3-6 months Python experience
 * 1x begineer machine learning or deep learning course 
-* PyTorch experience is a bonus (see my Learn PyTorch in a Day video)
+* PyTorch experience is a bonus (see my [Learn PyTorch in a Day video](https://youtu.be/Z_ikDlimN6A?si=Glf8q383cV0P9hEO) or [learnpytorch.io](https://www.learnpytorch.io/))
+
+Who is it for?
+
+* Beginners who love things explained in detail 
 
 TODO:
 
@@ -68,7 +73,7 @@ Aside from your own website, consider Hugging Face the homepage of your AI/machi
 
 No, it's a personal project by myself ([Daniel Bourke](https://www.mrdbourke.com)) to learn and help others learn the Hugging Face ecosystem.
 
-## How is this website made?
+> How is this website made?
 
 This is a Quarto website.
 
