@@ -105,8 +105,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <link rel="stylesheet" href="../styles.css">
 <meta property="og:title" content="Learn Hugging Face 🤗">
+<meta property="og:description" content="">
 <meta property="og:site_name" content="Learn Hugging Face 🤗">
 <meta name="twitter:title" content="Learn Hugging Face 🤗">
+<meta name="twitter:description" content="">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -203,7 +205,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#getting-setup-for-the-hugging-face-ecosystem" id="toc-getting-setup-for-the-hugging-face-ecosystem" class="nav-link active" data-scroll-target="#getting-setup-for-the-hugging-face-ecosystem">Getting setup for the Hugging Face ecosystem</a>
   <ul class="collapse">
-  <li><a href="#tk---start-here-universal-steps" id="toc-tk---start-here-universal-steps" class="nav-link" data-scroll-target="#tk---start-here-universal-steps">TK - Start here (universal steps)</a></li>
+  <li><a href="#start-here-universal-steps" id="toc-start-here-universal-steps" class="nav-link" data-scroll-target="#start-here-universal-steps">Start here (universal steps)</a></li>
   <li><a href="#tk---getting-setup-on-google-colab" id="toc-tk---getting-setup-on-google-colab" class="nav-link" data-scroll-target="#tk---getting-setup-on-google-colab">TK - Getting setup on Google Colab</a></li>
   <li><a href="#tk---getting-started-locally" id="toc-tk---getting-started-locally" class="nav-link" data-scroll-target="#tk---getting-started-locally">TK - Getting started locally</a></li>
   <li><a href="#installing-hugging-face-libraries" id="toc-installing-hugging-face-libraries" class="nav-link" data-scroll-target="#installing-hugging-face-libraries">Installing Hugging Face libraries</a></li>
@@ -219,26 +221,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="getting-setup-for-the-hugging-face-ecosystem" class="level1">
 <h1>Getting setup for the Hugging Face ecosystem</h1>
-<section id="tk---start-here-universal-steps" class="level2">
-<h2 class="anchored" data-anchor-id="tk---start-here-universal-steps">TK - Start here (universal steps)</h2>
+<p>The following steps are to help you get started with the Hugging Face ecosystem.</p>
+<p>Best to follow the “Start here” steps and then go through the other setup steps as necessary.</p>
+<section id="start-here-universal-steps" class="level2">
+<h2 class="anchored" data-anchor-id="start-here-universal-steps">Start here (universal steps)</h2>
 <ol type="1">
 <li>Create a free Hugging Face account at <a href="https://huggingface.co/join" class="uri">https://huggingface.co/join</a>.</li>
 <li>Create a Hugging Face access token with read and write access at <a href="https://huggingface.co/settings/tokens" class="uri">https://huggingface.co/settings/tokens</a>.
 <ul>
-<li>You can create a read/write token using the fine-grained settings and selecting the appropriate options.</li>
+<li>You can create a read/write token using the fine-grained settings and selecting all the appropriate options.</li>
 <li>Read more on Hugging Face access tokens at <a href="https://huggingface.co/docs/hub/en/security-tokens" class="uri">https://huggingface.co/docs/hub/en/security-tokens</a>.</li>
 </ul></li>
 </ol>
+<figure style="text-align: center;" class="figure">
+<!-- figtemplate -->
+<img src="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/setup/00-creating-huggingface-token.png" alt="Two screenshots of the Hugging Face website showing the process of creating an access token. The first screenshot displays the 'Access Tokens' page with an existing token and a highlighted '+ Create new token' button. The second screenshot shows the 'Create new Access Token' page, where the user can specify the token name and permissions for repositories, webhooks, inference, collections, discussions, posts, and billing." style="width: 120%; max-width: 1000px; height: auto;" class="figure-img">
+<figcaption>
+To read from and write to your Hugging Face Hub account, you’ll need to set up an access token. You can have one token for reading and one for writing. However, I personally use a single token for reading and writing. <strong>Note:</strong> Do not share your token with others. Always keep it private and avoid saving it in raw text format.
+</figcaption>
+</figure>
 </section>
 <section id="tk---getting-setup-on-google-colab" class="level2">
 <h2 class="anchored" data-anchor-id="tk---getting-setup-on-google-colab">TK - Getting setup on Google Colab</h2>
 <ol type="1">
 <li>Follow the steps in Start here.</li>
-<li>Add your Hugging Face read/write token as a Secret in Google Colab.</li>
+<li>Add your Hugging Face read/write token as a Secret in Google Colab.
+<ul>
+<li>Naming this Secret <code>HF_TOKEN</code> will mean that Hugging Face libraries automatically recognize your token for future use.</li>
+</ul></li>
 </ol>
-<p>TK image - show image for loading a secret in Google Colab</p>
-<p>If you need to force relogin for a notebook session, you can run:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> huggingface_hub</span>
+<figure style="text-align: center;" class="figure">
+<!-- figtemplate -->
+<img src="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/setup/01-adding-huggingface-token-to-google-colab.png" alt="Two screenshots illustrating how to add a Hugging Face token to Google Colab. The first screenshot shows the Hugging Face 'Access Token' page with an existing token and a highlighted token name. The second screenshot shows the Google Colab 'Secrets' tab with a list of stored secrets, including the Hugging Face token, with options to add new secrets or manage existing ones" style="width: 120%; max-width: 1000px; height: auto;" class="figure-img">
+<figcaption>
+For accessing models and datasets from the Hugging Face Hub (both read and write) inside Google Colab, you’ll need to add your Hugging Face token as a Secret in Google Colab. Once you give your Google Colab notebook access to the token, it can be used by Hugging Face libraries to interact with the Hugging Face Hub.
+</figcaption>
+</figure>
+<p>Alternatively, if you need to force relogin for a notebook session, you can run:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> huggingface_hub <span class="co"># requires !pip install huggingface_hub</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Login to Hugging Face</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>huggingface_hub.login()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
