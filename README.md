@@ -4,19 +4,93 @@ I'd like to learn the Hugging Face ecosystem better (transformers, datasets, acc
 
 So this repo is to  help me learn it and simulatenously teach others.
 
-Think of it as a small version of the [Hugging Face cookbook](https://github.com/huggingface/cookbook) with a series of practical examples and tutorials.
+Each example will include an end-to-end approach of starting with a dataset (custom or existing), building and evaluating a model and creating a demo to share.
 
-Repo outline:
-- Most of the materials will be in the form of runnable Jupyter notebooks with explanations + code snippets you can run for yourself.
-- For high-level concepts, there will be a few text-based tutorials.
-- But most of it will focus on practical examples.
-- All will come in a nicely formatted online book/documentation website.
+Teaching style: 
+
+A machine learning cooking show! 👨‍🍳
+
+Mottos:
+
+* ***If in doubt, run the code.*** -- Machine learning is very experimental. So it's good to get in the habit of continually trying things (even if you think they won't work).
+* ***Visualize, visualize, visualize!*** - If you're not sure of some dataset or some operation or some predictions, visualize it/them.
+* ***Experiment, experiment, experiment!*** - Again, machine learning is very experimental. So keep trying different things!
+* ***Data, model, demo!*** - Create/get a dataset, build/train/evaluate a model, create a demo to share.
+
+Project style:
+
+Data, model, demo!
+
+* Create a new/reuse an existing dataset.
+* Train/evaluate a model.
+* Build a demo to share.
+
+This will be our (rough) workflow:
+
+<figure style="text-align: center; display: inline-block;">
+    <!-- figtemplate -->
+    <img src="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/learn-hf-text-classification/01-hugging-face-workflow.png"
+     alt="The diagram shows the Hugging Face model development workflow, which includes the following steps: start with an idea or problem, get data ready (turn into tensors/create data splits), pick a pretrained model (to suit your problem), train/fine-tune the model on your custom data, evaluate the model, improve through experimentation, save and upload the fine-tuned model to the Hugging Face Hub, and turn your model into a shareable demo. Tools used in this workflow are Datasets/Tokenizers, Transformers/PEFT/Accelerate/timm, Hub/Spaces/Gradio, and Evaluate." 
+     style="width: 100%; max-width: 900px; height: auto;"/>
+     <figcaption style="width: 100%; box-sizing: border-box;">A general Hugging Face workflow from idea to shared model and demo using tools from the Hugging Face ecosystem. These kind of workflows are not set in stone and are more of guide than specific directions. See information on each of the tools in the <a href="https://huggingface.co/docs">Hugging Face documentation</a>.</figcaption>
+</figure>
+
+## Contents
+
+
+| Project | Description | Dataset | Model | Demo |
+| ----- | ----- | ----- | ----- | ----- |
+| [Text classification](https://www.learnhuggingface.com/notebooks/hugging_face_text_classification_tutorial) | Build project "Food Not Food", a text classification model to classify image captions into "food" if they're about food or "not_food" if they're not about food. This is the ideal place to get started if you've never used the Hugging Face ecosystem. | [Dataset](https://huggingface.co/datasets/mrdbourke/learn_hf_food_not_food_image_captions) | [Model](https://huggingface.co/mrdbourke/learn_hf_food_not_food_text_classifier-distilbert-base-uncased) | [Demo](https://huggingface.co/spaces/mrdbourke/learn_hf_food_not_food_text_classifier_demo) |
+| More to come soon! | Let me know if you'd like to see anything specific by [leaving an issue](https://github.com/mrdbourke/learn-huggingface/issues). | | | |
+
+## Who is it for?
+
+Ideal for:
+
+* Beginners who love things explained in detail.
+* Someone who wants to create more of their own end-to-end machine learning projects.
+
+Not ideal for:
+
+* People with 2-3+ years of machine learning projects & experience^.
+
+^Note: This being said, you may actually find some things helpful along the way. Best to explore and see!
+
+## Prerequisites
+
+* 3-6 months Python experience.
+* 1x beginner machine learning or deep learning course (see my [begineer-friendly ML course](https://dbourke.link/ZTMMLcourse) to learn Python + important ML concepts in one).
+    * PyTorch experience is a bonus (see my [Learn PyTorch in a Day video](https://youtu.be/Z_ikDlimN6A?si=Glf8q383cV0P9hEO) or [learnpytorch.io](https://www.learnpytorch.io/))
+
+## What is Hugging Face?
+
+Hugging Face is a platform that offers access to many different kinds of open-source machine learning models and datasets.
+
+They're also the creators of the popular [`transformers` library](https://huggingface.co/docs/transformers/en/index) (and many more helpful libraries) which is a Python-based library for working with pre-trained models as well as custom models.
+
+If you're getting into the world of AI and machine learning, you're going to come across Hugging Face.
+
+<figure style="text-align: center; display: inline-block;">
+    <!-- figtemplate -->
+    <img src="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/misc/learn_hf_ecosystem_overview.png"
+     alt="'Four browser screenshots displaying different sections of Hugging Face's ecosystem. Top-left: 'Hugging Face Transformers' page explaining access, training, and fine-tuning of state-of-the-art models. Top-right: 'Hugging Face Datasets' page about storing, processing, and accessing datasets. Bottom-left: 'Hugging Face Tokenizers' page on preprocessing and preparing text data for ML models. Bottom-right: 'Hugging Face Hub' page about storing and sharing models, datasets, and demos.'" 
+     style="width: 100%; max-width: 900px; height: auto;"/>
+     <figcaption style="width: 100%; box-sizing: border-box;">A handful of pieces from the Hugging Face ecosystem. There are many more available in <a href="https://huggingface.co/docs">Hugging Face documentation</a>.</figcaption>
+</figure>
+
+## Why Hugging Face?
+
+Many of the biggest companies in the world use Hugging Face for their open-source machine learning projects including [Apple](https://huggingface.co/apple), [Google](https://huggingface.co/google), [Facebook](https://huggingface.co/facebook) (Meta), [Microsoft](https://huggingface.co/microsoft), [OpenAI](https://huggingface.co/openai), [ByteDance](https://huggingface.co/ByteDance) and more.
+
+Not only does Hugging Face make it so you can use state-of-the-art machine learning models such as [Stable Diffusion](https://huggingface.co/stabilityai/stable-diffusion-2-1) (for image generation) and [Whipser](https://huggingface.co/openai/whisper-large-v3) (for audio transcription) easily, it also makes it so you can share your own models, datasets and resources.
+
+Aside from your own website, consider Hugging Face the homepage of your AI/machine learning profile.
 
 ## TODO
 
 - [ ] Prerequisites
 - [ ] Ecosystem overview (transformers, datasets, accelerate, tokenizers, Spaces, demos, models, hub etc.)
-- [ ] Text classification
+- [x] Text classification
 - [ ] Object detection
 - [ ] Named entity recognition
 - [ ] LLM fine-tuning
@@ -26,11 +100,15 @@ Repo outline:
 
 ## Setup
 
-Notebooks are designed to be run in Google Colab but can also work locally.
-
-TODO: Add setup instructions
+See [setup](https://github.com/mrdbourke/learn-huggingface/blob/main/extras/setup.md).
 
 ## Resources
 
 * Hugging Face documentation - https://huggingface.co/
 * Hugging Face cookbook - https://github.com/huggingface/cookbook
+
+## FAQ
+
+> Is this an official Hugging Face website?
+
+No, it's a personal project by myself ([Daniel Bourke](https://www.mrdbourke.com)) to learn and help others learn the Hugging Face ecosystem.

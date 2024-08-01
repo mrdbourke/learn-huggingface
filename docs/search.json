@@ -289,7 +289,7 @@
     "href": "index.html#contents",
     "title": "Learn Hugging Face 🤗 (work in progress)",
     "section": "Contents",
-    "text": "Contents\n\n\n\nProject\nDescription\n\n\n\n\nText classification\nBuild project “Food Not Food”, a text classification model to classify image captions into “food” if they’re about food or “not_food” if they’re not about food. This is the ideal place to get started if you’ve never used the Hugging Face ecosystem.\n\n\nMore to come soon!"
+    "text": "Contents\n\n\n\n\n\n\n\n\n\n\nProject\nDescription\nDataset\nModel\nDemo\n\n\n\n\nText classification (good place to start)\nBuild project “Food Not Food”, a text classification model to classify image captions into “food” if they’re about food or “not_food” if they’re not about food. This is the ideal place to get started if you’ve never used the Hugging Face ecosystem.\nDataset\nModel\nDemo\n\n\nMore to come soon!\nLet me know if you’d like to see anything specific by leaving an issue on GitHub."
   },
   {
     "objectID": "index.html#who-is-it-for",
@@ -303,14 +303,14 @@
     "href": "index.html#prerequisites",
     "title": "Learn Hugging Face 🤗 (work in progress)",
     "section": "Prerequisites",
-    "text": "Prerequisites\n\n3-6 months Python experience.\n1x beginner machine learning or deep learning course (see my begineer-friendly ML course to learn Python + important ML concepts in one).\n\nPyTorch experience is a bonus (see my Learn PyTorch in a Day video or learnpytorch.io)\n\n\n\nWhat is Hugging Face?\nHugging Face is a platform that offers access to many different kinds of open-source machine learning models and datasets.\nThey’re also the creators of the popular transformers library (and many more helpful libraries) which is a Python-based library for working with pre-trained models as well as custom models.\nIf you’re getting into the world of AI and machine learning, you’re going to come across Hugging Face.\n\n\n\n\nA handful of pieces from the Hugging Face ecosystem. There are many more available in Hugging Face documentation.\n\n\n\nTK image - add breakdown of the Hugging Face ecosystem, transformers, datasets\nsee many more: https://huggingface.co/docs\n\n\n\nWhy Hugging Face?\nMany of the biggest companies in the world use Hugging Face for their open-source machine learning projects including Apple, Google, Facebook (Meta), Microsoft, OpenAI, ByteDance and more.\nNot only does Hugging Face make it so you can use state-of-the-art machine learning models such as Stable Diffusion (for image generation) and Whipser (for audio transcription) easily, it also makes it so you can share your own models, datasets and resources.\nAside from your own website, consider Hugging Face the homepage of your AI/machine learning profile."
+    "text": "Prerequisites\n\n3-6 months Python experience.\n1x beginner machine learning or deep learning course (see my begineer-friendly ML course to learn Python + important ML concepts in one).\n\nPyTorch experience is a bonus (see my Learn PyTorch in a Day video or learnpytorch.io)"
   },
   {
     "objectID": "index.html#todo",
     "href": "index.html#todo",
     "title": "Learn Hugging Face 🤗 (work in progress)",
     "section": "TODO",
-    "text": "TODO\n\nFinish outline of this (index.md) page [ ] Copy a similar version to the README.md for GitHub [ ] Make share image for the whole thing\nMake index of different projects\nEcosystem overview: transformers, datasets, accelerate, Spaces, Hub, models etc\nPractical tutorials\n\nText classification (this will be like a “start here” for the Hugging Face ecosystem)\nMore to come…\n\nWhere to get help? HF forums, HF GitHub, etc\nFinish setup page [ ] Local setup\nFinish deployment to learnhuggingface.com page\nGet started: text classification shows an end-to-end workflow with detailed steps, I’d advise starting here to get to know the ecosystem a bit\n\nOther projects are more focused on specific tasks with less explanations but still complete code examples"
+    "text": "TODO\n\nFinish outline of this (index.md) page\n\nCopy a similar version to the README.md for GitHub\nMake share image for the whole thing\n\nMake index of different projects\nEcosystem overview: transformers, datasets, accelerate, Spaces, Hub, models etc\nPractical tutorials\n\nText classification (this will be like a “start here” for the Hugging Face ecosystem)\nMore to come…\n\nWhere to get help? HF forums, HF GitHub, etc\nFinish setup page\n\nLocal setup\n\nFinish deployment to learnhuggingface.com page\nGet started: text classification shows an end-to-end workflow with detailed steps, I’d advise starting here to get to know the ecosystem a bit\n\nOther projects are more focused on specific tasks with less explanations but still complete code examples"
   },
   {
     "objectID": "index.html#what-is-hugging-face",
