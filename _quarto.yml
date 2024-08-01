@@ -10,6 +10,8 @@ website:
   site-url: https://www.learnhuggingface.com
   repo-url: https://github.com/mrdbourke/learn-huggingface 
   issue-url: https://github.com/mrdbourke/learn-huggingface/issues 
+  reader-mode: true
+  back-to-top-navigation: true 
   twitter-card: true
   open-graph: true
   navbar:
@@ -22,6 +24,9 @@ website:
         text: Setup
       - href: extras/glossary.md
         text: Glossary
+    tools:
+      - icon: github
+        href: https://github.com/mrdbourke/learn-huggingface
   sidebar:
     style: "docked"
     search: true
@@ -30,6 +35,18 @@ website:
         contents:
           - href: notebooks/hugging_face_text_classification_tutorial.ipynb
             text: Text Classification
+  page-footer: 
+    right:
+      - icon: globe
+        href: https://www.mrdbourke.com
+      - icon: github
+        href: https://github.com/mrdbourke/learn-huggingface
+      - icon: youtube 
+        href: https://www.youtube.com/channel/UCr8O8l5cCX85Oem1d18EezQ 
+      - icon: twitter-x
+        href: https://twitter.com/mrdbourke
+      - icon: linkedin
+        href: https://www.linkedin.com/in/mrdbourke/
   
 format:
   html:
