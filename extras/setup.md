@@ -16,8 +16,10 @@ Best to follow the "Start here" steps and then go through the other setup steps 
     <img src="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/setup/00-creating-huggingface-token.png"
      alt="Two screenshots of the Hugging Face website showing the process of creating an access token. The first screenshot displays the 'Access Tokens' page with an existing token and a highlighted '+ Create new token' button. The second screenshot shows the 'Create new Access Token' page, where the user can specify the token name and permissions for repositories, webhooks, inference, collections, discussions, posts, and billing." 
      style="width: 100%; max-width: 900px; height: auto;"/>
-     <figcaption>To read from and write to your Hugging Face Hub account, you'll need to set up an access token. You can have one token for reading and one for writing. However, I personally use a single token for reading and writing. **Note:** Do not share your token with others. Always keep it private and avoid saving it in raw text format.</figcaption>
+     <figcaption>To read from and write to your Hugging Face Hub account, you'll need to set up an access token. You can have one token for reading and one for writing. However, I personally use a single token for reading and writing. </figcaption>
 </figure>
+
+**Note:** Do not share your token with others. Always keep it private and avoid saving it in raw text format.
 
 ## Getting setup on Google Colab
 
