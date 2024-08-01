@@ -21,6 +21,8 @@ Best to follow the "Start here" steps and then go through the other setup steps 
 
 ## Getting setup on Google Colab
 
+**Note:** If you're unfamiliar with Google Colab, I'd recommend going through Sam Witteveen's video [Colab 101](https://youtu.be/Ii6gs9zADEA?si=qbuRpFKTptd30tXz) and then [Advanced Colab](https://youtu.be/ieLpZ4wnb4A?si=AK1VecZck-BHoee6) to learn more.
+
 1. Follow the steps in Start here.
 2. Add your Hugging Face read/write token as a Secret in Google Colab.
     * Naming this Secret `HF_TOKEN` will mean that Hugging Face libraries automatically recognize your token for future use.
