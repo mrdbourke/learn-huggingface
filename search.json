@@ -180,11 +180,39 @@
     ]
   },
   {
-    "objectID": "extras/resources.html",
-    "href": "extras/resources.html",
-    "title": "Learn Hugging Face 🤗",
+    "objectID": "extras/setup.html",
+    "href": "extras/setup.html",
+    "title": "Getting setup for the Hugging Face ecosystem",
     "section": "",
-    "text": "See the Pytorch extra resources for some ideas: https://www.learnpytorch.io/pytorch_extra_resources/\nHugging Face NLP course: https://huggingface.co/learn/nlp-course/chapter0/1\nHugging Face forum: https://discuss.huggingface.co/\n\n\n\n\n Back to top"
+    "text": "The following steps are to help you get started with the Hugging Face ecosystem.\nBest to follow the “Start here” steps and then go through the other setup steps as necessary.\n\n\n\nCreate a free Hugging Face account at https://huggingface.co/join.\nCreate a Hugging Face access token with read and write access at https://huggingface.co/settings/tokens.\n\nYou can create a read/write token using the fine-grained settings and selecting all the appropriate options.\nRead more on Hugging Face access tokens at https://huggingface.co/docs/hub/en/security-tokens.\n\n\n\n\n\n\nTo read from and write to your Hugging Face Hub account, you’ll need to set up an access token. You can have one token for reading and one for writing. However, I personally use a single token for reading and writing. Note: Do not share your token with others. Always keep it private and avoid saving it in raw text format.\n\n\n\n\n\n\nFollow the steps in Start here.\nAdd your Hugging Face read/write token as a Secret in Google Colab.\n\nNaming this Secret HF_TOKEN will mean that Hugging Face libraries automatically recognize your token for future use.\n\n\n\n\n\n\nFor accessing models and datasets from the Hugging Face Hub (both read and write) inside Google Colab, you’ll need to add your Hugging Face token as a Secret in Google Colab. Once you give your Google Colab notebook access to the token, it can be used by Hugging Face libraries to interact with the Hugging Face Hub.\n\n\nAlternatively, if you need to force relogin for a notebook session, you can run:\nimport huggingface_hub # requires !pip install huggingface_hub\n\n# Login to Hugging Face\nhuggingface_hub.login()\nAnd enter your token in the box that appears (note: this token will only be active for the current notebook session and will delete when your Google Colab instance terminates).\n\n\n\n\nFollow the steps in Start here.\nInstall the Hugging Face CLI with pip install -U \"huggingface_hub[cli]\".\nFollow the setup steps mentioned in https://huggingface.co/docs/huggingface_hub/en/guides/cli.\n\n\n\n\nWe’ll need to install the following libraries from the Hugging Face ecosystem:\n\ntransformers - comes pre-installed on Google Colab but if you’re running on your local machine, you can install it via pip install transformers.\ndatasets - a library for accessing and manipulating datasets on and off the Hugging Face Hub, you can install it via pip install datasets.\nevaluate - a library for evaluating machine learning model performance with various metrics, you can install it via pip install evaluate.\naccelerate - a library for training machine learning models faster, you can install it via pip install accelerate.\ngradio - a library for creating interactive demos of machine learning models, you can install it via pip install gradio."
+  },
+  {
+    "objectID": "extras/setup.html#start-here-universal-steps",
+    "href": "extras/setup.html#start-here-universal-steps",
+    "title": "Getting setup for the Hugging Face ecosystem",
+    "section": "",
+    "text": "Create a free Hugging Face account at https://huggingface.co/join.\nCreate a Hugging Face access token with read and write access at https://huggingface.co/settings/tokens.\n\nYou can create a read/write token using the fine-grained settings and selecting all the appropriate options.\nRead more on Hugging Face access tokens at https://huggingface.co/docs/hub/en/security-tokens.\n\n\n\n\n\n\nTo read from and write to your Hugging Face Hub account, you’ll need to set up an access token. You can have one token for reading and one for writing. However, I personally use a single token for reading and writing. Note: Do not share your token with others. Always keep it private and avoid saving it in raw text format."
+  },
+  {
+    "objectID": "extras/setup.html#getting-setup-on-google-colab",
+    "href": "extras/setup.html#getting-setup-on-google-colab",
+    "title": "Getting setup for the Hugging Face ecosystem",
+    "section": "",
+    "text": "Follow the steps in Start here.\nAdd your Hugging Face read/write token as a Secret in Google Colab.\n\nNaming this Secret HF_TOKEN will mean that Hugging Face libraries automatically recognize your token for future use.\n\n\n\n\n\n\nFor accessing models and datasets from the Hugging Face Hub (both read and write) inside Google Colab, you’ll need to add your Hugging Face token as a Secret in Google Colab. Once you give your Google Colab notebook access to the token, it can be used by Hugging Face libraries to interact with the Hugging Face Hub.\n\n\nAlternatively, if you need to force relogin for a notebook session, you can run:\nimport huggingface_hub # requires !pip install huggingface_hub\n\n# Login to Hugging Face\nhuggingface_hub.login()\nAnd enter your token in the box that appears (note: this token will only be active for the current notebook session and will delete when your Google Colab instance terminates)."
+  },
+  {
+    "objectID": "extras/setup.html#tk---getting-started-locally",
+    "href": "extras/setup.html#tk---getting-started-locally",
+    "title": "Getting setup for the Hugging Face ecosystem",
+    "section": "",
+    "text": "Follow the steps in Start here.\nInstall the Hugging Face CLI with pip install -U \"huggingface_hub[cli]\".\nFollow the setup steps mentioned in https://huggingface.co/docs/huggingface_hub/en/guides/cli."
+  },
+  {
+    "objectID": "extras/setup.html#installing-hugging-face-libraries",
+    "href": "extras/setup.html#installing-hugging-face-libraries",
+    "title": "Getting setup for the Hugging Face ecosystem",
+    "section": "",
+    "text": "We’ll need to install the following libraries from the Hugging Face ecosystem:\n\ntransformers - comes pre-installed on Google Colab but if you’re running on your local machine, you can install it via pip install transformers.\ndatasets - a library for accessing and manipulating datasets on and off the Hugging Face Hub, you can install it via pip install datasets.\nevaluate - a library for evaluating machine learning model performance with various metrics, you can install it via pip install evaluate.\naccelerate - a library for training machine learning models faster, you can install it via pip install accelerate.\ngradio - a library for creating interactive demos of machine learning models, you can install it via pip install gradio."
   },
   {
     "objectID": "extras/glossary.html",
@@ -199,6 +227,27 @@
     "title": "About",
     "section": "",
     "text": "I’d like to learn the Hugging Face ecosystem more.\nSo this website is dedicated to documenting my learning journey + creating usable resources and tutorials for others.\nIt’s made by Daniel Bourke and will be in a similiar style to learnpytorch.io.\nYou can see more of my tutorials on:\n\nYouTube\nGitHub\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "extras/resources.html",
+    "href": "extras/resources.html",
+    "title": "Learn Hugging Face 🤗",
+    "section": "",
+    "text": "See the Pytorch extra resources for some ideas: https://www.learnpytorch.io/pytorch_extra_resources/\nHugging Face NLP course: https://huggingface.co/learn/nlp-course/chapter0/1\nHugging Face forum: https://discuss.huggingface.co/\n\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "extras/todo.html",
+    "href": "extras/todo.html",
+    "title": "Learn Hugging Face 🤗",
+    "section": "",
+    "text": "Move todo.md into index.md for easier navigation (one file is enough)\nAdd “getting setup” file to get started locally with the required dependencies\nAdd text classification dataset creation notebook (so people can see where the data comes from)\nAdd a Hugging Face ecosystem overview (transformers, datasets, tokenizers, torch, Hugging Face Hub, Hugging Face Spaces, etc.)\nAdd a fav icon\nMake code-only versions of notebooks? e.g. text stripped away and only code is left"
+  },
+  {
+    "objectID": "extras/todo.html#quarto-misc",
+    "href": "extras/todo.html#quarto-misc",
+    "title": "Learn Hugging Face 🤗",
+    "section": "Quarto misc",
+    "text": "Quarto misc\n\nCreate share cards - https://quarto.org/docs/websites/website-tools.html#twitter-cards\n\nSee here for share image - https://quarto.org/docs/websites/website-tools.html#preview-images"
   },
   {
     "objectID": "index.html",
@@ -255,54 +304,5 @@
     "title": "Learn Hugging Face 🤗 (work in progress)",
     "section": "FAQ",
     "text": "FAQ\n\nIs this an official Hugging Face website?\n\nNo, it’s a personal project by myself (Daniel Bourke) to learn and help others learn the Hugging Face ecosystem.\n\nHow is this website made?\n\nThis is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
-  },
-  {
-    "objectID": "extras/setup.html",
-    "href": "extras/setup.html",
-    "title": "Getting setup for the Hugging Face ecosystem",
-    "section": "",
-    "text": "The following steps are to help you get started with the Hugging Face ecosystem.\nBest to follow the “Start here” steps and then go through the other setup steps as necessary.\n\n\n\nCreate a free Hugging Face account at https://huggingface.co/join.\nCreate a Hugging Face access token with read and write access at https://huggingface.co/settings/tokens.\n\nYou can create a read/write token using the fine-grained settings and selecting all the appropriate options.\nRead more on Hugging Face access tokens at https://huggingface.co/docs/hub/en/security-tokens.\n\n\n\n\n\n\nTo read from and write to your Hugging Face Hub account, you’ll need to set up an access token. You can have one token for reading and one for writing. However, I personally use a single token for reading and writing. Note: Do not share your token with others. Always keep it private and avoid saving it in raw text format.\n\n\n\n\n\n\nFollow the steps in Start here.\nAdd your Hugging Face read/write token as a Secret in Google Colab.\n\nNaming this Secret HF_TOKEN will mean that Hugging Face libraries automatically recognize your token for future use.\n\n\n\n\n\n\nFor accessing models and datasets from the Hugging Face Hub (both read and write) inside Google Colab, you’ll need to add your Hugging Face token as a Secret in Google Colab. Once you give your Google Colab notebook access to the token, it can be used by Hugging Face libraries to interact with the Hugging Face Hub.\n\n\nAlternatively, if you need to force relogin for a notebook session, you can run:\nimport huggingface_hub # requires !pip install huggingface_hub\n\n# Login to Hugging Face\nhuggingface_hub.login()\nAnd enter your token in the box that appears (note: this token will only be active for the current notebook session and will delete when your Google Colab instance terminates).\n\n\n\n\nFollow the steps in Start here.\nInstall the Hugging Face CLI with pip install -U \"huggingface_hub[cli]\".\nFollow the setup steps mentioned in https://huggingface.co/docs/huggingface_hub/en/guides/cli.\n\n\n\n\nWe’ll need to install the following libraries from the Hugging Face ecosystem:\n\ntransformers - comes pre-installed on Google Colab but if you’re running on your local machine, you can install it via pip install transformers.\ndatasets - a library for accessing and manipulating datasets on and off the Hugging Face Hub, you can install it via pip install datasets.\nevaluate - a library for evaluating machine learning model performance with various metrics, you can install it via pip install evaluate.\naccelerate - a library for training machine learning models faster, you can install it via pip install accelerate.\ngradio - a library for creating interactive demos of machine learning models, you can install it via pip install gradio."
-  },
-  {
-    "objectID": "extras/setup.html#start-here-universal-steps",
-    "href": "extras/setup.html#start-here-universal-steps",
-    "title": "Getting setup for the Hugging Face ecosystem",
-    "section": "",
-    "text": "Create a free Hugging Face account at https://huggingface.co/join.\nCreate a Hugging Face access token with read and write access at https://huggingface.co/settings/tokens.\n\nYou can create a read/write token using the fine-grained settings and selecting all the appropriate options.\nRead more on Hugging Face access tokens at https://huggingface.co/docs/hub/en/security-tokens.\n\n\n\n\n\n\nTo read from and write to your Hugging Face Hub account, you’ll need to set up an access token. You can have one token for reading and one for writing. However, I personally use a single token for reading and writing. Note: Do not share your token with others. Always keep it private and avoid saving it in raw text format."
-  },
-  {
-    "objectID": "extras/setup.html#getting-setup-on-google-colab",
-    "href": "extras/setup.html#getting-setup-on-google-colab",
-    "title": "Getting setup for the Hugging Face ecosystem",
-    "section": "",
-    "text": "Follow the steps in Start here.\nAdd your Hugging Face read/write token as a Secret in Google Colab.\n\nNaming this Secret HF_TOKEN will mean that Hugging Face libraries automatically recognize your token for future use.\n\n\n\n\n\n\nFor accessing models and datasets from the Hugging Face Hub (both read and write) inside Google Colab, you’ll need to add your Hugging Face token as a Secret in Google Colab. Once you give your Google Colab notebook access to the token, it can be used by Hugging Face libraries to interact with the Hugging Face Hub.\n\n\nAlternatively, if you need to force relogin for a notebook session, you can run:\nimport huggingface_hub # requires !pip install huggingface_hub\n\n# Login to Hugging Face\nhuggingface_hub.login()\nAnd enter your token in the box that appears (note: this token will only be active for the current notebook session and will delete when your Google Colab instance terminates)."
-  },
-  {
-    "objectID": "extras/setup.html#tk---getting-started-locally",
-    "href": "extras/setup.html#tk---getting-started-locally",
-    "title": "Getting setup for the Hugging Face ecosystem",
-    "section": "",
-    "text": "Follow the steps in Start here.\nInstall the Hugging Face CLI with pip install -U \"huggingface_hub[cli]\".\nFollow the setup steps mentioned in https://huggingface.co/docs/huggingface_hub/en/guides/cli."
-  },
-  {
-    "objectID": "extras/setup.html#installing-hugging-face-libraries",
-    "href": "extras/setup.html#installing-hugging-face-libraries",
-    "title": "Getting setup for the Hugging Face ecosystem",
-    "section": "",
-    "text": "We’ll need to install the following libraries from the Hugging Face ecosystem:\n\ntransformers - comes pre-installed on Google Colab but if you’re running on your local machine, you can install it via pip install transformers.\ndatasets - a library for accessing and manipulating datasets on and off the Hugging Face Hub, you can install it via pip install datasets.\nevaluate - a library for evaluating machine learning model performance with various metrics, you can install it via pip install evaluate.\naccelerate - a library for training machine learning models faster, you can install it via pip install accelerate.\ngradio - a library for creating interactive demos of machine learning models, you can install it via pip install gradio."
-  },
-  {
-    "objectID": "extras/todo.html",
-    "href": "extras/todo.html",
-    "title": "Learn Hugging Face 🤗",
-    "section": "",
-    "text": "Move todo.md into index.md for easier navigation (one file is enough)\nAdd “getting setup” file to get started locally with the required dependencies\nAdd text classification dataset creation notebook (so people can see where the data comes from)\nAdd a Hugging Face ecosystem overview (transformers, datasets, tokenizers, torch, Hugging Face Hub, Hugging Face Spaces, etc.)\nAdd a fav icon\nMake code-only versions of notebooks? e.g. text stripped away and only code is left"
-  },
-  {
-    "objectID": "extras/todo.html#quarto-misc",
-    "href": "extras/todo.html#quarto-misc",
-    "title": "Learn Hugging Face 🤗",
-    "section": "Quarto misc",
-    "text": "Quarto misc\n\nCreate share cards - https://quarto.org/docs/websites/website-tools.html#twitter-cards\n\nSee here for share image - https://quarto.org/docs/websites/website-tools.html#preview-images"
   }
 ]
