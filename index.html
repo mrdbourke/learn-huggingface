@@ -173,11 +173,9 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#contents" id="toc-contents" class="nav-link active" data-scroll-target="#contents">Contents</a></li>
   <li><a href="#who-is-it-for" id="toc-who-is-it-for" class="nav-link" data-scroll-target="#who-is-it-for">Who is it for?</a></li>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a>
-  <ul class="collapse">
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
   <li><a href="#what-is-hugging-face" id="toc-what-is-hugging-face" class="nav-link" data-scroll-target="#what-is-hugging-face">What is Hugging Face?</a></li>
   <li><a href="#why-hugging-face" id="toc-why-hugging-face" class="nav-link" data-scroll-target="#why-hugging-face">Why Hugging Face?</a></li>
-  </ul></li>
   <li><a href="#todo" id="toc-todo" class="nav-link" data-scroll-target="#todo">TODO</a></li>
   <li><a href="#faq" id="toc-faq" class="nav-link" data-scroll-target="#faq">FAQ</a></li>
   </ul>
@@ -211,10 +209,10 @@ ul.task-list li input[type="checkbox"] {
 <p>A machine learning cooking show! 👨‍🍳</p>
 <p>Mottos:</p>
 <ul>
-<li><em>If in doubt, run the code.</em> - Machine learning is very experimental. So it’s good to get in the habit of continually trying things (even if you think they won’t work).</li>
-<li><em>Visualize, visualize, visualize!</em> - If you’re not sure of some dataset or some operation or some predictions, visualize it/them.</li>
-<li><em>Experiment, experiment, experiment!</em> - Again, machine learning is very experimental. So keep trying different things!</li>
-<li><em>Data, model, demo!</em> - Create/get a dataset, build/train/evaluate a model, create a demo to share.</li>
+<li><strong><em>If in doubt, run the code.</em></strong> – Machine learning is very experimental. So it’s good to get in the habit of continually trying things (even if you think they won’t work).</li>
+<li><strong><em>Visualize, visualize, visualize!</em></strong> - If you’re not sure of some dataset or some operation or some predictions, visualize it/them.</li>
+<li><strong><em>Experiment, experiment, experiment!</em></strong> - Again, machine learning is very experimental. So keep trying different things!</li>
+<li><strong><em>Data, model, demo!</em></strong> - Create/get a dataset, build/train/evaluate a model, create a demo to share.</li>
 </ul>
 <p>Project style:</p>
 <p>Data, model, demo!</p>
@@ -234,6 +232,10 @@ A general Hugging Face workflow from idea to shared model and demo using tools f
 <section id="contents" class="level2">
 <h2 class="anchored" data-anchor-id="contents">Contents</h2>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 75%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Project</th>
@@ -247,7 +249,7 @@ A general Hugging Face workflow from idea to shared model and demo using tools f
 </tr>
 <tr class="even">
 <td>More to come soon!</td>
-<td></td>
+<td>Let me know if you’d like to see anything specific by <a href="https://github.com/mrdbourke/learn-huggingface/issues">leaving an issue on GitHub</a>.</td>
 </tr>
 </tbody>
 </table>
@@ -274,8 +276,9 @@ A general Hugging Face workflow from idea to shared model and demo using tools f
 <li>PyTorch experience is a bonus (see my <a href="https://youtu.be/Z_ikDlimN6A?si=Glf8q383cV0P9hEO">Learn PyTorch in a Day video</a> or <a href="https://www.learnpytorch.io/">learnpytorch.io</a>)</li>
 </ul></li>
 </ul>
-<section id="what-is-hugging-face" class="level3">
-<h3 class="anchored" data-anchor-id="what-is-hugging-face">What is Hugging Face?</h3>
+</section>
+<section id="what-is-hugging-face" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-hugging-face">What is Hugging Face?</h2>
 <p>Hugging Face is a platform that offers access to many different kinds of open-source machine learning models and datasets.</p>
 <p>They’re also the creators of the popular <a href="https://huggingface.co/docs/transformers/en/index"><code>transformers</code> library</a> (and many more helpful libraries) which is a Python-based library for working with pre-trained models as well as custom models.</p>
 <p>If you’re getting into the world of AI and machine learning, you’re going to come across Hugging Face.</p>
@@ -286,22 +289,21 @@ A general Hugging Face workflow from idea to shared model and demo using tools f
 A handful of pieces from the Hugging Face ecosystem. There are many more available in <a href="https://huggingface.co/docs">Hugging Face documentation</a>.
 </figcaption>
 </figure>
-<ul>
-<li>TK image - add breakdown of the Hugging Face ecosystem, <code>transformers</code>, <code>datasets</code></li>
-<li>see many more: https://huggingface.co/docs</li>
-</ul>
 </section>
-<section id="why-hugging-face" class="level3">
-<h3 class="anchored" data-anchor-id="why-hugging-face">Why Hugging Face?</h3>
+<section id="why-hugging-face" class="level2">
+<h2 class="anchored" data-anchor-id="why-hugging-face">Why Hugging Face?</h2>
 <p>Many of the biggest companies in the world use Hugging Face for their open-source machine learning projects including <a href="https://huggingface.co/apple">Apple</a>, <a href="https://huggingface.co/google">Google</a>, <a href="https://huggingface.co/facebook">Facebook</a> (Meta), <a href="https://huggingface.co/microsoft">Microsoft</a>, <a href="https://huggingface.co/openai">OpenAI</a>, <a href="https://huggingface.co/ByteDance">ByteDance</a> and more.</p>
 <p>Not only does Hugging Face make it so you can use state-of-the-art machine learning models such as <a href="https://huggingface.co/stabilityai/stable-diffusion-2-1">Stable Diffusion</a> (for image generation) and <a href="https://huggingface.co/openai/whisper-large-v3">Whipser</a> (for audio transcription) easily, it also makes it so you can share your own models, datasets and resources.</p>
 <p>Aside from your own website, consider Hugging Face the homepage of your AI/machine learning profile.</p>
 </section>
-</section>
 <section id="todo" class="level2">
 <h2 class="anchored" data-anchor-id="todo">TODO</h2>
 <ul class="task-list">
-<li><label><input type="checkbox">Finish outline of this (index.md) page [ ] Copy a similar version to the README.md for GitHub [ ] Make share image for the whole thing</label></li>
+<li><label><input type="checkbox">Finish outline of this (index.md) page</label>
+<ul class="task-list">
+<li><label><input type="checkbox">Copy a similar version to the README.md for GitHub</label></li>
+<li><label><input type="checkbox">Make share image for the whole thing</label></li>
+</ul></li>
 <li><label><input type="checkbox">Make index of different projects</label></li>
 <li><label><input type="checkbox">Ecosystem overview: transformers, datasets, accelerate, Spaces, Hub, models etc</label></li>
 <li><label><input type="checkbox">Practical tutorials</label>
@@ -310,7 +312,10 @@ A handful of pieces from the Hugging Face ecosystem. There are many more availab
 <li><label><input type="checkbox">More to come…</label></li>
 </ul></li>
 <li><label><input type="checkbox">Where to get help? HF forums, HF GitHub, etc</label></li>
-<li><label><input type="checkbox">Finish setup page [ ] Local setup</label></li>
+<li><label><input type="checkbox">Finish setup page</label>
+<ul class="task-list">
+<li><label><input type="checkbox">Local setup</label></li>
+</ul></li>
 <li><label><input type="checkbox" checked="">Finish deployment to learnhuggingface.com page</label></li>
 <li><label><input type="checkbox">Get started: text classification shows an end-to-end workflow with detailed steps, I’d advise starting here to get to know the ecosystem a bit</label>
 <ul class="task-list">
