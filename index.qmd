@@ -12,10 +12,10 @@ A machine learning cooking show! 👨‍🍳
 
 Mottos:
 
-* *If in doubt, run the code.* - Machine learning is very experimental. So it's good to get in the habit of continually trying things (even if you think they won't work).
-* *Visualize, visualize, visualize!* - If you're not sure of some dataset or some operation or some predictions, visualize it/them.
-* *Experiment, experiment, experiment!* - Again, machine learning is very experimental. So keep trying different things!
-* *Data, model, demo!* - Create/get a dataset, build/train/evaluate a model, create a demo to share.
+* ***If in doubt, run the code.*** -- Machine learning is very experimental. So it's good to get in the habit of continually trying things (even if you think they won't work).
+* ***Visualize, visualize, visualize!*** - If you're not sure of some dataset or some operation or some predictions, visualize it/them.
+* ***Experiment, experiment, experiment!*** - Again, machine learning is very experimental. So keep trying different things!
+* ***Data, model, demo!*** - Create/get a dataset, build/train/evaluate a model, create a demo to share.
 
 Project style:
 
@@ -38,9 +38,11 @@ This will be our (rough) workflow:
 ## Contents
 
 | Project | Description |
-| --- | --- |
+| ----- | ----- |
 | [Text classification](https://www.learnhuggingface.com/notebooks/hugging_face_text_classification_tutorial) | Build project "Food Not Food", a text classification model to classify image captions into "food" if they're about food or "not_food" if they're not about food. This is the ideal place to get started if you've never used the Hugging Face ecosystem. |
-| More to come soon! | |
+| More to come soon! | Let me know if you'd like to see anything specific by [leaving an issue on GitHub](https://github.com/mrdbourke/learn-huggingface/issues). |
+
+: {tbl-colwidths="[25,75]"}
 
 ## Who is it for?
 
@@ -61,7 +63,7 @@ Not ideal for:
 * 1x beginner machine learning or deep learning course (see my [begineer-friendly ML course](https://dbourke.link/ZTMMLcourse) to learn Python + important ML concepts in one).
     * PyTorch experience is a bonus (see my [Learn PyTorch in a Day video](https://youtu.be/Z_ikDlimN6A?si=Glf8q383cV0P9hEO) or [learnpytorch.io](https://www.learnpytorch.io/))
 
-### What is Hugging Face?
+## What is Hugging Face?
 
 Hugging Face is a platform that offers access to many different kinds of open-source machine learning models and datasets.
 
@@ -77,10 +79,7 @@ If you're getting into the world of AI and machine learning, you're going to com
      <figcaption style="width: 100%; box-sizing: border-box;">A handful of pieces from the Hugging Face ecosystem. There are many more available in <a href="https://huggingface.co/docs">Hugging Face documentation</a>.</figcaption>
 </figure>
 
-* TK image - add breakdown of the Hugging Face ecosystem, `transformers`, `datasets`
-* see many more: https://huggingface.co/docs
-
-### Why Hugging Face?
+## Why Hugging Face?
 
 Many of the biggest companies in the world use Hugging Face for their open-source machine learning projects including [Apple](https://huggingface.co/apple), [Google](https://huggingface.co/google), [Facebook](https://huggingface.co/facebook) (Meta), [Microsoft](https://huggingface.co/microsoft), [OpenAI](https://huggingface.co/openai), [ByteDance](https://huggingface.co/ByteDance) and more.
 
@@ -91,8 +90,8 @@ Aside from your own website, consider Hugging Face the homepage of your AI/machi
 ## TODO
 
 * [ ] Finish outline of this (index.md) page
-    [ ] Copy a similar version to the README.md for GitHub
-    [ ] Make share image for the whole thing 
+   * [ ] Copy a similar version to the README.md for GitHub
+   * [ ] Make share image for the whole thing 
 * [ ] Make index of different projects
 * [ ] Ecosystem overview: transformers, datasets, accelerate, Spaces, Hub, models etc
 * [ ] Practical tutorials
@@ -100,7 +99,7 @@ Aside from your own website, consider Hugging Face the homepage of your AI/machi
     * [ ] More to come...
 * [ ] Where to get help? HF forums, HF GitHub, etc
 * [ ] Finish setup page
-    [ ] Local setup
+   * [ ] Local setup
 * [x] Finish deployment to learnhuggingface.com page
 * [ ] Get started: text classification shows an end-to-end workflow with detailed steps, I'd advise starting here to get to know the ecosystem a bit
     * [ ] Other projects are more focused on specific tasks with less explanations but still complete code examples 
