@@ -37,11 +37,12 @@ This will be our (rough) workflow:
 
 ## Contents
 
+All code and text will be free/open-source, video step-by-step walkthroughs are available as a paid upgrade.
 
-| Project | Description | Dataset | Model | Demo |
-| ----- | ----- | ----- | ----- | ----- |
-| [Text classification](https://www.learnhuggingface.com/notebooks/hugging_face_text_classification_tutorial) | Build project "Food Not Food", a text classification model to classify image captions into "food" if they're about food or "not_food" if they're not about food. This is the ideal place to get started if you've never used the Hugging Face ecosystem. | [Dataset](https://huggingface.co/datasets/mrdbourke/learn_hf_food_not_food_image_captions) | [Model](https://huggingface.co/mrdbourke/learn_hf_food_not_food_text_classifier-distilbert-base-uncased) | [Demo](https://huggingface.co/spaces/mrdbourke/learn_hf_food_not_food_text_classifier_demo) |
-| More to come soon! | Let me know if you'd like to see anything specific by [leaving an issue](https://github.com/mrdbourke/learn-huggingface/issues). | | | |
+| Project | Description | Dataset | Model | Demo | Video Course | 
+| ----- | ----- | ----- | ----- | ----- | ----- |
+| [Text classification](https://www.learnhuggingface.com/notebooks/hugging_face_text_classification_tutorial) | Build project "Food Not Food", a text classification model to classify image captions into "food" if they're about food or "not_food" if they're not about food. This is the ideal place to get started if you've never used the Hugging Face ecosystem. | [Dataset](https://huggingface.co/datasets/mrdbourke/learn_hf_food_not_food_image_captions) | [Model](https://huggingface.co/mrdbourke/learn_hf_food_not_food_text_classifier-distilbert-base-uncased) | [Demo](https://huggingface.co/spaces/mrdbourke/learn_hf_food_not_food_text_classifier_demo) | [Video Course](https://dbourke.link/ZTM-HF-Text-Classification) |
+| More to come soon! | Let me know if you'd like to see anything specific by [leaving an issue](https://github.com/mrdbourke/learn-huggingface/issues). | | | | |
 
 ## Who is it for?
 
