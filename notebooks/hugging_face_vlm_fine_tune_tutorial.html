@@ -254,9 +254,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#vlmllm-fine-tuning-mindset" id="toc-vlmllm-fine-tuning-mindset" class="nav-link" data-scroll-target="#vlmllm-fine-tuning-mindset"><span class="header-section-number">4</span> VLM/LLM Fine-tuning Mindset</a></li>
   <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">5</span> Resources</a>
   <ul class="collapse">
-  <li><a href="#hardware" id="toc-hardware" class="nav-link" data-scroll-target="#hardware"><span class="header-section-number">5.1</span> Hardware</a></li>
-  <li><a href="#models-data-and-demos" id="toc-models-data-and-demos" class="nav-link" data-scroll-target="#models-data-and-demos"><span class="header-section-number">5.2</span> Models, data and demos</a></li>
-  <li><a href="#documentation-and-extras" id="toc-documentation-and-extras" class="nav-link" data-scroll-target="#documentation-and-extras"><span class="header-section-number">5.3</span> Documentation and extras</a></li>
+  <li><a href="#videos" id="toc-videos" class="nav-link" data-scroll-target="#videos"><span class="header-section-number">5.1</span> Videos</a></li>
+  <li><a href="#hardware" id="toc-hardware" class="nav-link" data-scroll-target="#hardware"><span class="header-section-number">5.2</span> Hardware</a></li>
+  <li><a href="#models-data-and-demos" id="toc-models-data-and-demos" class="nav-link" data-scroll-target="#models-data-and-demos"><span class="header-section-number">5.3</span> Models, data and demos</a></li>
+  <li><a href="#documentation-and-extras" id="toc-documentation-and-extras" class="nav-link" data-scroll-target="#documentation-and-extras"><span class="header-section-number">5.4</span> Documentation and extras</a></li>
   </ul></li>
   <li><a href="#definitions" id="toc-definitions" class="nav-link" data-scroll-target="#definitions"><span class="header-section-number">6</span> Definitions</a></li>
   <li><a href="#import-dependencies" id="toc-import-dependencies" class="nav-link" data-scroll-target="#import-dependencies"><span class="header-section-number">7</span> Import Dependencies</a></li>
@@ -314,10 +315,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p><a target="_blank" href="https://colab.research.google.com/github/mrdbourke/learn-huggingface/blob/main/notebooks/hugging_face_vlm_fine_tune_tutorial.ipynb"> <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"> </a></p>
 <blockquote class="blockquote">
 <p><strong>Note:</strong> If you’re running in Google Colab, make sure to enable GPU usage by going to Runtime -&gt; Change runtime type -&gt; select GPU.</p>
 </blockquote>
-<p><a href="https://github.com/mrdbourke/learn-huggingface/blob/main/notebooks/hugging_face_llm_full_fine_tune_tutorial.ipynb">Source Code</a></p>
+<p><a href="https://github.com/mrdbourke/learn-huggingface/blob/main/notebooks/hugging_face_vlm_fine_tune_tutorial.ipynb">Source Code</a></p>
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
 <p>Let’s fine-tune a Small Vision Language Model (VLM) for a structured data extraction task.</p>
@@ -393,36 +395,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="resources" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="resources"><span class="header-section-number">5</span> Resources</h2>
-<section id="hardware" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="hardware"><span class="header-section-number">5.1</span> Hardware</h3>
+<section id="videos" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="videos"><span class="header-section-number">5.1</span> Videos</h3>
+<p>This notebook was created over a series of YouTube livestreams, feel free to watch these for raw unedited coding and problem solving.</p>
+<ul>
+<li><a href="https://youtube.com/live/cZVU559BLLM?feature=share">Part 1</a> - Creating a VLM dataset</li>
+<li><a href="https://youtube.com/live/Lgcp9hBqWEM?feature=share">Part 2</a> - Fine-tuning a VLM with LoRA and QLoRA and getting many errors (mostly my fault)</li>
+<li><a href="https://youtube.com/live/X-nYCCviCyI?feature=share">Part 3</a> - Switching from using LoRA and QLoRA (we’ll do these in a future video) to fine-tuning a smaller model (SmolVLM2) successfully, uploading it to the Hugging Face Hub and then creating an publishing a demo.</li>
+</ul>
+</section>
+<section id="hardware" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="hardware"><span class="header-section-number">5.2</span> Hardware</h3>
 <p>I’m running this notebook/tutorial locally on a <a href="https://nvda.ws/4iQXZU4">NVIDIA DGX Spark</a>.</p>
 <p>However, you can also run it in Google Colab.</p>
 <p>It is recommended you use a NVIDIA GPU.</p>
 </section>
-<section id="models-data-and-demos" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="models-data-and-demos"><span class="header-section-number">5.2</span> Models, data and demos</h3>
+<section id="models-data-and-demos" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="models-data-and-demos"><span class="header-section-number">5.3</span> Models, data and demos</h3>
 <ul>
-<li>Dataset we’ll be using - https://huggingface.co/datasets/mrdbourke/FoodExtract-1k-Vision</li>
-<li>Base model we’ll be fine-tuning - https://huggingface.co/HuggingFaceTB/SmolVLM2-500M-Video-Instruct</li>
-<li>Example demo we’ll be creating - https://huggingface.co/spaces/mrdbourke/FoodExtract-Vision-v1</li>
-<li>Fine-tuned model we’ll be creating - https://huggingface.co/mrdbourke/FoodExtract-Vision-SmolVLM2-500M-fine-tune-v1</li>
+<li>Dataset we’ll be using - <a href="https://huggingface.co/datasets/mrdbourke/FoodExtract-1k-Vision">FoodExtract-1k-Vision</a></li>
+<li>Base model we’ll be fine-tuning - <a href="https://huggingface.co/HuggingFaceTB/SmolVLM2-500M-Video-Instruct">SmolVLM2-500M-Video-Instruct</a></li>
+<li>Example demo we’ll be creating - <a href="https://huggingface.co/spaces/mrdbourke/FoodExtract-Vision-v1">FoodExtract-Vision-v1</a></li>
+<li>Fine-tuned model we’ll be creating - <a href="https://huggingface.co/mrdbourke/FoodExtract-Vision-SmolVLM2-500M-fine-tune-v1">FoodExtract-Vision-SmolVLM2-500M-fine-tune-v1</a></li>
 </ul>
 </section>
-<section id="documentation-and-extras" class="level3" data-number="5.3">
-<h3 data-number="5.3" class="anchored" data-anchor-id="documentation-and-extras"><span class="header-section-number">5.3</span> Documentation and extras</h3>
+<section id="documentation-and-extras" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="documentation-and-extras"><span class="header-section-number">5.4</span> Documentation and extras</h3>
 <ul>
-<li>Dataset format for VLM fine-tuning: https://huggingface.co/docs/trl/en/dataset_formats#vision-datasets</li>
-<li>Hugging Face blog post of what is a VLM: https://huggingface.co/blog/vlms-2025</li>
-<li>Hugging Face docs of fine-tuning SmolVLM: https://github.com/huggingface/smollm/blob/main/vision/finetuning/Smol_VLM_FT.ipynb</li>
-<li>Google Docs example of fine-tuning a VLM: https://ai.google.dev/gemma/docs/core/huggingface_vision_finetune_qlora</li>
-<li>Another doc example of inference with a VLM: https://github.com/google-gemini/gemma-cookbook/blob/main/Gemma/%5BGemma_3n%5DMultimodal_understanding_with_HF.ipynb</li>
-<li>LoRA without regret blog post: https://huggingface.co/docs/trl/main/en/lora_without_regret
+<li>Dataset format for VLM fine-tuning: <a href="https://huggingface.co/docs/trl/en/dataset_formats#vision-datasets">Vision Datasets</a></li>
+<li>Hugging Face blog post of what is a VLM: <a href="https://huggingface.co/blog/vlms-2025">VLMs 2025</a></li>
+<li>Hugging Face docs of fine-tuning SmolVLM: <a href="https://github.com/huggingface/smollm/blob/main/vision/finetuning/Smol_VLM_FT.ipynb">Smol_VLM_FT.ipynb</a></li>
+<li>Google Docs example of fine-tuning a VLM: <a href="https://ai.google.dev/gemma/docs/core/huggingface_vision_finetune_qlora">Hugging Face Vision Fine-tune QLoRA</a></li>
+<li>Another doc example of inference with a VLM: <a href="https://github.com/google-gemini/gemma-cookbook/blob/main/Gemma/%5BGemma_3n%5DMultimodal_understanding_with_HF.ipynb">Gemma 3n Multimodal Understanding with HF</a></li>
+<li>LoRA without regret blog post: <a href="https://huggingface.co/docs/trl/main/en/lora_without_regret">LoRA Without Regret</a>
 <ul>
-<li>Thinking Machines blog: https://thinkingmachines.ai/blog/lora/</li>
+<li>Thinking Machines blog: <a href="https://thinkingmachines.ai/blog/lora/">LoRA</a></li>
 </ul></li>
-<li>Example of LoRA in the wild: https://developer.apple.com/apple-intelligence/foundation-models-adapter/</li>
-<li>PEFT (Parameter Efficient Fine-tuning) GitHub - https://github.com/huggingface/peft</li>
-<li>SmolVLM Docling paper - https://arxiv.org/pdf/2503.11576
+<li>Example of LoRA in the wild: <a href="https://developer.apple.com/apple-intelligence/foundation-models-adapter/">Apple Intelligence Foundation Models Adapter</a></li>
+<li>PEFT (Parameter Efficient Fine-tuning) GitHub - <a href="https://github.com/huggingface/peft">huggingface/peft</a></li>
+<li>SmolVLM Docling paper - <a href="https://arxiv.org/pdf/2503.11576">arXiv:2503.11576</a>
 <ul>
 <li>Notes:
 <ul>
@@ -1404,14 +1415,18 @@ Assistant:
 <h2 data-number="14" class="anchored" data-anchor-id="setup-sftconfig"><span class="header-section-number">14</span> Setup SFTConfig</h2>
 <p>We’re going to use SFT (Supervised Fine-Tuning) which is a method of training where we provide input + output pairs for our model.</p>
 <p>Given an input and output pair, our model will be directly trained to predict the output based on the input.</p>
-<p>TK - UPTOHERE config + trainer</p>
+<p>To enable SFT training, we’re going to use the following two classes:</p>
+<ol type="1">
+<li>Setup <code>SFTConfig</code> (Supervised Fine-Tuning Config) - these are hyperparameter settings which tell our model <em>how</em> to train, see docs: https://huggingface.co/docs/trl/en/sft_trainer#trl.SFTConfig</li>
+<li>Setup <code>SFTTrainer</code> (Supervised Fine-Tuning Trainer) - this will tell our model <em>what</em> to train on, see docs: https://huggingface.co/docs/trl/en/sft_trainer#trl.SFTTrainer</li>
+</ol>
 <div id="06df4aa1" class="cell" data-execution_count="52">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> trl <span class="im">import</span> SFTConfig</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: Many of these hyperparameters have been taken from the SmolDocling paper: </span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: Many of these hyperparameters have been taken from the SmolDocling paper: https://arxiv.org/abs/2503.11576</span></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>training_args <span class="op">=</span> SFTConfig(</span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    output_dir<span class="op">=</span><span class="st">"smolvlm2-500m-FoodExtract-Vision-v1-VIDEO"</span>,</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    num_train_epochs<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    num_train_epochs<span class="op">=</span><span class="dv">4</span>, <span class="co"># depending on how much data you have you may want to train for shorter/longer</span></span>
 <span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    per_device_train_batch_size<span class="op">=</span><span class="dv">4</span>, <span class="co"># adjust based on the size of your GPU</span></span>
 <span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    per_device_eval_batch_size<span class="op">=</span><span class="dv">4</span>,</span>
 <span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    gradient_accumulation_steps<span class="op">=</span><span class="dv">4</span>,</span>

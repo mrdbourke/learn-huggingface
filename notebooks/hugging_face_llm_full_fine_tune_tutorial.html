@@ -428,7 +428,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </blockquote>
 <p>For Google Colab:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install trl accelerate gradio</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="421530e1" class="cell" data-execution_count="1">
+<div id="421530e1" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> transformers </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> trl <span class="co"># trl = Transformers Reinforcement Learning -&gt; https://github.com/huggingface/trl </span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> datasets </span>
@@ -436,7 +436,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gradio <span class="im">as</span> gr</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="629dcca3" class="cell" data-execution_count="2">
+<div id="629dcca3" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the amount of GPU memory available (we need at least ~16GB)</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -479,7 +479,7 @@ Free Memory:      128524.03 MB | 128.52 GB</code></pre>
 <p>It’s the same architecture style as larger LLMs such as Gemini but at a <em>much</em> smaller scale.</p>
 <p>This is why we refer to it as a “Small Language Model” or SLM.</p>
 <p>We can load our model using <code>transformers</code>.</p>
-<div id="4de92467" class="cell" data-execution_count="3">
+<div id="4de92467" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer, AutoModelForCausalLM</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>MODEL_NAME <span class="op">=</span> <span class="st">"google/gemma-3-270m-it"</span> <span class="co"># note: "it" stands for "instruction tuned" which means the model has been tuned for following instructions</span></span>
@@ -491,7 +491,7 @@ Free Memory:      128524.03 MB | 128.52 GB</code></pre>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    attn_implementation<span class="op">=</span><span class="st">"eager"</span> <span class="co"># could use flash_attention_2 but ran into issues... so stick with Eager for now</span></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="8ae5a6b9" class="cell" data-execution_count="4">
+<div id="8ae5a6b9" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(MODEL_NAME)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Model on device: </span><span class="sc">{</span>model<span class="sc">.</span>device<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -503,18 +503,18 @@ Free Memory:      128524.03 MB | 128.52 GB</code></pre>
 </div>
 <p>Our model requires numbers (tokens) as input.</p>
 <p>We can turn strings into tokens via a tokenizer!</p>
-<div id="e8d187d0" class="cell" data-execution_count="5">
+<div id="e8d187d0" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tokenizer(<span class="st">"Hello my name is Daniel"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>{'input_ids': [2, 9259, 1041, 1463, 563, 13108], 'attention_mask': [1, 1, 1, 1, 1, 1]}</code></pre>
 </div>
 </div>
-<div id="5cf6296a" class="cell" data-execution_count="6">
+<div id="5cf6296a" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>outputs <span class="op">=</span> model(torch.tensor(tokenizer(<span class="st">"Hello my name is Daniel"</span>)[<span class="st">"input_ids"</span>]).unsqueeze(<span class="dv">0</span>).to(<span class="st">"cuda"</span>))</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>outputs.keys()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>odict_keys(['logits', 'past_key_values'])</code></pre>
 </div>
 </div>
@@ -526,7 +526,7 @@ Free Memory:      128524.03 MB | 128.52 GB</code></pre>
 <p>For more on the dataset you can read the <a href="https://huggingface.co/datasets/mrdbourke/FoodExtract-1k">README.md</a> file explaining it.</p>
 <p>The main thing we are concerned about is that we want the input to our model to be the <code>"sequence"</code> column and the output to be the <code>"gpt-oss-120b-label-condensed"</code> column.</p>
 <p>We’ll explore these below.</p>
-<div id="5721a3b1" class="cell" data-execution_count="7">
+<div id="5721a3b1" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> load_dataset(<span class="st">"mrdbourke/FoodExtract-1k"</span>)</span>
@@ -536,7 +536,7 @@ Free Memory:      128524.03 MB | 128.52 GB</code></pre>
 <pre><code>[INFO] Number of samples in the dataset: 1420</code></pre>
 </div>
 </div>
-<div id="3fa6954c" class="cell" data-execution_count="8">
+<div id="3fa6954c" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -562,21 +562,21 @@ Free Memory:      128524.03 MB | 128.52 GB</code></pre>
 <span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(example_output_condensed)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Input:
-The image depicts a classic British red double-decker bus adorned with a "Wedding Special" sign at the back, alongside a contact number, 01474-353-896, and a license plate reading JJ04020. The bus, highlighted by a gold trim separating its two levels, is parked within the vicinity of a Shell gas station, with the station's pumps and yellow Shell emblem visible on the left. The bus rests closely to the curb, making it appear as though maneuvering in this space might be challenging. Another vehicle is seen fueling up nearby. A prominently placed sign in the bottom right corner reads, "Shell Drivers Club Points: I exchange mine for coffee. Don't lose your points. Register today." The sky above is overcast, contributing to the overall cloudy ambiance of the scene. No people are visible in the photograph.
+Nutrition information label for Sliced 5 Seeds Bread. Serving size: 78g (2 slices). Energy: 850 kJ (10% daily intake), Protein: 12.2g (22% daily intake), Fat: 8g (11% daily intake), Saturated Fat: 1.1g, Carbohydrate: 15.9g (5% daily intake), Sugars: 1.2g, Dietary Fibre: 1.6g (1% daily intake), Sodium: 300mg (13% daily intake). Ingredients include water, wheat flour, mixed seeds (18%), sunflower seeds, psyllium seeds, golden wheat seeds, and torch.
 
 [INFO] Example structured output (what we want our model to learn to predict):
-{'is_food_or_drink': True, 'tags': ['di', 'fa'], 'food_items': [], 'drink_items': ['coffee']}
+{'is_food_or_drink': True, 'tags': ['np', 'il', 'fi'], 'food_items': ['Sliced 5 Seeds Bread', 'water', 'wheat flour', 'mixed seeds', 'sunflower seeds', 'psyllium seeds', 'golden wheat seeds', 'torch'], 'drink_items': []}
 
 [INFO] Example output condensed (we'll train our model to predict the condensed output since it uses less tokens than JSON):
 food_or_drink: 1
-tags: di, fa
-foods: 
-drinks: coffee</code></pre>
+tags: np, il, fi
+foods: Sliced 5 Seeds Bread, water, wheat flour, mixed seeds, sunflower seeds, psyllium seeds, golden wheat seeds, torch
+drinks:</code></pre>
 </div>
 </div>
-<p>Because we’d like to use our model to potentially filter a large corpus of data, we get it assign various tags to the text as well.</p>
+<p>Because we’d like to use our model to potentially filter a large corpus of data, we get it to assign various tags to the text as well.</p>
 <p>These are as follows.</p>
-<div id="a4195702-aa43-42c6-9006-c43d1c02696e" class="cell" data-execution_count="9">
+<div id="a4195702-aa43-42c6-9006-c43d1c02696e" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Our fine-tuned model will assign tags to text so we can easily filter them by type in the future</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>tags_dict <span class="op">=</span> {<span class="st">'np'</span>: <span class="st">'nutrition_panel'</span>,</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a> <span class="st">'il'</span>: <span class="st">'ingredient list'</span>,</span>
@@ -597,26 +597,26 @@ drinks: coffee</code></pre>
 <blockquote class="blockquote">
 <p><strong>Resource:</strong> See the dataset formats and types in the TRL docs: https://huggingface.co/docs/trl/en/dataset_formats</p>
 </blockquote>
-<div id="6d909b36" class="cell" data-execution_count="10">
+<div id="6d909b36" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>random_sample</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>{'sequence': 'The image depicts a classic British red double-decker bus adorned with a "Wedding Special" sign at the back, alongside a contact number, 01474-353-896, and a license plate reading JJ04020. The bus, highlighted by a gold trim separating its two levels, is parked within the vicinity of a Shell gas station, with the station\'s pumps and yellow Shell emblem visible on the left. The bus rests closely to the curb, making it appear as though maneuvering in this space might be challenging. Another vehicle is seen fueling up nearby. A prominently placed sign in the bottom right corner reads, "Shell Drivers Club Points: I exchange mine for coffee. Don\'t lose your points. Register today." The sky above is overcast, contributing to the overall cloudy ambiance of the scene. No people are visible in the photograph.',
- 'image_url': 'https://live.staticflickr.com/821/26423687377_ea486a390d_h.jpg',
- 'class_label': 'not_food',
- 'source': 'pixmo_cap_dataset',
- 'char_len': 811.0,
- 'word_count': 134.0,
- 'syn_or_real': 'real',
- 'uuid': 'bcc462d9-ae44-4fcc-9bd4-5786ee3774bc',
- 'gpt-oss-120b-label': "{'is_food_or_drink': True, 'tags': ['di', 'fa'], 'food_items': [], 'drink_items': ['coffee']}",
- 'gpt-oss-120b-label-condensed': 'food_or_drink: 1\ntags: di, fa\nfoods: \ndrinks: coffee',
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>{'sequence': 'Nutrition information label for Sliced 5 Seeds Bread. Serving size: 78g (2 slices). Energy: 850 kJ (10% daily intake), Protein: 12.2g (22% daily intake), Fat: 8g (11% daily intake), Saturated Fat: 1.1g, Carbohydrate: 15.9g (5% daily intake), Sugars: 1.2g, Dietary Fibre: 1.6g (1% daily intake), Sodium: 300mg (13% daily intake). Ingredients include water, wheat flour, mixed seeds (18%), sunflower seeds, psyllium seeds, golden wheat seeds, and torch.',
+ 'image_url': None,
+ 'class_label': 'food',
+ 'source': 'manual_taken_images',
+ 'char_len': 451.0,
+ 'word_count': 67.0,
+ 'syn_or_real': 'syn',
+ 'uuid': '3666577f-e1d1-40ed-9325-d1b3808fe15c',
+ 'gpt-oss-120b-label': "{'is_food_or_drink': True, 'tags': ['np', 'il', 'fi'], 'food_items': ['Sliced 5 Seeds Bread', 'water', 'wheat flour', 'mixed seeds', 'sunflower seeds', 'psyllium seeds', 'golden wheat seeds', 'torch'], 'drink_items': []}",
+ 'gpt-oss-120b-label-condensed': 'food_or_drink: 1\ntags: np, il, fi\nfoods: Sliced 5 Seeds Bread, water, wheat flour, mixed seeds, sunflower seeds, psyllium seeds, golden wheat seeds, torch\ndrinks:',
  'target_food_names_to_use': None,
  'caption_detail_level': None,
  'num_foods': None,
  'target_image_point_of_view': None}</code></pre>
 </div>
 </div>
-<div id="16769fa3" class="cell" data-execution_count="11">
+<div id="16769fa3" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sample_to_conversation(sample):</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Helper function to convert an input sample to conversation style."""</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
@@ -627,47 +627,46 @@ drinks: coffee</code></pre>
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>sample_to_conversation(random_sample)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>{'messages': [{'role': 'user',
-   'content': 'The image depicts a classic British red double-decker bus adorned with a "Wedding Special" sign at the back, alongside a contact number, 01474-353-896, and a license plate reading JJ04020. The bus, highlighted by a gold trim separating its two levels, is parked within the vicinity of a Shell gas station, with the station\'s pumps and yellow Shell emblem visible on the left. The bus rests closely to the curb, making it appear as though maneuvering in this space might be challenging. Another vehicle is seen fueling up nearby. A prominently placed sign in the bottom right corner reads, "Shell Drivers Club Points: I exchange mine for coffee. Don\'t lose your points. Register today." The sky above is overcast, contributing to the overall cloudy ambiance of the scene. No people are visible in the photograph.'},
+   'content': 'Nutrition information label for Sliced 5 Seeds Bread. Serving size: 78g (2 slices). Energy: 850 kJ (10% daily intake), Protein: 12.2g (22% daily intake), Fat: 8g (11% daily intake), Saturated Fat: 1.1g, Carbohydrate: 15.9g (5% daily intake), Sugars: 1.2g, Dietary Fibre: 1.6g (1% daily intake), Sodium: 300mg (13% daily intake). Ingredients include water, wheat flour, mixed seeds (18%), sunflower seeds, psyllium seeds, golden wheat seeds, and torch.'},
   {'role': 'system',
-   'content': 'food_or_drink: 1\ntags: di, fa\nfoods: \ndrinks: coffee'}]}</code></pre>
+   'content': 'food_or_drink: 1\ntags: np, il, fi\nfoods: Sliced 5 Seeds Bread, water, wheat flour, mixed seeds, sunflower seeds, psyllium seeds, golden wheat seeds, torch\ndrinks:'}]}</code></pre>
 </div>
 </div>
-<div id="09cca9d2" class="cell" data-execution_count="12">
+<div id="09cca9d2" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Map our sample_to_conversation function to dataset </span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> dataset.<span class="bu">map</span>(sample_to_conversation,</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                      batched<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">"train"</span>][<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">"train"</span>][<span class="dv">42</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"d78fb79d6b08419b834c9d54a21e17dd","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"c5ddea2b01684e5aae59cb870c0b86c4","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>{'sequence': 'A mouth-watering photograph captures a delectable dish centered on a rectangular white porcelain plate, resting on a rustic wooden tabletop indoors. In the background, a wooden cutting board with a long handle subtly enhances the setting. The plate is adorned with several generously-sized, cheese-stuffed peppers that have been roasted to perfection, their blistered skins marked by charred black spots. Split down the middle, the peppers reveal a creamy white cheese filling, enriched with a blend of aromatic herbs. Once stuffed, the peppers have been closed and roasted, achieving a luscious, smoky flavor.\n\nThe dish is elegantly garnished with vibrant cherry tomato halves, freshly chopped green herbs, and delicate sprinkles of small diced red onions. A light, possibly citrus-infused dressing, hinted by a sheen of oil or lime juice, gently coats the ensemble, adding an extra layer of freshness. The meticulous presentation and vivid colors make this image not only a feast for the stomach but also a feast for the eyes.',
- 'image_url': 'http://i.imgur.com/X7cM9Df.jpg',
- 'class_label': 'food',
- 'source': 'pixmo_cap_dataset',
- 'char_len': 1028.0,
- 'word_count': 160.0,
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>{'sequence': 'another optional quest takes place on windfall island during the night time play the song of passing a number of times and each time, glance towards the sky',
+ 'image_url': 'https://portforward.com/games/walkthroughs/The-Legend-of-Zelda-The-Wind-Waker/The-Legend-of-Zelda-The-Wind-Waker-large-430.jpg',
+ 'class_label': 'not_food',
+ 'source': 'qwen2vl_open_dataset',
+ 'char_len': 156.0,
+ 'word_count': 28.0,
  'syn_or_real': 'real',
- 'uuid': '6720d6e0-5912-41e7-be50-85a2b63bfef9',
- 'gpt-oss-120b-label': "{'is_food_or_drink': True, 'tags': ['fi', 'fa'], 'food_items': ['cheese-stuffed peppers', 'cherry tomato halves', 'green herbs', 'diced red onions', 'citrus-infused dressing', 'oil', 'lime juice', 'cheese'], 'drink_items': []}",
- 'gpt-oss-120b-label-condensed': 'food_or_drink: 1\ntags: fi, fa\nfoods: cheese-stuffed peppers, cherry tomato halves, green herbs, diced red onions, citrus-infused dressing, oil, lime juice, cheese\ndrinks:',
+ 'uuid': 'bbac79ce-df1f-48b8-891c-752809be11c7',
+ 'gpt-oss-120b-label': "{'is_food_or_drink': 'false', 'tags': [], 'food_items': [], 'drink_items': []}",
+ 'gpt-oss-120b-label-condensed': 'food_or_drink: 0\ntags: \nfoods: \ndrinks:',
  'target_food_names_to_use': None,
  'caption_detail_level': None,
  'num_foods': None,
  'target_image_point_of_view': None,
- 'messages': [{'content': 'A mouth-watering photograph captures a delectable dish centered on a rectangular white porcelain plate, resting on a rustic wooden tabletop indoors. In the background, a wooden cutting board with a long handle subtly enhances the setting. The plate is adorned with several generously-sized, cheese-stuffed peppers that have been roasted to perfection, their blistered skins marked by charred black spots. Split down the middle, the peppers reveal a creamy white cheese filling, enriched with a blend of aromatic herbs. Once stuffed, the peppers have been closed and roasted, achieving a luscious, smoky flavor.\n\nThe dish is elegantly garnished with vibrant cherry tomato halves, freshly chopped green herbs, and delicate sprinkles of small diced red onions. A light, possibly citrus-infused dressing, hinted by a sheen of oil or lime juice, gently coats the ensemble, adding an extra layer of freshness. The meticulous presentation and vivid colors make this image not only a feast for the stomach but also a feast for the eyes.',
+ 'messages': [{'content': 'another optional quest takes place on windfall island during the night time play the song of passing a number of times and each time, glance towards the sky',
    'role': 'user'},
-  {'content': 'food_or_drink: 1\ntags: fi, fa\nfoods: cheese-stuffed peppers, cherry tomato halves, green herbs, diced red onions, citrus-infused dressing, oil, lime juice, cheese\ndrinks:',
-   'role': 'system'}]}</code></pre>
+  {'content': 'food_or_drink: 0\ntags: \nfoods: \ndrinks:', 'role': 'system'}]}</code></pre>
 </div>
 </div>
 <p>Notice how we now have a <code>"messages"</code> key in our dataset samples.</p>
-<div id="f027190f" class="cell" data-execution_count="13">
+<div id="f027190f" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a train/test split</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> dataset[<span class="st">"train"</span>].train_test_split(test_size<span class="op">=</span><span class="fl">0.2</span>,</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                                            shuffle<span class="op">=</span><span class="va">False</span>,</span>
@@ -677,7 +676,7 @@ drinks: coffee</code></pre>
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Always train on the train set and test on the test set</span></span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co"># This gives us an indication of how our model will perform in the real world</span></span>
 <span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>dataset</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="20">
 <pre><code>DatasetDict({
     train: Dataset({
         features: ['sequence', 'image_url', 'class_label', 'source', 'char_len', 'word_count', 'syn_or_real', 'uuid', 'gpt-oss-120b-label', 'gpt-oss-120b-label-condensed', 'target_food_names_to_use', 'caption_detail_level', 'num_foods', 'target_image_point_of_view', 'messages'],
@@ -693,7 +692,7 @@ drinks: coffee</code></pre>
 </section>
 <section id="try-the-model-with-a-pipeline" class="level3" data-number="11.2">
 <h3 data-number="11.2" class="anchored" data-anchor-id="try-the-model-with-a-pipeline"><span class="header-section-number">11.2</span> Try the model with a pipeline</h3>
-<div id="ea2738c3" class="cell" data-execution_count="14">
+<div id="ea2738c3" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>easy_sample <span class="op">=</span> {<span class="st">"role"</span>: <span class="st">"user"</span>, </span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>               <span class="st">"content"</span>: <span class="st">"Hi my name is Daniel"</span>}</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -701,7 +700,7 @@ drinks: coffee</code></pre>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    template <span class="op">=</span> {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="bu">input</span>}</span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> template</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="1a9871a6" class="cell" data-execution_count="15">
+<div id="1a9871a6" class="cell" data-execution_count="23">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline </span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load model and use it as a pipeline</span></span>
@@ -739,8 +738,27 @@ Hi my name is Daniel. Please reply to me with a machine learning poem.
 
 [INFO] Output from google/gemma-3-270m-it:
 
-Hi Daniel,
-Your poem is a beautiful and thoughtful reflection on the journey of learning. It captures a sense of wonder and the endless possibilities that come with it.
+Okay, Daniel! Here's a machine learning poem about the power of data:
+
+A silent hum, a learning stream,
+Data whispers, a vibrant dream.
+From pixels bright to patterns deep,
+Secrets that the data keeps to keep.
+
+Each pattern a story untold,
+Of connections, brave and bold.
+Algorithms weave, a clever art,
+To shape the world, a beating heart.
+
+The world's data, a boundless sea,
+Where insights bloom, and futures be.
+With each data point, a new quest,
+To understand, to be best blessed.
+
+So let the data guide your way,
+Through logic's logic, day and through day.
+A powerful tool, a guiding hand,
+To build a better, better land.
 </code></pre>
 </div>
 </div>
@@ -771,7 +789,7 @@ Secrets it will keep.</code></pre>
 </section>
 <section id="try-the-model-on-one-of-our-sequences" class="level3" data-number="11.3">
 <h3 data-number="11.3" class="anchored" data-anchor-id="try-the-model-on-one-of-our-sequences"><span class="header-section-number">11.3</span> Try the model on one of our sequences</h3>
-<div id="39394d8b" class="cell" data-execution_count="16">
+<div id="39394d8b" class="cell" data-execution_count="30">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a random sample</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>random_idx <span class="op">=</span> get_random_idx(dataset[<span class="st">"train"</span>])</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>random_train_sample <span class="op">=</span> dataset[<span class="st">"train"</span>][random_idx]</span>
@@ -790,12 +808,12 @@ Secrets it will keep.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Input:
 &lt;bos&gt;&lt;start_of_turn&gt;user
-I)$=~(n;("`U++7Dr_w?-r9&amp;e&lt;.s%E`[,(YA,m=e1wdJ26*1zfC(iX-i,G(Y9f7@W`;'0GIJ.ip(SkfnRH\v4wPQ6Db n#f&amp;"rR#.png&lt;end_of_turn&gt;
+A hand is holding a bottle of McCormick Foods Australia Pty Ltd's imported hot sauce. The label prominently displays the ingredients: reconstituted tomato puree (18%), distilled vinegar (6%), sugar, molasses (6%), maltodextrin, salt, spices (including black pepper 0.4%), corn starch, brown sugar, thickeners (guar gum, xanthan gum), onion, garlic, and smoke flavor. The nutrition information per 100g includes 464 kcal, 14g of fat, less than 1g of saturated fat, 233.3mg of sodium, and 15.4g of carbohydrates. The product is made in the USA and imported by McCormick Foods Australia Pty Ltd, located at 71 Fairbank Road, Clayton South, VIC, 3169, Australia. The best before date is March 11, 2026, and the bottle advises to shake it before pouring and store in the fridge after opening, not to use if the shrink wrap is broken or missing. The label also features a 'Born Here' badge from Texas.&lt;end_of_turn&gt;
 &lt;start_of_turn&gt;model
 
 
 [INFO] Output:
-I$ = ~(n; ("`U++7Dr_w?-r9&amp;e&lt;.s%E`[,(YA,m=e1wdJ26*1zfC(iX-i,G(Y9f7@W`;'0GIJ.ip(SkfnRH\v4wPQ6Db n#f&amp;"rR#.png`)
+The product is a **hot sauce** made in the USA.
 </code></pre>
 </div>
 </div>
@@ -811,7 +829,7 @@ I$ = ~(n; ("`U++7Dr_w?-r9&amp;e&lt;.s%E`[,(YA,m=e1wdJ26*1zfC(iX-i,G(Y9f7@W`;'0GI
 <p>We want a model to extract food and drink items from text.</p>
 <p>By default the model will just reply to any text input with a generic response.</p>
 <p>However, we can try and get our ideal outputs via prompting.</p>
-<div id="a1f93224" class="cell" data-execution_count="17">
+<div id="a1f93224" class="cell" data-execution_count="31">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>prompt_instruction <span class="op">=</span> <span class="st">"""Given the following target input text from an image caption, please extract the food and drink items to a list. </span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="st">If there are no food or drink items, return an empty list.</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -850,7 +868,7 @@ I$ = ~(n; ("`U++7Dr_w?-r9&amp;e&lt;.s%E`[,(YA,m=e1wdJ26*1zfC(iX-i,G(Y9f7@W`;'0GI
 <span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(update_input_message_content(<span class="bu">input</span><span class="op">=</span>random_train_sample)[<span class="dv">0</span>][<span class="st">"content"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Original content:
-I)$=~(n;("`U++7Dr_w?-r9&amp;e&lt;.s%E`[,(YA,m=e1wdJ26*1zfC(iX-i,G(Y9f7@W`;'0GIJ.ip(SkfnRH\v4wPQ6Db n#f&amp;"rR#.png
+A hand is holding a bottle of McCormick Foods Australia Pty Ltd's imported hot sauce. The label prominently displays the ingredients: reconstituted tomato puree (18%), distilled vinegar (6%), sugar, molasses (6%), maltodextrin, salt, spices (including black pepper 0.4%), corn starch, brown sugar, thickeners (guar gum, xanthan gum), onion, garlic, and smoke flavor. The nutrition information per 100g includes 464 kcal, 14g of fat, less than 1g of saturated fat, 233.3mg of sodium, and 15.4g of carbohydrates. The product is made in the USA and imported by McCormick Foods Australia Pty Ltd, located at 71 Fairbank Road, Clayton South, VIC, 3169, Australia. The best before date is March 11, 2026, and the bottle advises to shake it before pouring and store in the fridge after opening, not to use if the shrink wrap is broken or missing. The label also features a 'Born Here' badge from Texas.
 
 [INFO] New content with instructions in prompt:
 Given the following target input text from an image caption, please extract the food and drink items to a list. 
@@ -874,10 +892,10 @@ drink_items: ['cup of tea']
 
 Return only the formatted output and nothing else.
 
-Target input text: I)$=~(n;("`U++7Dr_w?-r9&amp;e&lt;.s%E`[,(YA,m=e1wdJ26*1zfC(iX-i,G(Y9f7@W`;'0GIJ.ip(SkfnRH\v4wPQ6Db n#f&amp;"rR#.png</code></pre>
+Target input text: A hand is holding a bottle of McCormick Foods Australia Pty Ltd's imported hot sauce. The label prominently displays the ingredients: reconstituted tomato puree (18%), distilled vinegar (6%), sugar, molasses (6%), maltodextrin, salt, spices (including black pepper 0.4%), corn starch, brown sugar, thickeners (guar gum, xanthan gum), onion, garlic, and smoke flavor. The nutrition information per 100g includes 464 kcal, 14g of fat, less than 1g of saturated fat, 233.3mg of sodium, and 15.4g of carbohydrates. The product is made in the USA and imported by McCormick Foods Australia Pty Ltd, located at 71 Fairbank Road, Clayton South, VIC, 3169, Australia. The best before date is March 11, 2026, and the bottle advises to shake it before pouring and store in the fridge after opening, not to use if the shrink wrap is broken or missing. The label also features a 'Born Here' badge from Texas.</code></pre>
 </div>
 </div>
-<div id="22ed0f84" class="cell" data-execution_count="18">
+<div id="22ed0f84" class="cell" data-execution_count="32">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the chat template</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>updated_input_prompt <span class="op">=</span> update_input_message_content(<span class="bu">input</span><span class="op">=</span>random_train_sample)</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -916,21 +934,16 @@ drink_items: ['cup of tea']
 
 Return only the formatted output and nothing else.
 
-Target input text: I)$=~(n;("`U++7Dr_w?-r9&amp;e&lt;.s%E`[,(YA,m=e1wdJ26*1zfC(iX-i,G(Y9f7@W`;'0GIJ.ip(SkfnRH\v4wPQ6Db n#f&amp;"rR#.png&lt;end_of_turn&gt;
+Target input text: A hand is holding a bottle of McCormick Foods Australia Pty Ltd's imported hot sauce. The label prominently displays the ingredients: reconstituted tomato puree (18%), distilled vinegar (6%), sugar, molasses (6%), maltodextrin, salt, spices (including black pepper 0.4%), corn starch, brown sugar, thickeners (guar gum, xanthan gum), onion, garlic, and smoke flavor. The nutrition information per 100g includes 464 kcal, 14g of fat, less than 1g of saturated fat, 233.3mg of sodium, and 15.4g of carbohydrates. The product is made in the USA and imported by McCormick Foods Australia Pty Ltd, located at 71 Fairbank Road, Clayton South, VIC, 3169, Australia. The best before date is March 11, 2026, and the bottle advises to shake it before pouring and store in the fridge after opening, not to use if the shrink wrap is broken or missing. The label also features a 'Born Here' badge from Texas.&lt;end_of_turn&gt;
 &lt;start_of_turn&gt;model
 
 
 [INFO] Output:
-```python
-def extract_food_and_drink_items(text):
-    food_items = []
-    drink_items = []
-
-    try:
-        if text == "I)$=~(n;(": "U++7Dr_w?-r9&amp;e&lt;.s%E`[,(YA,m=e1wdJ26*1zfC(iX-i,G(Y9f7@W`;'0GIJ.ip(SkfnRH\v4wPQ6Db n#f&amp;"rR#.png"): "U++7Dr_w?-r9&amp;e&lt;.s%E`[,(YA,m=e1wdJ26*1zfC(iX-i,G(Y9f7@W`;'0GIJ.ip(SkfnRH\v4wPQ6Db n#f&amp;"rR#.png"): "U++7Dr_w?-r9&amp;e&lt;.s%E`[,(FjY,m=e1wdJ26*1zfC(iX-i,G(Y9f7@W`;'0GIJ.ip(Sk</code></pre>
+food_items: ['rice cakes','salmon', 'cottage cheese', 'cherry tomatoes']
+drink_items: ['cup of tea']</code></pre>
 </div>
 </div>
-<div id="ff2b1392" class="cell" data-execution_count="19">
+<div id="ff2b1392" class="cell" data-execution_count="33">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is our input</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(random_train_sample[<span class="st">"messages"</span>][<span class="dv">0</span>][<span class="st">"content"</span>])</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
@@ -938,11 +951,11 @@ def extract_food_and_drink_items(text):
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This is our ideal output: </span></span>
 <span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(random_train_sample[<span class="st">"messages"</span>][<span class="dv">1</span>][<span class="st">"content"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>I)$=~(n;("`U++7Dr_w?-r9&amp;e&lt;.s%E`[,(YA,m=e1wdJ26*1zfC(iX-i,G(Y9f7@W`;'0GIJ.ip(SkfnRH\v4wPQ6Db n#f&amp;"rR#.png
+<pre><code>A hand is holding a bottle of McCormick Foods Australia Pty Ltd's imported hot sauce. The label prominently displays the ingredients: reconstituted tomato puree (18%), distilled vinegar (6%), sugar, molasses (6%), maltodextrin, salt, spices (including black pepper 0.4%), corn starch, brown sugar, thickeners (guar gum, xanthan gum), onion, garlic, and smoke flavor. The nutrition information per 100g includes 464 kcal, 14g of fat, less than 1g of saturated fat, 233.3mg of sodium, and 15.4g of carbohydrates. The product is made in the USA and imported by McCormick Foods Australia Pty Ltd, located at 71 Fairbank Road, Clayton South, VIC, 3169, Australia. The best before date is March 11, 2026, and the bottle advises to shake it before pouring and store in the fridge after opening, not to use if the shrink wrap is broken or missing. The label also features a 'Born Here' badge from Texas.
 
-food_or_drink: 0
-tags: 
-foods: 
+food_or_drink: 1
+tags: np, il, fi, fp
+foods: hot sauce
 drinks:</code></pre>
 </div>
 </div>
@@ -957,7 +970,7 @@ drinks:</code></pre>
 <li>Setup SFTConfig (Supervised Fine-tuning Config) - https://huggingface.co/docs/trl/v0.26.2/en/sft_trainer#trl.SFTConfig</li>
 <li>Use SFTTrainer to train our model on our supervised samples (from our dataset above) - https://huggingface.co/docs/trl/v0.26.2/en/sft_trainer#trl.SFTTrainer</li>
 </ol>
-<div id="c5f29e96" class="cell" data-execution_count="20">
+<div id="c5f29e96" class="cell" data-execution_count="34">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting up our SFTConfig</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> trl <span class="im">import</span> SFTConfig</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -997,7 +1010,7 @@ drinks:</code></pre>
 </div>
 </div>
 <p>Config setup, now we can train our model with <code>SFTTrainer</code>!</p>
-<div id="a6a74f51" class="cell" data-execution_count="21">
+<div id="a6a74f51" class="cell" data-execution_count="36">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Supervised Fine-Tuning = provide input and desired output samples</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> trl <span class="im">import</span> SFTTrainer</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1013,22 +1026,22 @@ drinks:</code></pre>
 <span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>trainer.train()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"bf86e768819247929b0c637c6ff12e3c","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"7606f2a463874477b85f7d7685e7ee54","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"0cfaaf23ebc743ddb73dda02064da40e","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"ab7aa621218344b89c17b9e6072cf2f1","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"d33d0d6982314303b25568da7c3d1c50","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"319bdb4c86e54331922098b692e49818","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"cee5ceef556046b5b45c74d5aaed2dfb","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"a97faf5227d841138f1a80be74e6129d","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-stderr">
@@ -1039,7 +1052,7 @@ The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and g
 <div>
       
       <progress value="213" max="213" style="width:300px; height:20px; vertical-align: middle;"></progress>
-      [213/213 05:18, Epoch 3/3]
+      [213/213 05:17, Epoch 3/3]
     </div>
     
 <table class="dataframe caption-top table table-sm table-striped small" data-border="1">
@@ -1082,13 +1095,13 @@ The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and g
 </table>
 <p>
 </p></div>
-<div class="cell-output cell-output-display" data-execution_count="21">
-<pre><code>TrainOutput(global_step=213, training_loss=1.8445255733991452, metrics={'train_runtime': 321.0184, 'train_samples_per_second': 10.616, 'train_steps_per_second': 0.664, 'total_flos': 873751312465920.0, 'train_loss': 1.8445255733991452, 'epoch': 3.0})</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="36">
+<pre><code>TrainOutput(global_step=213, training_loss=1.8445255733991452, metrics={'train_runtime': 320.1481, 'train_samples_per_second': 10.645, 'train_steps_per_second': 0.665, 'total_flos': 873751312465920.0, 'train_loss': 1.8445255733991452, 'epoch': 3.0})</code></pre>
 </div>
 </div>
 <p>Woohoo! Looks like our training accuracy went up.</p>
 <p>Let’s inspect the loss curves.</p>
-<div id="0e176da4" class="cell" data-execution_count="22">
+<div id="0e176da4" class="cell" data-execution_count="37">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Access the log history</span></span>
@@ -1117,7 +1130,7 @@ The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and g
 </div>
 </div>
 </div>
-<div id="ab9d8bbd" class="cell" data-execution_count="23">
+<div id="ab9d8bbd" class="cell" data-execution_count="38">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the model</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>trainer.save_model()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -1140,13 +1153,13 @@ To disable this warning, you can either:
 <section id="load-the-trained-model-back-in-and-see-how-it-performs" class="level2" data-number="13">
 <h2 data-number="13" class="anchored" data-anchor-id="load-the-trained-model-back-in-and-see-how-it-performs"><span class="header-section-number">13</span> Load the trained model back in and see how it performs</h2>
 <p>We’ve now fine-tuned our own Gemma 3 270M to do a specific task, let’s load it back in and see how it performs.</p>
-<div id="d2d5d374" class="cell" data-execution_count="40">
+<div id="d2d5d374" class="cell" data-execution_count="61">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>CHECKPOINT_DIR_NAME</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="40">
+<div class="cell-output cell-output-display" data-execution_count="61">
 <pre><code>'./checkpoint_models'</code></pre>
 </div>
 </div>
-<div id="c2ebfeae" class="cell" data-execution_count="41">
+<div id="c2ebfeae" class="cell" data-execution_count="62">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the fine-tuned model and see how it goes</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer, AutoModelForCausalLM</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1168,7 +1181,7 @@ To disable this warning, you can either:
 <pre><code>Device set to use cuda:0</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="42">
-<pre><code>&lt;transformers.pipelines.text_generation.TextGenerationPipeline at 0xef0124802930&gt;</code></pre>
+<pre><code>&lt;transformers.pipelines.text_generation.TextGenerationPipeline at 0xf3ee89376c60&gt;</code></pre>
 </div>
 </div>
 <div id="8db929ad" class="cell" data-execution_count="43">
@@ -1181,7 +1194,7 @@ To disable this warning, you can either:
 </div>
 </div>
 <p>Let’s now perform inference with our fine-tuned model on a random sample from the test dataset (our model has never seen these samples).</p>
-<div id="ee88d7fa" class="cell" data-execution_count="28">
+<div id="ee88d7fa" class="cell" data-execution_count="50">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a random sample</span></span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>random_test_idx <span class="op">=</span> get_random_idx(dataset[<span class="st">"test"</span>])</span>
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>random_test_sample <span class="op">=</span> dataset[<span class="st">"test"</span>][random_test_idx]</span>
@@ -1201,53 +1214,62 @@ To disable this warning, you can either:
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Input:
 &lt;bos&gt;&lt;start_of_turn&gt;user
-The image shows a package of "Helpful Harvest" dried vegetables. The ingredients include a variety of vegetables such as zucchini, carrots, mushrooms, onions, capsicum, and celery. The product is made from 100% vegetables and includes wonky and overly abundant produce where possible. The package notes that the ingredients and percentages may differ due to seasonal availability.
+The image shows a close-up of a snack package with detailed nutrition information and ingredients. The package is orange with a black label that reads "SNACK GOOD™." The nutrition panel provides the following information:
 
-The allergens listed are milk, eggs, soy, sesame seeds, hazelnuts, pistachios, cashews, and almonds. The nutrition information indicates that the package contains 4 servings, with each serving size being 10g. The average quantities per serving are as follows:
-- Energy: 125 kJ
-- Protein: 1.9 g
-- Gluten: 0 g (marked as gluten-free)
-- Fat, total: 0.3 g
-- Saturated fat: 0 g
-- Carbohydrate: 3.4 g
-- Sugars: 3.4 g
-- Fibre: 3.4 g
-- Sodium: 2.1 g
+- Servings per package: Approx. 12
+- Serving size: 33g (3 Balls)
 
-The average quantities per 100g are:
-- Energy: 1250 kJ
-- Protein: 18.7 g
-- Fat, total: 2.8 g
-- Saturated fat: 0 g
-- Carbohydrate: 34.3 g
-- Sugars: 34.3 g
-- Fibre: 20.9 g
-- Sodium: 282 mg
+**Nutrition Information:**
+- Energy: 620 kJ (148 Cal) per serving, 1,880 kJ (449 Cal) per 100g
+- Protein: 4.4 g per serving, 13.4 g per 100g
+- Gluten: Not detected
+- Fat, total: 7.1 g per serving, 21.6 g per 100g
+  - Saturated: 1.6 g per serving, 4.8 g per 100g
+- Carbohydrate: 14.9 g per serving, 45.1 g per 100g
+  - Sugars: 9.8 g per serving, 29.7 g per 100g
+- Dietary fibre: 3.6 g per serving, 11.0 g per 100g
+- Sodium: 90 mg per serving, 274 mg per 100g
 
-The package also mentions that 10g dry is equivalent to approximately 75-100g fresh when rehydrated, and each serve is a minimum of 1 adult serve of vegetables. The product is gluten-free, as indicated by a handwritten note on the package.&lt;end_of_turn&gt;
+**Ingredients:**
+- Dates, Peanuts, Cacao Powder (7%), Peanut Butter (5%), Sea Salt, Coconut.
+
+**Contains:**
+- Peanuts
+
+**May Contain:**
+- Tree Nuts, Soy and Milk, Fruit Pit or Nut Shell Fragments.
+
+**Storage Instructions:**
+- Please store in a dark, cool, dry place.
+
+**Additional Information:**
+- Made in New Zealand from imported and local ingredients.
+- Recycle at store.
+
+The package is displayed on a shelf, with other similar packages visible in the background.&lt;end_of_turn&gt;
 &lt;start_of_turn&gt;model
 
 
 [INFO] Output:
 food_or_drink: 1
 tags: np, il, fi, fp
-foods: zucchini, carrots, mushrooms, onions, capsicum, celery, wonky and overly abundant produce, milk, eggs, soy, sesame seeds, hazelnuts, pistachios, cashews, almonds
-drinks:</code></pre>
+foods: Dates, Peanuts, Cacao Powder, Peanut Butter, Sea Salt, Coconut
+drinks: Peanuts, Tree Nuts, Soy and Milk, Fruit Pit or Nut Shell Fragments</code></pre>
 </div>
 </div>
-<div id="1f424585" class="cell" data-execution_count="29">
+<div id="1f424585" class="cell" data-execution_count="51">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(random_test_sample[<span class="st">"gpt-oss-120b-label-condensed"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>food_or_drink: 1
 tags: np, il, fi, fp
-foods: zucchini, carrots, mushrooms, onions, capsicum, celery, milk, eggs, soy, sesame seeds, hazelnuts, pistachios, cashews, almonds
+foods: Dates, Peanuts, Cacao Powder, Peanut Butter, Sea Salt, Coconut, Tree Nuts, Soy, Milk, Fruit Pit, Nut Shell Fragments
 drinks:</code></pre>
 </div>
 </div>
 </section>
 <section id="counting-the-number-of-parameters-in-our-model" class="level2" data-number="14">
 <h2 data-number="14" class="anchored" data-anchor-id="counting-the-number-of-parameters-in-our-model"><span class="header-section-number">14</span> Counting the number of parameters in our model</h2>
-<div id="56c4e8ce" class="cell" data-execution_count="30">
+<div id="56c4e8ce" class="cell" data-execution_count="52">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_model_num_params(model):</span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns the number of trainable, non-trainable and total parameters of a PyTorch model.</span></span>
@@ -1270,10 +1292,10 @@ Non-trainable parameters: 0
 Total parameters: 268,098,176</code></pre>
 </div>
 </div>
-<div id="10c365fe" class="cell" data-execution_count="31">
+<div id="10c365fe" class="cell" data-execution_count="54">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Our model is 270M parameters, GPT-OSS-120B is 120B parameters</span></span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="dv">120_000_000_000</span> <span class="op">/</span> <span class="dv">270_000_000</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="31">
+<div class="cell-output cell-output-display" data-execution_count="54">
 <pre><code>444.44444444444446</code></pre>
 </div>
 </div>
@@ -1283,7 +1305,7 @@ Total parameters: 268,098,176</code></pre>
 <h2 data-number="15" class="anchored" data-anchor-id="uploading-our-fine-tuned-model-to-the-hugging-face-hub"><span class="header-section-number">15</span> Uploading our fine-tuned model to the Hugging Face Hub</h2>
 <p>We can upload our fine-tuned model to the Hugging Face Hub so other people can use it and test it out.</p>
 <p>First, let’s load it in ourselves and confirm it works how we’d like it to.</p>
-<div id="60366c1e" class="cell" data-execution_count="32">
+<div id="60366c1e" class="cell" data-execution_count="63">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoModelForCausalLM, AutoTokenizer</span>
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
 <span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1314,34 +1336,34 @@ Total parameters: 268,098,176</code></pre>
 The tokenizer you are loading from './checkpoint_models/' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
 Device set to use cuda:0</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="32">
-<pre><code>[{'generated_text': "Hello my name is Daniel! I work as a software developer with a passion for creating user-friendly and intuitive web applications. My team, the team at Global Solutions Inc. (which I'm a part of), has a vibrant and collaborative team culture, where we share a common goal of making technology accessible for everyone. We believe that technology should serve our users, and we're committed to providing the best possible solutions."}]</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="63">
+<pre><code>[{'generated_text': 'Hello my name is Daniel! We are an American-owned, family-owned business that provides world-class cooking services and culinary arts education to students from all over the world. We focus on providing high-quality, hands-on culinary experiences that go beyond simple recipes. From cooking classes and culinary arts workshops to cooking competitions and culinary school programs, Daniel offers an unparalleled culinary journey for every student. We believe that food should be more than just a source of energy; it should be a catalyst for creativity and self-discovery. With Daniel, you can unlock your culinary potential and discover your passion. Visit our website at www.danespot.com for more information.'}]</code></pre>
 </div>
 </div>
 <p>Let’s create a helper function to format our input text into message format.</p>
-<div id="4546c352-9764-4cff-b1e9-3db235a3b1b1" class="cell" data-execution_count="33">
+<div id="4546c352-9764-4cff-b1e9-3db235a3b1b1" class="cell" data-execution_count="64">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> format_message(<span class="bu">input</span>):</span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="bu">input</span>}]</span>
 <span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>input_formatted <span class="op">=</span> format_message(<span class="bu">input</span><span class="op">=</span>test_input_message)</span>
 <span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>input_formatted</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="33">
+<div class="cell-output cell-output-display" data-execution_count="64">
 <pre><code>[{'role': 'user', 'content': 'Hello my name is Daniel!'}]</code></pre>
 </div>
 </div>
 <p>Now we can turn it into a prompt with our <code>tokenizer</code> and the <code>apply_chat_template</code> method.</p>
-<div id="c7686504-0d33-4751-a8b4-55107719ef9d" class="cell" data-execution_count="34">
+<div id="c7686504-0d33-4751-a8b4-55107719ef9d" class="cell" data-execution_count="65">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>input_prompt <span class="op">=</span> loaded_model_pipeline.tokenizer.apply_chat_template(conversation<span class="op">=</span>input_formatted,</span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>                                                                   tokenize<span class="op">=</span><span class="va">False</span>,</span>
 <span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>                                                                   add_generation_prompt<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>input_prompt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="34">
+<div class="cell-output cell-output-display" data-execution_count="65">
 <pre><code>'&lt;bos&gt;&lt;start_of_turn&gt;user\nHello my name is Daniel!&lt;end_of_turn&gt;\n&lt;start_of_turn&gt;model\n'</code></pre>
 </div>
 </div>
 <p>Beautiful! Time to run our fine-tuned model!</p>
-<div id="41583a8d-13a8-4d57-b7d4-99f7c6619843" class="cell" data-execution_count="35">
+<div id="41583a8d-13a8-4d57-b7d4-99f7c6619843" class="cell" data-execution_count="66">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>loaded_model_outputs <span class="op">=</span> loaded_model_pipeline(text_inputs<span class="op">=</span>input_prompt,</span>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>                                             max_new_tokens<span class="op">=</span><span class="dv">256</span>)</span>
 <span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1364,7 +1386,7 @@ drinks:</code></pre>
 </div>
 <p>Okay let’s make another helper function to predict on any given sample input.</p>
 <p>We’ll also return the inference time of our model so we can see how long things take.</p>
-<div id="2341bd46-23d7-424a-b59d-d1d52481890b" class="cell" data-execution_count="36">
+<div id="2341bd46-23d7-424a-b59d-d1d52481890b" class="cell" data-execution_count="67">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pred_on_text(input_text):</span>
@@ -1382,19 +1404,19 @@ drinks:</code></pre>
 <span id="cb74-15"><a href="#cb74-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> generated_text, raw_output, total_time</span>
 <span id="cb74-16"><a href="#cb74-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb74-17"><a href="#cb74-17" aria-hidden="true" tabindex="-1"></a>pred_on_text(input_text<span class="op">=</span><span class="st">"British Breakfast with baked beans, fried eggs, black pudding, sausages, bacon, mushrooms, a cup of tea and toast and fried tomatoes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="36">
-<pre><code>('food_or_drink: 1\ntags: fi\nfoods: baked beans, fried eggs, black pudding, sausages, bacon, mushrooms, toast, fried tomatoes\ndrinks: tea',
+<div class="cell-output cell-output-display" data-execution_count="67">
+<pre><code>('food_or_drink: 1\ntags: fi, di\nfoods: baked beans, fried eggs, black pudding, sausages, bacon, mushrooms, toast, fried tomatoes\ndrinks: tea',
  [{'generated_text': [{'role': 'user',
      'content': 'British Breakfast with baked beans, fried eggs, black pudding, sausages, bacon, mushrooms, a cup of tea and toast and fried tomatoes'},
     {'role': 'assistant',
-     'content': 'food_or_drink: 1\ntags: fi\nfoods: baked beans, fried eggs, black pudding, sausages, bacon, mushrooms, toast, fried tomatoes\ndrinks: tea'}]}],
- 0.5977)</code></pre>
+     'content': 'food_or_drink: 1\ntags: fi, di\nfoods: baked beans, fried eggs, black pudding, sausages, bacon, mushrooms, toast, fried tomatoes\ndrinks: tea'}]}],
+ 0.6088)</code></pre>
 </div>
 </div>
 <p>Nice! Looks like our model is working well enough (of course we could always improve it over time with more testing and different samples).</p>
 <p>Let’s upload it to the Hugging Face Hub.</p>
 <p>We can do so using the <a href="https://huggingface.co/docs/huggingface_hub/en/index"><code>huggingface_hub</code> library</a>.</p>
-<div id="b536ac2f-fd95-441f-a708-b1b685e07e33" class="cell" data-execution_count="44">
+<div id="b536ac2f-fd95-441f-a708-b1b685e07e33" class="cell" data-execution_count="69">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> huggingface_hub <span class="im">import</span> HfApi, create_repo</span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>api <span class="op">=</span> HfApi()</span>
@@ -1415,19 +1437,20 @@ drinks:</code></pre>
 <span id="cb76-18"><a href="#cb76-18" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"52bc5c3791a04d24b416f4cae180ba9d","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"2029dfdc14ea47948582472b602a2bbf","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"a144f19d4d0c453981c78ff425878dca","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"7d1ae597dd664427a740937bbacf4439","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="44">
-<pre><code>CommitInfo(commit_url='https://huggingface.co/mrdbourke/FoodExtract-gemma-3-270m-fine-tune-v1/commit/825d826ada01faf86dcbd0c5c4d77504f3fa5d04', commit_message='Upload folder using huggingface_hub', commit_description='', oid='825d826ada01faf86dcbd0c5c4d77504f3fa5d04', pr_url=None, repo_url=RepoUrl('https://huggingface.co/mrdbourke/FoodExtract-gemma-3-270m-fine-tune-v1', endpoint='https://huggingface.co', repo_type='model', repo_id='mrdbourke/FoodExtract-gemma-3-270m-fine-tune-v1'), pr_revision=None, pr_num=None)</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="69">
+<pre><code>CommitInfo(commit_url='https://huggingface.co/mrdbourke/FoodExtract-gemma-3-270m-fine-tune-v1/commit/7707671b42ca5333905062e89b33020ab5812df0', commit_message='Upload folder using huggingface_hub', commit_description='', oid='7707671b42ca5333905062e89b33020ab5812df0', pr_url=None, repo_url=RepoUrl('https://huggingface.co/mrdbourke/FoodExtract-gemma-3-270m-fine-tune-v1', endpoint='https://huggingface.co', repo_type='model', repo_id='mrdbourke/FoodExtract-gemma-3-270m-fine-tune-v1'), pr_revision=None, pr_num=None)</code></pre>
 </div>
 </div>
 <p>Woohoo! Our model is officially on the Hugging Face Hub.</p>
+<p>You can download it here: https://huggingface.co/mrdbourke/FoodExtract-gemma-3-270m-fine-tune-v1/tree/main</p>
 <p>Now not only can we redownload it and use it again, others can download it and use it for themselves (of course you can make the model private if you like too).</p>
 </section>
 <section id="turn-our-model-into-a-demo" class="level2" data-number="16">
@@ -1452,7 +1475,7 @@ drinks:</code></pre>
 </ul></li>
 </ul>
 <p>Let’s make a folder to store our demo application.</p>
-<div id="fa4f64de-af13-47c7-ba5f-9b176bb58880" class="cell" data-execution_count="45">
+<div id="fa4f64de-af13-47c7-ba5f-9b176bb58880" class="cell" data-execution_count="70">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>mkdir demos<span class="op">/</span></span>
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>mkdir demos<span class="op">/</span>FoodExtract</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -1477,7 +1500,7 @@ To disable this warning, you can either:
 <span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> function_to_run_on_the_gpu():</span>
 <span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>To ensure your model runs on the GPU, be sure to select a ZeroGPU instance in your Hugging Face Space settings.</p>
-<div id="26b9719a-a52f-4a06-a5e7-e5e25c0f05cd" class="cell" data-execution_count="46">
+<div id="26b9719a-a52f-4a06-a5e7-e5e25c0f05cd" class="cell" data-execution_count="71">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile demos<span class="op">/</span>FoodExtract<span class="op">/</span>app.py</span>
 <span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load dependencies</span></span>
@@ -1575,7 +1598,7 @@ To disable this warning, you can either:
 <p>The <code>README.md</code> file will tell people what our app does.</p>
 <p>We could add more information here if we wanted to but for now we’ll keep it simple.</p>
 <p>Notice the special text at the top of the file below (the text between the <code>---</code>), these are some settings for the Space, you can see the <a href="https://huggingface.co/docs/hub/en/spaces-config-reference">settings for these in the docs</a>.</p>
-<div id="33cb083d-8258-4a5d-a54e-52d22c6a5789" class="cell" data-execution_count="47">
+<div id="33cb083d-8258-4a5d-a54e-52d22c6a5789" class="cell" data-execution_count="75">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile demos<span class="op">/</span>FoodExtract<span class="op">/</span>README.md</span>
 <span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span>
 <span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>title: FoodExtract Fine<span class="op">-</span>tuned LLM Structued Data Extractor</span>
@@ -1612,23 +1635,25 @@ To disable this warning, you can either:
 <span id="cb83-34"><a href="#cb83-34" aria-hidden="true" tabindex="-1"></a><span class="co"> 'fa': 'food_advertistment',</span></span>
 <span id="cb83-35"><a href="#cb83-35" aria-hidden="true" tabindex="-1"></a><span class="co"> 'fp': 'food_packaging'}</span></span>
 <span id="cb83-36"><a href="#cb83-36" aria-hidden="true" tabindex="-1"></a><span class="co">```</span></span>
-<span id="cb83-37"><a href="#cb83-37" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb83-37"><a href="#cb83-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-38"><a href="#cb83-38" aria-hidden="true" tabindex="-1"></a><span class="co">You can see walkthrough step by step code details at: https://www.learnhuggingface.com/notebooks/hugging_face_llm_full_fine_tune_tutorial </span></span>
+<span id="cb83-39"><a href="#cb83-39" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Writing demos/FoodExtract/README.md</code></pre>
+<pre><code>Overwriting demos/FoodExtract/README.md</code></pre>
 </div>
 </div>
 </section>
 <section id="create-the-requirements.txt-file" class="level3" data-number="16.3">
 <h3 data-number="16.3" class="anchored" data-anchor-id="create-the-requirements.txt-file"><span class="header-section-number">16.3</span> Create the <code>requirements.txt</code> file</h3>
 <p>This will tell the Hugging Face Space what libraries we’d like it to run inside.</p>
-<div id="d7e17c94-07bf-4c40-a045-f64f58256a0a" class="cell" data-execution_count="48">
+<div id="d7e17c94-07bf-4c40-a045-f64f58256a0a" class="cell" data-execution_count="76">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile demos<span class="op">/</span>FoodExtract<span class="op">/</span>requirements.txt</span>
 <span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>transformers</span>
 <span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>gradio</span>
 <span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>torch</span>
 <span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>accelerate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Writing demos/FoodExtract/requirements.txt</code></pre>
+<pre><code>Overwriting demos/FoodExtract/requirements.txt</code></pre>
 </div>
 </div>
 </section>
@@ -1637,7 +1662,7 @@ To disable this warning, you can either:
 <p>We can upload our demo to the Hugging Face Hub in a similar way to uploading our model.</p>
 <p>We could also upload it file by file via the Hugging Face Spaces interface.</p>
 <p>But let’s stick to the code-first approach.</p>
-<div id="a4988447-8a2a-40da-bffe-4636ab960b9c" class="cell" data-execution_count="49">
+<div id="a4988447-8a2a-40da-bffe-4636ab960b9c" class="cell" data-execution_count="77">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Import the required methods for uploading to the Hugging Face Hub</span></span>
 <span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> huggingface_hub <span class="im">import</span> (</span>
 <span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>    create_repo,</span>
@@ -1689,7 +1714,7 @@ To disable this warning, you can either:
 <p>Nice!</p>
 <p>It looks like our demo upload worked!</p>
 <p>We can try it out via the URL (in my case, it’s: <a href="https://huggingface.co/spaces/mrdbourke/FoodExtract-v1">https://huggingface.co/spaces/mrdbourke/FoodExtract-v1</a>). And we can even embed it right in our notebook.</p>
-<div id="5dc1a559-079a-49cd-9197-2b1b06f64c5b" class="cell" data-execution_count="50">
+<div id="5dc1a559-079a-49cd-9197-2b1b06f64c5b" class="cell" data-execution_count="78">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> HTML</span>
 <span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>html_code <span class="op">=</span> <span class="st">"""&lt;iframe</span></span>
