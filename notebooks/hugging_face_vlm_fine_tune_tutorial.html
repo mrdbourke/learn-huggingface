@@ -172,7 +172,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Fine-tune a Vision Language Model with Hugging Face Tutorial</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/hugging_face_object_detection_tutorial.html">Computer Vision</a></li><li class="breadcrumb-item"><a href="../notebooks/hugging_face_vlm_fine_tune_tutorial.html">Fine-tune a Small VLM to do structured data extraction</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -230,6 +230,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Build a custom object detection model and demo</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/hugging_face_vlm_fine_tune_tutorial.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Fine-tune a Small VLM to do structured data extraction</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -284,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/hugging_face_object_detection_tutorial.html">Computer Vision</a></li><li class="breadcrumb-item"><a href="../notebooks/hugging_face_vlm_fine_tune_tutorial.html">Fine-tune a Small VLM to do structured data extraction</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Fine-tune a Vision Language Model with Hugging Face Tutorial</h1>
 </div>
@@ -1768,156 +1774,191 @@ Epoch   Training Loss   Validation Loss Entropy Num Tokens  Mean Token Accuracy
 </section>
 <section id="create-a-demo-with-gradio" class="level2" data-number="19">
 <h2 data-number="19" class="anchored" data-anchor-id="create-a-demo-with-gradio"><span class="header-section-number">19</span> Create a demo with Gradio</h2>
+<p>We need 3 files:</p>
+<ul>
+<li><code>app.py</code> - Entry point for our app to load on Hugging Face Spaces.</li>
+<li><code>requirements.txt</code> - The requirements we’d like Hugging Face Spaces to install upon loading.</li>
+<li><code>README.md</code> - Some details about our demo.</li>
+</ul>
+<div id="ccaf63e3-14b4-40f7-b19d-00e6539fc7b8" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a directory to store our demos</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>mkdir demos<span class="op">/</span>FoodExtract<span class="op">-</span>Vision<span class="op">-</span>v1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <div id="b5acde0e" class="cell" data-execution_count="18">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile demos<span class="op">/</span>FoodExtract<span class="op">-</span>Vision<span class="op">-</span>v1<span class="op">/</span>app.py</span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gradio <span class="im">as</span> gr</span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> spaces</span>
-<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
-<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>BASE_MODEL_ID <span class="op">=</span> <span class="st">"HuggingFaceTB/SmolVLM2-500M-Video-Instruct"</span></span>
-<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>FINE_TUNED_MODEL_ID <span class="op">=</span> <span class="st">"mrdbourke/FoodExtract-Vision-SmolVLM2-500M-fine-tune-v1"</span></span>
-<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>OUTPUT_TOKENS <span class="op">=</span> <span class="dv">256</span></span>
-<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Load original base model (no fine-tuning)</span></span>
-<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Loading Original Model"</span>)</span>
-<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>original_pipeline <span class="op">=</span> pipeline(</span>
-<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"image-text-to-text"</span>,</span>
-<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>BASE_MODEL_ID,</span>
-<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb58-18"><a href="#cb58-18" aria-hidden="true" tabindex="-1"></a>    dtype<span class="op">=</span>torch.bfloat16,</span>
-<span id="cb58-19"><a href="#cb58-19" aria-hidden="true" tabindex="-1"></a>    device_map<span class="op">=</span><span class="st">"auto"</span></span>
-<span id="cb58-20"><a href="#cb58-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb58-21"><a href="#cb58-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-22"><a href="#cb58-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Load fine-tuned model</span></span>
-<span id="cb58-23"><a href="#cb58-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Loading Fine-tuned Model"</span>)</span>
-<span id="cb58-24"><a href="#cb58-24" aria-hidden="true" tabindex="-1"></a>ft_pipe <span class="op">=</span> pipeline(</span>
-<span id="cb58-25"><a href="#cb58-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"image-text-to-text"</span>,</span>
-<span id="cb58-26"><a href="#cb58-26" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>FINE_TUNED_MODEL_ID,</span>
-<span id="cb58-27"><a href="#cb58-27" aria-hidden="true" tabindex="-1"></a>    dtype<span class="op">=</span>torch.bfloat16,</span>
-<span id="cb58-28"><a href="#cb58-28" aria-hidden="true" tabindex="-1"></a>    device_map<span class="op">=</span><span class="st">"auto"</span></span>
-<span id="cb58-29"><a href="#cb58-29" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb58-30"><a href="#cb58-30" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb58-31"><a href="#cb58-31" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_message(input_image):</span>
-<span id="cb58-32"><a href="#cb58-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [{<span class="st">'role'</span>: <span class="st">'user'</span>,</span>
-<span id="cb58-33"><a href="#cb58-33" aria-hidden="true" tabindex="-1"></a> <span class="st">'content'</span>: [{<span class="st">'type'</span>: <span class="st">'image'</span>,</span>
-<span id="cb58-34"><a href="#cb58-34" aria-hidden="true" tabindex="-1"></a>   <span class="st">'image'</span>: input_image},</span>
-<span id="cb58-35"><a href="#cb58-35" aria-hidden="true" tabindex="-1"></a>  {<span class="st">'type'</span>: <span class="st">'text'</span>,</span>
-<span id="cb58-36"><a href="#cb58-36" aria-hidden="true" tabindex="-1"></a>   <span class="st">'text'</span>: <span class="st">"Classify the given input image into food or not and if edible food or drink items are present, extract those to a list. If no food/drink items are visible, return empty lists.</span><span class="ch">\n\n</span><span class="st">Only return valid JSON in the following form:</span><span class="ch">\n\n</span><span class="st">```json</span><span class="ch">\n</span><span class="st">{</span><span class="ch">\n</span><span class="st">  'is_food': 0, # int - 0 or 1 based on whether food/drinks are present (0 = no foods visible, 1 = foods visible)</span><span class="ch">\n</span><span class="st">  'image_title': '', # str - short food-related title for what foods/drinks are visible in the image, leave blank if no foods present</span><span class="ch">\n</span><span class="st">  'food_items': [], # list[str] - list of visible edible food item nouns</span><span class="ch">\n</span><span class="st">  'drink_items': [] # list[str] - list of visible edible drink item nouns</span><span class="ch">\n</span><span class="st">}</span><span class="ch">\n</span><span class="st">```</span><span class="ch">\n</span><span class="st">"</span>}]}]</span>
-<span id="cb58-37"><a href="#cb58-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-38"><a href="#cb58-38" aria-hidden="true" tabindex="-1"></a><span class="at">@spaces.GPU</span></span>
-<span id="cb58-39"><a href="#cb58-39" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_foods_from_image(input_image):</span>
-<span id="cb58-40"><a href="#cb58-40" aria-hidden="true" tabindex="-1"></a>    input_image <span class="op">=</span> input_image.resize(size<span class="op">=</span>(<span class="dv">512</span>, <span class="dv">512</span>))</span>
-<span id="cb58-41"><a href="#cb58-41" aria-hidden="true" tabindex="-1"></a>    input_message <span class="op">=</span> create_message(input_image<span class="op">=</span>input_image)</span>
-<span id="cb58-42"><a href="#cb58-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-43"><a href="#cb58-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get outputs from base model (not fine-tuned)</span></span>
-<span id="cb58-44"><a href="#cb58-44" aria-hidden="true" tabindex="-1"></a>    original_pipeline_output <span class="op">=</span> original_pipeline(text<span class="op">=</span>[input_message],</span>
-<span id="cb58-45"><a href="#cb58-45" aria-hidden="true" tabindex="-1"></a>                                                 max_new_tokens<span class="op">=</span>OUTPUT_TOKENS)</span>
-<span id="cb58-46"><a href="#cb58-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-47"><a href="#cb58-47" aria-hidden="true" tabindex="-1"></a>    outputs_pretrained <span class="op">=</span> original_pipeline_output[<span class="dv">0</span>][<span class="dv">0</span>][<span class="st">"generated_text"</span>][<span class="op">-</span><span class="dv">1</span>][<span class="st">"content"</span>]</span>
-<span id="cb58-48"><a href="#cb58-48" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb58-49"><a href="#cb58-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get outputs from fine-tuned model (fine-tuned on food images)</span></span>
-<span id="cb58-50"><a href="#cb58-50" aria-hidden="true" tabindex="-1"></a>    ft_pipe_output <span class="op">=</span> ft_pipe(text<span class="op">=</span>[input_message],</span>
-<span id="cb58-51"><a href="#cb58-51" aria-hidden="true" tabindex="-1"></a>                             max_new_tokens<span class="op">=</span>OUTPUT_TOKENS)</span>
-<span id="cb58-52"><a href="#cb58-52" aria-hidden="true" tabindex="-1"></a>    outputs_fine_tuned <span class="op">=</span> ft_pipe_output[<span class="dv">0</span>][<span class="dv">0</span>][<span class="st">"generated_text"</span>][<span class="op">-</span><span class="dv">1</span>][<span class="st">"content"</span>]</span>
-<span id="cb58-53"><a href="#cb58-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-54"><a href="#cb58-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> outputs_pretrained, outputs_fine_tuned</span>
-<span id="cb58-55"><a href="#cb58-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-56"><a href="#cb58-56" aria-hidden="true" tabindex="-1"></a>demo_title <span class="op">=</span> <span class="st">"🥑➡️📝 FoodExtract-Vision with a fine-tuned SmolVLM2-500M"</span></span>
-<span id="cb58-57"><a href="#cb58-57" aria-hidden="true" tabindex="-1"></a>demo_description <span class="op">=</span> <span class="st">"""* **Base model:** https://huggingface.co/HuggingFaceTB/SmolVLM-500M-Instruct</span></span>
-<span id="cb58-58"><a href="#cb58-58" aria-hidden="true" tabindex="-1"></a><span class="st">* **Fine-tuning dataset:** https://huggingface.co/datasets/mrdbourke/FoodExtract-1k-Vision (1k food images and 500 not food images)</span></span>
-<span id="cb58-59"><a href="#cb58-59" aria-hidden="true" tabindex="-1"></a><span class="st">* **Fine-tuned model:** https://huggingface.co/mrdbourke/FoodExtract-Vision-SmolVLM2-500M-fine-tune-v1</span></span>
-<span id="cb58-60"><a href="#cb58-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-61"><a href="#cb58-61" aria-hidden="true" tabindex="-1"></a><span class="st">## Overview</span></span>
-<span id="cb58-62"><a href="#cb58-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-63"><a href="#cb58-63" aria-hidden="true" tabindex="-1"></a><span class="st">Extract food and drink items in a structured way from images.</span></span>
-<span id="cb58-64"><a href="#cb58-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-65"><a href="#cb58-65" aria-hidden="true" tabindex="-1"></a><span class="st">The original model outputs fail to capture the desired structure. But the fine-tuned model sticks to the output structure quite well.</span></span>
-<span id="cb58-66"><a href="#cb58-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-67"><a href="#cb58-67" aria-hidden="true" tabindex="-1"></a><span class="st">However, the fine-tuned model could definitely be improved with respects to its ability to extract the right food/drink items.</span></span>
-<span id="cb58-68"><a href="#cb58-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-69"><a href="#cb58-69" aria-hidden="true" tabindex="-1"></a><span class="st">Both models use the input prompt:</span></span>
-<span id="cb58-70"><a href="#cb58-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-71"><a href="#cb58-71" aria-hidden="true" tabindex="-1"></a><span class="st">````</span></span>
-<span id="cb58-72"><a href="#cb58-72" aria-hidden="true" tabindex="-1"></a><span class="st">Classify the given input image into food or not and if edible food or drink items are present, extract those to a list. If no food/drink items are visible, return empty lists.</span></span>
-<span id="cb58-73"><a href="#cb58-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-74"><a href="#cb58-74" aria-hidden="true" tabindex="-1"></a><span class="st">Only return valid JSON in the following form:</span></span>
-<span id="cb58-75"><a href="#cb58-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-76"><a href="#cb58-76" aria-hidden="true" tabindex="-1"></a><span class="st">```json</span></span>
-<span id="cb58-77"><a href="#cb58-77" aria-hidden="true" tabindex="-1"></a><span class="st">{</span></span>
-<span id="cb58-78"><a href="#cb58-78" aria-hidden="true" tabindex="-1"></a><span class="st">  'is_food': 0, # int - 0 or 1 based on whether food/drinks are present (0 = no foods visible, 1 = foods visible)</span></span>
-<span id="cb58-79"><a href="#cb58-79" aria-hidden="true" tabindex="-1"></a><span class="st">  'image_title': '', # str - short food-related title for what foods/drinks are visible in the image, leave blank if no foods present</span></span>
-<span id="cb58-80"><a href="#cb58-80" aria-hidden="true" tabindex="-1"></a><span class="st">  'food_items': [], # list[str] - list of visible edible food item nouns</span></span>
-<span id="cb58-81"><a href="#cb58-81" aria-hidden="true" tabindex="-1"></a><span class="st">  'drink_items': [] # list[str] - list of visible edible drink item nouns</span></span>
-<span id="cb58-82"><a href="#cb58-82" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb58-83"><a href="#cb58-83" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb58-84"><a href="#cb58-84" aria-hidden="true" tabindex="-1"></a><span class="st">````</span></span>
-<span id="cb58-85"><a href="#cb58-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-86"><a href="#cb58-86" aria-hidden="true" tabindex="-1"></a><span class="st">Except one model has been fine-tuned on the structured data whereas the other hasn't.</span></span>
-<span id="cb58-87"><a href="#cb58-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-88"><a href="#cb58-88" aria-hidden="true" tabindex="-1"></a><span class="st">Notable next steps would be:</span></span>
-<span id="cb58-89"><a href="#cb58-89" aria-hidden="true" tabindex="-1"></a><span class="st">* **Remove the input prompt:** Just train the model to go straight from image -&gt; text (no text prompt on input), this would save on inference tokens.</span></span>
-<span id="cb58-90"><a href="#cb58-90" aria-hidden="true" tabindex="-1"></a><span class="st">* **Fine-tune on more real-world data:** Right now the model is only trained on 1k food images (from Food101) and 500 not food (random internet images), training on real world data would likely significantly improve performance.</span></span>
-<span id="cb58-91"><a href="#cb58-91" aria-hidden="true" tabindex="-1"></a><span class="st">* **Fix the repetitive generation:** The model can sometimes get stuck in a repetitive generation pattern, e.g. "onions", "onions", "onions", etc. We could look into patterns to help reduce this.</span></span>
-<span id="cb58-92"><a href="#cb58-92" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb58-93"><a href="#cb58-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-94"><a href="#cb58-94" aria-hidden="true" tabindex="-1"></a>demo <span class="op">=</span> gr.Interface(</span>
-<span id="cb58-95"><a href="#cb58-95" aria-hidden="true" tabindex="-1"></a>    fn<span class="op">=</span>extract_foods_from_image,</span>
-<span id="cb58-96"><a href="#cb58-96" aria-hidden="true" tabindex="-1"></a>    inputs<span class="op">=</span>gr.Image(<span class="bu">type</span><span class="op">=</span><span class="st">"pil"</span>),</span>
-<span id="cb58-97"><a href="#cb58-97" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span>demo_title,</span>
-<span id="cb58-98"><a href="#cb58-98" aria-hidden="true" tabindex="-1"></a>    description<span class="op">=</span>demo_description,</span>
-<span id="cb58-99"><a href="#cb58-99" aria-hidden="true" tabindex="-1"></a>    outputs<span class="op">=</span>[gr.Textbox(lines<span class="op">=</span><span class="dv">4</span>, label<span class="op">=</span><span class="st">"Original Model (not fine-tuned)"</span>),</span>
-<span id="cb58-100"><a href="#cb58-100" aria-hidden="true" tabindex="-1"></a>             gr.Textbox(lines<span class="op">=</span><span class="dv">4</span>, label<span class="op">=</span><span class="st">"Fine-tuned Model"</span>)],</span>
-<span id="cb58-101"><a href="#cb58-101" aria-hidden="true" tabindex="-1"></a>    examples<span class="op">=</span>[[<span class="st">"examples/camera.jpeg"</span>],</span>
-<span id="cb58-102"><a href="#cb58-102" aria-hidden="true" tabindex="-1"></a>              [<span class="st">"examples/Tandoori-Chicken.jpg"</span>],</span>
-<span id="cb58-103"><a href="#cb58-103" aria-hidden="true" tabindex="-1"></a>              [<span class="st">"examples/fries.jpeg"</span>]],</span>
-<span id="cb58-104"><a href="#cb58-104" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb58-105"><a href="#cb58-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-106"><a href="#cb58-106" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
-<span id="cb58-107"><a href="#cb58-107" aria-hidden="true" tabindex="-1"></a>    demo.launch(share<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile demos<span class="op">/</span>FoodExtract<span class="op">-</span>Vision<span class="op">-</span>v1<span class="op">/</span>app.py</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gradio <span class="im">as</span> gr</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> spaces</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>BASE_MODEL_ID <span class="op">=</span> <span class="st">"HuggingFaceTB/SmolVLM2-500M-Video-Instruct"</span></span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>FINE_TUNED_MODEL_ID <span class="op">=</span> <span class="st">"mrdbourke/FoodExtract-Vision-SmolVLM2-500M-fine-tune-v1"</span></span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>OUTPUT_TOKENS <span class="op">=</span> <span class="dv">256</span></span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Load original base model (no fine-tuning)</span></span>
+<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Loading Original Model"</span>)</span>
+<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a>original_pipeline <span class="op">=</span> pipeline(</span>
+<span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"image-text-to-text"</span>,</span>
+<span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>BASE_MODEL_ID,</span>
+<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb59-18"><a href="#cb59-18" aria-hidden="true" tabindex="-1"></a>    dtype<span class="op">=</span>torch.bfloat16,</span>
+<span id="cb59-19"><a href="#cb59-19" aria-hidden="true" tabindex="-1"></a>    device_map<span class="op">=</span><span class="st">"auto"</span></span>
+<span id="cb59-20"><a href="#cb59-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb59-21"><a href="#cb59-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-22"><a href="#cb59-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Load fine-tuned model</span></span>
+<span id="cb59-23"><a href="#cb59-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Loading Fine-tuned Model"</span>)</span>
+<span id="cb59-24"><a href="#cb59-24" aria-hidden="true" tabindex="-1"></a>ft_pipe <span class="op">=</span> pipeline(</span>
+<span id="cb59-25"><a href="#cb59-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"image-text-to-text"</span>,</span>
+<span id="cb59-26"><a href="#cb59-26" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>FINE_TUNED_MODEL_ID,</span>
+<span id="cb59-27"><a href="#cb59-27" aria-hidden="true" tabindex="-1"></a>    dtype<span class="op">=</span>torch.bfloat16,</span>
+<span id="cb59-28"><a href="#cb59-28" aria-hidden="true" tabindex="-1"></a>    device_map<span class="op">=</span><span class="st">"auto"</span></span>
+<span id="cb59-29"><a href="#cb59-29" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb59-30"><a href="#cb59-30" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb59-31"><a href="#cb59-31" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_message(input_image):</span>
+<span id="cb59-32"><a href="#cb59-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [{<span class="st">'role'</span>: <span class="st">'user'</span>,</span>
+<span id="cb59-33"><a href="#cb59-33" aria-hidden="true" tabindex="-1"></a> <span class="st">'content'</span>: [{<span class="st">'type'</span>: <span class="st">'image'</span>,</span>
+<span id="cb59-34"><a href="#cb59-34" aria-hidden="true" tabindex="-1"></a>   <span class="st">'image'</span>: input_image},</span>
+<span id="cb59-35"><a href="#cb59-35" aria-hidden="true" tabindex="-1"></a>  {<span class="st">'type'</span>: <span class="st">'text'</span>,</span>
+<span id="cb59-36"><a href="#cb59-36" aria-hidden="true" tabindex="-1"></a>   <span class="st">'text'</span>: <span class="st">"Classify the given input image into food or not and if edible food or drink items are present, extract those to a list. If no food/drink items are visible, return empty lists.</span><span class="ch">\n\n</span><span class="st">Only return valid JSON in the following form:</span><span class="ch">\n\n</span><span class="st">```json</span><span class="ch">\n</span><span class="st">{</span><span class="ch">\n</span><span class="st">  'is_food': 0, # int - 0 or 1 based on whether food/drinks are present (0 = no foods visible, 1 = foods visible)</span><span class="ch">\n</span><span class="st">  'image_title': '', # str - short food-related title for what foods/drinks are visible in the image, leave blank if no foods present</span><span class="ch">\n</span><span class="st">  'food_items': [], # list[str] - list of visible edible food item nouns</span><span class="ch">\n</span><span class="st">  'drink_items': [] # list[str] - list of visible edible drink item nouns</span><span class="ch">\n</span><span class="st">}</span><span class="ch">\n</span><span class="st">```</span><span class="ch">\n</span><span class="st">"</span>}]}]</span>
+<span id="cb59-37"><a href="#cb59-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-38"><a href="#cb59-38" aria-hidden="true" tabindex="-1"></a><span class="at">@spaces.GPU</span></span>
+<span id="cb59-39"><a href="#cb59-39" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_foods_from_image(input_image):</span>
+<span id="cb59-40"><a href="#cb59-40" aria-hidden="true" tabindex="-1"></a>    input_image <span class="op">=</span> input_image.resize(size<span class="op">=</span>(<span class="dv">512</span>, <span class="dv">512</span>))</span>
+<span id="cb59-41"><a href="#cb59-41" aria-hidden="true" tabindex="-1"></a>    input_message <span class="op">=</span> create_message(input_image<span class="op">=</span>input_image)</span>
+<span id="cb59-42"><a href="#cb59-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-43"><a href="#cb59-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get outputs from base model (not fine-tuned)</span></span>
+<span id="cb59-44"><a href="#cb59-44" aria-hidden="true" tabindex="-1"></a>    original_pipeline_output <span class="op">=</span> original_pipeline(text<span class="op">=</span>[input_message],</span>
+<span id="cb59-45"><a href="#cb59-45" aria-hidden="true" tabindex="-1"></a>                                                 max_new_tokens<span class="op">=</span>OUTPUT_TOKENS)</span>
+<span id="cb59-46"><a href="#cb59-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-47"><a href="#cb59-47" aria-hidden="true" tabindex="-1"></a>    outputs_pretrained <span class="op">=</span> original_pipeline_output[<span class="dv">0</span>][<span class="dv">0</span>][<span class="st">"generated_text"</span>][<span class="op">-</span><span class="dv">1</span>][<span class="st">"content"</span>]</span>
+<span id="cb59-48"><a href="#cb59-48" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb59-49"><a href="#cb59-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get outputs from fine-tuned model (fine-tuned on food images)</span></span>
+<span id="cb59-50"><a href="#cb59-50" aria-hidden="true" tabindex="-1"></a>    ft_pipe_output <span class="op">=</span> ft_pipe(text<span class="op">=</span>[input_message],</span>
+<span id="cb59-51"><a href="#cb59-51" aria-hidden="true" tabindex="-1"></a>                             max_new_tokens<span class="op">=</span>OUTPUT_TOKENS)</span>
+<span id="cb59-52"><a href="#cb59-52" aria-hidden="true" tabindex="-1"></a>    outputs_fine_tuned <span class="op">=</span> ft_pipe_output[<span class="dv">0</span>][<span class="dv">0</span>][<span class="st">"generated_text"</span>][<span class="op">-</span><span class="dv">1</span>][<span class="st">"content"</span>]</span>
+<span id="cb59-53"><a href="#cb59-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-54"><a href="#cb59-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> outputs_pretrained, outputs_fine_tuned</span>
+<span id="cb59-55"><a href="#cb59-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-56"><a href="#cb59-56" aria-hidden="true" tabindex="-1"></a>demo_title <span class="op">=</span> <span class="st">"🥑➡️📝 FoodExtract-Vision with a fine-tuned SmolVLM2-500M"</span></span>
+<span id="cb59-57"><a href="#cb59-57" aria-hidden="true" tabindex="-1"></a>demo_description <span class="op">=</span> <span class="st">"""* **Base model:** https://huggingface.co/HuggingFaceTB/SmolVLM-500M-Instruct</span></span>
+<span id="cb59-58"><a href="#cb59-58" aria-hidden="true" tabindex="-1"></a><span class="st">* **Fine-tuning dataset:** https://huggingface.co/datasets/mrdbourke/FoodExtract-1k-Vision (1k food images and 500 not food images)</span></span>
+<span id="cb59-59"><a href="#cb59-59" aria-hidden="true" tabindex="-1"></a><span class="st">* **Fine-tuned model:** https://huggingface.co/mrdbourke/FoodExtract-Vision-SmolVLM2-500M-fine-tune-v1</span></span>
+<span id="cb59-60"><a href="#cb59-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-61"><a href="#cb59-61" aria-hidden="true" tabindex="-1"></a><span class="st">## Overview</span></span>
+<span id="cb59-62"><a href="#cb59-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-63"><a href="#cb59-63" aria-hidden="true" tabindex="-1"></a><span class="st">Extract food and drink items in a structured way from images.</span></span>
+<span id="cb59-64"><a href="#cb59-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-65"><a href="#cb59-65" aria-hidden="true" tabindex="-1"></a><span class="st">The original model outputs fail to capture the desired structure. But the fine-tuned model sticks to the output structure quite well.</span></span>
+<span id="cb59-66"><a href="#cb59-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-67"><a href="#cb59-67" aria-hidden="true" tabindex="-1"></a><span class="st">However, the fine-tuned model could definitely be improved with respects to its ability to extract the right food/drink items.</span></span>
+<span id="cb59-68"><a href="#cb59-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-69"><a href="#cb59-69" aria-hidden="true" tabindex="-1"></a><span class="st">Both models use the input prompt:</span></span>
+<span id="cb59-70"><a href="#cb59-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-71"><a href="#cb59-71" aria-hidden="true" tabindex="-1"></a><span class="st">````</span></span>
+<span id="cb59-72"><a href="#cb59-72" aria-hidden="true" tabindex="-1"></a><span class="st">Classify the given input image into food or not and if edible food or drink items are present, extract those to a list. If no food/drink items are visible, return empty lists.</span></span>
+<span id="cb59-73"><a href="#cb59-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-74"><a href="#cb59-74" aria-hidden="true" tabindex="-1"></a><span class="st">Only return valid JSON in the following form:</span></span>
+<span id="cb59-75"><a href="#cb59-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-76"><a href="#cb59-76" aria-hidden="true" tabindex="-1"></a><span class="st">```json</span></span>
+<span id="cb59-77"><a href="#cb59-77" aria-hidden="true" tabindex="-1"></a><span class="st">{</span></span>
+<span id="cb59-78"><a href="#cb59-78" aria-hidden="true" tabindex="-1"></a><span class="st">  'is_food': 0, # int - 0 or 1 based on whether food/drinks are present (0 = no foods visible, 1 = foods visible)</span></span>
+<span id="cb59-79"><a href="#cb59-79" aria-hidden="true" tabindex="-1"></a><span class="st">  'image_title': '', # str - short food-related title for what foods/drinks are visible in the image, leave blank if no foods present</span></span>
+<span id="cb59-80"><a href="#cb59-80" aria-hidden="true" tabindex="-1"></a><span class="st">  'food_items': [], # list[str] - list of visible edible food item nouns</span></span>
+<span id="cb59-81"><a href="#cb59-81" aria-hidden="true" tabindex="-1"></a><span class="st">  'drink_items': [] # list[str] - list of visible edible drink item nouns</span></span>
+<span id="cb59-82"><a href="#cb59-82" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb59-83"><a href="#cb59-83" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb59-84"><a href="#cb59-84" aria-hidden="true" tabindex="-1"></a><span class="st">````</span></span>
+<span id="cb59-85"><a href="#cb59-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-86"><a href="#cb59-86" aria-hidden="true" tabindex="-1"></a><span class="st">Except one model has been fine-tuned on the structured data whereas the other hasn't.</span></span>
+<span id="cb59-87"><a href="#cb59-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-88"><a href="#cb59-88" aria-hidden="true" tabindex="-1"></a><span class="st">Notable next steps would be:</span></span>
+<span id="cb59-89"><a href="#cb59-89" aria-hidden="true" tabindex="-1"></a><span class="st">* **Remove the input prompt:** Just train the model to go straight from image -&gt; text (no text prompt on input), this would save on inference tokens.</span></span>
+<span id="cb59-90"><a href="#cb59-90" aria-hidden="true" tabindex="-1"></a><span class="st">* **Fine-tune on more real-world data:** Right now the model is only trained on 1k food images (from Food101) and 500 not food (random internet images), training on real world data would likely significantly improve performance.</span></span>
+<span id="cb59-91"><a href="#cb59-91" aria-hidden="true" tabindex="-1"></a><span class="st">* **Fix the repetitive generation:** The model can sometimes get stuck in a repetitive generation pattern, e.g. "onions", "onions", "onions", etc. We could look into patterns to help reduce this.</span></span>
+<span id="cb59-92"><a href="#cb59-92" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb59-93"><a href="#cb59-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-94"><a href="#cb59-94" aria-hidden="true" tabindex="-1"></a>demo <span class="op">=</span> gr.Interface(</span>
+<span id="cb59-95"><a href="#cb59-95" aria-hidden="true" tabindex="-1"></a>    fn<span class="op">=</span>extract_foods_from_image,</span>
+<span id="cb59-96"><a href="#cb59-96" aria-hidden="true" tabindex="-1"></a>    inputs<span class="op">=</span>gr.Image(<span class="bu">type</span><span class="op">=</span><span class="st">"pil"</span>),</span>
+<span id="cb59-97"><a href="#cb59-97" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span>demo_title,</span>
+<span id="cb59-98"><a href="#cb59-98" aria-hidden="true" tabindex="-1"></a>    description<span class="op">=</span>demo_description,</span>
+<span id="cb59-99"><a href="#cb59-99" aria-hidden="true" tabindex="-1"></a>    outputs<span class="op">=</span>[gr.Textbox(lines<span class="op">=</span><span class="dv">4</span>, label<span class="op">=</span><span class="st">"Original Model (not fine-tuned)"</span>),</span>
+<span id="cb59-100"><a href="#cb59-100" aria-hidden="true" tabindex="-1"></a>             gr.Textbox(lines<span class="op">=</span><span class="dv">4</span>, label<span class="op">=</span><span class="st">"Fine-tuned Model"</span>)],</span>
+<span id="cb59-101"><a href="#cb59-101" aria-hidden="true" tabindex="-1"></a>    examples<span class="op">=</span>[[<span class="st">"examples/camera.jpeg"</span>],</span>
+<span id="cb59-102"><a href="#cb59-102" aria-hidden="true" tabindex="-1"></a>              [<span class="st">"examples/Tandoori-Chicken.jpg"</span>],</span>
+<span id="cb59-103"><a href="#cb59-103" aria-hidden="true" tabindex="-1"></a>              [<span class="st">"examples/fries.jpeg"</span>]],</span>
+<span id="cb59-104"><a href="#cb59-104" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb59-105"><a href="#cb59-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-106"><a href="#cb59-106" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb59-107"><a href="#cb59-107" aria-hidden="true" tabindex="-1"></a>    demo.launch(share<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting demos/FoodExtract-Vision-v1/app.py</code></pre>
 </div>
 </div>
-<div id="c9ecbe14" class="cell" data-execution_count="19">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile demos<span class="op">/</span>FoodExtract<span class="op">-</span>Vision<span class="op">-</span>v1<span class="op">/</span>README.md</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>title: FoodExtract<span class="op">-</span>Vision Fine<span class="op">-</span>tuned VLM Structued Data Extractor</span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>emoji: 🍟➡️📝</span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>colorFrom: green</span>
-<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>colorTo: blue</span>
-<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>sdk: gradio</span>
-<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>app_file: app.py</span>
-<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>pinned: false</span>
-<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>license: apache<span class="op">-</span><span class="fl">2.0</span></span>
-<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span>
-<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>Fine<span class="op">-</span>tuned SmolVLM2<span class="op">-</span><span class="dv">500</span><span class="er">M</span> to extract food <span class="kw">and</span> drink items <span class="im">from</span> images.</span>
-<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a>Input can be <span class="bu">any</span> kind of image <span class="kw">and</span> output will be a formatted string such <span class="im">as</span> the following:</span>
-<span id="cb60-16"><a href="#cb60-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-17"><a href="#cb60-17" aria-hidden="true" tabindex="-1"></a>```json</span>
-<span id="cb60-18"><a href="#cb60-18" aria-hidden="true" tabindex="-1"></a>{<span class="st">'is_food'</span>: <span class="dv">0</span>, <span class="st">'image_title'</span>: <span class="st">''</span>, <span class="st">'food_items'</span>: [], <span class="st">'drink_items'</span>: []}</span>
-<span id="cb60-19"><a href="#cb60-19" aria-hidden="true" tabindex="-1"></a>```</span>
-<span id="cb60-20"><a href="#cb60-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-21"><a href="#cb60-21" aria-hidden="true" tabindex="-1"></a>Or <span class="cf">for</span> an image of food:</span>
-<span id="cb60-22"><a href="#cb60-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-23"><a href="#cb60-23" aria-hidden="true" tabindex="-1"></a>```json</span>
-<span id="cb60-24"><a href="#cb60-24" aria-hidden="true" tabindex="-1"></a>{<span class="st">'is_food'</span>: <span class="dv">1</span>, <span class="st">'image_title'</span>: <span class="st">'fried calamari'</span>, <span class="st">'food_items'</span>: [<span class="st">'fried calamari'</span>], <span class="st">'drink_items'</span>: []}</span>
-<span id="cb60-25"><a href="#cb60-25" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="c9ecbe14" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile demos<span class="op">/</span>FoodExtract<span class="op">-</span>Vision<span class="op">-</span>v1<span class="op">/</span>README.md</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>title: FoodExtract<span class="op">-</span>Vision Fine<span class="op">-</span>tuned VLM Structued Data Extractor</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>emoji: 🍟➡️📝</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>colorFrom: green</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>colorTo: blue</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>sdk: gradio</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>app_file: app.py</span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>pinned: false</span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>license: apache<span class="op">-</span><span class="fl">2.0</span></span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span>
+<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a>Fine<span class="op">-</span>tuned SmolVLM2<span class="op">-</span><span class="dv">500</span><span class="er">M</span> to extract food <span class="kw">and</span> drink items <span class="im">from</span> images.</span>
+<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-15"><a href="#cb61-15" aria-hidden="true" tabindex="-1"></a>Input can be <span class="bu">any</span> kind of image <span class="kw">and</span> output will be a formatted string such <span class="im">as</span> the following:</span>
+<span id="cb61-16"><a href="#cb61-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-17"><a href="#cb61-17" aria-hidden="true" tabindex="-1"></a>```json</span>
+<span id="cb61-18"><a href="#cb61-18" aria-hidden="true" tabindex="-1"></a>{<span class="st">'is_food'</span>: <span class="dv">0</span>, <span class="st">'image_title'</span>: <span class="st">''</span>, <span class="st">'food_items'</span>: [], <span class="st">'drink_items'</span>: []}</span>
+<span id="cb61-19"><a href="#cb61-19" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb61-20"><a href="#cb61-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-21"><a href="#cb61-21" aria-hidden="true" tabindex="-1"></a>Or <span class="cf">for</span> an image of food:</span>
+<span id="cb61-22"><a href="#cb61-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-23"><a href="#cb61-23" aria-hidden="true" tabindex="-1"></a>```json</span>
+<span id="cb61-24"><a href="#cb61-24" aria-hidden="true" tabindex="-1"></a>{<span class="st">'is_food'</span>: <span class="dv">1</span>, <span class="st">'image_title'</span>: <span class="st">'fried calamari'</span>, <span class="st">'food_items'</span>: [<span class="st">'fried calamari'</span>], <span class="st">'drink_items'</span>: []}</span>
+<span id="cb61-25"><a href="#cb61-25" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Overwriting demos/FoodExtract-Vision-v1/README.md</code></pre>
+<pre><code>Writing ../demos/FoodExtract-Vision-v1/README.md</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">FileNotFoundError</span>                         Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[3]</span><span class="ansi-green-fg">, line 1</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> <span class="ansi-yellow-bg">get_ipython</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">run_cell_magic</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">writefile</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">../demos/FoodExtract-Vision-v1/README.md</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-fg ansi-yellow-bg">---</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">title: FoodExtract-Vision Fine-tuned VLM Structued Data Extractor</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">emoji: 🍟➡️📝</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">colorFrom: green</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">colorTo: blue</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">sdk: gradio</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">app_file: app.py</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">pinned: false</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">license: apache-2.0</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">---</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">Fine-tuned SmolVLM2-500M to extract food and drink items from images.</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">Input can be any kind of image and output will be a formatted string such as the following:</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">```json</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">{</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">is_food</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">: 0, </span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">image_title</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">: </span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">, </span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">food_items</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">: [], </span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">drink_items</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">: []}</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">```</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">Or for an image of food:</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">```json</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">{</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">is_food</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">: 1, </span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">image_title</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">: </span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">fried calamari</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">, </span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">food_items</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">: [</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">fried calamari</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">], </span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">drink_items</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">: []}</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">```</span><span style="font-weight:bold;color:rgb(175,95,0)" class="ansi-yellow-bg">\n</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-bg">)</span>
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniforge3/envs/ai/lib/python3.12/site-packages/IPython/core/interactiveshell.py:2572</span>, in <span class="ansi-cyan-fg">InteractiveShell.run_cell_magic</span><span class="ansi-blue-fg">(self, magic_name, line, cell)</span>
+<span class="ansi-green-fg">   2570</span> <span style="font-weight:bold;color:rgb(0,135,0)">with</span> <span style="color:rgb(0,135,0)">self</span>.builtin_trap:
+<span class="ansi-green-fg">   2571</span>     args = (magic_arg_s, cell)
+<span class="ansi-green-fg">-&gt; </span><span class="ansi-green-fg">2572</span>     result = <span class="ansi-yellow-bg">fn</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg">   2574</span> <span style="font-style:italic;color:rgb(95,135,135)"># The code below prevents the output from being displayed</span>
+<span class="ansi-green-fg">   2575</span> <span style="font-style:italic;color:rgb(95,135,135)"># when using magics with decorator @output_can_be_silenced</span>
+<span class="ansi-green-fg">   2576</span> <span style="font-style:italic;color:rgb(95,135,135)"># when the last Python token in the expression is a ';'.</span>
+<span class="ansi-green-fg">   2577</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="color:rgb(0,135,0)">getattr</span>(fn, magic.MAGIC_OUTPUT_CAN_BE_SILENCED, <span style="font-weight:bold;color:rgb(0,135,0)">False</span>):
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/miniforge3/envs/ai/lib/python3.12/site-packages/IPython/core/magics/osm.py:854</span>, in <span class="ansi-cyan-fg">OSMagics.writefile</span><span class="ansi-blue-fg">(self, line, cell)</span>
+<span class="ansi-green-fg">    851</span>     <span style="color:rgb(0,135,0)">print</span>(<span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">Writing </span><span style="font-weight:bold;color:rgb(175,95,135)">%s</span><span class="ansi-yellow-fg">"</span> % filename)
+<span class="ansi-green-fg">    853</span> mode = <span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">a</span><span class="ansi-yellow-fg">'</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> args.append <span style="font-weight:bold;color:rgb(0,135,0)">else</span> <span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">w</span><span class="ansi-yellow-fg">'</span>
+<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">854</span> <span style="font-weight:bold;color:rgb(0,135,0)">with</span> <span class="ansi-yellow-bg">io</span><span class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">open</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">filename</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">mode</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">encoding</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-fg ansi-yellow-bg">utf-8</span><span class="ansi-yellow-fg ansi-yellow-bg">'</span><span class="ansi-yellow-bg">)</span> <span style="font-weight:bold;color:rgb(0,135,0)">as</span> f:
+<span class="ansi-green-fg">    855</span>     f.write(cell)
+
+<span class="ansi-red-fg">FileNotFoundError</span>: [Errno 2] No such file or directory: '../demos/FoodExtract-Vision-v1/README.md'</pre>
+</div>
 </div>
 </div>
 <div id="f88fe144" class="cell" data-execution_count="20">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile demos<span class="op">/</span>FoodExtract<span class="op">-</span>Vision<span class="op">-</span>v1<span class="op">/</span>requirements.txt</span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>num2words</span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>transformers</span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>torch</span>
-<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>accelerate</span>
-<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>gradio</span>
-<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>torchvision</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile demos<span class="op">/</span>FoodExtract<span class="op">-</span>Vision<span class="op">-</span>v1<span class="op">/</span>requirements.txt</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>num2words</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>transformers</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>torch</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>accelerate</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>gradio</span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>torchvision</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting demos/FoodExtract-Vision-v1/requirements.txt</code></pre>
 </div>
@@ -1926,47 +1967,47 @@ Epoch   Training Loss   Validation Loss Entropy Num Tokens  Mean Token Accuracy
 <section id="upload-the-demo-to-the-hugging-face-hub" class="level2" data-number="20">
 <h2 data-number="20" class="anchored" data-anchor-id="upload-the-demo-to-the-hugging-face-hub"><span class="header-section-number">20</span> Upload the demo to the Hugging Face Hub</h2>
 <div id="fe8c4857" class="cell" data-execution_count="21">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Import the required methods for uploading to the Hugging Face Hub</span></span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> huggingface_hub <span class="im">import</span> (</span>
-<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>    create_repo,</span>
-<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>    get_full_repo_name,</span>
-<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>    upload_file, <span class="co"># for uploading a single file (if necessary)</span></span>
-<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>    upload_folder <span class="co"># for uploading multiple files (in a folder)</span></span>
-<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Define the parameters we'd like to use for the upload</span></span>
-<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a>LOCAL_DEMO_FOLDER_PATH_TO_UPLOAD <span class="op">=</span> <span class="st">"demos/FoodExtract-Vision-v1/"</span></span>
-<span id="cb64-11"><a href="#cb64-11" aria-hidden="true" tabindex="-1"></a>HF_TARGET_SPACE_NAME <span class="op">=</span> <span class="st">"FoodExtract-Vision-v1"</span></span>
-<span id="cb64-12"><a href="#cb64-12" aria-hidden="true" tabindex="-1"></a>HF_REPO_TYPE <span class="op">=</span> <span class="st">"space"</span> <span class="co"># we're creating a Hugging Face Space</span></span>
-<span id="cb64-13"><a href="#cb64-13" aria-hidden="true" tabindex="-1"></a>HF_SPACE_SDK <span class="op">=</span> <span class="st">"gradio"</span></span>
-<span id="cb64-14"><a href="#cb64-14" aria-hidden="true" tabindex="-1"></a>HF_TOKEN <span class="op">=</span> <span class="st">""</span> <span class="co"># optional: set to your Hugging Face token (but I'd advise storing this as an environment variable as previously discussed)</span></span>
-<span id="cb64-15"><a href="#cb64-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-16"><a href="#cb64-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Create a Space repository on Hugging Face Hub </span></span>
-<span id="cb64-17"><a href="#cb64-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Creating repo on Hugging Face Hub with name: </span><span class="sc">{</span>HF_TARGET_SPACE_NAME<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb64-18"><a href="#cb64-18" aria-hidden="true" tabindex="-1"></a>create_repo(</span>
-<span id="cb64-19"><a href="#cb64-19" aria-hidden="true" tabindex="-1"></a>    repo_id<span class="op">=</span>HF_TARGET_SPACE_NAME,</span>
-<span id="cb64-20"><a href="#cb64-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># token=HF_TOKEN, # optional: set token manually (though it will be automatically recognized if it's available as an environment variable)</span></span>
-<span id="cb64-21"><a href="#cb64-21" aria-hidden="true" tabindex="-1"></a>    repo_type<span class="op">=</span>HF_REPO_TYPE,</span>
-<span id="cb64-22"><a href="#cb64-22" aria-hidden="true" tabindex="-1"></a>    private<span class="op">=</span><span class="va">False</span>, <span class="co"># set to True if you don't want your Space to be accessible to others</span></span>
-<span id="cb64-23"><a href="#cb64-23" aria-hidden="true" tabindex="-1"></a>    space_sdk<span class="op">=</span>HF_SPACE_SDK,</span>
-<span id="cb64-24"><a href="#cb64-24" aria-hidden="true" tabindex="-1"></a>    exist_ok<span class="op">=</span><span class="va">True</span>, <span class="co"># set to False if you want an error to raise if the repo_id already exists </span></span>
-<span id="cb64-25"><a href="#cb64-25" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb64-26"><a href="#cb64-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-27"><a href="#cb64-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Get the full repository name (e.g. {username}/{model_id} or {username}/{space_name})</span></span>
-<span id="cb64-28"><a href="#cb64-28" aria-hidden="true" tabindex="-1"></a>full_hf_repo_name <span class="op">=</span> get_full_repo_name(model_id<span class="op">=</span>HF_TARGET_SPACE_NAME)</span>
-<span id="cb64-29"><a href="#cb64-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Full Hugging Face Hub repo name: </span><span class="sc">{</span>full_hf_repo_name<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb64-30"><a href="#cb64-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb64-31"><a href="#cb64-31" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Upload our demo folder</span></span>
-<span id="cb64-32"><a href="#cb64-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Uploading </span><span class="sc">{</span>LOCAL_DEMO_FOLDER_PATH_TO_UPLOAD<span class="sc">}</span><span class="ss"> to repo: </span><span class="sc">{</span>full_hf_repo_name<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb64-33"><a href="#cb64-33" aria-hidden="true" tabindex="-1"></a>folder_upload_url <span class="op">=</span> upload_folder(</span>
-<span id="cb64-34"><a href="#cb64-34" aria-hidden="true" tabindex="-1"></a>    repo_id<span class="op">=</span>full_hf_repo_name,</span>
-<span id="cb64-35"><a href="#cb64-35" aria-hidden="true" tabindex="-1"></a>    folder_path<span class="op">=</span>LOCAL_DEMO_FOLDER_PATH_TO_UPLOAD,</span>
-<span id="cb64-36"><a href="#cb64-36" aria-hidden="true" tabindex="-1"></a>    path_in_repo<span class="op">=</span><span class="st">"."</span>, <span class="co"># upload our folder to the root directory ("." means "base" or "root", this is the default)</span></span>
-<span id="cb64-37"><a href="#cb64-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># token=HF_TOKEN, # optional: set token manually</span></span>
-<span id="cb64-38"><a href="#cb64-38" aria-hidden="true" tabindex="-1"></a>    repo_type<span class="op">=</span>HF_REPO_TYPE,</span>
-<span id="cb64-39"><a href="#cb64-39" aria-hidden="true" tabindex="-1"></a>    commit_message<span class="op">=</span><span class="st">"Uploading FoodExtract-Vision demo app.py"</span></span>
-<span id="cb64-40"><a href="#cb64-40" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb64-41"><a href="#cb64-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Demo folder successfully uploaded with commit URL: </span><span class="sc">{</span>folder_upload_url<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Import the required methods for uploading to the Hugging Face Hub</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> huggingface_hub <span class="im">import</span> (</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>    create_repo,</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>    get_full_repo_name,</span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>    upload_file, <span class="co"># for uploading a single file (if necessary)</span></span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>    upload_folder <span class="co"># for uploading multiple files (in a folder)</span></span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Define the parameters we'd like to use for the upload</span></span>
+<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a>LOCAL_DEMO_FOLDER_PATH_TO_UPLOAD <span class="op">=</span> <span class="st">"demos/FoodExtract-Vision-v1/"</span></span>
+<span id="cb65-11"><a href="#cb65-11" aria-hidden="true" tabindex="-1"></a>HF_TARGET_SPACE_NAME <span class="op">=</span> <span class="st">"FoodExtract-Vision-v1"</span></span>
+<span id="cb65-12"><a href="#cb65-12" aria-hidden="true" tabindex="-1"></a>HF_REPO_TYPE <span class="op">=</span> <span class="st">"space"</span> <span class="co"># we're creating a Hugging Face Space</span></span>
+<span id="cb65-13"><a href="#cb65-13" aria-hidden="true" tabindex="-1"></a>HF_SPACE_SDK <span class="op">=</span> <span class="st">"gradio"</span></span>
+<span id="cb65-14"><a href="#cb65-14" aria-hidden="true" tabindex="-1"></a>HF_TOKEN <span class="op">=</span> <span class="st">""</span> <span class="co"># optional: set to your Hugging Face token (but I'd advise storing this as an environment variable as previously discussed)</span></span>
+<span id="cb65-15"><a href="#cb65-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-16"><a href="#cb65-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Create a Space repository on Hugging Face Hub </span></span>
+<span id="cb65-17"><a href="#cb65-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Creating repo on Hugging Face Hub with name: </span><span class="sc">{</span>HF_TARGET_SPACE_NAME<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb65-18"><a href="#cb65-18" aria-hidden="true" tabindex="-1"></a>create_repo(</span>
+<span id="cb65-19"><a href="#cb65-19" aria-hidden="true" tabindex="-1"></a>    repo_id<span class="op">=</span>HF_TARGET_SPACE_NAME,</span>
+<span id="cb65-20"><a href="#cb65-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># token=HF_TOKEN, # optional: set token manually (though it will be automatically recognized if it's available as an environment variable)</span></span>
+<span id="cb65-21"><a href="#cb65-21" aria-hidden="true" tabindex="-1"></a>    repo_type<span class="op">=</span>HF_REPO_TYPE,</span>
+<span id="cb65-22"><a href="#cb65-22" aria-hidden="true" tabindex="-1"></a>    private<span class="op">=</span><span class="va">False</span>, <span class="co"># set to True if you don't want your Space to be accessible to others</span></span>
+<span id="cb65-23"><a href="#cb65-23" aria-hidden="true" tabindex="-1"></a>    space_sdk<span class="op">=</span>HF_SPACE_SDK,</span>
+<span id="cb65-24"><a href="#cb65-24" aria-hidden="true" tabindex="-1"></a>    exist_ok<span class="op">=</span><span class="va">True</span>, <span class="co"># set to False if you want an error to raise if the repo_id already exists </span></span>
+<span id="cb65-25"><a href="#cb65-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb65-26"><a href="#cb65-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-27"><a href="#cb65-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Get the full repository name (e.g. {username}/{model_id} or {username}/{space_name})</span></span>
+<span id="cb65-28"><a href="#cb65-28" aria-hidden="true" tabindex="-1"></a>full_hf_repo_name <span class="op">=</span> get_full_repo_name(model_id<span class="op">=</span>HF_TARGET_SPACE_NAME)</span>
+<span id="cb65-29"><a href="#cb65-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Full Hugging Face Hub repo name: </span><span class="sc">{</span>full_hf_repo_name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb65-30"><a href="#cb65-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-31"><a href="#cb65-31" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Upload our demo folder</span></span>
+<span id="cb65-32"><a href="#cb65-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Uploading </span><span class="sc">{</span>LOCAL_DEMO_FOLDER_PATH_TO_UPLOAD<span class="sc">}</span><span class="ss"> to repo: </span><span class="sc">{</span>full_hf_repo_name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb65-33"><a href="#cb65-33" aria-hidden="true" tabindex="-1"></a>folder_upload_url <span class="op">=</span> upload_folder(</span>
+<span id="cb65-34"><a href="#cb65-34" aria-hidden="true" tabindex="-1"></a>    repo_id<span class="op">=</span>full_hf_repo_name,</span>
+<span id="cb65-35"><a href="#cb65-35" aria-hidden="true" tabindex="-1"></a>    folder_path<span class="op">=</span>LOCAL_DEMO_FOLDER_PATH_TO_UPLOAD,</span>
+<span id="cb65-36"><a href="#cb65-36" aria-hidden="true" tabindex="-1"></a>    path_in_repo<span class="op">=</span><span class="st">"."</span>, <span class="co"># upload our folder to the root directory ("." means "base" or "root", this is the default)</span></span>
+<span id="cb65-37"><a href="#cb65-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># token=HF_TOKEN, # optional: set token manually</span></span>
+<span id="cb65-38"><a href="#cb65-38" aria-hidden="true" tabindex="-1"></a>    repo_type<span class="op">=</span>HF_REPO_TYPE,</span>
+<span id="cb65-39"><a href="#cb65-39" aria-hidden="true" tabindex="-1"></a>    commit_message<span class="op">=</span><span class="st">"Uploading FoodExtract-Vision demo app.py"</span></span>
+<span id="cb65-40"><a href="#cb65-40" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb65-41"><a href="#cb65-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Demo folder successfully uploaded with commit URL: </span><span class="sc">{</span>folder_upload_url<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Creating repo on Hugging Face Hub with name: FoodExtract-Vision-v1
 [INFO] Full Hugging Face Hub repo name: mrdbourke/FoodExtract-Vision-v1
@@ -1998,7 +2039,7 @@ Epoch   Training Loss   Validation Loss Entropy Num Tokens  Mean Token Accuracy
 <h2 data-number="22" class="anchored" data-anchor-id="extensions"><span class="header-section-number">22</span> Extensions</h2>
 <ol type="1">
 <li><p><strong>Formalise evaluations</strong> - How does our model compare to a model such as Qwen3-VL-8B?</p></li>
-<li><p><strong>Improve the data sampling</strong> - if our model makes mistakes, could we improve the input data (more samples + more diverse samples)? For example, introduce 1000+ real life food images (on top of Food101).</p></li>
+<li><p><strong>Improve/scale the data sampling</strong> - if our model makes mistakes, could we improve the input data (more samples + more diverse samples)? For example, introduce 1000+ real life food images (on top of Food101).</p></li>
 <li><p><strong>Remove the input prompt</strong> - right now our model is fine-tuned with an input prompt (text) as well as an image. In the future, we could just have it go straight from image -&gt; JSON to save on input tokens.</p></li>
 <li><p><strong>Fix the repetitive generation</strong> - Sometimes our model produces outputs such as “onion”, “onion”, “onion”, “onion”. What are some ways we could fix this? Perhaps we’d need to introduce RL for avoiding repetitive generation.</p></li>
 <li><p><strong>Try the fine-tune process on another dataset</strong> - Practice fine-tuning a small model for another structured data task such as extracting details from an invoice or from a poster (like Apple’s Visual Intelligence). The model likely has seen more of these samples in training so it may be better at this task.</p></li>
