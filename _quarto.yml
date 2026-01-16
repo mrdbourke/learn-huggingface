@@ -41,6 +41,8 @@ website:
         contents:
           - href: notebooks/hugging_face_object_detection_tutorial.ipynb
             text: Build a custom object detection model and demo
+          - href: notebooks/hugging_face_vlm_fine_tune_tutorial.ipynb
+            text: Fine-tune a Small VLM to do structured data extraction 
   page-footer: 
     right:
       - icon: globe
