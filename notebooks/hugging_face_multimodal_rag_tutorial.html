@@ -353,14 +353,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Ingredients:</p>
 <ul>
 <li><strong>Hardware used:</strong> NVIDIA DGX Spark (though you could also use Google Colab for embedding creation)</li>
-<li><strong>Dataset used:</strong> https://huggingface.co/datasets/mrdbourke/recipe-synthetic-images-10k</li>
-<li><strong>Embedding model used:</strong> https://huggingface.co/nvidia/llama-nemotron-embed-vl-1b-v2
+<li><strong>Dataset used:</strong> <a href="https://huggingface.co/datasets/mrdbourke/recipe-synthetic-images-10k">https://huggingface.co/datasets/mrdbourke/recipe-synthetic-images-10k</a></li>
+<li><strong>Embedding model used:</strong> <a href="https://huggingface.co/nvidia/llama-nemotron-embed-vl-1b-v2">https://huggingface.co/nvidia/llama-nemotron-embed-vl-1b-v2</a>
 <ul>
 <li><strong>Note:</strong> By default we use the image + text embeddings as we have access to image and text pairs in our dataset, and according to the <a href="https://huggingface.co/blog/nvidia/llama-nemotron-vl-1b">launch blog post</a>, these work the best.</li>
 </ul></li>
-<li><strong>Rerank model used:</strong> https://huggingface.co/nvidia/llama-nemotron-rerank-vl-1b-v2</li>
-<li><strong>Generation model used:</strong> https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct (note: you could use a larger model such as <a href="https://huggingface.co/collections/nvidia/nvidia-nemotron-v3">Nemotron v3</a>, however, this will require more compute resources)</li>
-<li><strong>Demo:</strong> https://huggingface.co/spaces/mrdbourke/multimodal-rag-with-nemotron</li>
+<li><strong>Rerank model used:</strong> <a href="https://huggingface.co/nvidia/llama-nemotron-rerank-vl-1b-v2">https://huggingface.co/nvidia/llama-nemotron-rerank-vl-1b-v2</a></li>
+<li><strong>Generation model used:</strong> <a href="https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct">https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct</a> (note: you could use a larger model such as <a href="https://huggingface.co/collections/nvidia/nvidia-nemotron-v3">Nemotron v3</a>, however, this will require more compute resources)</li>
+<li><strong>Demo:</strong> <a href="https://huggingface.co/spaces/mrdbourke/multimodal-rag-with-nemotron">https://huggingface.co/spaces/mrdbourke/multimodal-rag-with-nemotron</a></li>
 </ul>
 <p>Steps:</p>
 <ol type="1">
@@ -674,7 +674,7 @@ An appetizer from dr. and mrs. atkins. (quick &amp; easy new diet cookbook)
 <p>We could create/load the image or text embeddings only.</p>
 <p>But we’re going to use the image + text embeddings (combined embedding of image &amp; text) as these are reported to perform the best.</p>
 <p>These embeddings were created by passing the image of the recipe (<code>dataset["train"]["image"]</code>) + the markdown text of the recipe (<code>dataset["train"]["recipe_markdown"]</code>)to the embedding model.</p>
-<p>See: https://huggingface.co/blog/nvidia/llama-nemotron-vl-1b</p>
+<p>See: <a href="https://huggingface.co/blog/nvidia/llama-nemotron-vl-1b">https://huggingface.co/blog/nvidia/llama-nemotron-vl-1b</a></p>
 <blockquote class="blockquote">
 <p><strong>Note:</strong> All of these embeddings were created with <a href="https://huggingface.co/nvidia/llama-nemotron-embed-vl-1b-v2"><code>llama-nemotron-embed-vl-1b-v2</code></a>. Therefore to interact with them using queries, we must embed the query with the same model.</p>
 <p>Embedding creation is often a one-time practice, as in, you create document embeddings once and store them in a file/database and then import them when you’d like to use them. The only time you would need to update your document embeddings would be if you decided to update the embedding model you used.</p>
@@ -1328,7 +1328,7 @@ Wall time: 16.7 s</code></pre>
 </div>
 <section id="create-a-helper-function-for-reranking-input-samples" class="level3" data-number="10.1">
 <h3 data-number="10.1" class="anchored" data-anchor-id="create-a-helper-function-for-reranking-input-samples"><span class="header-section-number">10.1</span> Create a helper function for reranking input samples</h3>
-<p>See here for steps on how to do this: https://huggingface.co/nvidia/llama-nemotron-rerank-vl-1b-v2</p>
+<p>See here for steps on how to do this: <a href="https://huggingface.co/nvidia/llama-nemotron-rerank-vl-1b-v2">https://huggingface.co/nvidia/llama-nemotron-rerank-vl-1b-v2</a></p>
 <div id="94ef967a" class="cell" data-execution_count="36">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rerank_samples(</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    dataset,</span>
@@ -3963,7 +3963,7 @@ To disable this warning, you can either:
 <li><strong>Lexical Search:</strong> Integrate lexical based search alongside embedding search, this would allow simple text matching as well as semantic matching
 <ul>
 <li>E.g. search for “egg sandwich” get back all results with actual text “egg sandwich”</li>
-<li>For example, just add in BM25 or another similar alrogithm, see here: https://github.com/xhluca/bm25s</li>
+<li>For example, just add in BM25 or another similar alrogithm, see here: <a href="https://github.com/xhluca/bm25s">https://github.com/xhluca/bm25s</a></li>
 <li>This way we could combine semantic/embedding search with lexical search</li>
 </ul></li>
 <li><strong>Input checker:</strong> What if the input isn’t related to food? What could we do to add a note on what options are available?</li>
