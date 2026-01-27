@@ -265,40 +265,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-were-going-to-build" id="toc-what-were-going-to-build" class="nav-link active" data-scroll-target="#what-were-going-to-build"><span class="header-section-number">1</span> What we’re going to build</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">2</span> Resources</a></li>
-  <li><a href="#definitions" id="toc-definitions" class="nav-link" data-scroll-target="#definitions"><span class="header-section-number">3</span> Definitions</a></li>
-  <li><a href="#load-dataset" id="toc-load-dataset" class="nav-link" data-scroll-target="#load-dataset"><span class="header-section-number">4</span> Load dataset</a></li>
-  <li><a href="#load-models" id="toc-load-models" class="nav-link" data-scroll-target="#load-models"><span class="header-section-number">5</span> Load models</a></li>
-  <li><a href="#createload-embeddings" id="toc-createload-embeddings" class="nav-link" data-scroll-target="#createload-embeddings"><span class="header-section-number">6</span> Create/Load embeddings</a></li>
-  <li><a href="#retrieve-samples-based-on-input-query" id="toc-retrieve-samples-based-on-input-query" class="nav-link" data-scroll-target="#retrieve-samples-based-on-input-query"><span class="header-section-number">7</span> Retrieve samples based on input query</a></li>
-  <li><a href="#displaying-top-results" id="toc-displaying-top-results" class="nav-link" data-scroll-target="#displaying-top-results"><span class="header-section-number">8</span> Displaying top results</a></li>
-  <li><a href="#rerank-the-outputs" id="toc-rerank-the-outputs" class="nav-link" data-scroll-target="#rerank-the-outputs"><span class="header-section-number">9</span> Rerank the outputs</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
+  <li><a href="#what-were-going-to-build" id="toc-what-were-going-to-build" class="nav-link" data-scroll-target="#what-were-going-to-build"><span class="header-section-number">2</span> What we’re going to build</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">3</span> Resources</a></li>
+  <li><a href="#definitions" id="toc-definitions" class="nav-link" data-scroll-target="#definitions"><span class="header-section-number">4</span> Definitions</a></li>
+  <li><a href="#load-dataset" id="toc-load-dataset" class="nav-link" data-scroll-target="#load-dataset"><span class="header-section-number">5</span> Load dataset</a></li>
+  <li><a href="#load-models" id="toc-load-models" class="nav-link" data-scroll-target="#load-models"><span class="header-section-number">6</span> Load models</a></li>
+  <li><a href="#createload-embeddings" id="toc-createload-embeddings" class="nav-link" data-scroll-target="#createload-embeddings"><span class="header-section-number">7</span> Create/Load embeddings</a></li>
+  <li><a href="#retrieve-samples-based-on-input-query" id="toc-retrieve-samples-based-on-input-query" class="nav-link" data-scroll-target="#retrieve-samples-based-on-input-query"><span class="header-section-number">8</span> Retrieve samples based on input query</a></li>
+  <li><a href="#displaying-top-results" id="toc-displaying-top-results" class="nav-link" data-scroll-target="#displaying-top-results"><span class="header-section-number">9</span> Displaying top results</a></li>
+  <li><a href="#rerank-the-outputs" id="toc-rerank-the-outputs" class="nav-link" data-scroll-target="#rerank-the-outputs"><span class="header-section-number">10</span> Rerank the outputs</a>
   <ul class="collapse">
-  <li><a href="#create-a-helper-function-for-reranking-input-samples" id="toc-create-a-helper-function-for-reranking-input-samples" class="nav-link" data-scroll-target="#create-a-helper-function-for-reranking-input-samples"><span class="header-section-number">9.1</span> Create a helper function for reranking input samples</a></li>
-  <li><a href="#view-recipe-retrieval-before-and-after-reranking" id="toc-view-recipe-retrieval-before-and-after-reranking" class="nav-link" data-scroll-target="#view-recipe-retrieval-before-and-after-reranking"><span class="header-section-number">9.2</span> View recipe retrieval before and after reranking</a></li>
+  <li><a href="#create-a-helper-function-for-reranking-input-samples" id="toc-create-a-helper-function-for-reranking-input-samples" class="nav-link" data-scroll-target="#create-a-helper-function-for-reranking-input-samples"><span class="header-section-number">10.1</span> Create a helper function for reranking input samples</a></li>
+  <li><a href="#view-recipe-retrieval-before-and-after-reranking" id="toc-view-recipe-retrieval-before-and-after-reranking" class="nav-link" data-scroll-target="#view-recipe-retrieval-before-and-after-reranking"><span class="header-section-number">10.2</span> View recipe retrieval before and after reranking</a></li>
   </ul></li>
-  <li><a href="#load-generation-model" id="toc-load-generation-model" class="nav-link" data-scroll-target="#load-generation-model"><span class="header-section-number">10</span> Load Generation Model</a>
+  <li><a href="#load-generation-model" id="toc-load-generation-model" class="nav-link" data-scroll-target="#load-generation-model"><span class="header-section-number">11</span> Load Generation Model</a>
   <ul class="collapse">
-  <li><a href="#create-helper-function-for-generating-summaries" id="toc-create-helper-function-for-generating-summaries" class="nav-link" data-scroll-target="#create-helper-function-for-generating-summaries"><span class="header-section-number">10.1</span> Create helper function for generating summaries</a></li>
+  <li><a href="#create-helper-function-for-generating-summaries" id="toc-create-helper-function-for-generating-summaries" class="nav-link" data-scroll-target="#create-helper-function-for-generating-summaries"><span class="header-section-number">11.1</span> Create helper function for generating summaries</a></li>
   </ul></li>
-  <li><a href="#make-a-gradio-demo" id="toc-make-a-gradio-demo" class="nav-link" data-scroll-target="#make-a-gradio-demo"><span class="header-section-number">11</span> Make a Gradio demo</a>
+  <li><a href="#make-a-gradio-demo" id="toc-make-a-gradio-demo" class="nav-link" data-scroll-target="#make-a-gradio-demo"><span class="header-section-number">12</span> Make a Gradio demo</a>
   <ul class="collapse">
-  <li><a href="#create-a-helper-function-for-showing-recipe-texts" id="toc-create-a-helper-function-for-showing-recipe-texts" class="nav-link" data-scroll-target="#create-a-helper-function-for-showing-recipe-texts"><span class="header-section-number">11.1</span> Create a helper function for showing recipe texts</a></li>
-  <li><a href="#create-a-function-to-perform-our-rag-pipeline" id="toc-create-a-function-to-perform-our-rag-pipeline" class="nav-link" data-scroll-target="#create-a-function-to-perform-our-rag-pipeline"><span class="header-section-number">11.2</span> Create a function to perform our RAG pipeline</a></li>
-  <li><a href="#build-the-gradio-demo" id="toc-build-the-gradio-demo" class="nav-link" data-scroll-target="#build-the-gradio-demo"><span class="header-section-number">11.3</span> Build the Gradio demo</a></li>
+  <li><a href="#create-a-helper-function-for-showing-recipe-texts" id="toc-create-a-helper-function-for-showing-recipe-texts" class="nav-link" data-scroll-target="#create-a-helper-function-for-showing-recipe-texts"><span class="header-section-number">12.1</span> Create a helper function for showing recipe texts</a></li>
+  <li><a href="#create-a-function-to-perform-our-rag-pipeline" id="toc-create-a-function-to-perform-our-rag-pipeline" class="nav-link" data-scroll-target="#create-a-function-to-perform-our-rag-pipeline"><span class="header-section-number">12.2</span> Create a function to perform our RAG pipeline</a></li>
+  <li><a href="#build-the-gradio-demo" id="toc-build-the-gradio-demo" class="nav-link" data-scroll-target="#build-the-gradio-demo"><span class="header-section-number">12.3</span> Build the Gradio demo</a></li>
   </ul></li>
-  <li><a href="#turn-the-gradio-demo-into-files" id="toc-turn-the-gradio-demo-into-files" class="nav-link" data-scroll-target="#turn-the-gradio-demo-into-files"><span class="header-section-number">12</span> Turn the Gradio demo into files</a>
+  <li><a href="#turn-the-gradio-demo-into-files" id="toc-turn-the-gradio-demo-into-files" class="nav-link" data-scroll-target="#turn-the-gradio-demo-into-files"><span class="header-section-number">13</span> Turn the Gradio demo into files</a>
   <ul class="collapse">
-  <li><a href="#create-the-app.py-file" id="toc-create-the-app.py-file" class="nav-link" data-scroll-target="#create-the-app.py-file"><span class="header-section-number">12.1</span> Create the <code>app.py</code> file</a></li>
-  <li><a href="#upload-demo-folder-to-hugging-face" id="toc-upload-demo-folder-to-hugging-face" class="nav-link" data-scroll-target="#upload-demo-folder-to-hugging-face"><span class="header-section-number">12.2</span> Upload demo folder to Hugging Face</a></li>
+  <li><a href="#create-the-app.py-file" id="toc-create-the-app.py-file" class="nav-link" data-scroll-target="#create-the-app.py-file"><span class="header-section-number">13.1</span> Create the <code>app.py</code> file</a></li>
+  <li><a href="#upload-demo-folder-to-hugging-face" id="toc-upload-demo-folder-to-hugging-face" class="nav-link" data-scroll-target="#upload-demo-folder-to-hugging-face"><span class="header-section-number">13.2</span> Upload demo folder to Hugging Face</a></li>
   </ul></li>
-  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes"><span class="header-section-number">13</span> Notes</a></li>
-  <li><a href="#extensions" id="toc-extensions" class="nav-link" data-scroll-target="#extensions"><span class="header-section-number">14</span> Extensions</a>
+  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes"><span class="header-section-number">14</span> Notes</a></li>
+  <li><a href="#extensions" id="toc-extensions" class="nav-link" data-scroll-target="#extensions"><span class="header-section-number">15</span> Extensions</a>
   <ul class="collapse">
-  <li><a href="#evals" id="toc-evals" class="nav-link" data-scroll-target="#evals"><span class="header-section-number">14.1</span> Evals</a></li>
-  <li><a href="#apprag-pipeline" id="toc-apprag-pipeline" class="nav-link" data-scroll-target="#apprag-pipeline"><span class="header-section-number">14.2</span> App/RAG Pipeline</a></li>
-  <li><a href="#data-creationimprovements" id="toc-data-creationimprovements" class="nav-link" data-scroll-target="#data-creationimprovements"><span class="header-section-number">14.3</span> Data creation/Improvements</a></li>
+  <li><a href="#evals" id="toc-evals" class="nav-link" data-scroll-target="#evals"><span class="header-section-number">15.1</span> Evals</a></li>
+  <li><a href="#apprag-pipeline" id="toc-apprag-pipeline" class="nav-link" data-scroll-target="#apprag-pipeline"><span class="header-section-number">15.2</span> App/RAG Pipeline</a></li>
+  <li><a href="#data-creationimprovements" id="toc-data-creationimprovements" class="nav-link" data-scroll-target="#data-creationimprovements"><span class="header-section-number">15.3</span> Data creation/Improvements</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/mrdbourke/learn-huggingface/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -330,6 +331,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p><a target="_blank" href="https://colab.research.google.com/github/mrdbourke/learn-huggingface/blob/main/notebooks/hugging_face_multimodal_rag_tutorial.ipynb"> <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"> </a></p>
+<blockquote class="blockquote">
+<p><strong>Note:</strong> If you’re running in Google Colab, make sure to enable GPU usage by going to Runtime -&gt; Change runtime type -&gt; select GPU.</p>
+</blockquote>
+<p><a href="https://www.learnhuggingface.com/notebooks/hugging_face_multimodal_rag_tutorial">Book version</a> (easy to read) | <a href="../notebooks/hugging_face_multimodal_rag_tutorial.html">Source Code</a></p>
+<section id="overview" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
+<p>We’re going to build a multimodal RAG pipeline to retrieve food recipe images/texts given an input query of text or image.</p>
 <p>Goals:</p>
 <ul>
 <li>Image input -&gt; retrieved recipes</li>
@@ -358,14 +367,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Build the demo application from embeddings -&gt; retrieval -&gt; rerank (optional) -&gt; display results</li>
 <li>Add in generation if this pipeline works well</li>
 </ol>
-<section id="what-were-going-to-build" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="what-were-going-to-build"><span class="header-section-number">1</span> What we’re going to build</h2>
+</section>
+<section id="what-were-going-to-build" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="what-were-going-to-build"><span class="header-section-number">2</span> What we’re going to build</h2>
 <p>We’re going to build a multimodal RAG pipeline which will allow us to query a database of ~10,000 recipe images and texts with a text or an input image.</p>
 <p>The pipeline will return the most relevant recipe images and texts with optional reranking and generative outputs.</p>
 <p><img src="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/learn-hf-multimodal-rag/multi-modal-rag-overview.png" class="img-fluid"></p>
 </section>
-<section id="resources" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="resources"><span class="header-section-number">2</span> Resources</h2>
+<section id="resources" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="resources"><span class="header-section-number">3</span> Resources</h2>
 <p>All the code for this notebook was developed over a series of livestreams on YouTube.</p>
 <p>This notebook is a succinct/cleaned up version of the trials and errors faced through the streams.</p>
 <p>You can see them on my YouTube channel under “Local Multimodal RAG on the NVIDIA DGX Spark”.</p>
@@ -412,8 +422,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="definitions" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="definitions"><span class="header-section-number">3</span> Definitions</h2>
+<section id="definitions" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="definitions"><span class="header-section-number">4</span> Definitions</h2>
 <ul>
 <li><strong>query</strong> = A text/image based search term for what you’re trying to find, for example, “recipes with tomatoes and parmesan” or an image of a kitchen bench of ingredients.</li>
 <li><strong>query embedding</strong> = A numerical representation of your input query so it can be matched to document embeddings.</li>
@@ -422,7 +432,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>For example, you have 10,000 images in a file and them embed them with an embedding model, save these embeddings to file, these would be called your document embeddings. Our goal is to find the most similar document embedding(s) for a given query embedding.</li>
 </ul></li>
 </ul>
-<div id="6f52a2f8" class="cell" data-execution_count="1">
+<div id="6f52a2f8" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set device (note: having CUDA is important otherwise everything will take far longer)</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -433,9 +443,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="load-dataset" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="load-dataset"><span class="header-section-number">4</span> Load dataset</h2>
-<div id="6df558ec" class="cell" data-execution_count="2">
+<section id="load-dataset" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="load-dataset"><span class="header-section-number">5</span> Load dataset</h2>
+<div id="6df558ec" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> load_dataset(path<span class="op">=</span><span class="st">"mrdbourke/recipe-synthetic-images-10k"</span>)</span>
@@ -444,7 +454,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[INFO] Number of samples in our dataset: 10096</code></pre>
 </div>
 </div>
-<div id="b889e86b" class="cell" data-execution_count="3">
+<div id="b889e86b" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View an example sample</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dataset[<span class="st">"train"</span>][<span class="dv">42</span>][<span class="st">"recipe_markdown"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -556,8 +566,8 @@ An appetizer from dr. and mrs. atkins. (quick &amp; easy new diet cookbook)
 </div>
 </div>
 </section>
-<section id="load-models" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="load-models"><span class="header-section-number">5</span> Load models</h2>
+<section id="load-models" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="load-models"><span class="header-section-number">6</span> Load models</h2>
 <blockquote class="blockquote">
 <p><strong>Note:</strong> We are loading models from a custom commit version of <code>"nvidia/llama-nemotron-embed-vl-1b-v2"</code> and <code>"nvidia/llama-nemotron-rerank-vl-1b-v2"</code> so we can run them using <code>sdpa</code> attention rather than <code>flash_attention_2</code> (this is required for Hugging Face Spaces). If you have <code>flash_attention_2</code> installed locally, it is suggested you use the models with it for faster generation.</p>
 </blockquote>
@@ -659,8 +669,8 @@ An appetizer from dr. and mrs. atkins. (quick &amp; easy new diet cookbook)
 </div>
 </div>
 </section>
-<section id="createload-embeddings" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="createload-embeddings"><span class="header-section-number">6</span> Create/Load embeddings</h2>
+<section id="createload-embeddings" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="createload-embeddings"><span class="header-section-number">7</span> Create/Load embeddings</h2>
 <p>We could create/load the image or text embeddings only.</p>
 <p>But we’re going to use the image + text embeddings (combined embedding of image &amp; text) as these are reported to perform the best.</p>
 <p>These embeddings were created by passing the image of the recipe (<code>dataset["train"]["image"]</code>) + the markdown text of the recipe (<code>dataset["train"]["recipe_markdown"]</code>)to the embedding model.</p>
@@ -748,8 +758,8 @@ An appetizer from dr. and mrs. atkins. (quick &amp; easy new diet cookbook)
 </div>
 <p>We have 10,096 embeddings, one for each of our recipe image + text combos. They are of size <code>2048</code> which means they are represented by 2048 numerical values each.</p>
 </section>
-<section id="retrieve-samples-based-on-input-query" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="retrieve-samples-based-on-input-query"><span class="header-section-number">7</span> Retrieve samples based on input query</h2>
+<section id="retrieve-samples-based-on-input-query" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="retrieve-samples-based-on-input-query"><span class="header-section-number">8</span> Retrieve samples based on input query</h2>
 <p>Because our embeddings store image + text representations in one, we can search via input text or via input image (or if we really wanted to, we can search via both).</p>
 <p>To keep things simple, we’ll start with querying our embeddings using text.</p>
 <blockquote class="blockquote">
@@ -1028,8 +1038,8 @@ This is the best banana bread ever.  the sour cream really gives it something ex
 </div>
 </div>
 </section>
-<section id="displaying-top-results" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="displaying-top-results"><span class="header-section-number">8</span> Displaying top results</h2>
+<section id="displaying-top-results" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="displaying-top-results"><span class="header-section-number">9</span> Displaying top results</h2>
 <p>Let’s write some nice visualization code to view the top results.</p>
 <div id="f93a1802" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_top_n_scores_and_samples(scores, indicies, top_n<span class="op">=</span><span class="dv">3</span>):</span>
@@ -1226,8 +1236,8 @@ This is the best banana bread ever.  the sour cream really gives it something ex
 <span id="cb38-172"><a href="#cb38-172" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="rerank-the-outputs" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="rerank-the-outputs"><span class="header-section-number">9</span> Rerank the outputs</h2>
+<section id="rerank-the-outputs" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="rerank-the-outputs"><span class="header-section-number">10</span> Rerank the outputs</h2>
 <p>We get back some good results to start, however, these results could potentially be improved via reranking.</p>
 <p>To do so, we can use <a href="https://huggingface.co/nvidia/llama-nemotron-rerank-vl-1b-v2"><code>nvidia/llama-nemotron-rerank-vl-1b-v2</code></a>.</p>
 <div id="94011306" class="cell" data-execution_count="32">
@@ -1316,8 +1326,8 @@ Wall time: 16.7 s</code></pre>
         12, 16], device='cuda:0')</code></pre>
 </div>
 </div>
-<section id="create-a-helper-function-for-reranking-input-samples" class="level3" data-number="9.1">
-<h3 data-number="9.1" class="anchored" data-anchor-id="create-a-helper-function-for-reranking-input-samples"><span class="header-section-number">9.1</span> Create a helper function for reranking input samples</h3>
+<section id="create-a-helper-function-for-reranking-input-samples" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="create-a-helper-function-for-reranking-input-samples"><span class="header-section-number">10.1</span> Create a helper function for reranking input samples</h3>
 <p>See here for steps on how to do this: https://huggingface.co/nvidia/llama-nemotron-rerank-vl-1b-v2</p>
 <div id="94ef967a" class="cell" data-execution_count="36">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rerank_samples(</span>
@@ -1482,8 +1492,8 @@ Wall time: 16.7 s</code></pre>
 </div>
 </div>
 </section>
-<section id="view-recipe-retrieval-before-and-after-reranking" class="level3" data-number="9.2">
-<h3 data-number="9.2" class="anchored" data-anchor-id="view-recipe-retrieval-before-and-after-reranking"><span class="header-section-number">9.2</span> View recipe retrieval before and after reranking</h3>
+<section id="view-recipe-retrieval-before-and-after-reranking" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="view-recipe-retrieval-before-and-after-reranking"><span class="header-section-number">10.2</span> View recipe retrieval before and after reranking</h3>
 <div id="67511da0" class="cell" data-execution_count="40">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> io <span class="im">import</span> BytesIO</span>
@@ -2345,8 +2355,8 @@ Wall time: 16.7 s</code></pre>
 <p>This is something you will have to test and see if it fits your given circumstance.</p>
 </section>
 </section>
-<section id="load-generation-model" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="load-generation-model"><span class="header-section-number">10</span> Load Generation Model</h2>
+<section id="load-generation-model" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="load-generation-model"><span class="header-section-number">11</span> Load Generation Model</h2>
 <p>We are using <code>Qwen3-VL-2B-Instruct</code> for a small model as to not take up too much memory.</p>
 <p>However, you could easily use a model such as <a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16">`nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16</a> for higher quality outputs.</p>
 <div id="22c694ec" class="cell" data-execution_count="42">
@@ -2371,8 +2381,8 @@ Wall time: 16.7 s</code></pre>
 [INFO] Device: cuda:0</code></pre>
 </div>
 </div>
-<section id="create-helper-function-for-generating-summaries" class="level3" data-number="10.1">
-<h3 data-number="10.1" class="anchored" data-anchor-id="create-helper-function-for-generating-summaries"><span class="header-section-number">10.1</span> Create helper function for generating summaries</h3>
+<section id="create-helper-function-for-generating-summaries" class="level3" data-number="11.1">
+<h3 data-number="11.1" class="anchored" data-anchor-id="create-helper-function-for-generating-summaries"><span class="header-section-number">11.1</span> Create helper function for generating summaries</h3>
 <div id="2bfe5ff5" class="cell" data-execution_count="43">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to summarize recipes</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_recipe_summary(</span>
@@ -2500,8 +2510,8 @@ A simple, two-ingredient recipe for homemade pineapple preserves that's easy to 
 </div>
 </section>
 </section>
-<section id="make-a-gradio-demo" class="level2" data-number="11">
-<h2 data-number="11" class="anchored" data-anchor-id="make-a-gradio-demo"><span class="header-section-number">11</span> Make a Gradio demo</h2>
+<section id="make-a-gradio-demo" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="make-a-gradio-demo"><span class="header-section-number">12</span> Make a Gradio demo</h2>
 <p>Let’s turn our retrieval pipeline into a demo so other people can try it out.</p>
 <p>Ideally our demo will:</p>
 <ul>
@@ -2571,8 +2581,8 @@ A simple, two-ingredient recipe for homemade pineapple preserves that's easy to 
 </div>
 </div>
 </div>
-<section id="create-a-helper-function-for-showing-recipe-texts" class="level3" data-number="11.1">
-<h3 data-number="11.1" class="anchored" data-anchor-id="create-a-helper-function-for-showing-recipe-texts"><span class="header-section-number">11.1</span> Create a helper function for showing recipe texts</h3>
+<section id="create-a-helper-function-for-showing-recipe-texts" class="level3" data-number="12.1">
+<h3 data-number="12.1" class="anchored" data-anchor-id="create-a-helper-function-for-showing-recipe-texts"><span class="header-section-number">12.1</span> Create a helper function for showing recipe texts</h3>
 <p>Our helper fucntion will convert our recipes as markdown into HTML for displaying in our Gradio demo.</p>
 <div id="42186674" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
@@ -2615,8 +2625,8 @@ A simple, two-ingredient recipe for homemade pineapple preserves that's easy to 
 <span id="cb56-38"><a href="#cb56-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> combined_html</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="create-a-function-to-perform-our-rag-pipeline" class="level3" data-number="11.2">
-<h3 data-number="11.2" class="anchored" data-anchor-id="create-a-function-to-perform-our-rag-pipeline"><span class="header-section-number">11.2</span> Create a function to perform our RAG pipeline</h3>
+<section id="create-a-function-to-perform-our-rag-pipeline" class="level3" data-number="12.2">
+<h3 data-number="12.2" class="anchored" data-anchor-id="create-a-function-to-perform-our-rag-pipeline"><span class="header-section-number">12.2</span> Create a function to perform our RAG pipeline</h3>
 <p>We’ll make a single function to go from input (text/image) -&gt; retrieval -&gt; rerank (optional) -&gt; generate (optional) -&gt; display results.</p>
 <p>This is because Gradio works off the premise of input -&gt; function -&gt; output.</p>
 <p>Our input will be a text/image query for recipes, our function will perform the RAG pipeline steps and return our desired outputs to display.</p>
@@ -2978,8 +2988,8 @@ A simple, warming tea made with milk, cardamom, tea bags, and sugar. Easy to pre
 </div>
 </div>
 </section>
-<section id="build-the-gradio-demo" class="level3" data-number="11.3">
-<h3 data-number="11.3" class="anchored" data-anchor-id="build-the-gradio-demo"><span class="header-section-number">11.3</span> Build the Gradio demo</h3>
+<section id="build-the-gradio-demo" class="level3" data-number="12.3">
+<h3 data-number="12.3" class="anchored" data-anchor-id="build-the-gradio-demo"><span class="header-section-number">12.3</span> Build the Gradio demo</h3>
 <p>We can now run construct and run our Gradio demo inside our notebook if we like.</p>
 <div id="42473cfa" class="cell" data-execution_count="63">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gradio <span class="im">as</span> gr</span>
@@ -3098,8 +3108,8 @@ A simple, warming tea made with milk, cardamom, tea bags, and sugar. Easy to pre
 </div>
 </section>
 </section>
-<section id="turn-the-gradio-demo-into-files" class="level2" data-number="12">
-<h2 data-number="12" class="anchored" data-anchor-id="turn-the-gradio-demo-into-files"><span class="header-section-number">12</span> Turn the Gradio demo into files</h2>
+<section id="turn-the-gradio-demo-into-files" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="turn-the-gradio-demo-into-files"><span class="header-section-number">13</span> Turn the Gradio demo into files</h2>
 <p>We can turn our Gradio demo into a series of files we can upload to Hugging Face Spaces to make it live.</p>
 <p>Specifically we’ll need:</p>
 <ul>
@@ -3116,8 +3126,8 @@ To disable this warning, you can either:
     - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)</code></pre>
 </div>
 </div>
-<section id="create-the-app.py-file" class="level3" data-number="12.1">
-<h3 data-number="12.1" class="anchored" data-anchor-id="create-the-app.py-file"><span class="header-section-number">12.1</span> Create the <code>app.py</code> file</h3>
+<section id="create-the-app.py-file" class="level3" data-number="13.1">
+<h3 data-number="13.1" class="anchored" data-anchor-id="create-the-app.py-file"><span class="header-section-number">13.1</span> Create the <code>app.py</code> file</h3>
 <div id="ef6a11b2" class="cell" data-execution_count="65">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile demo<span class="op">/</span>app.py</span>
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
@@ -3857,8 +3867,8 @@ To disable this warning, you can either:
 </div>
 </div>
 </section>
-<section id="upload-demo-folder-to-hugging-face" class="level3" data-number="12.2">
-<h3 data-number="12.2" class="anchored" data-anchor-id="upload-demo-folder-to-hugging-face"><span class="header-section-number">12.2</span> Upload demo folder to Hugging Face</h3>
+<section id="upload-demo-folder-to-hugging-face" class="level3" data-number="13.2">
+<h3 data-number="13.2" class="anchored" data-anchor-id="upload-demo-folder-to-hugging-face"><span class="header-section-number">13.2</span> Upload demo folder to Hugging Face</h3>
 <div id="f1dff458" class="cell" data-execution_count="70">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Import the required methods for uploading to the Hugging Face Hub</span></span>
 <span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> huggingface_hub <span class="im">import</span> (</span>
@@ -3925,8 +3935,8 @@ To disable this warning, you can either:
 </div>
 </section>
 </section>
-<section id="notes" class="level2" data-number="13">
-<h2 data-number="13" class="anchored" data-anchor-id="notes"><span class="header-section-number">13</span> Notes</h2>
+<section id="notes" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="notes"><span class="header-section-number">14</span> Notes</h2>
 <ul>
 <li><strong>Reranking tradeoff:</strong> Better retrieval results but increased latency.</li>
 <li><strong>Generation tradeoff:</strong> Produces a nice summary/overview but increases latency.
@@ -3939,16 +3949,16 @@ To disable this warning, you can either:
 </ul></li>
 </ul>
 </section>
-<section id="extensions" class="level2" data-number="14">
-<h2 data-number="14" class="anchored" data-anchor-id="extensions"><span class="header-section-number">14</span> Extensions</h2>
-<section id="evals" class="level3" data-number="14.1">
-<h3 data-number="14.1" class="anchored" data-anchor-id="evals"><span class="header-section-number">14.1</span> Evals</h3>
+<section id="extensions" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="extensions"><span class="header-section-number">15</span> Extensions</h2>
+<section id="evals" class="level3" data-number="15.1">
+<h3 data-number="15.1" class="anchored" data-anchor-id="evals"><span class="header-section-number">15.1</span> Evals</h3>
 <ul>
 <li><strong>Add actual evals:</strong> Right now we’re basing the results off <em>vibe</em> but they seem quite good, however, if we wanted to get a more robust system we’d be looking to get evaluation metrics on the quality of our retrieval. This would take an investment in ranking samples we’d like to get back given an input query.</li>
 </ul>
 </section>
-<section id="apprag-pipeline" class="level3" data-number="14.2">
-<h3 data-number="14.2" class="anchored" data-anchor-id="apprag-pipeline"><span class="header-section-number">14.2</span> App/RAG Pipeline</h3>
+<section id="apprag-pipeline" class="level3" data-number="15.2">
+<h3 data-number="15.2" class="anchored" data-anchor-id="apprag-pipeline"><span class="header-section-number">15.2</span> App/RAG Pipeline</h3>
 <ul>
 <li><strong>Lexical Search:</strong> Integrate lexical based search alongside embedding search, this would allow simple text matching as well as semantic matching
 <ul>
@@ -3964,8 +3974,8 @@ To disable this warning, you can either:
 <li><strong>A more formal RAG pipeline:</strong> Our demo works quite well but if we want to put it into a production setting, there are likely a few more parts we could add, see Martin Fowler’s <a href="https://martinfowler.com/articles/gen-ai-patterns/"><em>Emerging Patterns in Building GenAI Products</em></a> for more.</li>
 </ul>
 </section>
-<section id="data-creationimprovements" class="level3" data-number="14.3">
-<h3 data-number="14.3" class="anchored" data-anchor-id="data-creationimprovements"><span class="header-section-number">14.3</span> Data creation/Improvements</h3>
+<section id="data-creationimprovements" class="level3" data-number="15.3">
+<h3 data-number="15.3" class="anchored" data-anchor-id="data-creationimprovements"><span class="header-section-number">15.3</span> Data creation/Improvements</h3>
 <ul>
 <li><strong>Increase scale:</strong> We capped our dataset at 10,000 samples but this workflow could easily scale to 1,000,000 samples (100x increase), how does this go?
 <ul>
