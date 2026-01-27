@@ -2,42 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.learnhuggingface.com/notebooks/hugging_face_object_detection_tutorial.html</loc>
-    <lastmod>2026-01-16T11:44:02.240Z</lastmod>
+    <lastmod>2026-01-27T02:43:38.812Z</lastmod>
   </url>
   <url>
     <loc>https://www.learnhuggingface.com/notebooks/hugging_face_llm_full_fine_tune_tutorial.html</loc>
-    <lastmod>2026-01-16T11:44:02.207Z</lastmod>
+    <lastmod>2026-01-27T02:43:38.770Z</lastmod>
   </url>
   <url>
-    <loc>https://www.learnhuggingface.com/about.html</loc>
-    <lastmod>2026-01-16T11:44:02.170Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.learnhuggingface.com/extras/resources.html</loc>
-    <lastmod>2026-01-16T11:44:02.205Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.learnhuggingface.com/extras/glossary.html</loc>
-    <lastmod>2026-01-16T11:44:02.205Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.learnhuggingface.com/index.html</loc>
-    <lastmod>2026-01-16T11:44:02.205Z</lastmod>
-  </url>
-  <url>
-    <loc>https://www.learnhuggingface.com/extras/todo.html</loc>
-    <lastmod>2026-01-16T11:44:02.205Z</lastmod>
+    <loc>https://www.learnhuggingface.com/notebooks/hugging_face_multimodal_rag_tutorial.html</loc>
+    <lastmod>2026-01-27T02:43:38.779Z</lastmod>
   </url>
   <url>
     <loc>https://www.learnhuggingface.com/extras/setup.html</loc>
-    <lastmod>2026-01-16T11:44:02.205Z</lastmod>
+    <lastmod>2026-01-27T02:43:38.768Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.learnhuggingface.com/extras/todo.html</loc>
+    <lastmod>2026-01-27T02:43:38.768Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.learnhuggingface.com/index.html</loc>
+    <lastmod>2026-01-27T02:43:38.768Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.learnhuggingface.com/extras/glossary.html</loc>
+    <lastmod>2026-01-27T02:43:38.768Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.learnhuggingface.com/extras/resources.html</loc>
+    <lastmod>2026-01-27T02:43:38.768Z</lastmod>
+  </url>
+  <url>
+    <loc>https://www.learnhuggingface.com/about.html</loc>
+    <lastmod>2026-01-27T02:43:38.733Z</lastmod>
   </url>
   <url>
     <loc>https://www.learnhuggingface.com/notebooks/hugging_face_text_classification_tutorial.html</loc>
-    <lastmod>2026-01-16T11:44:02.242Z</lastmod>
+    <lastmod>2026-01-27T02:43:38.814Z</lastmod>
   </url>
   <url>
     <loc>https://www.learnhuggingface.com/notebooks/hugging_face_vlm_fine_tune_tutorial.html</loc>
-    <lastmod>2026-01-16T11:44:02.251Z</lastmod>
+    <lastmod>2026-01-27T02:43:38.823Z</lastmod>
   </url>
 </urlset>
