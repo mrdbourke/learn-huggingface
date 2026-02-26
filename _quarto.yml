@@ -59,14 +59,16 @@ website:
         href: https://twitter.com/mrdbourke
       - icon: linkedin
         href: https://www.linkedin.com/in/mrdbourke/
-  
+
+filters:
+  - filters/cell-numbers.lua
+
 format:
   html:
-    theme: cosmo
-    css: styles.css
+    theme:
+      light: cosmo
+      dark: darkly
+    css: styles/custom.css
     toc: true
     page-layout: full
     highlight-style: pygments
-
-
-
