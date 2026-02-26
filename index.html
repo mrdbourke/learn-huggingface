@@ -392,8 +392,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#updates" id="toc-updates" class="nav-link active" data-scroll-target="#updates">Updates</a></li>
-  <li><a href="#contents" id="toc-contents" class="nav-link" data-scroll-target="#contents">Contents</a></li>
+  <li><a href="#contents" id="toc-contents" class="nav-link active" data-scroll-target="#contents">Contents</a></li>
+  <li><a href="#updates" id="toc-updates" class="nav-link" data-scroll-target="#updates">Updates</a></li>
   <li><a href="#who-is-it-for" id="toc-who-is-it-for" class="nav-link" data-scroll-target="#who-is-it-for">Who is it for?</a></li>
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
   <li><a href="#what-is-hugging-face" id="toc-what-is-hugging-face" class="nav-link" data-scroll-target="#what-is-hugging-face">What is Hugging Face?</a></li>
@@ -444,6 +444,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>Teaching style:</p>
 <p>A machine learning cooking show! 👨‍🍳</p>
+<p>We focus on starting with raw ingredients such as a dataset or base model and then we customize them to our own liking before uploading the fine-tuned model and custom demo to Hugging Face so other people can try it out.</p>
 <p>Mottos:</p>
 <ul>
 <li><strong><em>If in doubt, run the code.</em></strong> – Machine learning is very experimental. So it’s good to get in the habit of continually trying things (even if you think they won’t work).</li>
@@ -466,22 +467,13 @@ ul.task-list li input[type="checkbox"] {
 A general Hugging Face workflow from idea to shared model and demo using tools from the Hugging Face ecosystem. These kind of workflows are not set in stone and are more of guide than specific directions. See information on each of the tools in the <a href="https://huggingface.co/docs">Hugging Face documentation</a>.
 </figcaption>
 </figure>
-<section id="updates" class="level2">
-<h2 class="anchored" data-anchor-id="updates">Updates</h2>
-<ul>
-<li><strong>08 Jan 2026</strong> - Add first iteration of <a href="https://www.learnhuggingface.com/notebooks/hugging_face_llm_full_fine_tune_tutorial">full fine-tuning notebook for Gemma 3 270M</a> (fully fine-tune a Small Language Model for structured data extraction)</li>
-<li><strong>07 Nov 2025</strong> - Videos for the object detection project are now available on <a href="https://dbourke.link/ZTMHuggingFace">ZTM in the Hugging Face Bootcamp</a>!</li>
-<li><strong>18 June 2025</strong> - All code has been completed for the <a href="https://www.learnhuggingface.com/notebooks/hugging_face_object_detection_tutorial">object detection project</a>, train a custom object detection model and make a demo with it for others to try! (video course to come soon)</li>
-<li><strong>1 Oct 2024</strong> - Video course version of text classification is <a href="https://dbourke.link/ZTM-HF-Text-Classification">live on ZTM</a>! Inside, we’ll walkthrough every line of code building the <a href="https://www.learnhuggingface.com/notebooks/hugging_face_text_classification_tutorial">text classification project</a> with Hugging Face Datasets, Transformers and Spaces.</li>
-</ul>
-</section>
 <section id="contents" class="level2">
 <h2 class="anchored" data-anchor-id="contents">Contents</h2>
 <p>All code and text will be free/open-source, <a href="https://dbourke.link/ZTMHuggingFace">video step-by-step walkthroughs</a> are available as a paid upgrade on Zero to Mastery.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 45%">
+<col style="width: 15%">
+<col style="width: 40%">
 <col style="width: 5%">
 <col style="width: 5%">
 <col style="width: 5%">
@@ -515,12 +507,28 @@ A general Hugging Face workflow from idea to shared model and demo using tools f
 <td><a href="https://dbourke.link/ZTMHuggingFace">Video Course</a></td>
 </tr>
 <tr class="odd">
-<td>2 - (WIP) <a href="https://www.learnhuggingface.com/notebooks/hugging_face_llm_full_fine_tune_tutorial">LLM Full Fine-tuning</a></td>
+<td>2 - <a href="https://www.learnhuggingface.com/notebooks/hugging_face_llm_full_fine_tune_tutorial">LLM Full Fine-tuning</a></td>
 <td>Fully fine-tune Google’s Gemma 3 270M model to perform structured data extraction on any kind of text.</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td><a href="https://huggingface.co/datasets/mrdbourke/FoodExtract-1k">Dataset</a></td>
+<td><a href="https://huggingface.co/mrdbourke/FoodExtract-gemma-3-270m-fine-tune-v1">Model</a></td>
+<td><a href="https://huggingface.co/spaces/mrdbourke/FoodExtract-v1">Demo</a></td>
+<td><a href="https://youtu.be/2hoNAr-id-E">YouTube</a></td>
+</tr>
+<tr class="even">
+<td>3 - <a href="https://www.learnhuggingface.com/notebooks/hugging_face_vlm_fine_tune_tutorial">VLM Fine-tuning</a></td>
+<td>Fine-tune a small VLM model, SmolVLM2-500M for structured data extraction from images.</td>
+<td><a href="https://huggingface.co/datasets/mrdbourke/FoodExtract-1k-Vision">Dataset</a></td>
+<td><a href="https://huggingface.co/mrdbourke/FoodExtract-Vision-SmolVLM2-500M-fine-tune-v1">Model</a></td>
+<td><a href="https://huggingface.co/spaces/mrdbourke/FoodExtract-Vision-v1">Demo</a></td>
+<td><a href="https://youtu.be/_EMfJSmLSKE">YouTube</a></td>
+</tr>
+<tr class="odd">
+<td>4 - <a href="https://www.learnhuggingface.com/notebooks/hugging_face_multimodal_rag_tutorial">Multimodal RAG (Retrieval Augmented Generation)</a></td>
+<td>Level up your text-based RAG pipelines and learn how to embed text and images of documents into a shared embedding space. This allows you to query over a dataset of combined images and text.</td>
+<td>Dataset</td>
+<td>Model</td>
+<td>Demo</td>
+<td><a href="https://youtu.be/7GQPFS7NQrA">YouTube</a></td>
 </tr>
 <tr class="even">
 <td>More to come soon!</td>
@@ -532,6 +540,16 @@ A general Hugging Face workflow from idea to shared model and demo using tools f
 </tr>
 </tbody>
 </table>
+</section>
+<section id="updates" class="level2">
+<h2 class="anchored" data-anchor-id="updates">Updates</h2>
+<ul>
+<li><strong>26 Feb 2026</strong> - Update links to LLM fine-tuning, VLM fine-tuning, Multimodal RAG notebooks (these all work, however, I’m in the process of tidying them up). Add dark mode to notebooks.</li>
+<li><strong>08 Jan 2026</strong> - Add first iteration of <a href="https://www.learnhuggingface.com/notebooks/hugging_face_llm_full_fine_tune_tutorial">full fine-tuning notebook for Gemma 3 270M</a> (fully fine-tune a Small Language Model for structured data extraction)</li>
+<li><strong>07 Nov 2025</strong> - Videos for the object detection project are now available on <a href="https://dbourke.link/ZTMHuggingFace">ZTM in the Hugging Face Bootcamp</a>!</li>
+<li><strong>18 June 2025</strong> - All code has been completed for the <a href="https://www.learnhuggingface.com/notebooks/hugging_face_object_detection_tutorial">object detection project</a>, train a custom object detection model and make a demo with it for others to try! (video course to come soon)</li>
+<li><strong>1 Oct 2024</strong> - Video course version of text classification is <a href="https://dbourke.link/ZTM-HF-Text-Classification">live on ZTM</a>! Inside, we’ll walkthrough every line of code building the <a href="https://www.learnhuggingface.com/notebooks/hugging_face_text_classification_tutorial">text classification project</a> with Hugging Face Datasets, Transformers and Spaces.</li>
+</ul>
 </section>
 <section id="who-is-it-for" class="level2">
 <h2 class="anchored" data-anchor-id="who-is-it-for">Who is it for?</h2>
@@ -578,27 +596,22 @@ A handful of pieces from the Hugging Face ecosystem. There are many more availab
 <section id="todo" class="level2">
 <h2 class="anchored" data-anchor-id="todo">TODO</h2>
 <ul class="task-list">
+<li><label><input type="checkbox">Ecosystem overview: transformers, datasets, accelerate, Spaces, Hub, models etc</label></li>
 <li><label><input type="checkbox">Finish outline of this (index.md) page</label>
 <ul class="task-list">
 <li><label><input type="checkbox">Copy a similar version to the README.md for GitHub</label></li>
 <li><label><input type="checkbox">Make share image for the whole thing</label></li>
 </ul></li>
 <li><label><input type="checkbox">Make index of different projects</label></li>
-<li><label><input type="checkbox">Ecosystem overview: transformers, datasets, accelerate, Spaces, Hub, models etc</label></li>
-<li><label><input type="checkbox">Practical tutorials</label>
-<ul class="task-list">
-<li><label><input type="checkbox">Text classification (this will be like a “start here” for the Hugging Face ecosystem)</label></li>
-<li><label><input type="checkbox">More to come…</label></li>
-</ul></li>
 <li><label><input type="checkbox">Where to get help? HF forums, HF GitHub, etc</label></li>
 <li><label><input type="checkbox">Finish setup page</label>
 <ul class="task-list">
 <li><label><input type="checkbox">Local setup</label></li>
 </ul></li>
 <li><label><input type="checkbox" checked="">Finish deployment to learnhuggingface.com page</label></li>
-<li><label><input type="checkbox">Get started: text classification shows an end-to-end workflow with detailed steps, I’d advise starting here to get to know the ecosystem a bit</label>
+<li><label><input type="checkbox" checked="">Get started: text classification shows an end-to-end workflow with detailed steps, I’d advise starting here to get to know the ecosystem a bit</label>
 <ul class="task-list">
-<li><label><input type="checkbox">Other projects are more focused on specific tasks with less explanations but still complete code examples</label></li>
+<li><label><input type="checkbox" checked="">Other projects are more focused on specific tasks with less explanations but still complete code examples</label></li>
 </ul></li>
 </ul>
 </section>
