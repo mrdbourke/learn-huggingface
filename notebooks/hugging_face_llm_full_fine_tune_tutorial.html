@@ -77,7 +77,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-1d5e050edb13250d4f64432100cad504.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-48b82b0f71f6c0c71417b6e285bbb595.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-42a8210db514eb70ae23b331f1d56581.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -294,7 +294,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#upload-our-demo-to-the-hugging-face-hub" id="toc-upload-our-demo-to-the-hugging-face-hub" class="nav-link" data-scroll-target="#upload-our-demo-to-the-hugging-face-hub"><span class="header-section-number">16.4</span> Upload our demo to the Hugging Face Hub</a></li>
   </ul></li>
   <li><a href="#bonus-speeding-up-our-model-with-batched-inference" id="toc-bonus-speeding-up-our-model-with-batched-inference" class="nav-link" data-scroll-target="#bonus-speeding-up-our-model-with-batched-inference"><span class="header-section-number">17</span> Bonus: Speeding up our model with batched inference</a></li>
-  <li><a href="#bonus-performing-evaluations-on-our-model" id="toc-bonus-performing-evaluations-on-our-model" class="nav-link" data-scroll-target="#bonus-performing-evaluations-on-our-model"><span class="header-section-number">18</span> Bonus: Performing evaluations on our model</a></li>
+  <li><a href="#tk---bonus-performing-evaluations-on-our-model" id="toc-tk---bonus-performing-evaluations-on-our-model" class="nav-link" data-scroll-target="#tk---bonus-performing-evaluations-on-our-model"><span class="header-section-number">18</span> TK - Bonus: Performing evaluations on our model</a></li>
   <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">19</span> Next steps</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/mrdbourke/learn-huggingface/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -330,7 +330,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <blockquote class="blockquote">
 <p><strong>Note:</strong> If you’re running in Google Colab, make sure to enable GPU usage by going to Runtime -&gt; Change runtime type -&gt; select GPU.</p>
 </blockquote>
-<p><a href="https://github.com/mrdbourke/learn-huggingface/blob/main/notebooks/hugging_face_llm_full_fine_tune_tutorial.ipynb">Source Code</a></p>
+<p><a href="https://github.com/mrdbourke/learn-huggingface/blob/main/notebooks/hugging_face_llm_full_fine_tune_tutorial.ipynb">Source Code</a> | <a href="https://youtu.be/2hoNAr-id-E">Walkthrough video on YouTube</a></p>
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
 <p>Why fine-tune a Small Language Model (SLM)?</p>
@@ -386,13 +386,68 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="ingredients" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="ingredients"><span class="header-section-number">4</span> Ingredients</h2>
-<ol type="1">
-<li>Model (<a href="https://huggingface.co/google/gemma-3-270m-it">Gemma-3-270M</a>)</li>
-<li><a href="https://huggingface.co/datasets/mrdbourke/FoodExtract-1k">Dataset</a> (a pre-baked dataset to extract foods and drinks from text)</li>
-<li>Training code (Hugging Face Transformers + TRL)</li>
-<li>Eval code</li>
-<li>Demo</li>
-</ol>
+<p>We’re going to start with:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Start</th>
+<th>Item</th>
+<th>Link</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Base Model</td>
+<td><a href="https://huggingface.co/google/gemma-3-270m-it">Gemma-3-270M</a></td>
+<td>We will fine-tune this model to perform our specific task.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Dataset</td>
+<td><a href="https://huggingface.co/datasets/mrdbourke/FoodExtract-1k">FoodExtract-1k</a></td>
+<td>A pre-baked dataset to extract foods and drinks from text.</td>
+</tr>
+</tbody>
+</table>
+<p>And we’re going to work towards building:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Build</th>
+<th>Item</th>
+<th>Link</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>3</td>
+<td>Training code</td>
+<td>—</td>
+<td>Hugging Face Transformers + TRL inside this notebook.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Eval code</td>
+<td>—</td>
+<td>Inside this notebook.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Fine-tuned model</td>
+<td><a href="https://huggingface.co/mrdbourke/FoodExtract-gemma-3-270m-fine-tune-v1">FoodExtract-gemma-3-270m-fine-tune-v1</a></td>
+<td>The FoodExtract model we’ll end up with after fine-tuning the base model.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Demo</td>
+<td><a href="https://huggingface.co/spaces/mrdbourke/FoodExtract-v1">FoodExtract-v1</a></td>
+<td>An interactive demo to try out the model and share with others.</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="method" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="method"><span class="header-section-number">5</span> Method</h2>
@@ -401,7 +456,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Download dataset - <a href="https://huggingface.co/docs/datasets/en/index">Hugging Face <code>datasets</code></a></li>
 <li>Inspect dataset - Hugging Face <code>datasets</code></li>
 <li>Train model on dataset - <a href="https://huggingface.co/docs/trl/en/index">Hugging Face <code>trl</code></a> (TRL = Transformers Reinforcement Learning)</li>
-<li>Eval model - basically just look at a bunch of samples</li>
+<li>Eval model - look at a bunch of samples + add metrics to compare to the original labelling model</li>
 <li>Create an interactive demo - Hugging Face <code>gradio</code></li>
 <li>Bonus: Make the demo public so other people can use it - Hugging Face Spaces</li>
 </ol>
@@ -2077,8 +2132,8 @@ To disable this warning, you can either:
 </div>
 </div>
 </section>
-<section id="bonus-performing-evaluations-on-our-model" class="level2" data-number="18">
-<h2 data-number="18" class="anchored" data-anchor-id="bonus-performing-evaluations-on-our-model"><span class="header-section-number">18</span> Bonus: Performing evaluations on our model</h2>
+<section id="tk---bonus-performing-evaluations-on-our-model" class="level2" data-number="18">
+<h2 data-number="18" class="anchored" data-anchor-id="tk---bonus-performing-evaluations-on-our-model"><span class="header-section-number">18</span> TK - Bonus: Performing evaluations on our model</h2>
 <p>We can evaluate our model directly against the original labels from <code>gpt-oss-120b</code> and see how it stacks up.</p>
 <p>For example, we could compare the following:</p>
 <ul>
