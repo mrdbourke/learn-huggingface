@@ -74,10 +74,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1d5e050edb13250d4f64432100cad504.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1d5e050edb13250d4f64432100cad504.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-1d5e050edb13250d4f64432100cad504.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1d5e050edb13250d4f64432100cad504.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-42a8210db514eb70ae23b331f1d56581.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-42a8210db514eb70ae23b331f1d56581.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-3f67166c6828978c2e02940f2032d576.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-42a8210db514eb70ae23b331f1d56581.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -140,7 +144,7 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../styles/custom.css">
 <meta property="og:title" content="Object Detection with Hugging Face Transformers Tutorial – Learn Hugging Face 🤗">
 <meta property="og:description" content="Learn how to create a custom object detection model with Hugging Face Transformers.">
 <meta property="og:image" content="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/learn-hf-trashify-object-detection/00-what-were-going-to-build.png">
@@ -151,7 +155,169 @@ window.Quarto = {
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-sidebar docked nav-fixed quarto-light">
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -186,8 +352,9 @@ window.Quarto = {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools tools-wide">
     <a href="https://github.com/mrdbourke/learn-huggingface" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -396,6 +563,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
 
+
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/hugging_face_object_detection_tutorial.html">Computer Vision</a></li><li class="breadcrumb-item"><a href="../notebooks/hugging_face_object_detection_tutorial.html">Build a custom object detection model and demo</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Object Detection with Hugging Face Transformers Tutorial</h1>
@@ -462,6 +630,7 @@ Note
 </ol>
 <p>By the end of this project, you’ll have a trained model and <a href="https://huggingface.co/spaces/mrdbourke/trashify_demo_v4">demo on Hugging Face</a> you can share with others:</p>
 <div id="cell-4" class="cell" data-execution_count="2">
+<div class="cell-label cell-label-in">In [2]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> HTML </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>HTML(<span class="st">"""</span></span>
@@ -472,6 +641,7 @@ Note
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">    height="1150"</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">&gt;&lt;/iframe&gt;</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [2]:</div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <iframe src="https://mrdbourke-trashify-demo-v4.hf.space" frameborder="0" width="850" height="1150"></iframe>
@@ -686,6 +856,7 @@ Note
 </ul>
 <p>We can also check the versions of our software with <code>package_name.__version__</code>.</p>
 <div id="cell-9" class="cell" data-execution_count="3">
+<div class="cell-label cell-label-in">In [3]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install/import dependencies (this is mostly for Google Colab, as the other dependences are available by default in Colab)</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> datasets</span>
@@ -717,6 +888,7 @@ Note
 <span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Using datasets version: </span><span class="sc">{</span>datasets<span class="sc">.</span>__version__<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Using torch version: </span><span class="sc">{</span>torch<span class="sc">.</span>__version__<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Using torchmetrics version: </span><span class="sc">{</span>torchmetrics<span class="sc">.</span>__version__<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [3]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Using transformers version: 4.53.0
 Using datasets version: 3.6.0
@@ -806,12 +978,14 @@ Our Trashify dataset is available on Hugging Face. These images have been labell
 </div>
 <p>Let’s load our dataset and check it out.</p>
 <div id="cell-13" class="cell" data-execution_count="4">
+<div class="cell-label cell-label-in">In [4]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load our Trashify dataset</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> load_dataset(path<span class="op">=</span><span class="st">"mrdbourke/trashify_manual_labelled_images"</span>)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>dataset</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [4]:</div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>DatasetDict({
     train: Dataset({
@@ -825,12 +999,14 @@ Our Trashify dataset is available on Hugging Face. These images have been labell
 <p>We can see that there is a <code>train</code> split of the dataset already which currently contains all of the samples (<code>1128</code> in total).</p>
 <p>There are also some <code>features</code> that come with our dataset which are related to our object detection goal.</p>
 <div id="cell-15" class="cell" data-execution_count="5">
+<div class="cell-label cell-label-in">In [5]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Length of original dataset: </span><span class="sc">{</span><span class="bu">len</span>(dataset[<span class="st">'train'</span>])<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Dataset features:"</span>) </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>pprint(dataset[<span class="st">'train'</span>].features)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [5]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Length of original dataset: 1128
 [INFO] Dataset features:
@@ -873,8 +1049,10 @@ Our Trashify dataset is available on Hugging Face. These images have been labell
 <p>Now we’ve seen the features, let’s check out a single sample from our dataset.</p>
 <p>We can index on a single sample of the <code>"train"</code> set just like indexing on a Python list.</p>
 <div id="cell-18" class="cell" data-execution_count="7">
+<div class="cell-label cell-label-in">In [7]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View a single sample of the dataset</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">"train"</span>][<span class="dv">42</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [7]:</div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>{'image': &lt;PIL.Image.Image image mode=RGB size=960x1280&gt;,
  'image_id': 745,
@@ -906,7 +1084,9 @@ Our Trashify dataset is available on Hugging Face. These images have been labell
 <p>With the <code>category_id</code> values of <code>5</code>, <code>1</code>, <code>0</code> (we’ll map these to class names shortly).</p>
 <p>Let’s inspect a single bounding box.</p>
 <div id="cell-20" class="cell" data-execution_count="8">
+<div class="cell-label cell-label-in">In [8]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dataset[<span class="st">"train"</span>][<span class="dv">42</span>][<span class="st">"annotations"</span>][<span class="st">"bbox"</span>][<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [8]:</div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>[333.1000061035156, 611.2000122070312, 244.89999389648438, 321.29998779296875]</code></pre>
 </div>
@@ -1004,6 +1184,7 @@ ID to label mapping:
 <p>And the negative classes <code>not_bin</code>, <code>not_hand</code>, <code>not_trash</code> in a light red colour to indicate they’re the negative versions.</p>
 <p>Our colour dictionary will map <code>class_name</code> -&gt; <code>(red, green, blue)</code> (or <a href="https://en.wikipedia.org/wiki/RGB_color_model">RGB</a>) colour values.</p>
 <div id="cell-28" class="cell" data-execution_count="8">
+<div class="cell-label cell-label-in">In [8]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make colour dictionary</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>colour_palette <span class="op">=</span> {</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'bin'</span>: (<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">224</span>),         <span class="co"># Bright Blue (High contrast with greenery) in format (red, green, blue)</span></span>
@@ -1023,6 +1204,7 @@ ID to label mapping:
 <p>We can plot our colours with <code>matplotlib</code>.</p>
 <p>We’ll just have to write a small function to normalize our colour values from <code>[0, 255]</code> to <code>[0, 1]</code> (<code>matplotlib</code> expects our colour values to be between 0 and 1).</p>
 <div id="cell-30" class="cell" data-execution_count="9">
+<div class="cell-label cell-label-in">In [9]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1052,6 +1234,7 @@ ID to label mapping:
 <span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [9]:</div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1078,6 +1261,7 @@ ID to label mapping:
 <p>These functions aren’t 100% necessary in our workflow.</p>
 <p>They’re just to make the images slightly smaller so they fit better in the notebook.</p>
 <div id="cell-34" class="cell" data-execution_count="10">
+<div class="cell-label cell-label-in">In [10]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> PIL</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> half_image(image: PIL.Image) <span class="op">-&gt;</span> PIL.Image:</span>
@@ -1122,6 +1306,7 @@ ID to label mapping:
 <span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a>boxes_test_torch <span class="op">=</span> torch.tensor([<span class="fl">100.0</span>, <span class="fl">100.0</span>, <span class="fl">100.0</span>, <span class="fl">100.0</span>])</span>
 <span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Original boxes: </span><span class="sc">{</span>boxes_test_torch<span class="sc">}</span><span class="ss"> | Half boxes: </span><span class="sc">{</span>half_boxes(boxes_test_torch)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [10]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Original image size: (960, 1280) | Half image size: (480, 640)
 [INFO] Original boxes: [100, 100, 100, 100] | Half boxes: [50, 50, 50, 50]
@@ -1167,6 +1352,7 @@ Note
 </div>
 </div>
 <div id="cell-36" class="cell" data-execution_count="11">
+<div class="cell-label cell-label-in">In [11]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting a bounding box on a single image</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1218,6 +1404,7 @@ Note
 <span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a>        label_colors<span class="op">=</span>random_sample_colours</span>
 <span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [11]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Showing training sample from index: 264
 Boxes in XYWH format: tensor([[ 64., 256., 308., 304.],
@@ -1520,6 +1707,7 @@ Note
 <p>See the <a href="https://huggingface.co/docs/transformers/en/model_doc/auto#transformers.AutoModelForObjectDetection.from_pretrained">full documentation</a> for a full list of parameters we can use.</p>
 <p>Let’s create a model!</p>
 <div id="cell-44" class="cell" data-execution_count="12">
+<div class="cell-label cell-label-in">In [12]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>, category<span class="op">=</span><span class="pp">UserWarning</span>, module<span class="op">=</span><span class="st">"torch.nn.modules.module"</span>) <span class="co"># turn off warnings for loading the model (feel free to comment this if you want to see the warnings)</span></span>
@@ -1540,6 +1728,7 @@ Note
 <span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment to see full model architecture</span></span>
 <span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="co"># model</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [12]:</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Some weights of RTDetrV2ForObjectDetection were not initialized from the model checkpoint at PekingU/rtdetr_v2_r50vd and are newly initialized because the shapes did not match:
 - model.decoder.class_embed.0.bias: found shape torch.Size([80]) in the checkpoint and torch.Size([7]) in the model instantiated
@@ -1619,8 +1808,10 @@ You should probably TRAIN this model on a down-stream task to be able to use it 
 <li><code>bbox_embed</code> = regression head with <code>out_features=4</code> (one for each of our bbox coordinates, e.g.&nbsp;<code>[center_x, center_y, width, height]</code>).</li>
 </ol>
 <div id="cell-47" class="cell" data-execution_count="13">
+<div class="cell-label cell-label-in">In [13]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Final classification layer: </span><span class="sc">{</span>model<span class="sc">.</span>class_embed<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Final box regression layer: </span><span class="sc">{</span>model<span class="sc">.</span>bbox_embed<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [13]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Final classification layer: ModuleList(
   (0-5): 6 x Linear(in_features=256, out_features=7, bias=True)
@@ -1667,6 +1858,7 @@ You should probably TRAIN this model on a down-stream task to be able to use it 
 <li>Total parameters (trainable parameters + non-trainable parameters)</li>
 </ul>
 <div id="cell-50" class="cell" data-execution_count="14">
+<div class="cell-label cell-label-in">In [14]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of parameters in the model</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_parameters(model):</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Takes in a PyTorch model and returns the number of parameters."""</span></span>
@@ -1678,6 +1870,7 @@ You should probably TRAIN this model on a down-stream task to be able to use it 
 <span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Non-trainable parameters (will not be updated): </span><span class="sc">{</span>non_trainable_parameters<span class="sc">:,}</span><span class="ss">"</span>)</span>
 <span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>count_parameters(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [14]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Total parameters: 42,741,357
 Trainable parameters (will be updated): 42,741,357
@@ -1696,6 +1889,7 @@ Non-trainable parameters (will not be updated): 0</code></pre>
 <p>Since machine learning is very experimental, we may want to create multiple instances of our <code>model</code> to test various things.</p>
 <p>So let’s functionize the creation of a new model with parameters for our target model name, <code>id2label</code> and <code>label2id</code> dictionaries.</p>
 <div id="cell-53" class="cell" data-execution_count="15">
+<div class="cell-label cell-label-in">In [15]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoModelForObjectDetection</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Setup the model</span></span>
@@ -1725,9 +1919,11 @@ Non-trainable parameters (will not be updated): 0</code></pre>
 <p>Perfect!</p>
 <p>And to make sure our function works…</p>
 <div id="cell-55" class="cell" data-execution_count="16">
+<div class="cell-label cell-label-in">In [16]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new model instance</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> create_model()</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># model</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [16]:</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Some weights of RTDetrV2ForObjectDetection were not initialized from the model checkpoint at PekingU/rtdetr_v2_r50vd and are newly initialized because the shapes did not match:
 - model.decoder.class_embed.0.bias: found shape torch.Size([80]) in the checkpoint and torch.Size([7]) in the model instantiated
@@ -1760,6 +1956,7 @@ You should probably TRAIN this model on a down-stream task to be able to use it 
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>model.forward(input_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>To see what happens when we call our model, let’s inspect the <code>forward</code> method’s docstring with <a href="https://huggingface.co/docs/transformers/main/en/model_doc/conditional_detr#transformers.ConditionalDetrModel.forward"><code>model.forward?</code></a>.</p>
 <div id="cell-57" class="cell" data-execution_count="17">
+<div class="cell-label cell-label-in">In [17]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What happens when we call our model?</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: for PyTorch modules, `forward` overrides the __call__ method, </span></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co"># so calling the model is equivalent to calling the forward method.</span></span>
@@ -1945,6 +2142,7 @@ Note
 </div>
 <p>We’ll do so by setting <code>pixel_values</code> to our <code>random_sample["image"]</code> and <code>pixel_mask=None</code>.</p>
 <div id="cell-60" class="cell" data-execution_count="18">
+<div class="cell-label cell-label-in">In [18]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Do a single forward pass with the model</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>random_sample_outputs <span class="op">=</span> model(pixel_values<span class="op">=</span>random_sample[<span class="st">"image"</span>],</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>                              pixel_mask<span class="op">=</span><span class="va">None</span>)</span>
@@ -2080,6 +2278,7 @@ Workflow we’ll follow to create our own custom object detection model. We’ll
 <p>To do so, we’ll use <a href="https://huggingface.co/docs/transformers/en/model_doc/auto#transformers.AutoImageProcessor"><code>transformers.AutoImageProcessor</code></a> and pass our target model name to the <code>from_pretrained</code> method.</p>
 <p>We can set <code>use_fast=True</code> so the fast version of the processor is loaded (see more in the docs under <a href="https://huggingface.co/docs/transformers/en/model_doc/rt_detr#transformers.RTDetrImageProcessorFast"><code>transformers.RTDetrImageProcessorFast</code></a>).</p>
 <div id="cell-65" class="cell" data-execution_count="19">
+<div class="cell-label cell-label-in">In [19]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoImageProcessor</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>MODEL_NAME <span class="op">=</span> <span class="st">"PekingU/rtdetr_v2_r50vd"</span></span>
@@ -2091,6 +2290,7 @@ Workflow we’ll follow to create our own custom object detection model. We’ll
 <span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out the image processor</span></span>
 <span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>image_processor</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [19]:</div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>RTDetrImageProcessorFast {
   "crop_size": null,
@@ -2170,6 +2370,7 @@ Note
 </div>
 </div>
 <div id="cell-67" class="cell" data-execution_count="20">
+<div class="cell-label cell-label-in">In [20]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set image size</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>IMAGE_SIZE <span class="op">=</span> <span class="dv">640</span> <span class="co"># we could try other sizes here: 300x300, 480x480, 512x512, 640x640, 800x800 (best to experiment and see which works best)</span></span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2190,6 +2391,7 @@ Note
 <span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out our new image processor size</span></span>
 <span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a>image_processor.size</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [20]:</div>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <pre><code>{'shortest_edge': 640, 'longest_edge': 640}</code></pre>
 </div>
@@ -2200,7 +2402,9 @@ Note
 <p>To do so, we can pass its <code>"image"</code> key and <code>"annotations"</code> key to our <code>image_processor</code>’s <a href="https://huggingface.co/docs/transformers/en/model_doc/conditional_detr#transformers.ConditionalDetrImageProcessor.preprocess"><code>preprocess</code></a> method (we can also just called <code>image_processor</code> directly as it will call <code>preprocess</code> via the <code>__call__</code> method).</p>
 <p>Let’s try!</p>
 <div id="cell-69" class="cell" data-execution_count="21">
+<div class="cell-label cell-label-in">In [21]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>image_processor</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [21]:</div>
 <div class="cell-output cell-output-display" data-execution_count="21">
 <pre><code>RTDetrImageProcessorFast {
   "crop_size": null,
@@ -2241,9 +2445,11 @@ Note
 </div>
 </div>
 <div id="cell-70" class="cell" data-execution_count="22">
+<div class="cell-label cell-label-in">In [22]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Try to process a single image and annotation pair (spoiler: this will error)</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>random_sample_preprocessed <span class="op">=</span> image_processor.preprocess(images<span class="op">=</span>random_sample[<span class="st">"image"</span>],</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>                                                        annotations<span class="op">=</span>random_sample[<span class="st">"annotations"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [22]:</div>
 <div class="cell-output cell-output-error">
 <div class="ansi-escaped-output">
 <pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
@@ -2307,6 +2513,7 @@ File <span class="ansi-green-fg">~/miniconda3/envs/ai/lib/python3.11/site-packag
 <p>We can fix this later on by adjusting our annotations.</p>
 <p>How about we try to preprocess just a single image instead?</p>
 <div id="cell-73" class="cell" data-execution_count="23">
+<div class="cell-label cell-label-in">In [23]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preprocess our target sample</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>random_sample_preprocessed_image_only <span class="op">=</span> image_processor(images<span class="op">=</span>random_sample[<span class="st">"image"</span>],</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>                                                        annotations<span class="op">=</span><span class="va">None</span>, <span class="co"># no annotations this time </span></span>
@@ -2318,6 +2525,7 @@ File <span class="ansi-green-fg">~/miniconda3/envs/ai/lib/python3.11/site-packag
 <span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the keys of the preprocessed image</span></span>
 <span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(random_sample_preprocessed_image_only.keys())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [23]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>KeysView({'pixel_mask': tensor([[[1, 1, 1,  ..., 1, 1, 1],
          [1, 1, 1,  ..., 1, 1, 1],
@@ -2359,11 +2567,13 @@ File <span class="ansi-green-fg">~/miniconda3/envs/ai/lib/python3.11/site-packag
 <p>Beautiful!</p>
 <p>Now how about we inspect our processed image’s shape?</p>
 <div id="cell-76" class="cell" data-execution_count="24">
+<div class="cell-label cell-label-in">In [24]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment to inspect all preprocessed pixel values</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co"># print(random_sample_preprocessed_image_only["pixel_values"][0])</span></span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Original image shape: </span><span class="sc">{</span>random_sample[<span class="st">'image'</span>]<span class="sc">.</span>size<span class="sc">}</span><span class="ss"> -&gt; [width, height]"</span>)</span>
 <span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Preprocessed image shape: </span><span class="sc">{</span>random_sample_preprocessed_image_only[<span class="st">'pixel_values'</span>]<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -&gt; [batch_size, colour_channles, height, width]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [24]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Original image shape: (960, 1280) -&gt; [width, height]
 [INFO] Preprocessed image shape: torch.Size([1, 3, 640, 480]) -&gt; [batch_size, colour_channles, height, width]</code></pre>
@@ -2397,6 +2607,7 @@ Note
 <p>How about we try another forward by calling <code>model.forward(pixel_values, pixel_mask)</code>?</p>
 <p>Which is the same as calling <code>model(pixel_values, pixel_mask)</code>.</p>
 <div id="cell-79" class="cell" data-execution_count="25">
+<div class="cell-label cell-label-in">In [25]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Do a single forward pass with the model</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>random_sample_outputs <span class="op">=</span> model(</span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>    pixel_values<span class="op">=</span>random_sample_preprocessed_image_only[<span class="st">"pixel_values"</span>], <span class="co"># model expects input [batch_size, color_channels, height, width]</span></span>
@@ -2867,8 +3078,10 @@ Full output of <code>random_sample_outputs</code>:
 <p>Our model processed our <code>random_sample_preprocessed_image_only["pixel_values"]</code> and returned a <a href="https://huggingface.co/docs/transformers/main/en/model_doc/rt_detr_v2#transformers.RTDetrV2ForObjectDetection.forward"><code>RTDetrV2ObjectDetectionOutput</code></a> object as output.</p>
 <p>Let’s inspect the <code>keys()</code> method of this output and see what they are.</p>
 <div id="cell-81" class="cell" data-execution_count="26">
+<div class="cell-label cell-label-in">In [26]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the keys of the output</span></span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>random_sample_outputs.keys()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [26]:</div>
 <div class="cell-output cell-output-display" data-execution_count="26">
 <pre><code>odict_keys(['logits', 'pred_boxes', 'last_hidden_state', 'intermediate_hidden_states', 'intermediate_logits', 'intermediate_reference_points', 'encoder_last_hidden_state', 'init_reference_points', 'enc_topk_logits', 'enc_topk_bboxes', 'enc_outputs_class', 'enc_outputs_coord_logits'])</code></pre>
 </div>
@@ -2882,9 +3095,11 @@ Full output of <code>random_sample_outputs</code>:
 </ul>
 <p>How about we inspect the <code>shape</code> attribute of the <code>logits</code>?</p>
 <div id="cell-84" class="cell" data-execution_count="27">
+<div class="cell-label cell-label-in">In [27]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect logits output shape</span></span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>output_logits <span class="op">=</span> random_sample_outputs.logits</span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Output logits shape: </span><span class="sc">{</span>output_logits<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -&gt; [1 image, 300 boxes, 7 classes]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [27]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Output logits shape: torch.Size([1, 300, 7]) -&gt; [1 image, 300 boxes, 7 classes]</code></pre>
 </div>
@@ -2894,9 +3109,11 @@ Full output of <code>random_sample_outputs</code>:
 <p>The final value of <code>7</code> in the <code>output_logits</code> tensor is equivalent to the number of classes we have.</p>
 <p>And the <code>300</code> is the number of boxes our model predicts for each image (this is defined by the <code>num_queries</code> parameter of the <a href="https://huggingface.co/docs/transformers/main/en/model_doc/rt_detr_v2#transformers.RTDetrV2Config"><code>transformers.RTDetrV2Config</code></a>, where <code>num_queries=300</code> is the default).</p>
 <div id="cell-86" class="cell" data-execution_count="28">
+<div class="cell-label cell-label-in">In [28]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect predicted boxes output shape</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>output_pred_boxes <span class="op">=</span> random_sample_outputs.pred_boxes</span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Output predicted boxes shape: </span><span class="sc">{</span>output_pred_boxes<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -&gt; [1 image, 300 boxes, 4 coordinates (center_x, center_y, width, height)]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [28]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Output predicted boxes shape: torch.Size([1, 300, 4]) -&gt; [1 image, 300 boxes, 4 coordinates (center_x, center_y, width, height)]</code></pre>
 </div>
@@ -2910,8 +3127,10 @@ Full output of <code>random_sample_outputs</code>:
 <p>It means that the raw output boxes from our model come in normalized <code>CXCYWH</code> format (see <a href="#tbl-bbox-formats" class="quarto-xref">Table&nbsp;1</a> for more).</p>
 <p>How about we inspect a single box?</p>
 <div id="cell-88" class="cell" data-execution_count="29">
+<div class="cell-label cell-label-in">In [29]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Single example predicted bounding box coordinates</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Example output box: </span><span class="sc">{</span>output_pred_boxes[:, <span class="dv">0</span>, :][<span class="dv">0</span>]<span class="sc">.</span>detach()<span class="sc">}</span><span class="ss"> -&gt; (center_x, center_y, width, height)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [29]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Example output box: tensor([0.3726, 0.2132, 0.1820, 0.0800]) -&gt; (center_x, center_y, width, height)</code></pre>
 </div>
@@ -2932,11 +3151,13 @@ Full output of <code>random_sample_outputs</code>:
 <p>And we got an error.</p>
 <p>Let’s make sure we’re not crazy and this is still the case.</p>
 <div id="cell-92" class="cell" data-execution_count="30">
+<div class="cell-label cell-label-in">In [30]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preprocess a single image and annotation pair</span></span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>image_processor.preprocess(</span>
 <span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>    images<span class="op">=</span>random_sample[<span class="st">"image"</span>], </span>
 <span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>    annotations<span class="op">=</span>random_sample[<span class="st">"annotations"</span>]</span>
 <span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [30]:</div>
 <div class="cell-output cell-output-error">
 <div class="ansi-escaped-output">
 <pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
@@ -3163,6 +3384,7 @@ Note
 <li>Data validation - we can use methods such as <a href="https://docs.python.org/3/library/dataclasses.html#dataclasses.__post_init__"><code>__post_init__</code></a> to run checks on our <code>@dataclass</code> as it’s initialized, for example, we always want the length of <code>bbox</code> to be 4 (bounding box coordinates in <code>XYWH</code> format).</li>
 </ul>
 <div id="cell-96" class="cell" data-execution_count="31">
+<div class="cell-label cell-label-in">In [31]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dataclasses <span class="im">import</span> dataclass, asdict</span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> List, Tuple</span>
 <span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -3210,8 +3432,10 @@ Note
 <p>Let’s now inspect our <code>SingleCOCOAnnotation</code> dataclass.</p>
 <p>We can use the <code>SingleCOCOAnnotation?</code> syntax to view the docstring of the class.</p>
 <div id="cell-98" class="cell" data-execution_count="32">
+<div class="cell-label cell-label-in">In [32]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One of the benefits of using a dataclass is that we can inspect the attributes with the `?` syntax</span></span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>SingleCOCOAnnotation?</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [32]:</div>
 <div class="cell-output cell-output-stdout">
 <div class="ansi-escaped-output">
 <pre><span class="ansi-red-fg">Init signature:</span>
@@ -3264,10 +3488,12 @@ Attributes:
 </div>
 <p>We can also see the error handling of our <code>__post_init__</code> method in action by trying to create an instance of <code>SingleCOCOAnnotation</code> with an incorrect number of bbox values.</p>
 <div id="cell-100" class="cell" data-execution_count="33">
+<div class="cell-label cell-label-in">In [33]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's try our SingleCOCOAnnotation dataclass (this will error since the bbox doesn't have 4 values)</span></span>
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>SingleCOCOAnnotation(image_id<span class="op">=</span><span class="dv">42</span>, </span>
 <span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>                     category_id<span class="op">=</span><span class="dv">0</span>, </span>
 <span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>                     bbox<span class="op">=</span>[<span class="dv">100</span>, <span class="dv">100</span>, <span class="dv">100</span>]) <span class="co"># missing a 4th value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [33]:</div>
 <div class="cell-output cell-output-error">
 <div class="ansi-escaped-output">
 <pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
@@ -3291,9 +3517,11 @@ Cell <span class="ansi-green-fg">In[31], line 29</span>, in <span class="ansi-cy
 </div>
 <p>And now if we pass the correct number of values to our <code>SingleCOCOAnnotation</code>, it should work.</p>
 <div id="cell-102" class="cell" data-execution_count="34">
+<div class="cell-label cell-label-in">In [34]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>SingleCOCOAnnotation(image_id<span class="op">=</span><span class="dv">42</span>, </span>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>                     category_id<span class="op">=</span><span class="dv">0</span>, </span>
 <span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>                     bbox<span class="op">=</span>[<span class="dv">100</span>, <span class="dv">100</span>, <span class="dv">100</span>, <span class="dv">100</span>]) <span class="co"># correct number of values</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [34]:</div>
 <div class="cell-output cell-output-display" data-execution_count="34">
 <pre><code>SingleCOCOAnnotation(image_id=42, category_id=0, bbox=[100, 100, 100, 100], area=0.0, iscrowd=0)</code></pre>
 </div>
@@ -3312,6 +3540,7 @@ Cell <span class="ansi-green-fg">In[31], line 29</span>, in <span class="ansi-cy
 <p>Because that’s the current format our existing annotations are in (how we downloaded them from Hugging Face in the beginning).</p>
 <p>Let’s do it!</p>
 <div id="cell-104" class="cell" data-execution_count="35">
+<div class="cell-label cell-label-in">In [35]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Take in a unique image_id as well as lists of categories, areas, and bounding boxes</span></span>
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> format_image_annotations_as_coco(</span>
 <span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>        image_id: <span class="bu">int</span>,</span>
@@ -3371,9 +3600,11 @@ Cell <span class="ansi-green-fg">In[31], line 29</span>, in <span class="ansi-cy
 <p>Now let’s try our <code>format_image_annotations_as_coco</code> function on a new <em>not so</em> <code>random_sample</code> (we’ll make a <code>random_sample</code> with a known index for reproducibility).</p>
 <p>First, we’ll remind ourselves what our <code>random_sample</code> looks like.</p>
 <div id="cell-106" class="cell" data-execution_count="36">
+<div class="cell-label cell-label-in">In [36]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a not so random sample and inspect it </span></span>
 <span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>random_sample <span class="op">=</span> dataset[<span class="st">"train"</span>][<span class="dv">77</span>]</span>
 <span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>random_sample</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [36]:</div>
 <div class="cell-output cell-output-display" data-execution_count="36">
 <pre><code>{'image': &lt;PIL.Image.Image image mode=RGB size=960x1280&gt;,
  'image_id': 558,
@@ -3394,6 +3625,7 @@ Cell <span class="ansi-green-fg">In[31], line 29</span>, in <span class="ansi-cy
 <p>Ok wonderful, looks like we can extract the <code>image_id</code>, <code>category_id</code> <code>bbox</code> and <code>area</code> fields from our <code>random_sample</code> to get the required inputs to our <code>format_image_annotations_as_coco</code> function.</p>
 <p>Let’s try it out.</p>
 <div id="cell-108" class="cell" data-execution_count="37">
+<div class="cell-label cell-label-in">In [37]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract image_id, categories, areas, and bboxes from the random sample</span></span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>random_sample_image_id <span class="op">=</span> random_sample[<span class="st">"image_id"</span>]</span>
 <span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>random_sample_categories <span class="op">=</span> random_sample[<span class="st">"annotations"</span>][<span class="st">"category_id"</span>]</span>
@@ -3406,6 +3638,7 @@ Cell <span class="ansi-green-fg">In[31], line 29</span>, in <span class="ansi-cy
 <span id="cb77-10"><a href="#cb77-10" aria-hidden="true" tabindex="-1"></a>                                                                  areas<span class="op">=</span>random_sample_areas,</span>
 <span id="cb77-11"><a href="#cb77-11" aria-hidden="true" tabindex="-1"></a>                                                                  bboxes<span class="op">=</span>random_sample_bboxes)</span>
 <span id="cb77-12"><a href="#cb77-12" aria-hidden="true" tabindex="-1"></a>random_sample_coco_annotations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [37]:</div>
 <div class="cell-output cell-output-display" data-execution_count="37">
 <pre><code>{'image_id': 558,
  'annotations': [{'image_id': 558,
@@ -3453,6 +3686,7 @@ Note
 </div>
 </div>
 <div id="cell-111" class="cell" data-execution_count="38">
+<div class="cell-label cell-label-in">In [38]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preprocess random sample image and assosciated annotations</span></span>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>random_sample_preprocessed <span class="op">=</span> image_processor.preprocess(images<span class="op">=</span>random_sample[<span class="st">"image"</span>],</span>
 <span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>                                                        annotations<span class="op">=</span>random_sample_coco_annotations,</span>
@@ -3478,6 +3712,7 @@ Note
 </div>
 </div>
 <div id="cell-113" class="cell" data-execution_count="39">
+<div class="cell-label cell-label-in">In [39]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional: Disable warnings about `max_size` parameter being deprecated</span></span>
 <span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
 <span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -3487,8 +3722,10 @@ Note
 <p>It looks like the <code>preprocess</code> method worked on our single sample.</p>
 <p>Let’s inspect the <code>keys()</code> method of our <code>random_sample_preprocessed</code>.</p>
 <div id="cell-115" class="cell" data-execution_count="40">
+<div class="cell-label cell-label-in">In [40]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the keys of our preprocessed example</span></span>
 <span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>random_sample_preprocessed.keys()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [40]:</div>
 <div class="cell-output cell-output-display" data-execution_count="40">
 <pre><code>KeysView({'pixel_mask': tensor([[[1, 1, 1,  ..., 1, 1, 1],
          [1, 1, 1,  ..., 1, 1, 1],
@@ -3530,8 +3767,10 @@ Note
 <li><code>labels</code> = preprocessed labels (the preprocessed annotations).</li>
 </ul>
 <div id="cell-117" class="cell" data-execution_count="41">
+<div class="cell-label cell-label-in">In [41]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect preprocessed image shape</span></span>
 <span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Preprocessed image shape: </span><span class="sc">{</span>random_sample_preprocessed[<span class="st">'pixel_values'</span>]<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -&gt; [batch_size, colour_channels, height, width]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [41]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Preprocessed image shape: torch.Size([1, 3, 640, 480]) -&gt; [batch_size, colour_channels, height, width]</code></pre>
 </div>
@@ -3539,8 +3778,10 @@ Note
 <p>Since we only passed a single sample to <code>preprocess</code>, we get back a batch size of 1.</p>
 <p>Now how do our labels look?</p>
 <div id="cell-119" class="cell" data-execution_count="42">
+<div class="cell-label cell-label-in">In [42]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the preprocessed labels (our boxes and other metadata)</span></span>
 <span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>pprint(random_sample_preprocessed[<span class="st">"labels"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [42]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[{'area': tensor([  9830.8350, 125158.5000,  46787.6836]),
   'boxes': tensor([[0.3675, 0.6583, 0.1894, 0.1690],
@@ -3593,6 +3834,7 @@ Note
 <p>To postprocess the outputs of our model we can use the <a href="https://huggingface.co/docs/transformers/en/model_doc/rt_detr#transformers.RTDetrImageProcessor.post_process_object_detection"><code>transformers.RTDetrImageProcessor.post_process_object_detection()</code></a> method (see the <a href="https://github.com/huggingface/transformers/blob/237c7c356cce5f8a6befc0a5f71bc952bb5adc9a/src/transformers/models/rt_detr/image_processing_rt_detr.py#L1029">source code on GitHub</a>, this is what we’ll reproduce by hand).</p>
 <p>Let’s frist recompute the model’s outputs for our preprocessed single sample.</p>
 <div id="cell-122" class="cell" data-execution_count="43">
+<div class="cell-label cell-label-in">In [43]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recompute the random sample outputs with our preprocessed sample</span></span>
 <span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>random_sample_outputs <span class="op">=</span> model(</span>
 <span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>    pixel_values<span class="op">=</span>random_sample_preprocessed[<span class="st">"pixel_values"</span>], <span class="co"># model expects input [batch_size, color_channels, height, width]</span></span>
@@ -3601,6 +3843,7 @@ Note
 <span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb87-7"><a href="#cb87-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the output type</span></span>
 <span id="cb87-8"><a href="#cb87-8" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(random_sample_outputs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [43]:</div>
 <div class="cell-output cell-output-display" data-execution_count="43">
 <pre><code>transformers.models.rt_detr_v2.modeling_rt_detr_v2.RTDetrV2ObjectDetectionOutput</code></pre>
 </div>
@@ -3634,6 +3877,7 @@ Note
 </div>
 </div>
 <div id="cell-124" class="cell" data-execution_count="44">
+<div class="cell-label cell-label-in">In [44]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the score threshold for postprocessing</span></span>
 <span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>THRESHOLD <span class="op">=</span> <span class="fl">0.4</span> <span class="co"># adjust this where necessary to get a handful of outputs below (note: if it's too high, e.g. 0.5+, you might not see any outputs, try lowering to 0.3</span></span>
 <span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -3645,6 +3889,7 @@ Note
 <span id="cb89-9"><a href="#cb89-9" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb89-10"><a href="#cb89-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb89-11"><a href="#cb89-11" aria-hidden="true" tabindex="-1"></a>random_sample_outputs_post_processed</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [44]:</div>
 <div class="cell-output cell-output-display" data-execution_count="44">
 <pre><code>[{'scores': tensor([0.5886, 0.5872, 0.5826, 0.5804, 0.5747, 0.5669, 0.5660, 0.5616, 0.5595,
           0.5533, 0.5532, 0.5462, 0.5462, 0.5448, 0.5447, 0.5435, 0.5435, 0.5433,
@@ -3707,6 +3952,7 @@ Note
 </ul>
 <p>Let’s see what these predictions look like when plotted.</p>
 <div id="cell-126" class="cell" data-execution_count="56">
+<div class="cell-label cell-label-in">In [56]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get target image and boxes (half them for display purposes in the notebook)</span></span>
 <span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>image_to_plot <span class="op">=</span> half_image(random_sample[<span class="st">"image"</span>])</span>
 <span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>boxes_to_plot <span class="op">=</span> half_boxes(random_sample_outputs_post_processed[<span class="dv">0</span>][<span class="st">"boxes"</span>])</span>
@@ -3741,6 +3987,7 @@ Note
 <span id="cb91-32"><a href="#cb91-32" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb91-33"><a href="#cb91-33" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb91-34"><a href="#cb91-34" aria-hidden="true" tabindex="-1"></a>output_image_with_boxes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [56]:</div>
 <div class="cell-output cell-output-display" data-execution_count="56">
 <div>
 <figure class="figure">
@@ -6701,6 +6948,7 @@ Note
 <p>This way, we’ll be able to upload the whole <code>demos/trashify_object_detector/</code> folder to Hugging Face Spaces.</p>
 <p>Let’s start by making a directory to store our demo application files.</p>
 <div id="cell-261" class="cell" data-execution_count="16">
+<div class="cell-label cell-label-in">In [16]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb205"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb205-1"><a href="#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb205-2"><a href="#cb205-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb205-3"><a href="#cb205-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Setup path to trashify demo folder (we'll store all of our demo requirements in here)</span></span>
@@ -6735,6 +6983,7 @@ Note
 <p>And we can turn it into a file by using the <a href="https://ipython.readthedocs.io/en/stable/interactive/magics.html#cellmagic-writefile"><code>%%writefile</code></a> magic command and passing it our target filepath.</p>
 <p>Let’s do it!</p>
 <div id="cell-263" class="cell" data-execution_count="25">
+<div class="cell-label cell-label-in">In [25]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb206"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb206-1"><a href="#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile ..<span class="op">/</span>demos<span class="op">/</span>trashify_object_detector<span class="op">/</span>app.py</span>
 <span id="cb206-2"><a href="#cb206-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb206-3"><a href="#cb206-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Import the required libraries and packages</span></span>
@@ -6905,6 +7154,7 @@ Note
 <span id="cb206-168"><a href="#cb206-168" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb206-169"><a href="#cb206-169" aria-hidden="true" tabindex="-1"></a><span class="co"># Launch the demo</span></span>
 <span id="cb206-170"><a href="#cb206-170" aria-hidden="true" tabindex="-1"></a>demo.launch()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [25]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting ../demos/trashify_object_detector/app.py</code></pre>
 </div>
@@ -6924,11 +7174,13 @@ ModuleNotFoundError: No module named 'torch'</code></pre>
 <p>Good news is, our demo only has three requirements: <code>gradio</code>, <code>torch</code>, <code>transformers</code>.</p>
 <p>Let’s create a <code>requirements.txt</code> file with the packages we need and save it to the same directory as our <code>app.py</code> file.</p>
 <div id="cell-265" class="cell" data-execution_count="18">
+<div class="cell-label cell-label-in">In [18]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb209"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb209-1"><a href="#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile ..<span class="op">/</span>demos<span class="op">/</span>trashify_object_detector<span class="op">/</span>requirements.txt</span>
 <span id="cb209-2"><a href="#cb209-2" aria-hidden="true" tabindex="-1"></a>timm</span>
 <span id="cb209-3"><a href="#cb209-3" aria-hidden="true" tabindex="-1"></a>gradio</span>
 <span id="cb209-4"><a href="#cb209-4" aria-hidden="true" tabindex="-1"></a>torch</span>
 <span id="cb209-5"><a href="#cb209-5" aria-hidden="true" tabindex="-1"></a>transformers</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [18]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting ../demos/trashify_object_detector/requirements.txt</code></pre>
 </div>
@@ -6982,6 +7234,7 @@ Note
 </div>
 </div>
 <div id="cell-267" class="cell" data-execution_count="26">
+<div class="cell-label cell-label-in">In [26]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb211"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb211-1"><a href="#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile ..<span class="op">/</span>demos<span class="op">/</span>trashify_object_detector<span class="op">/</span>README.md</span>
 <span id="cb211-2"><a href="#cb211-2" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span>
 <span id="cb211-3"><a href="#cb211-3" aria-hidden="true" tabindex="-1"></a>title: Trashify Demo V4 🚮</span>
@@ -7019,6 +7272,7 @@ Note
 <span id="cb211-35"><a href="#cb211-35" aria-hidden="true" tabindex="-1"></a><span class="co">## Learn more</span></span>
 <span id="cb211-36"><a href="#cb211-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb211-37"><a href="#cb211-37" aria-hidden="true" tabindex="-1"></a>See the full end<span class="op">-</span>to<span class="op">-</span>end code of how this demo was built at [learnhuggingface.com](https:<span class="op">//</span>www.learnhuggingface.com<span class="op">/</span>notebooks<span class="op">/</span>hugging_face_object_detection_tutorial). </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [26]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting ../demos/trashify_object_detector/README.md</code></pre>
 </div>
@@ -7030,6 +7284,7 @@ Note
 <p>To do so, we can add some example images to use with our demo.</p>
 <p>First we’ll create a folder to store the demo images.</p>
 <div id="cell-269" class="cell" data-execution_count="27">
+<div class="cell-label cell-label-in">In [27]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb213"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb213-1"><a href="#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a directory to save examples to</span></span>
 <span id="cb213-2"><a href="#cb213-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb213-3"><a href="#cb213-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -7039,11 +7294,13 @@ Note
 <p>And now we can download some pre-made examples I’ve added to Hugging Face Datasets (none of these were in the Trashify training data).</p>
 <p>You can find the example Trashify images at <a href="https://huggingface.co/datasets/mrdbourke/trashify_examples"><code>mrdbourke/trashify_examples</code></a>.</p>
 <div id="cell-271" class="cell" data-execution_count="28">
+<div class="cell-label cell-label-in">In [28]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb214"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb214-1"><a href="#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the examples from Hugging Face Datasets</span></span>
 <span id="cb214-2"><a href="#cb214-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
 <span id="cb214-3"><a href="#cb214-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb214-4"><a href="#cb214-4" aria-hidden="true" tabindex="-1"></a>trashify_examples <span class="op">=</span> load_dataset(<span class="st">"mrdbourke/trashify_examples"</span>)</span>
 <span id="cb214-5"><a href="#cb214-5" aria-hidden="true" tabindex="-1"></a>trashify_examples</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [28]:</div>
 <div class="cell-output cell-output-display" data-execution_count="28">
 <pre><code>DatasetDict({
     train: Dataset({
@@ -7056,10 +7313,12 @@ Note
 <p>Perfect!</p>
 <p>Now let’s save each of these images to our target example folder in the Trashify demo directory.</p>
 <div id="cell-273" class="cell" data-execution_count="29">
+<div class="cell-label cell-label-in">In [29]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb216"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb216-1"><a href="#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, sample <span class="kw">in</span> <span class="bu">enumerate</span>(trashify_examples[<span class="st">"train"</span>]):</span>
 <span id="cb216-2"><a href="#cb216-2" aria-hidden="true" tabindex="-1"></a>    save_path <span class="op">=</span> Path(demo_example_dir, <span class="ss">f"trashify_example_</span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">.jpeg"</span>)</span>
 <span id="cb216-3"><a href="#cb216-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"[INFO] Saving image to: </span><span class="sc">{</span>save_path<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb216-4"><a href="#cb216-4" aria-hidden="true" tabindex="-1"></a>    sample[<span class="st">"image"</span>].save(save_path)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [29]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Saving image to: ../demos/trashify_object_detector/trashify_examples/trashify_example_1.jpeg
 [INFO] Saving image to: ../demos/trashify_object_detector/trashify_examples/trashify_example_2.jpeg
@@ -7068,7 +7327,9 @@ Note
 </div>
 <p>Now let’s check the demo folder for Trashify.</p>
 <div id="cell-275" class="cell" data-execution_count="30">
+<div class="cell-label cell-label-in">In [30]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb218"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb218-1"><a href="#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>ls ..<span class="op">/</span>demos<span class="op">/</span>trashify_object_detector<span class="op">/</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [30]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>README.md  app.py  requirements.txt  trashify_examples</code></pre>
 </div>
@@ -7108,6 +7369,7 @@ Note
 </ol>
 <p>A fair few steps but we’ve got this!</p>
 <div id="cell-278" class="cell" data-execution_count="31">
+<div class="cell-label cell-label-in">In [31]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb220"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb220-1"><a href="#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Import the required methods for uploading to the Hugging Face Hub</span></span>
 <span id="cb220-2"><a href="#cb220-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> huggingface_hub <span class="im">import</span> (</span>
 <span id="cb220-3"><a href="#cb220-3" aria-hidden="true" tabindex="-1"></a>    create_repo,</span>
@@ -7149,6 +7411,7 @@ Note
 <span id="cb220-39"><a href="#cb220-39" aria-hidden="true" tabindex="-1"></a>    commit_message<span class="op">=</span><span class="st">"Uploading Trashify box detection model app.py"</span></span>
 <span id="cb220-40"><a href="#cb220-40" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb220-41"><a href="#cb220-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Demo folder successfully uploaded with commit URL: </span><span class="sc">{</span>folder_upload_url<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [31]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Creating repo on Hugging Face Hub with name: trashify_demo_v4
 [INFO] Full Hugging Face Hub repo name: mrdbourke/trashify_demo_v4
@@ -7233,6 +7496,19 @@ Note
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {

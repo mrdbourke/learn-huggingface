@@ -74,10 +74,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1d5e050edb13250d4f64432100cad504.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1d5e050edb13250d4f64432100cad504.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-1d5e050edb13250d4f64432100cad504.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1d5e050edb13250d4f64432100cad504.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-42a8210db514eb70ae23b331f1d56581.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-42a8210db514eb70ae23b331f1d56581.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-3f67166c6828978c2e02940f2032d576.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-42a8210db514eb70ae23b331f1d56581.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -111,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
 
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../styles/custom.css">
 <meta property="og:title" content="Multimodal RAG with NVIDIA Nemotron and Hugging Face Tutorial – Learn Hugging Face 🤗">
 <meta property="og:description" content="Learn how to build a multimodal RAG pipeline with NVIDIA Nemotron models and Hugging Face Transformers.">
 <meta property="og:image" content="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/learn-hf-multimodal-rag/multi-modal-rag-overview.png">
@@ -122,7 +126,169 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-sidebar docked nav-fixed quarto-light">
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -157,8 +323,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools tools-wide">
     <a href="https://github.com/mrdbourke/learn-huggingface" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -306,6 +473,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content">
+
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/hugging_face_multimodal_rag_tutorial.html">RAG - Retrieval-Augmented Generation</a></li><li class="breadcrumb-item"><a href="../notebooks/hugging_face_multimodal_rag_tutorial.html">Build a multimodal RAG pipeline with NVIDIA Nemotron models</a></li></ol></nav>
 <div class="quarto-title">
@@ -500,6 +668,7 @@ An appetizer from dr. and mrs. atkins. (quick &amp; easy new diet cookbook)
 </div>
 </div>
 <div id="03067ff8" class="cell" data-execution_count="4">
+<div class="cell-label cell-label-in">In [4]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -510,19 +679,23 @@ An appetizer from dr. and mrs. atkins. (quick &amp; easy new diet cookbook)
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Number of total images: </span><span class="sc">{</span><span class="bu">len</span>(all_image_paths)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>image_paths_100 <span class="op">=</span> random.sample(all_image_paths, k<span class="op">=</span><span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [4]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Number of total images: 10096</code></pre>
 </div>
 </div>
 <div id="d86ae9f7" class="cell" data-execution_count="5">
+<div class="cell-label cell-label-in">In [5]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get image paths in same order as dataset</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Get ids -&gt; map to image path names </span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>all_image_ids <span class="op">=</span> <span class="bu">list</span>(dataset[<span class="st">"train"</span>][<span class="st">"id"</span>])</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>all_full_recipes <span class="op">=</span> <span class="bu">list</span>(dataset[<span class="st">"train"</span>][<span class="st">"full_recipe"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="08d3d948" class="cell" data-execution_count="6">
+<div class="cell-label cell-label-in">In [6]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>all_full_recipes_markdown <span class="op">=</span> dataset[<span class="st">"train"</span>][<span class="st">"recipe_markdown"</span>]</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(all_full_recipes_markdown[<span class="dv">42</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [6]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Artichoke Hearts Wrapped In Bacon
 
@@ -572,6 +745,7 @@ An appetizer from dr. and mrs. atkins. (quick &amp; easy new diet cookbook)
 <p><strong>Note:</strong> We are loading models from a custom commit version of <code>"nvidia/llama-nemotron-embed-vl-1b-v2"</code> and <code>"nvidia/llama-nemotron-rerank-vl-1b-v2"</code> so we can run them using <code>sdpa</code> attention rather than <code>flash_attention_2</code> (this is required for Hugging Face Spaces). If you have <code>flash_attention_2</code> installed locally, it is suggested you use the models with it for faster generation.</p>
 </blockquote>
 <div id="3bef9f07" class="cell" data-execution_count="7">
+<div class="cell-label cell-label-in">In [7]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>modality_to_tokens <span class="op">=</span> {</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"image"</span>: <span class="dv">2048</span>,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"image_text"</span>: <span class="dv">10240</span>,</span>
@@ -579,6 +753,7 @@ An appetizer from dr. and mrs. atkins. (quick &amp; easy new diet cookbook)
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="91a83a7d" class="cell" data-execution_count="8">
+<div class="cell-label cell-label-in">In [8]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time </span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
@@ -653,6 +828,7 @@ An appetizer from dr. and mrs. atkins. (quick &amp; easy new diet cookbook)
 <span id="cb13-72"><a href="#cb13-72" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-73"><a href="#cb13-73" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Loaded rerank model from commit: </span><span class="sc">{</span>RERANK_COMMIT_HASH[:<span class="dv">7</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb13-74"><a href="#cb13-74" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Rerank processor using rerank_max_length: </span><span class="sc">{</span>rerank_processor<span class="sc">.</span>rerank_max_length<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [8]:</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>/home/mrdbourke/miniforge3/envs/ai/lib/python3.12/site-packages/torch/cuda/__init__.py:283: UserWarning: 
     Found GPU0 NVIDIA GB10 which is of cuda capability 12.1.
@@ -742,11 +918,13 @@ An appetizer from dr. and mrs. atkins. (quick &amp; easy new diet cookbook)
 </div>
 </div>
 <div id="1812af0c" class="cell" data-execution_count="10">
+<div class="cell-label cell-label-in">In [10]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show an example embedding</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>example_embeddings <span class="op">=</span> image_text_embeddings[<span class="dv">0</span>]</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Example embeddings shape: </span><span class="sc">{</span>example_embeddings<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Example embeddings first 10 vales:"</span>)</span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>example_embeddings[:<span class="dv">10</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [10]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Example embeddings shape: torch.Size([2048])
 [INFO] Example embeddings first 10 vales:</code></pre>
@@ -770,6 +948,7 @@ An appetizer from dr. and mrs. atkins. (quick &amp; easy new diet cookbook)
 <p>For example, it could be specific such as <code>"recipes with tomato and parmesan cheese"</code> or vague such as <code>"summer lunch ideas"</code>.</p>
 <p>You could even input non-food related text such as <code>"best office furniture deals"</code> and the model will still return results, however, they will likely not be very related to the query as our system is specifically designed with food recipes in mind.</p>
 <div id="3854af73" class="cell" data-execution_count="11">
+<div class="cell-label cell-label-in">In [11]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
@@ -819,13 +998,16 @@ An appetizer from dr. and mrs. atkins. (quick &amp; easy new diet cookbook)
 <span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a>result_sorted_scores, result_sorted_indices <span class="op">=</span> match_query_to_embeddings(query<span class="op">=</span>query,</span>
 <span id="cb21-48"><a href="#cb21-48" aria-hidden="true" tabindex="-1"></a>                                                                        target_embeddings_to_match<span class="op">=</span>image_text_embeddings,</span>
 <span id="cb21-49"><a href="#cb21-49" aria-hidden="true" tabindex="-1"></a>                                                                        top_k<span class="op">=</span><span class="dv">100</span>) <span class="co"># get back the top 100 samples</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [11]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>CPU times: user 294 ms, sys: 196 ms, total: 490 ms
 Wall time: 490 ms</code></pre>
 </div>
 </div>
 <div id="3aba627d" class="cell" data-execution_count="12">
+<div class="cell-label cell-label-in">In [12]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>result_sorted_scores, result_sorted_indices</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [12]:</div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>(tensor([0.5000, 0.4922, 0.4863, 0.4805, 0.4785, 0.4688, 0.4668, 0.4668, 0.4590,
          0.4590, 0.4551, 0.4531, 0.4531, 0.4473, 0.4473, 0.4453, 0.4453, 0.4434,
@@ -851,17 +1033,21 @@ Wall time: 490 ms</code></pre>
 </div>
 </div>
 <div id="eeb7a25e" class="cell" data-execution_count="13">
+<div class="cell-label cell-label-in">In [13]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>result_sorted_scores.shape, result_sorted_indices.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [13]:</div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>(torch.Size([100]), torch.Size([100]))</code></pre>
 </div>
 </div>
 <div id="f70cc753" class="cell" data-execution_count="14">
+<div class="cell-label cell-label-in">In [14]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test with an image</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># test_image_path = "banana_bread.png"</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>test_image_path <span class="op">=</span> <span class="st">"moussaka.jpeg"</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>test_image_query <span class="op">=</span> Image.<span class="bu">open</span>(test_image_path)</span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>test_image_query.resize(size<span class="op">=</span>(<span class="dv">500</span>, <span class="dv">500</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [14]:</div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 <figure class="figure">
@@ -871,12 +1057,15 @@ Wall time: 490 ms</code></pre>
 </div>
 </div>
 <div id="9c31164d" class="cell" data-execution_count="15">
+<div class="cell-label cell-label-in">In [15]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>image_result_sorted_scores, image_result_sorted_indices <span class="op">=</span> match_query_to_embeddings(query<span class="op">=</span>test_image_query,</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                                                                                    target_embeddings_to_match<span class="op">=</span>image_text_embeddings,</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                                                                                    top_k<span class="op">=</span><span class="dv">100</span>) <span class="co"># get back the top 100 samples</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="da392846" class="cell" data-execution_count="16">
+<div class="cell-label cell-label-in">In [16]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>image_result_sorted_scores, image_result_sorted_indices</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [16]:</div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>(tensor([0.3613, 0.3574, 0.3535, 0.3438, 0.3418, 0.3398, 0.3398, 0.3379, 0.3379,
          0.3379, 0.3359, 0.3359, 0.3320, 0.3320, 0.3301, 0.3301, 0.3301, 0.3301,
@@ -904,7 +1093,9 @@ Wall time: 490 ms</code></pre>
 </div>
 </div>
 <div id="3404fb8a" class="cell" data-execution_count="17">
+<div class="cell-label cell-label-in">In [17]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dataset[<span class="st">"train"</span>][image_result_sorted_indices[<span class="dv">0</span>].item()][<span class="st">"recipe_markdown"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [17]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Mediterranean Eggplant  Aubergine  Cakes
 
@@ -971,11 +1162,13 @@ Thanks, Varsha!  I'll be making these again.
 </div>
 <p>Let’s test another text-based query.</p>
 <div id="a6f8d8f9" class="cell" data-execution_count="19">
+<div class="cell-label cell-label-in">In [19]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>test_query_text <span class="op">=</span> <span class="st">"Banana Sour Cream Bread"</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>text_result_sorted_scores, text_result_sorted_indices <span class="op">=</span> match_query_to_embeddings(query<span class="op">=</span>test_query_text,</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                                                                                  target_embeddings_to_match<span class="op">=</span>image_text_embeddings,</span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>                                                                                  top_k<span class="op">=</span><span class="dv">100</span>) <span class="co"># get back the top 100 samples</span></span>
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dataset[<span class="st">"train"</span>][text_result_sorted_indices[<span class="dv">0</span>].item()][<span class="st">"recipe_markdown"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [19]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Banana Sour Cream Bread  Oamc
 
@@ -1042,6 +1235,7 @@ This is the best banana bread ever.  the sour cream really gives it something ex
 <h2 data-number="9" class="anchored" data-anchor-id="displaying-top-results"><span class="header-section-number">9</span> Displaying top results</h2>
 <p>Let’s write some nice visualization code to view the top results.</p>
 <div id="f93a1802" class="cell" data-execution_count="20">
+<div class="cell-label cell-label-in">In [20]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_top_n_scores_and_samples(scores, indicies, top_n<span class="op">=</span><span class="dv">3</span>):</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> top_n <span class="op">&gt;</span> <span class="bu">len</span>(scores):</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>        top_n <span class="op">==</span> <span class="bu">len</span>(scores)</span>
@@ -1054,9 +1248,11 @@ This is the best banana bread ever.  the sour cream really gives it something ex
 <span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> top_scores_and_samples</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="5235c1de" class="cell" data-execution_count="21">
+<div class="cell-label cell-label-in">In [21]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>top_3_scores_and_samples <span class="op">=</span> get_top_n_scores_and_samples(scores<span class="op">=</span>image_result_sorted_scores,</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>                                                        indicies<span class="op">=</span>image_result_sorted_indices)</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Got num top scores and samples: </span><span class="sc">{</span>top_3_scores_and_samples<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [21]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Got num top scores and samples: [{'score': 0.3613, 'sample': {'name': 'mediterranean eggplant  aubergine  cakes', 'id': 112586, 'minutes': 50, 'contributor_id': 125458, 'submitted': datetime.datetime(2005, 3, 3, 0, 0), 'tags': "['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'cuisine', 'preparation', 'occasion', 'appetizers', 'main-dish', 'vegetables', 'greek', 'easy', 'european', 'dinner-party', 'finger-food', 'vegetarian', 'italian', 'dietary', 'high-calcium', 'inexpensive', 'high-in-something', 'presentation']", 'nutrition': '[569.8, 61.0, 24.0, 41.0, 43.0, 65.0, 10.0]', 'n_steps': 11, 'steps': "['preheat oven to 375f', 'brush eggplant slices evenly with olive oil', 'bake for 20 minutes until golden brown and tender', 'remove from oven , and finely dice the eggplant slices', 'in a medium bowl , combine the chopped eggplant pieces with the garlic , egg whites , parmesan , feta , breadcrumbs , basil and parsley and green onions', 'add the salt and pepper in quantities at your discretion', 'mix everything well and place in the refrigerator 20min to firm up', 'divide the mixture into 6-8 equal portions , and shape into a flattened ball', 'coat with flour', 'fry the fritters in shallow oil for 2 mins on either side , till they are golden brown', 'serve with a salad , lemon wedges and a yoghurt sauce to dip into , if preferred']", 'description': 'a lovely vegetarian appetizer. i always sweat my eggplants before making this, to remove the bitter juices. i find it has a better flavor that way.', 'ingredients': "['eggplant', 'olive oil', 'garlic cloves', 'egg white', 'fresh breadcrumb', 'flour', 'parmesan cheese', 'feta cheese', 'fresh parsley', 'fresh basil', 'green onions', 'salt', 'fresh ground black pepper']", 'n_ingredients': 13, 'random_reviews': ['This was simple, flavorful and took no time at all to put together.', "Truly delicious!  Next time I'm going to try it with a side of cold, sweet chutney!", "These are insanely delicious and quite easy to make.  Very rich, though--I wish I'd had some tzaziki on hand.\r\nI had to use 2 eggs plus a bit of water to get all the ingredients to bind together.  I also only used 5-6 oz of Parmesan, which turned out to be plenty.\r\nFYI--the uncooked cakes freeze very nicely.\r\nThanks, Varsha!  I'll be making these again.", "These were absolutely delicious.  They were easy and quick to make and both myself and my girlfriend loved them (and we're not big eggplant eaters!)", "I like eggplant but I didn't care much for the texture of the finished patties-somewhat slimy, I'm afraid. Don't know what happened. I used dried basil and skipped the optional feta but otherwise followed the recipe faithfully. I guess that's why they make Chocolate, vanilla and strawberry.", "These are delicious and certain to convert the most diehard of eggplant opponents. I wasn't sure how much eggplant to use as they vary so much in size - mine weighed 1 1/2 pounds! I checked on the Internet and discovered the 'average' eggplant weighs around 9 to 10 ounces, so I used half and put the rest aside for another day. I reduced the amount of breadcrumbs to 1 cup, and used two eggs rather than one to bind the mixture, but otherwise followed the recipe as written. One tip - use a non-stick skillet rather than stainless steel, as they have a tendency to stick. I made 9 fritters from the mixture, and DH and I had two each as an appetiser. They were delectable, and the hint of basil was perfect - don't omit it. Thanks for posting a great recipe! "], 'number_of_ratings': 6, '_generated': {'pdf_path': '2026-01-19_03-52-56-recipe_to_pdf_and_image_outputs/pdfs/recipe_112586_rustic_kitchen_variant.pdf', 'image_path': '2026-01-19_03-52-56-recipe_to_pdf_and_image_outputs/images/recipe_112586_rustic_kitchen_variant.png', 'config_name': 'rustic_kitchen_variant', 'layout': 'sidebar', 'nutrition_viz': 'bar', 'theme_base': 'rustic_kitchen'}, 'image': &lt;PIL.PngImagePlugin.PngImageFile image mode=RGB size=1275x1650 at 0xE5C21AED3920&gt;, 'full_recipe': {'id': 112586, 'name': 'mediterranean eggplant  aubergine  cakes', 'minutes': 50, 'tags': "['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'cuisine', 'preparation', 'occasion', 'appetizers', 'main-dish', 'vegetables', 'greek', 'easy', 'european', 'dinner-party', 'finger-food', 'vegetarian', 'italian', 'dietary', 'high-calcium', 'inexpensive', 'high-in-something', 'presentation']", 'n_steps': 11, 'steps': "['preheat oven to 375f', 'brush eggplant slices evenly with olive oil', 'bake for 20 minutes until golden brown and tender', 'remove from oven , and finely dice the eggplant slices', 'in a medium bowl , combine the chopped eggplant pieces with the garlic , egg whites , parmesan , feta , breadcrumbs , basil and parsley and green onions', 'add the salt and pepper in quantities at your discretion', 'mix everything well and place in the refrigerator 20min to firm up', 'divide the mixture into 6-8 equal portions , and shape into a flattened ball', 'coat with flour', 'fry the fritters in shallow oil for 2 mins on either side , till they are golden brown', 'serve with a salad , lemon wedges and a yoghurt sauce to dip into , if preferred']", 'description': 'a lovely vegetarian appetizer. i always sweat my eggplants before making this, to remove the bitter juices. i find it has a better flavor that way.', 'ingredients': "['eggplant', 'olive oil', 'garlic cloves', 'egg white', 'fresh breadcrumb', 'flour', 'parmesan cheese', 'feta cheese', 'fresh parsley', 'fresh basil', 'green onions', 'salt', 'fresh ground black pepper']", 'n_ingredients': 13, 'random_reviews': ['This was simple, flavorful and took no time at all to put together.', "Truly delicious!  Next time I'm going to try it with a side of cold, sweet chutney!", "These are insanely delicious and quite easy to make.  Very rich, though--I wish I'd had some tzaziki on hand.\r\nI had to use 2 eggs plus a bit of water to get all the ingredients to bind together.  I also only used 5-6 oz of Parmesan, which turned out to be plenty.\r\nFYI--the uncooked cakes freeze very nicely.\r\nThanks, Varsha!  I'll be making these again.", "These were absolutely delicious.  They were easy and quick to make and both myself and my girlfriend loved them (and we're not big eggplant eaters!)", "I like eggplant but I didn't care much for the texture of the finished patties-somewhat slimy, I'm afraid. Don't know what happened. I used dried basil and skipped the optional feta but otherwise followed the recipe faithfully. I guess that's why they make Chocolate, vanilla and strawberry.", "These are delicious and certain to convert the most diehard of eggplant opponents. I wasn't sure how much eggplant to use as they vary so much in size - mine weighed 1 1/2 pounds! I checked on the Internet and discovered the 'average' eggplant weighs around 9 to 10 ounces, so I used half and put the rest aside for another day. I reduced the amount of breadcrumbs to 1 cup, and used two eggs rather than one to bind the mixture, but otherwise followed the recipe as written. One tip - use a non-stick skillet rather than stainless steel, as they have a tendency to stick. I made 9 fritters from the mixture, and DH and I had two each as an appetiser. They were delectable, and the hint of basil was perfect - don't omit it. Thanks for posting a great recipe! "], 'number_of_ratings': 6}, 'recipe_markdown': "# Mediterranean Eggplant  Aubergine  Cakes\n\n**ID:** 112586  \n**Time:** 50 minutes  \n**Number of Ratings:** 6\n\n## Description\n\nA lovely vegetarian appetizer. i always sweat my eggplants before making this, to remove the bitter juices. i find it has a better flavor that way.\n\n## Ingredients\n\n- eggplant\n- olive oil\n- garlic cloves\n- egg white\n- fresh breadcrumb\n- flour\n- parmesan cheese\n- feta cheese\n- fresh parsley\n- fresh basil\n- green onions\n- salt\n- fresh ground black pepper\n\n## Steps (11 total)\n\n1. Preheat oven to 375f\n2. Brush eggplant slices evenly with olive oil\n3. Bake for 20 minutes until golden brown and tender\n4. Remove from oven , and finely dice the eggplant slices\n5. In a medium bowl , combine the chopped eggplant pieces with the garlic , egg whites , parmesan , feta , breadcrumbs , basil and parsley and green onions\n6. Add the salt and pepper in quantities at your discretion\n7. Mix everything well and place in the refrigerator 20min to firm up\n8. Divide the mixture into 6-8 equal portions , and shape into a flattened ball\n9. Coat with flour\n10. Fry the fritters in shallow oil for 2 mins on either side , till they are golden brown\n11. Serve with a salad , lemon wedges and a yoghurt sauce to dip into , if preferred\n\n## Tags\n\n`60-minutes-or-less`, `time-to-make`, `course`, `main-ingredient`, `cuisine`, `preparation`, `occasion`, `appetizers`, `main-dish`, `vegetables`, `greek`, `easy`, `european`, `dinner-party`, `finger-food`, `vegetarian`, `italian`, `dietary`, `high-calcium`, `inexpensive`, `high-in-something`, `presentation`\n\n## Reviews\n\n&gt; This was simple, flavorful and took no time at all to put together.\n\n&gt; Truly delicious!  Next time I'm going to try it with a side of cold, sweet chutney!\n\n&gt; These are insanely delicious and quite easy to make.  Very rich, though--I wish I'd had some tzaziki on hand.\r\nI had to use 2 eggs plus a bit of water to get all the ingredients to bind together.  I also only used 5-6 oz of Parmesan, which turned out to be plenty.\r\nFYI--the uncooked cakes freeze very nicely.\r\nThanks, Varsha!  I'll be making these again.\n\n&gt; These were absolutely delicious.  They were easy and quick to make and both myself and my girlfriend loved them (and we're not big eggplant eaters!)\n\n&gt; I like eggplant but I didn't care much for the texture of the finished patties-somewhat slimy, I'm afraid. Don't know what happened. I used dried basil and skipped the optional feta but otherwise followed the recipe faithfully. I guess that's why they make Chocolate, vanilla and strawberry.\n\n&gt; These are delicious and certain to convert the most diehard of eggplant opponents. I wasn't sure how much eggplant to use as they vary so much in size - mine weighed 1 1/2 pounds! I checked on the Internet and discovered the 'average' eggplant weighs around 9 to 10 ounces, so I used half and put the rest aside for another day. I reduced the amount of breadcrumbs to 1 cup, and used two eggs rather than one to bind the mixture, but otherwise followed the recipe as written. One tip - use a non-stick skillet rather than stainless steel, as they have a tendency to stick. I made 9 fritters from the mixture, and DH and I had two each as an appetiser. They were delectable, and the hint of basil was perfect - don't omit it. Thanks for posting a great recipe! \n"}}, {'score': 0.3574, 'sample': {'name': 'mile high crock pot lasagna with zucchini or spinach', 'id': 320527, 'minutes': 320, 'contributor_id': 177443, 'submitted': datetime.datetime(2008, 8, 20, 0, 0), 'tags': "['course', 'main-ingredient', 'cuisine', 'preparation', 'occasion', 'main-dish', 'pasta', 'vegetables', 'easy', 'european', 'dinner-party', 'holiday-event', 'italian', 'lasagna', 'crock-pot-slow-cooker', 'dietary', 'one-dish-meal', 'high-calcium', 'high-in-something', 'meat', 'pasta-rice-and-grains', 'taste-mood', 'savory', 'equipment']", 'nutrition': '[756.7, 55.0, 41.0, 43.0, 108.0, 87.0, 16.0]', 'n_steps': 11, 'steps': "['brown the beef , onions , zucchini , and garlic in 2 tablespoons olive oil in a large skillet , stirring to break up meat', 'stir in the oregano , basil , pepper , crushed anise seeds , sliced mushrooms , parsley , spaghetti sauce , and wine', 'in a separate bowl , stir together the beaten egg and the ricotta cheese , beating well until mixture is smooth', 'stir in the grated parmesan cheese , combine well', 'grease the bottom and sides of the crock pot', 'layer about 1 / 4 of the meat sauce mixture in the bottom of the crock pot', 'put a layer of noodles on top of that', 'put about 1 / 3 of the cheese mixture and sprinkle with 1 / 4 of the mozzarella', 'repeat with sauce , noodles and cheese for another two layers', 'top with meat sauce and a little parmesan and shredded mozzarella on top', 'cover and cook on low for 4-6 hours , or until noodles are tender']", 'description': "this is such a wonderful lasagna recipe! very hearty  and delicious with nice deep layers, plenty of meat and cheese, and just the right amount of seasoned sauce--- plus it's a great way to sneak some veggies into your family's meal!! very easy to prepare, and any leftovers are great reheated the next day. equally good with chopped spinach or zucchini.", 'ingredients': "['lean ground beef', 'onion', 'zucchini', 'garlic cloves', 'extra virgin olive oil', 'oregano leaves', 'basil leaves', 'ground black pepper', 'anise seed', 'sliced mushrooms', 'fresh parsley', 'spaghetti sauce', 'dry red wine', 'lasagna noodles', 'part-skim ricotta cheese', 'egg', 'parmesan cheese', 'part-skim mozzarella cheese']", 'n_ingredients': 18, 'random_reviews': ["This recipe is awesome!  I took a batch of this to a potluck and it was gone in 20 minutes!  4 people asked me for the recipe.  I used all the suggested ingredients.  I doubled the amount of canned mushrooms and I added 1 lb of Italian sausage.  Also, I doubled the amount of wine because I like the flavor it adds.  I'm getting ready to make a batch for at home because it was so good.  Thanks for this recipe.", 'i had saved this recipe for  a while now and decided to give it a shot. i thought it would be kinda soupy in the crockpot, but oh noooooo, it came out firm and tender, i made it with extra meet and made 4 layers- i will make lasagna no other way now!! most excellent!!!', 'This is a delicious, hearty lasagna! I made it exactly as written, with  the "optionals".  It was wonderful, I wouldn\'t change a thing! The added bonus was making it in the crockpot!  I will definately make this again. Thank you!', "I am not using the other lasagna recipes I have anymore!  I love this b/c I don't have to use the oven and heat the whole house (or if it's a cold day, I'm sure I could do this in the oven also...).  I used 2 C spinach the first time and the second time I used 3 C and it wasn't too much spinach.  I also used ground turkey.  Excellent!", "I saved this recipe you posted months ago thinking it looks good maybe I'll try it.  I finally gave it a whirl but not sure about the veggies inside.  I will do lasagna no other way now!  I really thing the veggies give it substance and doesn't subtract from the flavors in any way which is what I was originally afraid of.  I use Barilla no boil noodles but know from my past experiments you can do the same with regular nooldes laryering them dry and obtain the same great results.  BecR this is truly a gem of a recipe and one I will keep.  I only hope more poeple with try it.  Many Thanks!", 'FABULOUS! My husband is not a fan of lasagne but he loved it and even asked me to be sure to save the recipe for repeats!!  I did not use the fennel seed as I used mild Italian Sausage instead of ground beef, which has fennel already. The only other changes made were that I sauteed the sausage first, to drain well and did not add the zucchini to the sauce, but layered the slices following the sauce layers.  I wanted to make sure each bite had zucchini.  And as I grated my own mozzarella rather than buying a pre-grated package, probably used a bit more cheese.  Again, a FABULOUS recipe.', 'Holy Smokes, this was amazing!!!!!!!!!!!!!!!!!!!!!  I didn&amp;#039;t add the wine,but I did add chopped up swiss chard and kale.  Thanks soooooo much for sharing!  Oh, also this was done in 3 hours on low for me.', 'Fantastic! Easy enough to put together in the morning before work, and the house smelled great when we got home. Hearty and delectable. Thanks!', 'I\'ve been making lasagna most of my life.  I\'ve been called the lasagna wizard but, this one tops them all!  I use Italian sausage and I use a couple different cheeses in addition to what is mentioned here.  This is THE BEST lasagna recipe ever.  I look at recipes as a "suggestion" and then go from there.  This one is so good, I even converted it to an oven lasagna and it was just as good.  Thank you for sharing!!!'], 'number_of_ratings': 9, '_generated': {'pdf_path': '2026-01-19_03-52-56-recipe_to_pdf_and_image_outputs/pdfs/recipe_320527_tropical_vibes_variant.pdf', 'image_path': '2026-01-19_03-52-56-recipe_to_pdf_and_image_outputs/images/recipe_320527_tropical_vibes_variant.png', 'config_name': 'tropical_vibes_variant', 'layout': 'single', 'nutrition_viz': 'pie', 'theme_base': 'tropical_vibes'}, 'image': &lt;PIL.PngImagePlugin.PngImageFile image mode=RGB size=1275x1650 at 0xE5C21AED21E0&gt;, 'full_recipe': {'id': 320527, 'name': 'mile high crock pot lasagna with zucchini or spinach', 'minutes': 320, 'tags': "['course', 'main-ingredient', 'cuisine', 'preparation', 'occasion', 'main-dish', 'pasta', 'vegetables', 'easy', 'european', 'dinner-party', 'holiday-event', 'italian', 'lasagna', 'crock-pot-slow-cooker', 'dietary', 'one-dish-meal', 'high-calcium', 'high-in-something', 'meat', 'pasta-rice-and-grains', 'taste-mood', 'savory', 'equipment']", 'n_steps': 11, 'steps': "['brown the beef , onions , zucchini , and garlic in 2 tablespoons olive oil in a large skillet , stirring to break up meat', 'stir in the oregano , basil , pepper , crushed anise seeds , sliced mushrooms , parsley , spaghetti sauce , and wine', 'in a separate bowl , stir together the beaten egg and the ricotta cheese , beating well until mixture is smooth', 'stir in the grated parmesan cheese , combine well', 'grease the bottom and sides of the crock pot', 'layer about 1 / 4 of the meat sauce mixture in the bottom of the crock pot', 'put a layer of noodles on top of that', 'put about 1 / 3 of the cheese mixture and sprinkle with 1 / 4 of the mozzarella', 'repeat with sauce , noodles and cheese for another two layers', 'top with meat sauce and a little parmesan and shredded mozzarella on top', 'cover and cook on low for 4-6 hours , or until noodles are tender']", 'description': "this is such a wonderful lasagna recipe! very hearty  and delicious with nice deep layers, plenty of meat and cheese, and just the right amount of seasoned sauce--- plus it's a great way to sneak some veggies into your family's meal!! very easy to prepare, and any leftovers are great reheated the next day. equally good with chopped spinach or zucchini.", 'ingredients': "['lean ground beef', 'onion', 'zucchini', 'garlic cloves', 'extra virgin olive oil', 'oregano leaves', 'basil leaves', 'ground black pepper', 'anise seed', 'sliced mushrooms', 'fresh parsley', 'spaghetti sauce', 'dry red wine', 'lasagna noodles', 'part-skim ricotta cheese', 'egg', 'parmesan cheese', 'part-skim mozzarella cheese']", 'n_ingredients': 18, 'random_reviews': ["This recipe is awesome!  I took a batch of this to a potluck and it was gone in 20 minutes!  4 people asked me for the recipe.  I used all the suggested ingredients.  I doubled the amount of canned mushrooms and I added 1 lb of Italian sausage.  Also, I doubled the amount of wine because I like the flavor it adds.  I'm getting ready to make a batch for at home because it was so good.  Thanks for this recipe.", 'i had saved this recipe for  a while now and decided to give it a shot. i thought it would be kinda soupy in the crockpot, but oh noooooo, it came out firm and tender, i made it with extra meet and made 4 layers- i will make lasagna no other way now!! most excellent!!!', 'This is a delicious, hearty lasagna! I made it exactly as written, with  the "optionals".  It was wonderful, I wouldn\'t change a thing! The added bonus was making it in the crockpot!  I will definately make this again. Thank you!', "I am not using the other lasagna recipes I have anymore!  I love this b/c I don't have to use the oven and heat the whole house (or if it's a cold day, I'm sure I could do this in the oven also...).  I used 2 C spinach the first time and the second time I used 3 C and it wasn't too much spinach.  I also used ground turkey.  Excellent!", "I saved this recipe you posted months ago thinking it looks good maybe I'll try it.  I finally gave it a whirl but not sure about the veggies inside.  I will do lasagna no other way now!  I really thing the veggies give it substance and doesn't subtract from the flavors in any way which is what I was originally afraid of.  I use Barilla no boil noodles but know from my past experiments you can do the same with regular nooldes laryering them dry and obtain the same great results.  BecR this is truly a gem of a recipe and one I will keep.  I only hope more poeple with try it.  Many Thanks!", 'FABULOUS! My husband is not a fan of lasagne but he loved it and even asked me to be sure to save the recipe for repeats!!  I did not use the fennel seed as I used mild Italian Sausage instead of ground beef, which has fennel already. The only other changes made were that I sauteed the sausage first, to drain well and did not add the zucchini to the sauce, but layered the slices following the sauce layers.  I wanted to make sure each bite had zucchini.  And as I grated my own mozzarella rather than buying a pre-grated package, probably used a bit more cheese.  Again, a FABULOUS recipe.', 'Holy Smokes, this was amazing!!!!!!!!!!!!!!!!!!!!!  I didn&amp;#039;t add the wine,but I did add chopped up swiss chard and kale.  Thanks soooooo much for sharing!  Oh, also this was done in 3 hours on low for me.', 'Fantastic! Easy enough to put together in the morning before work, and the house smelled great when we got home. Hearty and delectable. Thanks!', 'I\'ve been making lasagna most of my life.  I\'ve been called the lasagna wizard but, this one tops them all!  I use Italian sausage and I use a couple different cheeses in addition to what is mentioned here.  This is THE BEST lasagna recipe ever.  I look at recipes as a "suggestion" and then go from there.  This one is so good, I even converted it to an oven lasagna and it was just as good.  Thank you for sharing!!!'], 'number_of_ratings': 9}, 'recipe_markdown': '# Mile High Crock Pot Lasagna With Zucchini Or Spinach\n\n**ID:** 320527  \n**Time:** 320 minutes  \n**Number of Ratings:** 9\n\n## Description\n\nThis is such a wonderful lasagna recipe! very hearty  and delicious with nice deep layers, plenty of meat and cheese, and just the right amount of seasoned sauce--- plus it\'s a great way to sneak some veggies into your family\'s meal!! very easy to prepare, and any leftovers are great reheated the next day. equally good with chopped spinach or zucchini.\n\n## Ingredients\n\n- lean ground beef\n- onion\n- zucchini\n- garlic cloves\n- extra virgin olive oil\n- oregano leaves\n- basil leaves\n- ground black pepper\n- anise seed\n- sliced mushrooms\n- fresh parsley\n- spaghetti sauce\n- dry red wine\n- lasagna noodles\n- part-skim ricotta cheese\n- egg\n- parmesan cheese\n- part-skim mozzarella cheese\n\n## Steps (11 total)\n\n1. Brown the beef , onions , zucchini , and garlic in 2 tablespoons olive oil in a large skillet , stirring to break up meat\n2. Stir in the oregano , basil , pepper , crushed anise seeds , sliced mushrooms , parsley , spaghetti sauce , and wine\n3. In a separate bowl , stir together the beaten egg and the ricotta cheese , beating well until mixture is smooth\n4. Stir in the grated parmesan cheese , combine well\n5. Grease the bottom and sides of the crock pot\n6. Layer about 1 / 4 of the meat sauce mixture in the bottom of the crock pot\n7. Put a layer of noodles on top of that\n8. Put about 1 / 3 of the cheese mixture and sprinkle with 1 / 4 of the mozzarella\n9. Repeat with sauce , noodles and cheese for another two layers\n10. Top with meat sauce and a little parmesan and shredded mozzarella on top\n11. Cover and cook on low for 4-6 hours , or until noodles are tender\n\n## Tags\n\n`course`, `main-ingredient`, `cuisine`, `preparation`, `occasion`, `main-dish`, `pasta`, `vegetables`, `easy`, `european`, `dinner-party`, `holiday-event`, `italian`, `lasagna`, `crock-pot-slow-cooker`, `dietary`, `one-dish-meal`, `high-calcium`, `high-in-something`, `meat`, `pasta-rice-and-grains`, `taste-mood`, `savory`, `equipment`\n\n## Reviews\n\n&gt; This recipe is awesome!  I took a batch of this to a potluck and it was gone in 20 minutes!  4 people asked me for the recipe.  I used all the suggested ingredients.  I doubled the amount of canned mushrooms and I added 1 lb of Italian sausage.  Also, I doubled the amount of wine because I like the flavor it adds.  I\'m getting ready to make a batch for at home because it was so good.  Thanks for this recipe.\n\n&gt; i had saved this recipe for  a while now and decided to give it a shot. i thought it would be kinda soupy in the crockpot, but oh noooooo, it came out firm and tender, i made it with extra meet and made 4 layers- i will make lasagna no other way now!! most excellent!!!\n\n&gt; This is a delicious, hearty lasagna! I made it exactly as written, with  the "optionals".  It was wonderful, I wouldn\'t change a thing! The added bonus was making it in the crockpot!  I will definately make this again. Thank you!\n\n&gt; I am not using the other lasagna recipes I have anymore!  I love this b/c I don\'t have to use the oven and heat the whole house (or if it\'s a cold day, I\'m sure I could do this in the oven also...).  I used 2 C spinach the first time and the second time I used 3 C and it wasn\'t too much spinach.  I also used ground turkey.  Excellent!\n\n&gt; I saved this recipe you posted months ago thinking it looks good maybe I\'ll try it.  I finally gave it a whirl but not sure about the veggies inside.  I will do lasagna no other way now!  I really thing the veggies give it substance and doesn\'t subtract from the flavors in any way which is what I was originally afraid of.  I use Barilla no boil noodles but know from my past experiments you can do the same with regular nooldes laryering them dry and obtain the same great results.  BecR this is truly a gem of a recipe and one I will keep.  I only hope more poeple with try it.  Many Thanks!\n\n&gt; FABULOUS! My husband is not a fan of lasagne but he loved it and even asked me to be sure to save the recipe for repeats!!  I did not use the fennel seed as I used mild Italian Sausage instead of ground beef, which has fennel already. The only other changes made were that I sauteed the sausage first, to drain well and did not add the zucchini to the sauce, but layered the slices following the sauce layers.  I wanted to make sure each bite had zucchini.  And as I grated my own mozzarella rather than buying a pre-grated package, probably used a bit more cheese.  Again, a FABULOUS recipe.\n\n&gt; Holy Smokes, this was amazing!!!!!!!!!!!!!!!!!!!!!  I didn&amp;#039;t add the wine,but I did add chopped up swiss chard and kale.  Thanks soooooo much for sharing!  Oh, also this was done in 3 hours on low for me.\n\n&gt; Fantastic! Easy enough to put together in the morning before work, and the house smelled great when we got home. Hearty and delectable. Thanks!\n\n&gt; I\'ve been making lasagna most of my life.  I\'ve been called the lasagna wizard but, this one tops them all!  I use Italian sausage and I use a couple different cheeses in addition to what is mentioned here.  This is THE BEST lasagna recipe ever.  I look at recipes as a "suggestion" and then go from there.  This one is so good, I even converted it to an oven lasagna and it was just as good.  Thank you for sharing!!!\n'}}, {'score': 0.3535, 'sample': {'name': 'vegetable lasagna without the lasagna', 'id': 12792, 'minutes': 105, 'contributor_id': 4470, 'submitted': datetime.datetime(2001, 10, 16, 0, 0), 'tags': "['weeknight', 'time-to-make', 'course', 'main-ingredient', 'cuisine', 'preparation', 'occasion', 'north-american', 'casseroles', 'main-dish', 'side-dishes', 'eggs-dairy', 'pasta', 'vegetables', 'canadian', 'oven', 'european', 'potluck', 'dinner-party', 'italian', 'cheese', 'eggs', 'dietary', 'comfort-food', 'pasta-rice-and-grains', 'taste-mood', 'to-go', 'equipment', '4-hours-or-less']", 'nutrition': '[134.9, 7.0, 26.0, 30.0, 19.0, 15.0, 4.0]', 'n_steps': 19, 'steps': '[\'preheat oven to 425 degrees fahrenheit\', \'sprinkle both sides of the peeled egg plant slices with 1 / 2 tsp salt and 1 / 4 tsp pepper\', \'place strips of egg plant and the chopped onions on a non stick baking sheet , in a single layer , and bake for 5 to 7 minutes\', \'turn the strips over and bake a little longer until the eggplant is slightly soft\', \'you should still be able to lift the slices but they should be soft\', \'stir up the onions\', \'they should be translucent\', \'if one is done before the other , take it out of the oven until both are cooked\', \'mix together the ricotta , egg white , green onion and remaining salt and pepper\', \'spread 1 1 / 2 cups of tomato sauce on the bottom of a 9x13" oven proof casserole\', \'place a layer of eggplant and onion , using about one third\', \'cover with half of the ricotta mixture\', \'add another layer of veggies\', \'cover with the rest of the ricotta\', \'add the rest of the veggies\', \'add the remaining tomato sauce on top\', \'sprinkle with the mozzarella and parmesan cheeses\', \'cover with foil and bake for 1 hour at 375 degrees fahrenheit\', \'remove foil and bake another 5 to 10 minutes until the cheese is nicely browned\']', 'description': 'a nice change, leaving out the lasagna. i like to add some sliced mushrooms and hot peppers. this is another dish that you can experiment with and make it to suit your own taste. do ahead and pop it in the oven 1 hour or so before serving. with eggplants i find it depends on the age and size whether you peel it or not. i recommend that you peel them.  i also substitute unpeeled zucchini for the eggplant.', 'ingredients': "['eggplants', 'onion', 'salt', 'pepper', 'low-fat ricotta cheese', 'egg white', 'green onion', 'tomato sauce', 'reduced-fat mozzarella cheese', 'parmesan cheese']", 'n_ingredients': 10, 'random_reviews': ['Thanks for a keeper!  I too was looking for a good South Beach recipe.  I substituted my recipe for meat sauce (ground beef or turkey), with wine, red pepper, and lots of garlic!  The eggplant added the needed texture and substance, and was simply delicious!  ', 'This was wonderful!!! I roasted some carrots, green pepper, and onion in the oven for about 30 min and added that to the layers.  I also added some frozen chopped spinach, thawed and squeezed the liquid out and added that to the ricotta.  I served it with a mixed greens salad with avacado and a homemade asian sesame dressing.  My husband loved it and he is an avid meat eater!! Thanks so much!! I will definitely make this again!', "This made a very nice dinner. I halved the recipe and I didn't have ricotta cheese, so I subbed cottage cheese. I also used spaghetti sauce instead of tomato sauce. Thanks Bergy!", 'Excellant! I fixed mine a little different:\r\nInstead of baking the eggplant one layer at a time I put all of them on the cookie sheet and covered it with foil and baked them for 28 m. at the recommended temp. Then I took all the vegetable and steamed them each in a skillet. Instead of 1 egg white I used two. My additional vegetables were cauliflower, carrots, and green and yellow squashes. I also used grated parmesan cheese from a container with Hunts traditional tomato sauce (2 Cans). I added no salt.', "A very good, quick prep, healthy, mix and match way to go. I have to watch fat, cholesterol and sodium. I used fat free ricotta and low fat other cheeses, off brand spaghetti sauce fat free 320mg sodium per serving and even cut the recipie in half, also used no additional salt. My teenage daughter said it was cool! I didn't tell her about the Egg plant though. (I would recommend the same). It was GREAT! Thank You.", "A great substitute for the low carb dieter who is craving pasta.  I used Hunt's No Added Sugar Italian Baking Sauce which has only 6 gms carbs and 3 gms sugar per serving.  I believe I didn't buy big enough eggplant because the sauce and ricotta seemed to take over the dish. Next time I will add more eggplant and cut it thicker while still keeping the sauce and cheese measurements the same. Thanks Bergy!", "I was looking for a veggie lasagna recipe that would be compatable with the South Beach Diet.  This fits the bill.  I could not find any tomato sauce that did not have sugar in it so I made my usual sauce with canned tomatoes, mushrooms, garlic, onion, oregano and basil.  I ended up using about 3 or 4 cups for the whole pan as I wanted it plenty moist for leftovers.  My next concern was the eggplant.  The recipe did not say if it should be peeled or not, I will peel it next time as the peeling kind of was a bother in the final dish.  Maybe I should have used younger eggplants, I don't know.  This is a fantastic dish.   ", 'I used a mixture of eggplant and zucc.  \nI added extra cheese and basil. ', "Excellent!  My 5 year old enjoyed it as well.  I made my own tomato sauce, which was plentiful with onions so I used no more for the recipe, and froze it for the week.  Instead of sugar, I used honey to sweeten the sauce a little.  I peeled the eggplant with a potato peeler and sliced it as directed.  My son saw me with the eggplant and gave a sour plant.  I told him it would be good, it is just an overgrown apple that you have to cook.  :) It worked and he ended up eating it and liking it.  I sprinkled with sea salt and pepper and baked the eggplant all at one time for 28 minutes as done by Chef Mokhal below.  I steamed my vegetables (cauliflower, yellow squash, carrots, and broccoli).  Since I salted my own tomato sauce and sprinkled salt on the eggplant, I used no additional salt for the recipe (not even on the vegetables when I steamed them).  If you are a salt lover you can add additional salt to your own taste, but I am watching my salt intake.  I used low-fat, part skim cheeses and kroger brand grated parmesan.  I was intimidated at first to eat the eggplant but I really did enjoy it and so did my son so that's all I need!  I will more than likely add some spinach, green and red peppers, and some zuccini next time.  :) The veggies were great in it!", 'made this over the weekend...it was very good, but must admit I added browned ground beef to it to make it more man friendly. Had alot of eggplant to use up......everyone enjoyed it...will make again', "Oh what a great way to eat lasagna and not feel guilty!\r\nI used my own spaghetti sauce and sprinkled onion powder in the ricotta mix as I didn't have green onions.\r\nWe really enjoyed this casserole and will have it often. Thanks, Carole in Orlando", 'Absolutely fabulous recipe! I put a little cream sherry into the store-bought tomato sauce and it really added some nice richeness.', "So DH and I are on a diet which doesn't allow us carbs or anything that isn't low fat. Plus, for the next two weeks we can't have any meat. This doesn't leave us too many options. Hence, this recipe! I made it as written but added some diced mushrooms and some jalapeno hot sauce to the tomato sauce. Very flavorful and the eggplant looked uncannily like noodles. I am not sure that they tasted like noodles, but they sure didn't taste like eggplant. I think next time I might cook the eggplant for about 5 minutes longer to make sure that all of it is softened up. Thanks for an unusual and tasty entree.", 'Great recipe for South Beach Dieters.  I\'ve been craving something cheesy, and this was delicious!  I bought some beautiful eggplant at a farmstand, and remembered I had your recipe in my cookbook.  I sliced the eggplant into thin rounds, and I used lowfat ricotta and eggbeaters rather than egg white.  I mixed the parmesan in with the ricotta.  I used 1Steve\'s "Big Batch Spaghetti Sauce #37563, which I was canning at the time.  I\'ll make this again even if I\'m NOT dieting!  Great dish, Bergy.', 'I loved this. I used one big eggplant peeled, two smallish zucchini and about 7 oz. sliced mushrooms. Smelled great while it was cooking. Thanks Bergy!', 'Outstanding! I used zukes and yellow squash, and added a little spinach. I also used canned marinara instead of tomato sauce.', 'This had a very good flavor, and smelled delicious while it was baking.  I added mushrooms and green peppers sautéed in Pam to the sauce, which I thought went quite well with it.  However, I was a little disappointed because some of the eggplant was tough, even though it was peeled.  I did use plenty of sauce and baked it the full time.  I will try baking the eggplant a little longer if I make this again.  Overall, very tasty, and certainly great for the waistline!  (I figure only about 1600 calories for the whole pan using low fat cheeses.)', "I've always liked eggplant.  Since it didn't have to be fried, gotta be a lot healthier.  I used everything no fat and low fat like Eric.  Eggplant is NOT the most popular vegetable in the market, but you really can't tell what it is doctored up like lasagna.  I messed up though and didn't cover it with foil.  By the time I realized that, the cheese had become rather rubbery.  I just pulled off that layer, added more of the cheeses and finished uncovered for 10 minutes, came out perfect! Thanks Bergy for another great one."], 'number_of_ratings': 18, '_generated': {'pdf_path': '2026-01-19_03-52-56-recipe_to_pdf_and_image_outputs/pdfs/recipe_12792_cozy_home_variant.pdf', 'image_path': '2026-01-19_03-52-56-recipe_to_pdf_and_image_outputs/images/recipe_12792_cozy_home_variant.png', 'config_name': 'cozy_home_variant', 'layout': 'two_column', 'nutrition_viz': 'pie', 'theme_base': 'cozy_home'}, 'image': &lt;PIL.PngImagePlugin.PngImageFile image mode=RGB size=1275x1650 at 0xE5C21AED0290&gt;, 'full_recipe': {'id': 12792, 'name': 'vegetable lasagna without the lasagna', 'minutes': 105, 'tags': "['weeknight', 'time-to-make', 'course', 'main-ingredient', 'cuisine', 'preparation', 'occasion', 'north-american', 'casseroles', 'main-dish', 'side-dishes', 'eggs-dairy', 'pasta', 'vegetables', 'canadian', 'oven', 'european', 'potluck', 'dinner-party', 'italian', 'cheese', 'eggs', 'dietary', 'comfort-food', 'pasta-rice-and-grains', 'taste-mood', 'to-go', 'equipment', '4-hours-or-less']", 'n_steps': 19, 'steps': '[\'preheat oven to 425 degrees fahrenheit\', \'sprinkle both sides of the peeled egg plant slices with 1 / 2 tsp salt and 1 / 4 tsp pepper\', \'place strips of egg plant and the chopped onions on a non stick baking sheet , in a single layer , and bake for 5 to 7 minutes\', \'turn the strips over and bake a little longer until the eggplant is slightly soft\', \'you should still be able to lift the slices but they should be soft\', \'stir up the onions\', \'they should be translucent\', \'if one is done before the other , take it out of the oven until both are cooked\', \'mix together the ricotta , egg white , green onion and remaining salt and pepper\', \'spread 1 1 / 2 cups of tomato sauce on the bottom of a 9x13" oven proof casserole\', \'place a layer of eggplant and onion , using about one third\', \'cover with half of the ricotta mixture\', \'add another layer of veggies\', \'cover with the rest of the ricotta\', \'add the rest of the veggies\', \'add the remaining tomato sauce on top\', \'sprinkle with the mozzarella and parmesan cheeses\', \'cover with foil and bake for 1 hour at 375 degrees fahrenheit\', \'remove foil and bake another 5 to 10 minutes until the cheese is nicely browned\']', 'description': 'a nice change, leaving out the lasagna. i like to add some sliced mushrooms and hot peppers. this is another dish that you can experiment with and make it to suit your own taste. do ahead and pop it in the oven 1 hour or so before serving. with eggplants i find it depends on the age and size whether you peel it or not. i recommend that you peel them.  i also substitute unpeeled zucchini for the eggplant.', 'ingredients': "['eggplants', 'onion', 'salt', 'pepper', 'low-fat ricotta cheese', 'egg white', 'green onion', 'tomato sauce', 'reduced-fat mozzarella cheese', 'parmesan cheese']", 'n_ingredients': 10, 'random_reviews': ['Thanks for a keeper!  I too was looking for a good South Beach recipe.  I substituted my recipe for meat sauce (ground beef or turkey), with wine, red pepper, and lots of garlic!  The eggplant added the needed texture and substance, and was simply delicious!  ', 'This was wonderful!!! I roasted some carrots, green pepper, and onion in the oven for about 30 min and added that to the layers.  I also added some frozen chopped spinach, thawed and squeezed the liquid out and added that to the ricotta.  I served it with a mixed greens salad with avacado and a homemade asian sesame dressing.  My husband loved it and he is an avid meat eater!! Thanks so much!! I will definitely make this again!', "This made a very nice dinner. I halved the recipe and I didn't have ricotta cheese, so I subbed cottage cheese. I also used spaghetti sauce instead of tomato sauce. Thanks Bergy!", 'Excellant! I fixed mine a little different:\r\nInstead of baking the eggplant one layer at a time I put all of them on the cookie sheet and covered it with foil and baked them for 28 m. at the recommended temp. Then I took all the vegetable and steamed them each in a skillet. Instead of 1 egg white I used two. My additional vegetables were cauliflower, carrots, and green and yellow squashes. I also used grated parmesan cheese from a container with Hunts traditional tomato sauce (2 Cans). I added no salt.', "A very good, quick prep, healthy, mix and match way to go. I have to watch fat, cholesterol and sodium. I used fat free ricotta and low fat other cheeses, off brand spaghetti sauce fat free 320mg sodium per serving and even cut the recipie in half, also used no additional salt. My teenage daughter said it was cool! I didn't tell her about the Egg plant though. (I would recommend the same). It was GREAT! Thank You.", "A great substitute for the low carb dieter who is craving pasta.  I used Hunt's No Added Sugar Italian Baking Sauce which has only 6 gms carbs and 3 gms sugar per serving.  I believe I didn't buy big enough eggplant because the sauce and ricotta seemed to take over the dish. Next time I will add more eggplant and cut it thicker while still keeping the sauce and cheese measurements the same. Thanks Bergy!", "I was looking for a veggie lasagna recipe that would be compatable with the South Beach Diet.  This fits the bill.  I could not find any tomato sauce that did not have sugar in it so I made my usual sauce with canned tomatoes, mushrooms, garlic, onion, oregano and basil.  I ended up using about 3 or 4 cups for the whole pan as I wanted it plenty moist for leftovers.  My next concern was the eggplant.  The recipe did not say if it should be peeled or not, I will peel it next time as the peeling kind of was a bother in the final dish.  Maybe I should have used younger eggplants, I don't know.  This is a fantastic dish.   ", 'I used a mixture of eggplant and zucc.  \nI added extra cheese and basil. ', "Excellent!  My 5 year old enjoyed it as well.  I made my own tomato sauce, which was plentiful with onions so I used no more for the recipe, and froze it for the week.  Instead of sugar, I used honey to sweeten the sauce a little.  I peeled the eggplant with a potato peeler and sliced it as directed.  My son saw me with the eggplant and gave a sour plant.  I told him it would be good, it is just an overgrown apple that you have to cook.  :) It worked and he ended up eating it and liking it.  I sprinkled with sea salt and pepper and baked the eggplant all at one time for 28 minutes as done by Chef Mokhal below.  I steamed my vegetables (cauliflower, yellow squash, carrots, and broccoli).  Since I salted my own tomato sauce and sprinkled salt on the eggplant, I used no additional salt for the recipe (not even on the vegetables when I steamed them).  If you are a salt lover you can add additional salt to your own taste, but I am watching my salt intake.  I used low-fat, part skim cheeses and kroger brand grated parmesan.  I was intimidated at first to eat the eggplant but I really did enjoy it and so did my son so that's all I need!  I will more than likely add some spinach, green and red peppers, and some zuccini next time.  :) The veggies were great in it!", 'made this over the weekend...it was very good, but must admit I added browned ground beef to it to make it more man friendly. Had alot of eggplant to use up......everyone enjoyed it...will make again', "Oh what a great way to eat lasagna and not feel guilty!\r\nI used my own spaghetti sauce and sprinkled onion powder in the ricotta mix as I didn't have green onions.\r\nWe really enjoyed this casserole and will have it often. Thanks, Carole in Orlando", 'Absolutely fabulous recipe! I put a little cream sherry into the store-bought tomato sauce and it really added some nice richeness.', "So DH and I are on a diet which doesn't allow us carbs or anything that isn't low fat. Plus, for the next two weeks we can't have any meat. This doesn't leave us too many options. Hence, this recipe! I made it as written but added some diced mushrooms and some jalapeno hot sauce to the tomato sauce. Very flavorful and the eggplant looked uncannily like noodles. I am not sure that they tasted like noodles, but they sure didn't taste like eggplant. I think next time I might cook the eggplant for about 5 minutes longer to make sure that all of it is softened up. Thanks for an unusual and tasty entree.", 'Great recipe for South Beach Dieters.  I\'ve been craving something cheesy, and this was delicious!  I bought some beautiful eggplant at a farmstand, and remembered I had your recipe in my cookbook.  I sliced the eggplant into thin rounds, and I used lowfat ricotta and eggbeaters rather than egg white.  I mixed the parmesan in with the ricotta.  I used 1Steve\'s "Big Batch Spaghetti Sauce #37563, which I was canning at the time.  I\'ll make this again even if I\'m NOT dieting!  Great dish, Bergy.', 'I loved this. I used one big eggplant peeled, two smallish zucchini and about 7 oz. sliced mushrooms. Smelled great while it was cooking. Thanks Bergy!', 'Outstanding! I used zukes and yellow squash, and added a little spinach. I also used canned marinara instead of tomato sauce.', 'This had a very good flavor, and smelled delicious while it was baking.  I added mushrooms and green peppers sautéed in Pam to the sauce, which I thought went quite well with it.  However, I was a little disappointed because some of the eggplant was tough, even though it was peeled.  I did use plenty of sauce and baked it the full time.  I will try baking the eggplant a little longer if I make this again.  Overall, very tasty, and certainly great for the waistline!  (I figure only about 1600 calories for the whole pan using low fat cheeses.)', "I've always liked eggplant.  Since it didn't have to be fried, gotta be a lot healthier.  I used everything no fat and low fat like Eric.  Eggplant is NOT the most popular vegetable in the market, but you really can't tell what it is doctored up like lasagna.  I messed up though and didn't cover it with foil.  By the time I realized that, the cheese had become rather rubbery.  I just pulled off that layer, added more of the cheeses and finished uncovered for 10 minutes, came out perfect! Thanks Bergy for another great one."], 'number_of_ratings': 18}, 'recipe_markdown': '# Vegetable Lasagna Without The Lasagna\n\n**ID:** 12792  \n**Time:** 105 minutes  \n**Number of Ratings:** 18\n\n## Description\n\nA nice change, leaving out the lasagna. i like to add some sliced mushrooms and hot peppers. this is another dish that you can experiment with and make it to suit your own taste. do ahead and pop it in the oven 1 hour or so before serving. with eggplants i find it depends on the age and size whether you peel it or not. i recommend that you peel them.  i also substitute unpeeled zucchini for the eggplant.\n\n## Ingredients\n\n- eggplants\n- onion\n- salt\n- pepper\n- low-fat ricotta cheese\n- egg white\n- green onion\n- tomato sauce\n- reduced-fat mozzarella cheese\n- parmesan cheese\n\n## Steps (19 total)\n\n1. Preheat oven to 425 degrees fahrenheit\n2. Sprinkle both sides of the peeled egg plant slices with 1 / 2 tsp salt and 1 / 4 tsp pepper\n3. Place strips of egg plant and the chopped onions on a non stick baking sheet , in a single layer , and bake for 5 to 7 minutes\n4. Turn the strips over and bake a little longer until the eggplant is slightly soft\n5. You should still be able to lift the slices but they should be soft\n6. Stir up the onions\n7. They should be translucent\n8. If one is done before the other , take it out of the oven until both are cooked\n9. Mix together the ricotta , egg white , green onion and remaining salt and pepper\n10. Spread 1 1 / 2 cups of tomato sauce on the bottom of a 9x13" oven proof casserole\n11. Place a layer of eggplant and onion , using about one third\n12. Cover with half of the ricotta mixture\n13. Add another layer of veggies\n14. Cover with the rest of the ricotta\n15. Add the rest of the veggies\n16. Add the remaining tomato sauce on top\n17. Sprinkle with the mozzarella and parmesan cheeses\n18. Cover with foil and bake for 1 hour at 375 degrees fahrenheit\n19. Remove foil and bake another 5 to 10 minutes until the cheese is nicely browned\n\n## Tags\n\n`weeknight`, `time-to-make`, `course`, `main-ingredient`, `cuisine`, `preparation`, `occasion`, `north-american`, `casseroles`, `main-dish`, `side-dishes`, `eggs-dairy`, `pasta`, `vegetables`, `canadian`, `oven`, `european`, `potluck`, `dinner-party`, `italian`, `cheese`, `eggs`, `dietary`, `comfort-food`, `pasta-rice-and-grains`, `taste-mood`, `to-go`, `equipment`, `4-hours-or-less`\n\n## Reviews\n\n&gt; Thanks for a keeper!  I too was looking for a good South Beach recipe.  I substituted my recipe for meat sauce (ground beef or turkey), with wine, red pepper, and lots of garlic!  The eggplant added the needed texture and substance, and was simply delicious!  \n\n&gt; This was wonderful!!! I roasted some carrots, green pepper, and onion in the oven for about 30 min and added that to the layers.  I also added some frozen chopped spinach, thawed and squeezed the liquid out and added that to the ricotta.  I served it with a mixed greens salad with avacado and a homemade asian sesame dressing.  My husband loved it and he is an avid meat eater!! Thanks so much!! I will definitely make this again!\n\n&gt; This made a very nice dinner. I halved the recipe and I didn\'t have ricotta cheese, so I subbed cottage cheese. I also used spaghetti sauce instead of tomato sauce. Thanks Bergy!\n\n&gt; Excellant! I fixed mine a little different:\r\nInstead of baking the eggplant one layer at a time I put all of them on the cookie sheet and covered it with foil and baked them for 28 m. at the recommended temp. Then I took all the vegetable and steamed them each in a skillet. Instead of 1 egg white I used two. My additional vegetables were cauliflower, carrots, and green and yellow squashes. I also used grated parmesan cheese from a container with Hunts traditional tomato sauce (2 Cans). I added no salt.\n\n&gt; A very good, quick prep, healthy, mix and match way to go. I have to watch fat, cholesterol and sodium. I used fat free ricotta and low fat other cheeses, off brand spaghetti sauce fat free 320mg sodium per serving and even cut the recipie in half, also used no additional salt. My teenage daughter said it was cool! I didn\'t tell her about the Egg plant though. (I would recommend the same). It was GREAT! Thank You.\n\n&gt; A great substitute for the low carb dieter who is craving pasta.  I used Hunt\'s No Added Sugar Italian Baking Sauce which has only 6 gms carbs and 3 gms sugar per serving.  I believe I didn\'t buy big enough eggplant because the sauce and ricotta seemed to take over the dish. Next time I will add more eggplant and cut it thicker while still keeping the sauce and cheese measurements the same. Thanks Bergy!\n\n&gt; I was looking for a veggie lasagna recipe that would be compatable with the South Beach Diet.  This fits the bill.  I could not find any tomato sauce that did not have sugar in it so I made my usual sauce with canned tomatoes, mushrooms, garlic, onion, oregano and basil.  I ended up using about 3 or 4 cups for the whole pan as I wanted it plenty moist for leftovers.  My next concern was the eggplant.  The recipe did not say if it should be peeled or not, I will peel it next time as the peeling kind of was a bother in the final dish.  Maybe I should have used younger eggplants, I don\'t know.  This is a fantastic dish.   \n\n&gt; I used a mixture of eggplant and zucc.  \nI added extra cheese and basil. \n\n&gt; Excellent!  My 5 year old enjoyed it as well.  I made my own tomato sauce, which was plentiful with onions so I used no more for the recipe, and froze it for the week.  Instead of sugar, I used honey to sweeten the sauce a little.  I peeled the eggplant with a potato peeler and sliced it as directed.  My son saw me with the eggplant and gave a sour plant.  I told him it would be good, it is just an overgrown apple that you have to cook.  :) It worked and he ended up eating it and liking it.  I sprinkled with sea salt and pepper and baked the eggplant all at one time for 28 minutes as done by Chef Mokhal below.  I steamed my vegetables (cauliflower, yellow squash, carrots, and broccoli).  Since I salted my own tomato sauce and sprinkled salt on the eggplant, I used no additional salt for the recipe (not even on the vegetables when I steamed them).  If you are a salt lover you can add additional salt to your own taste, but I am watching my salt intake.  I used low-fat, part skim cheeses and kroger brand grated parmesan.  I was intimidated at first to eat the eggplant but I really did enjoy it and so did my son so that\'s all I need!  I will more than likely add some spinach, green and red peppers, and some zuccini next time.  :) The veggies were great in it!\n\n&gt; made this over the weekend...it was very good, but must admit I added browned ground beef to it to make it more man friendly. Had alot of eggplant to use up......everyone enjoyed it...will make again\n\n&gt; Oh what a great way to eat lasagna and not feel guilty!\r\nI used my own spaghetti sauce and sprinkled onion powder in the ricotta mix as I didn\'t have green onions.\r\nWe really enjoyed this casserole and will have it often. Thanks, Carole in Orlando\n\n&gt; Absolutely fabulous recipe! I put a little cream sherry into the store-bought tomato sauce and it really added some nice richeness.\n\n&gt; So DH and I are on a diet which doesn\'t allow us carbs or anything that isn\'t low fat. Plus, for the next two weeks we can\'t have any meat. This doesn\'t leave us too many options. Hence, this recipe! I made it as written but added some diced mushrooms and some jalapeno hot sauce to the tomato sauce. Very flavorful and the eggplant looked uncannily like noodles. I am not sure that they tasted like noodles, but they sure didn\'t taste like eggplant. I think next time I might cook the eggplant for about 5 minutes longer to make sure that all of it is softened up. Thanks for an unusual and tasty entree.\n\n&gt; Great recipe for South Beach Dieters.  I\'ve been craving something cheesy, and this was delicious!  I bought some beautiful eggplant at a farmstand, and remembered I had your recipe in my cookbook.  I sliced the eggplant into thin rounds, and I used lowfat ricotta and eggbeaters rather than egg white.  I mixed the parmesan in with the ricotta.  I used 1Steve\'s "Big Batch Spaghetti Sauce #37563, which I was canning at the time.  I\'ll make this again even if I\'m NOT dieting!  Great dish, Bergy.\n\n&gt; I loved this. I used one big eggplant peeled, two smallish zucchini and about 7 oz. sliced mushrooms. Smelled great while it was cooking. Thanks Bergy!\n\n&gt; Outstanding! I used zukes and yellow squash, and added a little spinach. I also used canned marinara instead of tomato sauce.\n\n&gt; This had a very good flavor, and smelled delicious while it was baking.  I added mushrooms and green peppers sautéed in Pam to the sauce, which I thought went quite well with it.  However, I was a little disappointed because some of the eggplant was tough, even though it was peeled.  I did use plenty of sauce and baked it the full time.  I will try baking the eggplant a little longer if I make this again.  Overall, very tasty, and certainly great for the waistline!  (I figure only about 1600 calories for the whole pan using low fat cheeses.)\n\n&gt; I\'ve always liked eggplant.  Since it didn\'t have to be fried, gotta be a lot healthier.  I used everything no fat and low fat like Eric.  Eggplant is NOT the most popular vegetable in the market, but you really can\'t tell what it is doctored up like lasagna.  I messed up though and didn\'t cover it with foil.  By the time I realized that, the cheese had become rather rubbery.  I just pulled off that layer, added more of the cheeses and finished uncovered for 10 minutes, came out perfect! Thanks Bergy for another great one.\n'}}]</code></pre>
 </div>
@@ -1241,9 +1437,11 @@ This is the best banana bread ever.  the sour cream really gives it something ex
 <p>We get back some good results to start, however, these results could potentially be improved via reranking.</p>
 <p>To do so, we can use <a href="https://huggingface.co/nvidia/llama-nemotron-rerank-vl-1b-v2"><code>nvidia/llama-nemotron-rerank-vl-1b-v2</code></a>.</p>
 <div id="94011306" class="cell" data-execution_count="32">
+<div class="cell-label cell-label-in">In [32]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Need image + text pairs for reranking</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>test_query_text <span class="op">=</span> <span class="st">"Banana Sour Cream Bread"</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>text_result_sorted_scores, text_result_sorted_indices</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [32]:</div>
 <div class="cell-output cell-output-display" data-execution_count="32">
 <pre><code>(tensor([0.5898, 0.5547, 0.5430, 0.5195, 0.5156, 0.5117, 0.5000, 0.4961, 0.4961,
          0.4922, 0.4902, 0.4883, 0.4805, 0.4727, 0.4707, 0.4688, 0.4629, 0.4609,
@@ -1269,6 +1467,7 @@ This is the best banana bread ever.  the sour cream really gives it something ex
 </div>
 </div>
 <div id="c7314175" class="cell" data-execution_count="34">
+<div class="cell-label cell-label-in">In [34]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1303,6 +1502,7 @@ This is the best banana bread ever.  the sour cream really gives it something ex
 <span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a>rerank_end_time <span class="op">=</span> time.time()</span>
 <span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a>rerank_total_time <span class="op">=</span> rerank_end_time <span class="op">-</span> rerank_start_time</span>
 <span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Total rerank time for </span><span class="sc">{</span><span class="bu">len</span>(dataset_samples_to_rerank)<span class="sc">}</span><span class="ss"> samples: </span><span class="sc">{</span>rerank_total_time<span class="sc">:.2f}</span><span class="ss"> seconds"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [34]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Reranking number of top samples: 20
 [INFO] Total rerank time for 20 samples: 16.66 seconds
@@ -1314,6 +1514,7 @@ Wall time: 16.7 s</code></pre>
 <p><strong>Note:</strong> Depending on your pipeline, reranking may or may not be worth it. If you are reranking image + text, keep in mind, this will likely take a significant portion of your overal retrieval time.</p>
 </blockquote>
 <div id="236eb292" class="cell" data-execution_count="35">
+<div class="cell-label cell-label-in">In [35]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get logits</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>rerank_logits <span class="op">=</span> rerank_outputs.logits</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>rerank_logits_flat <span class="op">=</span> rerank_logits.squeeze(<span class="op">-</span><span class="dv">1</span>)</span>
@@ -1321,6 +1522,7 @@ Wall time: 16.7 s</code></pre>
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get sorted indices</span></span>
 <span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>rerank_sorted_indicies <span class="op">=</span> torch.argsort(rerank_logits_flat, descending<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>rerank_sorted_indicies</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [35]:</div>
 <div class="cell-output cell-output-display" data-execution_count="35">
 <pre><code>tensor([ 0,  1,  7,  6,  8,  2,  3, 11, 13, 18,  5, 14, 17,  4,  9, 19, 15, 10,
         12, 16], device='cuda:0')</code></pre>
@@ -1330,6 +1532,7 @@ Wall time: 16.7 s</code></pre>
 <h3 data-number="10.1" class="anchored" data-anchor-id="create-a-helper-function-for-reranking-input-samples"><span class="header-section-number">10.1</span> Create a helper function for reranking input samples</h3>
 <p>See here for steps on how to do this: <a href="https://huggingface.co/nvidia/llama-nemotron-rerank-vl-1b-v2">https://huggingface.co/nvidia/llama-nemotron-rerank-vl-1b-v2</a></p>
 <div id="94ef967a" class="cell" data-execution_count="36">
+<div class="cell-label cell-label-in">In [36]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rerank_samples(</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    dataset,</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    query_text: <span class="bu">str</span>,</span>
@@ -1407,6 +1610,7 @@ Wall time: 16.7 s</code></pre>
 <span id="cb45-75"><a href="#cb45-75" aria-hidden="true" tabindex="-1"></a>                                                                            rerank_processor<span class="op">=</span>rerank_processor)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="2a89935c" class="cell" data-execution_count="38">
+<div class="cell-label cell-label-in">In [38]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> display_rerank_changes(rerank_sorted_indices, top_n<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Display how samples moved after reranking.</span></span>
@@ -1442,6 +1646,7 @@ Wall time: 16.7 s</code></pre>
 <span id="cb46-33"><a href="#cb46-33" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>new_rank <span class="op">+</span> <span class="dv">1</span><span class="sc">:&lt;6}</span><span class="ss"> #</span><span class="sc">{</span>original_idx<span class="sc">:&lt;7}</span><span class="ss"> was #</span><span class="sc">{</span>old_rank <span class="op">+</span> <span class="dv">1</span><span class="sc">:&lt;7}</span><span class="ss"> </span><span class="sc">{</span>color<span class="sc">}{</span>arrow<span class="sc">:&lt;10}{</span>reset<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb46-34"><a href="#cb46-34" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-35"><a href="#cb46-35" aria-hidden="true" tabindex="-1"></a>display_rerank_changes(rerank_sorted_indicies_function)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [38]:</div>
 <div class="cell-output cell-output-stdout">
 <div class="ansi-escaped-output">
 <pre>Rank   Sample   Original   Change    
@@ -1495,6 +1700,7 @@ Wall time: 16.7 s</code></pre>
 <section id="view-recipe-retrieval-before-and-after-reranking" class="level3" data-number="10.2">
 <h3 data-number="10.2" class="anchored" data-anchor-id="view-recipe-retrieval-before-and-after-reranking"><span class="header-section-number">10.2</span> View recipe retrieval before and after reranking</h3>
 <div id="67511da0" class="cell" data-execution_count="40">
+<div class="cell-label cell-label-in">In [40]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> io <span class="im">import</span> BytesIO</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> HTML, display</span>
@@ -1968,12 +2174,14 @@ Wall time: 16.7 s</code></pre>
 <span id="cb47-471"><a href="#cb47-471" aria-hidden="true" tabindex="-1"></a>    display(HTML(html))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="62dc190e" class="cell" data-execution_count="41">
+<div class="cell-label cell-label-in">In [41]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>display_rerank_comparison(</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>    query<span class="op">=</span>test_query_text,</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    original_dataset<span class="op">=</span>dataset_samples_to_rerank,   <span class="co"># Your original retrieval results</span></span>
 <span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>    reranked_dataset<span class="op">=</span>dataset_samples_to_rerank.select(rerank_sorted_indicies),    <span class="co"># Your reranked results</span></span>
 <span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    top_k<span class="op">=</span><span class="dv">3</span></span>
 <span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [41]:</div>
 <div class="cell-output cell-output-display">
 
     <style>
@@ -2360,6 +2568,7 @@ Wall time: 16.7 s</code></pre>
 <p>We are using <code>Qwen3-VL-2B-Instruct</code> for a small model as to not take up too much memory.</p>
 <p>However, you could easily use a model such as <a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16">`nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16</a> for higher quality outputs.</p>
 <div id="22c694ec" class="cell" data-execution_count="42">
+<div class="cell-label cell-label-in">In [42]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> Qwen3VLForConditionalGeneration, AutoProcessor</span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2376,6 +2585,7 @@ Wall time: 16.7 s</code></pre>
 <span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Loaded model: </span><span class="sc">{</span>GENERATION_MODEL_ID<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Device: </span><span class="sc">{</span>qwen_model<span class="sc">.</span>device<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [42]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Loaded model: Qwen/Qwen3-VL-2B-Instruct
 [INFO] Device: cuda:0</code></pre>
@@ -2384,6 +2594,7 @@ Wall time: 16.7 s</code></pre>
 <section id="create-helper-function-for-generating-summaries" class="level3" data-number="11.1">
 <h3 data-number="11.1" class="anchored" data-anchor-id="create-helper-function-for-generating-summaries"><span class="header-section-number">11.1</span> Create helper function for generating summaries</h3>
 <div id="2bfe5ff5" class="cell" data-execution_count="43">
+<div class="cell-label cell-label-in">In [43]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to summarize recipes</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_recipe_summary(</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>    recipe_texts: <span class="bu">list</span>[<span class="bu">str</span>],</span>
@@ -2490,6 +2701,7 @@ Wall time: 16.7 s</code></pre>
 <span id="cb51-104"><a href="#cb51-104" aria-hidden="true" tabindex="-1"></a>recipe_texts <span class="op">=</span> <span class="bu">list</span>(dataset[<span class="st">"train"</span>].select([<span class="dv">42</span>, <span class="dv">43</span>, <span class="dv">44</span>])[<span class="st">"recipe_markdown"</span>])</span>
 <span id="cb51-105"><a href="#cb51-105" aria-hidden="true" tabindex="-1"></a>summary <span class="op">=</span> generate_recipe_summary(recipe_texts)</span>
 <span id="cb51-106"><a href="#cb51-106" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [43]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>```markdown
 # Recipe summary
@@ -2521,17 +2733,21 @@ A simple, two-ingredient recipe for homemade pineapple preserves that's easy to 
 <li>Display time/latency throughout</li>
 </ul>
 <div id="77841f7f" class="cell" data-execution_count="49">
+<div class="cell-label cell-label-in">In [49]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Match the input query to the target embeddings and get back scores and indices</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Finding recipe matches on query: </span><span class="sc">{</span>query<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>result_sorted_scores, result_sorted_indices <span class="op">=</span> match_query_to_embeddings(query<span class="op">=</span>query,</span>
 <span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>                                                                        target_embeddings_to_match<span class="op">=</span>image_text_embeddings,</span>
 <span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>                                                                        top_k<span class="op">=</span><span class="dv">100</span>) <span class="co"># get back the top 100 samples</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [49]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Finding recipe matches on query: recipes with tomato and parmesan cheese</code></pre>
 </div>
 </div>
 <div id="8b36509d" class="cell" data-execution_count="50">
+<div class="cell-label cell-label-in">In [50]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>display_rerank_changes(rerank_sorted_indicies)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [50]:</div>
 <div class="cell-output cell-output-stdout">
 <div class="ansi-escaped-output">
 <pre>Rank   Sample   Original   Change    
@@ -2631,6 +2847,7 @@ A simple, two-ingredient recipe for homemade pineapple preserves that's easy to 
 <p>This is because Gradio works off the premise of input -&gt; function -&gt; output.</p>
 <p>Our input will be a text/image query for recipes, our function will perform the RAG pipeline steps and return our desired outputs to display.</p>
 <div id="54ffae91" class="cell" data-execution_count="51">
+<div class="cell-label cell-label-in">In [51]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> retrieve(query_text: <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>,</span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>             query_image: Image.Image <span class="op">|</span> <span class="va">None</span>,</span>
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>             rerank_option: <span class="bu">str</span>,</span>
@@ -2747,6 +2964,7 @@ A simple, two-ingredient recipe for homemade pineapple preserves that's easy to 
 <span id="cb57-114"><a href="#cb57-114" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> output_image_gallery, output_recipe_cards_html, summary, timing_dict</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="2a117f8c" class="cell" data-execution_count="59">
+<div class="cell-label cell-label-in">In [59]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>demo_test_query <span class="op">=</span> <span class="st">"cup of tea"</span></span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>output_image_gallery, output_recipe_cards_html, summary, timing_dict <span class="op">=</span> retrieve(query_text<span class="op">=</span>demo_test_query,</span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>                                                                                query_image<span class="op">=</span><span class="va">None</span>,</span>
@@ -2754,6 +2972,7 @@ A simple, two-ingredient recipe for homemade pineapple preserves that's easy to 
 <span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>                                                                                generate_summary_option<span class="op">=</span><span class="st">"True"</span>)</span>
 <span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">[INFO] Timing dict: </span><span class="sc">{</span>timing_dict<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [59]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Query image: None
 [INFO] Query text: cup of tea
@@ -2766,8 +2985,10 @@ A simple, two-ingredient recipe for homemade pineapple preserves that's easy to 
 </div>
 </div>
 <div id="ac020643" class="cell" data-execution_count="60">
+<div class="cell-label cell-label-in">In [60]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Summary text for recipes retrieved with query: </span><span class="sc">{</span>demo_test_query<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [60]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Summary text for recipes retrieved with query: cup of tea
 
@@ -2798,7 +3019,9 @@ A simple, warming tea made with milk, cardamom, tea bags, and sugar. Easy to pre
 </div>
 <p>We can display the retrieved texts as HTML cards.</p>
 <div id="e4ca694b" class="cell" data-execution_count="61">
+<div class="cell-label cell-label-in">In [61]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>display(HTML(output_recipe_cards_html))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [61]:</div>
 <div class="cell-output cell-output-display">
 
     <div style="margin-top: 16px;">
@@ -2923,6 +3146,7 @@ A simple, warming tea made with milk, cardamom, tea bags, and sugar. Easy to pre
 </div>
 <p>And we can create a helper function to make the retrieved images viewable in a gallery style.</p>
 <div id="e1c9bf8e" class="cell" data-execution_count="62">
+<div class="cell-label cell-label-in">In [62]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> List, Tuple</span>
 <span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
@@ -2976,6 +3200,7 @@ A simple, warming tea made with milk, cardamom, tea bags, and sugar. Easy to pre
 <span id="cb63-51"><a href="#cb63-51" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
 <span id="cb63-52"><a href="#cb63-52" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-53"><a href="#cb63-53" aria-hidden="true" tabindex="-1"></a>plot_image_gallery(output_image_gallery)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [62]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Showing images retrieved for query: cup of tea</code></pre>
 </div>
@@ -2992,6 +3217,7 @@ A simple, warming tea made with milk, cardamom, tea bags, and sugar. Easy to pre
 <h3 data-number="12.3" class="anchored" data-anchor-id="build-the-gradio-demo"><span class="header-section-number">12.3</span> Build the Gradio demo</h3>
 <p>We can now run construct and run our Gradio demo inside our notebook if we like.</p>
 <div id="42473cfa" class="cell" data-execution_count="63">
+<div class="cell-label cell-label-in">In [63]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gradio <span class="im">as</span> gr</span>
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> gr.Blocks(</span>
@@ -3092,6 +3318,7 @@ A simple, warming tea made with milk, cardamom, tea bags, and sugar. Easy to pre
 <span id="cb65-98"><a href="#cb65-98" aria-hidden="true" tabindex="-1"></a>    show_error<span class="op">=</span><span class="va">True</span>,</span>
 <span id="cb65-99"><a href="#cb65-99" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="dv">1000</span></span>
 <span id="cb65-100"><a href="#cb65-100" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [63]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>* Running on local URL:  http://127.0.0.1:7860
 * To create a public link, set `share=True` in `launch()`.</code></pre>
@@ -3118,7 +3345,9 @@ A simple, warming tea made with milk, cardamom, tea bags, and sugar. Easy to pre
 <li><code>README.md</code> - Details about our app and how it works as well as metadata about the Space.</li>
 </ul>
 <div id="e4e3777b" class="cell" data-execution_count="64">
+<div class="cell-label cell-label-in">In [64]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>mkdir <span class="op">-</span>p demo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [64]:</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
 To disable this warning, you can either:
@@ -3129,6 +3358,7 @@ To disable this warning, you can either:
 <section id="create-the-app.py-file" class="level3" data-number="13.1">
 <h3 data-number="13.1" class="anchored" data-anchor-id="create-the-app.py-file"><span class="header-section-number">13.1</span> Create the <code>app.py</code> file</h3>
 <div id="ef6a11b2" class="cell" data-execution_count="65">
+<div class="cell-label cell-label-in">In [65]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile demo<span class="op">/</span>app.py</span>
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="co">Multimodal RAG Demo with Nemotron Embed VL and Rerank VL</span></span>
@@ -3784,11 +4014,13 @@ To disable this warning, you can either:
 <span id="cb71-653"><a href="#cb71-653" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-654"><a href="#cb71-654" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
 <span id="cb71-655"><a href="#cb71-655" aria-hidden="true" tabindex="-1"></a>    demo.launch()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [65]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting demo/app.py</code></pre>
 </div>
 </div>
 <div id="cfe538e8" class="cell" data-execution_count="66">
+<div class="cell-label cell-label-in">In [66]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile demo<span class="op">/</span>requirements.txt</span>
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>torch<span class="op">==</span><span class="fl">2.9.1</span></span>
 <span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>torchvision<span class="op">==</span><span class="fl">0.24.1</span></span>
@@ -3800,11 +4032,13 @@ To disable this warning, you can either:
 <span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>accelerate<span class="op">==</span><span class="fl">1.12.0</span></span>
 <span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a>qwen<span class="op">-</span>vl<span class="op">-</span>utils<span class="op">==</span><span class="fl">0.0.14</span></span>
 <span id="cb73-11"><a href="#cb73-11" aria-hidden="true" tabindex="-1"></a>spaces</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [66]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting demo/requirements.txt</code></pre>
 </div>
 </div>
 <div id="a1ebbcb7" class="cell" data-execution_count="67">
+<div class="cell-label cell-label-in">In [67]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile demo<span class="op">/</span>README.md</span>
 <span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span>
 <span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>title: Multimodal RAG <span class="cf">with</span> Nemotron Embed <span class="kw">and</span> Rerank VL</span>
@@ -3838,12 +4072,15 @@ To disable this warning, you can either:
 <span id="cb75-31"><a href="#cb75-31" aria-hidden="true" tabindex="-1"></a><span class="op">*</span> <span class="op">**</span>Generation model used:<span class="op">**</span> https:<span class="op">//</span>huggingface.co<span class="op">/</span>Qwen<span class="op">/</span>Qwen3<span class="op">-</span>VL<span class="op">-</span><span class="dv">2</span><span class="er">B</span><span class="op">-</span>Instruct (note: you could use a larger model such <span class="im">as</span> [Nemotron v3](https:<span class="op">//</span>huggingface.co<span class="op">/</span>collections<span class="op">/</span>nvidia<span class="op">/</span>nvidia<span class="op">-</span>nemotron<span class="op">-</span>v3), however, this will require more compute resources)</span>
 <span id="cb75-32"><a href="#cb75-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb75-33"><a href="#cb75-33" aria-hidden="true" tabindex="-1"></a><span class="op">**</span>Note:<span class="op">**</span> This README.md was authored <span class="kw">in</span> a [live tutorial recorded <span class="cf">for</span> YouTube](https:<span class="op">//</span>youtube.com<span class="op">/</span>live<span class="op">/</span>XWmqcFiBvpU?feature<span class="op">=</span>share).</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [67]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting demo/README.md</code></pre>
 </div>
 </div>
 <div id="b5d47109" class="cell" data-execution_count="68">
+<div class="cell-label cell-label-in">In [68]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>cp image_text_embeddings_10k.safetensors demo<span class="op">/</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [68]:</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
 To disable this warning, you can either:
@@ -3852,6 +4089,7 @@ To disable this warning, you can either:
 </div>
 </div>
 <div id="0e62ee1e" class="cell" data-execution_count="69">
+<div class="cell-label cell-label-in">In [69]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> Path(<span class="st">"kitchen_bench.png"</span>).is_file():</span>
@@ -3859,6 +4097,7 @@ To disable this warning, you can either:
 <span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">!</span>cp kitchen_bench.png demo<span class="op">/</span></span>
 <span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
 <span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">!</span>cp kitchen_bench.png demo<span class="op">/</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [69]:</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
 To disable this warning, you can either:
@@ -3870,6 +4109,7 @@ To disable this warning, you can either:
 <section id="upload-demo-folder-to-hugging-face" class="level3" data-number="13.2">
 <h3 data-number="13.2" class="anchored" data-anchor-id="upload-demo-folder-to-hugging-face"><span class="header-section-number">13.2</span> Upload demo folder to Hugging Face</h3>
 <div id="f1dff458" class="cell" data-execution_count="70">
+<div class="cell-label cell-label-in">In [70]:</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Import the required methods for uploading to the Hugging Face Hub</span></span>
 <span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> huggingface_hub <span class="im">import</span> (</span>
 <span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>    create_repo,</span>
@@ -3911,6 +4151,7 @@ To disable this warning, you can either:
 <span id="cb81-39"><a href="#cb81-39" aria-hidden="true" tabindex="-1"></a>    commit_message<span class="op">=</span><span class="st">"uploading app_local.py for running locally (no @spaces.GPU)"</span></span>
 <span id="cb81-40"><a href="#cb81-40" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb81-41"><a href="#cb81-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Demo folder successfully uploaded with commit URL: </span><span class="sc">{</span>folder_upload_url<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-label cell-label-out">Out [70]:</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Creating repo on Hugging Face Hub with name: multimodal-rag-with-nemotron
 [INFO] Full Hugging Face Hub repo name: mrdbourke/multimodal-rag-with-nemotron
@@ -4010,6 +4251,19 @@ To disable this warning, you can either:
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
