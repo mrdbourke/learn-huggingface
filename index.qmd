@@ -2,37 +2,15 @@
 title: "Learn Hugging Face 🤗"
 ---
 
-Website dedicated to teaching the Hugging Face ecosystem with practical examples.
+Welcome to the 2nd best place on the internet to learn the Hugging Face ecosystem (the first is the [official docs](https://huggingface.co/docs)) and a bunch of AI and ML concepts along the way. 
+
+This website dedicated to teaching the Hugging Face ecosystem with practical examples.
 
 Each example will include an end-to-end approach of starting with a dataset (custom or existing), building and evaluating a model and creating a demo to share.
 
-:::{.callout-tip}
-## Video Course Content
-If you would like step-by-step guidance through each of the projects, they are all [available as video courses on the Zero to Mastery platform](https://dbourke.link/ZTMHuggingFace).
-
-You can sign up and go through them at your own liesure.
-:::
-
-Teaching style: 
-
-A machine learning cooking show! 👨‍🍳
+Teaching style: a machine learning cooking show! 👨‍🍳
 
 We focus on starting with raw ingredients such as a dataset or base model and then we customize them to our own liking before uploading the fine-tuned model and custom demo to Hugging Face so other people can try it out.
-
-Mottos:
-
-* ***If in doubt, run the code.*** -- Machine learning is very experimental. So it's good to get in the habit of continually trying things (even if you think they won't work).
-* ***Visualize, visualize, visualize!*** - If you're not sure of some dataset or some operation or some predictions, visualize it/them.
-* ***Experiment, experiment, experiment!*** - Again, machine learning is very experimental. So keep trying different things!
-* ***Data, model, demo!*** - Create/get a dataset, build/train/evaluate a model, create a demo to share.
-
-Project style:
-
-Data, model, demo!
-
-* Create a new/reuse an existing dataset.
-* Train/evaluate a model.
-* Build a demo to share.
 
 This will be our (rough) workflow:
 
@@ -46,8 +24,6 @@ This will be our (rough) workflow:
 
 ## Contents
 
-All code and text will be free/open-source, [video step-by-step walkthroughs](https://dbourke.link/ZTMHuggingFace) are available as a paid upgrade on Zero to Mastery.
-
 | Project | Description | Dataset | Model | Demo | Video Course | 
 | ----- | ----- | ----- | ----- | ----- | ----- |
 | 0 - [Text classification](https://www.learnhuggingface.com/notebooks/hugging_face_text_classification_tutorial) | Build project "Food Not Food", a text classification model to classify image captions into "food" if they're about food or "not_food" if they're not about food. This is the ideal place to get started if you've never used the Hugging Face ecosystem. | [Dataset](https://huggingface.co/datasets/mrdbourke/learn_hf_food_not_food_image_captions) | [Model](https://huggingface.co/mrdbourke/learn_hf_food_not_food_text_classifier-distilbert-base-uncased) | [Demo](https://huggingface.co/spaces/mrdbourke/learn_hf_food_not_food_text_classifier_demo) | [Video Course](https://dbourke.link/ZTMHuggingFace) |
@@ -58,6 +34,13 @@ All code and text will be free/open-source, [video step-by-step walkthroughs](ht
 | More to come soon! | Let me know if you'd like to see anything specific by [leaving an issue](https://github.com/mrdbourke/learn-huggingface/issues). | | | | |
 
 : {tbl-colwidths="[15,40,5,5,5,5]"}
+
+:::{.callout-tip}
+## Video Course Content
+If you would like step-by-step guidance through each of the projects, they are all [available as video courses on the Zero to Mastery platform](https://dbourke.link/ZTMHuggingFace).
+
+You can sign up and go through them at your own liesure.
+:::
 
 ## Updates
 
@@ -79,6 +62,21 @@ Not ideal for:
 * People with 2-3+ years of machine learning projects & experience^.
 
 ^Note: This being said, you may actually find some things helpful along the way. Best to explore and see!
+
+The course is very hands-on. We teach concepts interweaved with code and always push towards deploying publishing real-world applications.
+
+Our project style will be: data, model, demo.
+
+* **Data** -- Create a new/reuse an existing dataset.
+* **Model** -- Train/evaluate a model (Hugging Face hosts many 1000s of models we can download and use).
+* **Demo** -- Build a demo to share (a demo is one of the quickest ways to let other people try your work).
+
+As practitioners, we've got several mottos:
+
+* ***If in doubt, run the code.*** -- Machine learning is very experimental. So it's good to get in the habit of continually trying things (even if you think they won't work).
+* ***Visualize, visualize, visualize!*** - If you're not sure of some dataset or some operation or some predictions, visualize it/them.
+* ***Experiment, experiment, experiment!*** - Again, machine learning is very experimental. So keep trying different things!
+* ***Data, model, demo!*** - Create/get a dataset, build/train/evaluate a model, create a demo to share.
 
 ## Prerequisites
 
