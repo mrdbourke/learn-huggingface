@@ -716,7 +716,7 @@
     "href": "notebooks/hugging_face_llm_full_fine_tune_tutorial.html#overview",
     "title": "Fully Fine-tune a Small Language Model with Hugging Face Tutorial",
     "section": "1 Overview",
-    "text": "1 Overview\nWhy fine-tune a Small Language Model (SLM)?\nBecause we want small model for a specific task (e.g. don’t to pay API credits or leak our data online).\nIf we have our own model… we can run it anywhere and everywhere we like.",
+    "text": "1 Overview\nWhy fine-tune a Small Language Model (SLM)?\nBecause we want small model for a specific task (e.g. don’t to pay API credits or leak our data online).\nIf we have our own model… we can run it anywhere and everywhere we like.\nTK image - what we’re going to do",
     "crumbs": [
       "Home",
       "Natural Language Processing (NLP)",
