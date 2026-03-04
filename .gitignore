@@ -5,6 +5,10 @@ docs/
 /notebooks/food_not_food_text_model/
 /notebooks/learn_hf_food_not_food_text_classifier_model/
 
+/notebooks/demos/
+/notebooks/*.safetensors
+
+
 # Models
 *models*
 *.pt*
