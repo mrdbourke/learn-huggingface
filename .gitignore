@@ -16,4 +16,7 @@ docs/
 *.DS_Store
 *.ipynb_checkpoints
 scratch_pad.md
-**/*.quarto_ipynb
+**/*.quarto_ipynb*.safetensors
+*.log.gz
+nvidia-bug-report.log.gz
+notebooks/smolvlm2-500m-*/
