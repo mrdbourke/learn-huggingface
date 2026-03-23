@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>glossary – Learn Hugging Face 🤗</title>
+<title>Work in progress: Batched LLM inference – Learn Hugging Face 🤗</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -78,11 +113,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../styles/custom.css">
-<meta property="og:title" content="Learn Hugging Face 🤗">
+<meta property="og:title" content="Work in progress: Batched LLM inference – Learn Hugging Face 🤗">
 <meta property="og:description" content="Practical hands-on machine learning tutorials using the Hugging Face ecosystem.">
 <meta property="og:image" content="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/misc/learn_hf_cover_image.png">
 <meta property="og:site_name" content="Learn Hugging Face 🤗">
-<meta name="twitter:title" content="Learn Hugging Face 🤗">
+<meta name="twitter:title" content="Work in progress: Batched LLM inference – Learn Hugging Face 🤗">
 <meta name="twitter:description" content="Practical hands-on machine learning tutorials using the Hugging Face ecosystem.">
 <meta name="twitter:image" content="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/misc/learn_hf_cover_image.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -280,7 +315,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Setup</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../extras/glossary.html" aria-current="page"> 
+    <a class="nav-link" href="../extras/glossary.html"> 
 <span class="menu-text">Glossary</span></a>
   </li>  
 </ul>
@@ -301,7 +336,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Work in progress: Batched LLM inference</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -394,64 +429,249 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#glossary" id="toc-glossary" class="nav-link active" data-scroll-target="#glossary">Glossary</a></li>
+  <li><a href="#bonus-speeding-up-our-model-with-batched-inference" id="toc-bonus-speeding-up-our-model-with-batched-inference" class="nav-link active" data-scroll-target="#bonus-speeding-up-our-model-with-batched-inference">Bonus: Speeding up our model with batched inference</a></li>
+  <li><a href="#tk---extensions" id="toc-tk---extensions" class="nav-link" data-scroll-target="#tk---extensions">TK - Extensions</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/mrdbourke/learn-huggingface/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content column-body" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Work in progress: Batched LLM inference</h1>
+</div>
 
 
 
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
 
 
-<section id="glossary" class="level1">
-<h1>Glossary</h1>
-<p>This is messy and a work in progress. Will tidy up later.</p>
+</header>
+
+
+<p>Note: This notebook is a work in progress.</p>
 <ul>
-<li>Predictive vs generative AI = predictive AI -&gt; machine readable outputs, generative AI -&gt; human readable outputs. Predictive style models take in data and map it to a fixed output space (e.g.&nbsp;a text classification model predicting whether an email is spam or not). Generative AI models take in data and generate an unbounded response (though theorectically this response <em>is</em> bounded by the training distribution), such as, a chat system taking in natural language instructions and producing natural language as output. Generative AI models can be turned into predictive-style models, for example a generative LLM could produce JSON outputs if instructed/constrained to do so.</li>
-<li>Transformer = A deep learning model that adopts the attention mechanism to draw global dependencies between input and output. The “T” in GPT (Generative Pre-Trained Transformer).</li>
-<li>Tokenization = turning a series of data (text or image) into a series of tokens, where a token is a numerical representation of the input data, for example, in the case of text, tokenization could mean turning the words in a sentence into numbers (e.g.&nbsp;“hello world” -&gt; [101, 102])</li>
-<li>Tokens = a token is a letter, word or word-piece (word) that a model uses to represent input data, for example, in the case of text, a token could be a word (e.g.&nbsp;“hello”) or a word-piece (e.g.&nbsp;“hell” and “o”), see: https://platform.openai.com/tokenizer for an example</li>
-<li><code>transformers</code> = A Python library by Hugging Face that provides a wide range of pre-trained transformer models, fine-tuning tools, and utilities to use them</li>
-<li><code>datasets</code> = A Python library by Hugging Face that provides a wide range of datasets for NLP and CV tasks</li>
-<li><code>tokenizers</code> = A Python library by Hugging Face that provides a wide range of tokenizers for NLP tasks</li>
-<li><code>evaluate</code> = A Python library by Hugging Face with premade evaluation functions for various tasks</li>
-<li><code>torch</code> = PyTorch, an open-source machine learning library</li>
-<li><code>transformers.pipeline</code> = an abstraction to get a machine learning pipeline up and running in a few lines of code, handles data preprocessing and device placement behind the scences. For example, <code>transformers.pipeline("text-classification")</code> can be used to tokenize input text and classify it.</li>
-<li>transfer learning = taking what one model has learned and applying it to another task (e.g.&nbsp;a model which has learned across many millions of words of text from the internet and then adjusting it to work with your smaller dataset)</li>
-<li>fine-tuning = a type of transfer learning where you take the existing patterns of one model (usually trained on a very large dataset) and customize them to work for your smaller dataset</li>
-<li>full fine-tuning = fine-tune <strong>all</strong> of a models parameters to your dataset</li>
-<li>partial fine-tuning = only fine-tune a portion of a models parameters to your dataset</li>
-<li>feature extraction fine-tuning = only fine-tune the final layer(s) of model to your dataset (e.g.&nbsp;the majority of the backbone stays frozen)</li>
-<li><a href="https://huggingface.co/papers/2106.09685">LoRA (Low-Rank Adaptation)</a> = train an adaptor matrix (far fewer parameters than a full model) to apply to your base model weights (base model weights stay frozen)</li>
-<li>hyperparameters = values you can set to adjust training settings, for example, learning rate is a hyperparameter that is adjustable</li>
-<li>Hugging Face Hub (or Hub for short) = Place to store datasets, models, and other resources of your own + find existing datasets, models &amp; scripts others have shared. If you are familiar with GitHub, Hugging Face is like the GitHub of machine learning.</li>
-<li><a href="https://huggingface.co/docs/transformers/en/model_doc/auto#auto-classes">Auto Classes</a> = A series of classes in <code>transformers</code> which enables automatic loading of preprocessor or model classes based on the name or path of the model. For example you can load the processor for <code>microsoft/conditional-detr-resnet-50</code> with <code>transformers.AutoImageProcessor(microsoft/conditional-detr-resnet-50)</code> or the model architecture with <code>transformers.AutoModelForObjectDetection(microsoft/conditional-detr-resnet-50)</code>.</li>
-<li>Hugging Face Spaces = A platform to share and run machine learning apps/demos, these can be built with HTML, Gradio or Streamlit</li>
-<li>HF = Hugging Face</li>
-<li>NLP = Natural Language Processing</li>
-<li>CV = Computer Vision</li>
-<li>Image classification = Classify an image in a single or multiple classes (classifying something as multiple items or labels such as <code>[warm, well lit, sunset]</code> is also known as tagging or more specifically, image tagging), for example, is a photo of food or not food.</li>
-<li>Object detection = Detect and locate an <em>item</em> in an image or series of images (e.g.&nbsp;a video). An item can be almost anything in an image, for example, a licence plate, a person, a weed in a garden or a small bug on the body of a bee.</li>
-<li>Bounding box = A box, often rectangular in nature, drawn around an item in an image to indicate its location. Can come in several different forms such as <code>XYXY</code>, <code>XYWH</code> and <code>CXCYWH</code> (see more in <a href="https://www.learnml.io/posts/a-guide-to-bounding-box-formats/">A Guide to Bounding Box Formats and How to Draw Them</a>).</li>
-<li>TPU = Tensor Processing Unit</li>
-<li>GPU = Graphics Processing Unit</li>
-<li>Learning rate = Often the most important hyperparameter to tune. It is proportional with the amount an optimizer will update a model’s parameters every update step. A higher amount means larger updates (though sometimes too large) a lower amount means smaller updates (though sometimes not enough). The most ideal learning rate is experimental. Common values include 0.001, 0.0001, 0.0005, 0.00001, 0.00005 (though the learning rate can be any value). Many optimizers have decent default learning rates. For example, the Adam optimizer (a common and generally well performing optimizer) in PyTorch (<a href="https://pytorch.org/docs/stable/generated/torch.optim.Adam.html"><code>torch.optim.Adam</code></a>) has a default learning rate of 0.001. For fine-tuning an already trained model a learning rate of 10x smaller than the default is a good rule of thumb (e.g.&nbsp;if a model was trained with a learning rate of 0.001, fine-tuning with 0.0001 is common). The learning rate does not have to be static and can change dynamcially during training, this practice is referred to as learning rate scheduling.</li>
-<li>Inference = using a trained (or untrained) model to make predictions on a given piece of data. The model <em>infers</em> what the output should be based on the inputs. Inference is often much faster than training on a sample per sample basis because no weights get updated during inference. Though, when compared to training, inference can often take more compute in the long run. Because a model can be trained once but then used for inference millions of times (or more) over the next several months (or longer).</li>
-<li>Prediction probability = the probability of a model’s prediction for a given input, is a score between 0 and 1 with 1 being the highest, for example, a model may have a prediction probability of 0.95, this would mean it’s quite confident with its prediction but it doesn’t mean it’s correct. A good way to inspect potential issues with a dataset is to show examples in the test set which have a high prediction probability but are wrong (e.g.&nbsp;pred prob = 0.98 but the prediction was incorrect).</li>
-<li>Hugging Face Pipeline (<code>pipeline</code>) = A high-level API for using model for various tasks (e.g.&nbsp;<code>text-classification</code>, <code>audio-classification</code>, <code>image-classification</code>, <code>object-detection</code> and more), see the docs: https://huggingface.co/docs/transformers/v4.41.3/en/main_classes/pipelines#transformers.pipeline</li>
-<li>loss value = Measure of how wrong your model is by a given metric. A perfect model will have a loss value of 0 (it is able to predict the data perfectly), though this is highly unlikely in practice (there are no perfect models). Ideally, the loss value will go down (towards 0) as training goes on. If the loss value on the training set is lower than the loss value on the test set, the model is likely overfitting (memorizing the training set too well rather than learning generalizable patterns to unseen data). To fix overfitting, introduce more regularization. To fix underfitting (loss not going down), introduce more learning capacity (more data, more parameters in the model, longer training). Machine learning is a constant battle between overfitting and underfitting.</li>
-<li>Random seed = Value to flavour the randomness of an operation. For example, if you set a random seed to <code>42</code> the numbers produced by a random generator will be random but flavoured by the seed. This means if the seed stays at <code>42</code>, subsequent calls of the same operation will return the same values. Not setting a random seed will result in different random values each time. Setting a random seed is done to ensure reproducibility of an operation. This is helpful when performing experiments and you do not want the outputs to be random each time.</li>
-<li>Synthetic data generation = using a model such as a generative Large Language Model (LLM) to generate synthetic pieces of data for a specific problem. For example, getting an LLM to generate food and not food image captions to create a binary text classification model. Synthetic data is very helpful when bootstrapping a machine learning problem. Though it is advised to only train on synthetic data and to evaluate on real data whenever possible.</li>
-<li>Pre-trained models = models which have already been trained on a large dataset, for example, text-based models which have gone through many millions of words of text (e.g.&nbsp;all of Wikipedia and 1000s of books) or image-based models which have seen millions of images (e.g.&nbsp;models trained on <a href="https://www.image-net.org/">ImageNet</a>). In essence, any model which has already spent a large amount of time learning patterns in data. These patterns can then be adjusted for your own sample problems, often with much much smaller amounts of data for excellent results. The process of customizing a pre-trained model for a specific problem is called <strong>transfer learning</strong> (transferring what an existing model knows to your own problem).</li>
-<li>Training/test split = One of the most important concepts in machine learning. Train models on the training data and evaluate them on the test data. The test data should never be seen by a model during training. Think of the test data as the final exam in a university course. A model should be able to learn enough patterns in the training set to perform well on the test set. Just like a student should be able to learn enough on course materials to do well on the final exam. If a model performs well on the training set but not well on the test set, this is known as <strong>overfitting</strong>, as in, the model memorizes the training set rather than learning generalizable patterns to unseen data. If a model performs poorly on both the training set and the test set, this is known as <strong>underfitting</strong>.<br>
-</li>
-<li>Prediction probabilities = a value assigned to a model’s prediction on a certain sample after its output logits have passed through an activation function such as Softmax or Sigmoid. For example, in a binary classification problem of whether an image is of food or not of food, a model could assign a prediction probability of the image being 0.98 food and 0.02 not food. Prediction probabilities do not indicate how right a prediction is, more so, how confident a model is in that prediction. The closer a prediction probability to 1, the higher the model’s confidence in the prediction. A good evaluation step is to inspect samples with low prediction probabilities (the model seems to get confused on them) or inspect test samples where the model has a high prediction probability but the prediction is wrong (these predictions are often referred to as <strong>most wrong predictions</strong>).</li>
-<li>Synthetic data = Data which has been produced by a generative model or generative process. For example, a text generation model may generate samples for your text classification task. Or an image generation model may create images with specific objects in them for your object detection task. In the case of documents, you may create a generative pipeline which places certain document elements in desired locations. The benefit of synthetic data is that you often have paired ground truth with it. For example, if you generate a text via a structured element (e.g.&nbsp;JSON) of metadata, you can then use the generated text and structured pair to train a model to do the reverse later on (e.g.&nbsp;go from raw text to the structure you desire). Synthetic data is helpful for when the data for your specific task is lacking or requires bolstering in a certain area.</li>
-<li>TK - logits - the raw outputs of a model</li>
-<li>TK - Softmax function - an activation function which can be applied to logits to get prediction probabilities.</li>
+<li>TK - this notebook builds off of the LLM fine-tuning tutorial - https://www.learnhuggingface.com/notebooks/hugging_face_llm_full_fine_tune_tutorial</li>
 </ul>
+<div id="c858585a" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Last updated: </span><span class="sc">{</span>time<span class="sc">.</span>ctime()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Last updated: Mon Mar 23 05:28:49 2026</code></pre>
+</div>
+</div>
+<section id="bonus-speeding-up-our-model-with-batched-inference" class="level2">
+<h2 class="anchored" data-anchor-id="bonus-speeding-up-our-model-with-batched-inference">Bonus: Speeding up our model with batched inference</h2>
+<p>TK - split this into another notebook</p>
+<p>Right now our model only inferences on one sample at a time but as is the case with many machine learning models, we could perform inference on multiple samples (also referred to as a batch) to significantly improve throughout.</p>
+<p>In batched inference mode, your model performs predictions on X number of samples at once, this can dramatically improve sample throughput.</p>
+<p>The number of samples you can predict on at once will depend on a few factors:</p>
+<ul>
+<li>The size of your model (e.g.&nbsp;if your model is quite large, it may only be able to predict on 1 sample at time)</li>
+<li>The size of your compute VRAM (e.g.&nbsp;if your compute VRAM is already saturated, add multiple samples at a time may result in errors)</li>
+<li>The size of your samples (if one of your samples is 100x the size of others, this may cause errors with batched inference)</li>
+</ul>
+<p>To find an optimal batch size for our setup, we can run an experiment:</p>
+<ul>
+<li>Loop through different batch sizes and measure the throughput for each batch size.
+<ul>
+<li>Why do we do this?
+<ul>
+<li>It’s hard to tell the ideal batch size ahead of time.</li>
+<li>So we experiment from say 1, 2, 4, 8, 16, 32, 64 batch sizes and see which performs best.</li>
+<li>Just because we may get a speed up from using batch size 8, doesn’t mean 64 will be better.</li>
+</ul></li>
+</ul></li>
+</ul>
+<div id="382d8610-da61-4cb3-9899-11489b6cc8dd" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> load_dataset(<span class="st">"mrdbourke/FoodExtract-1k"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Number of samples in the dataset: </span><span class="sc">{</span><span class="bu">len</span>(dataset[<span class="st">'train'</span>])<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sample_to_conversation(sample):</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"messages"</span>: [</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>            {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: sample[<span class="st">"sequence"</span>]}, <span class="co"># Load the sequence from the dataset</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: sample[<span class="st">"gpt-oss-120b-label-condensed"</span>]} <span class="co"># Load the gpt-oss-120b generated label</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Map our sample_to_conversation function to dataset </span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> dataset.<span class="bu">map</span>(sample_to_conversation,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                      batched<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a train/test split</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> dataset[<span class="st">"train"</span>].train_test_split(test_size<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                                            shuffle<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                                            seed<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Number #1 rule in machine learning</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Always train on the train set and test on the test set</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co"># This gives us an indication of how our model will perform in the real world</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>dataset</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="b5310def-e323-4781-8f3c-e4c3047afa1c" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Need to turn our samples into batches (e.g. lists of samples)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Formatting test samples into list prompts..."</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>test_input_prompts <span class="op">=</span> [</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    loaded_model_pipeline.tokenizer.apply_chat_template(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        item[<span class="st">"messages"</span>][:<span class="dv">1</span>],</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        tokenize<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        add_generation_prompt<span class="op">=</span><span class="va">True</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> item <span class="kw">in</span> dataset[<span class="st">"test"</span>]</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Number of test sample prompts: </span><span class="sc">{</span><span class="bu">len</span>(test_input_prompts)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>test_input_prompts[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="5d032ce4-c126-4876-897b-585b9ed39a17" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Need to perform batched inference and time each step</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm.auto <span class="im">import</span> tqdm</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>all_outputs <span class="op">=</span> []</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's write a list of batch sizes to test</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>chunk_sizes_to_test <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>, <span class="dv">64</span>, <span class="dv">128</span>]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>timing_dict <span class="op">=</span> {}</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each batch size and time the inference</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> CHUNK_SIZE <span class="kw">in</span> chunk_sizes_to_test:</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"[INFO] Making predictions with batch size: </span><span class="sc">{</span>CHUNK_SIZE<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    start_time <span class="op">=</span> time.time()</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> chunk_number <span class="kw">in</span> tqdm(<span class="bu">range</span>(<span class="bu">round</span>(<span class="bu">len</span>(test_input_prompts) <span class="op">/</span> CHUNK_SIZE))):</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        batched_inputs <span class="op">=</span> test_input_prompts[(CHUNK_SIZE <span class="op">*</span> chunk_number): CHUNK_SIZE <span class="op">*</span> (chunk_number <span class="op">+</span> <span class="dv">1</span>)]</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        batched_outputs <span class="op">=</span> loaded_model_pipeline(text_inputs<span class="op">=</span>batched_inputs,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                                                batch_size<span class="op">=</span>CHUNK_SIZE,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>                                                max_new_tokens<span class="op">=</span><span class="dv">256</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>                                                disable_compile<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        all_outputs <span class="op">+=</span> batched_outputs</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    end_time <span class="op">=</span> time.time()</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    total_time <span class="op">=</span> end_time <span class="op">-</span> start_time</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    timing_dict[CHUNK_SIZE] <span class="op">=</span> total_time</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"[INFO] Total time for batch size </span><span class="sc">{</span>CHUNK_SIZE<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>total_time<span class="sc">:.2f}</span><span class="ss">s"</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"="</span><span class="op">*</span><span class="dv">80</span> <span class="op">+</span> <span class="st">"</span><span class="ch">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Batched inference complete! Let’s make a plot comparing different batch sizes.</p>
+<div id="efe68a5c-bf61-4647-a00f-72a8d0b793dc" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Data</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> timing_dict</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>total_samples <span class="op">=</span> <span class="bu">len</span>(dataset[<span class="st">"test"</span>])</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>batch_sizes <span class="op">=</span> <span class="bu">list</span>(data.keys())</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>inference_times <span class="op">=</span> <span class="bu">list</span>(data.values())</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>samples_per_second <span class="op">=</span> [total_samples <span class="op">/</span> time <span class="cf">for</span> bs, time <span class="kw">in</span> data.items()]</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create side-by-side plots</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Left plot: Total Inference Time ---</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>ax1.bar([<span class="bu">str</span>(bs) <span class="cf">for</span> bs <span class="kw">in</span> batch_sizes], inference_times, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'Batch Size'</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Total Inference Time (s)'</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'Inference Time by Batch Size'</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, v <span class="kw">in</span> <span class="bu">enumerate</span>(inference_times):</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    ax1.text(i, v <span class="op">+</span> <span class="dv">1</span>, <span class="ss">f'</span><span class="sc">{</span>v<span class="sc">:.1f}</span><span class="ss">'</span>, ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># --- ARROW LOGIC (Left) ---</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Identify Start (Slowest) and End (Fastest)</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>start_val <span class="op">=</span> <span class="bu">max</span>(inference_times)</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>end_val <span class="op">=</span> <span class="bu">min</span>(inference_times)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>start_idx <span class="op">=</span> inference_times.index(start_val)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>end_idx <span class="op">=</span> inference_times.index(end_val)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>speedup <span class="op">=</span> start_val <span class="op">/</span> end_val</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Draw Arrow (No Text)</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co"># connectionstyle "rad=-0.3" arcs the arrow upwards</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>ax1.annotate(<span class="st">""</span>,</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>             xy<span class="op">=</span>(end_idx, end_val<span class="op">+</span>(<span class="fl">0.5</span><span class="op">*</span>end_val)),</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>             xytext<span class="op">=</span>(start_idx<span class="op">+</span><span class="fl">0.25</span>, start_val<span class="op">+</span><span class="dv">10</span>),</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>             arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-&gt;"</span>, color<span class="op">=</span><span class="st">'green'</span>, lw<span class="op">=</span><span class="fl">1.5</span>, connectionstyle<span class="op">=</span><span class="st">"arc3,rad=-0.3"</span>))</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Place Text at Midpoint</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>mid_x <span class="op">=</span> (start_idx <span class="op">+</span> end_idx) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Place text slightly above the highest point of the two bars</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>text_y <span class="op">=</span> <span class="bu">max</span>(start_val, end_val) <span class="op">+</span> (<span class="bu">max</span>(inference_times) <span class="op">*</span> <span class="fl">0.1</span>)</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>ax1.text(mid_x<span class="op">+</span><span class="fl">0.5</span>, text_y<span class="op">-</span><span class="dv">150</span>, <span class="ss">f"</span><span class="sc">{</span>speedup<span class="sc">:.1f}</span><span class="ss">x speedup"</span>,</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>         ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'bottom'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>         bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">"round,pad=0.3"</span>, fc<span class="op">=</span><span class="st">"white"</span>, ec<span class="op">=</span><span class="st">"none"</span>, alpha<span class="op">=</span><span class="fl">0.8</span>))</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(<span class="dv">0</span>, <span class="bu">max</span>(inference_times) <span class="op">*</span> <span class="fl">1.35</span>) <span class="co"># Increase headroom for text</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Right plot: Samples per Second ---</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>ax2.bar([<span class="bu">str</span>(bs) <span class="cf">for</span> bs <span class="kw">in</span> batch_sizes], samples_per_second, color<span class="op">=</span><span class="st">'coral'</span>)</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'Batch Size'</span>)</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Samples per Second'</span>)</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'Throughput by Batch Size'</span>)</span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, v <span class="kw">in</span> <span class="bu">enumerate</span>(samples_per_second):</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    ax2.text(i, v <span class="op">+</span> <span class="fl">0.05</span>, <span class="ss">f'</span><span class="sc">{</span>v<span class="sc">:.2f}</span><span class="ss">'</span>, ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="co"># --- ARROW LOGIC (Right) ---</span></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Identify Start (Slowest) and End (Fastest)</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>start_val_t <span class="op">=</span> <span class="bu">min</span>(samples_per_second)</span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>end_val_t <span class="op">=</span> <span class="bu">max</span>(samples_per_second)</span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>start_idx_t <span class="op">=</span> samples_per_second.index(start_val_t)</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>end_idx_t <span class="op">=</span> samples_per_second.index(end_val_t)</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>speedup_t <span class="op">=</span> end_val_t <span class="op">/</span> start_val_t</span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Draw Arrow (No Text)</span></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>ax2.annotate(<span class="st">""</span>,</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>             xy<span class="op">=</span>(end_idx_t<span class="op">-</span>(<span class="fl">0.05</span><span class="op">*</span>end_idx_t), end_val_t<span class="op">+</span>(<span class="fl">0.025</span><span class="op">*</span>end_val_t)),</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>             xytext<span class="op">=</span>(start_idx_t, start_val_t<span class="op">+</span><span class="fl">0.6</span>),</span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>             arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-&gt;"</span>, color<span class="op">=</span><span class="st">'green'</span>, lw<span class="op">=</span><span class="fl">1.5</span>, connectionstyle<span class="op">=</span><span class="st">"arc3,rad=-0.3"</span>))</span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Place Text at Midpoint</span></span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>mid_x_t <span class="op">=</span> (start_idx_t <span class="op">+</span> end_idx_t) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>text_y_t <span class="op">=</span> <span class="bu">max</span>(start_val_t, end_val_t) <span class="op">+</span> (<span class="bu">max</span>(samples_per_second) <span class="op">*</span> <span class="fl">0.1</span>)</span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>ax2.text(mid_x_t<span class="op">-</span><span class="fl">0.5</span>, text_y_t<span class="op">-</span><span class="fl">4.5</span>, <span class="ss">f"</span><span class="sc">{</span>speedup_t<span class="sc">:.1f}</span><span class="ss">x speedup"</span>,</span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>         ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'bottom'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>         bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">"round,pad=0.3"</span>, fc<span class="op">=</span><span class="st">"white"</span>, ec<span class="op">=</span><span class="st">"none"</span>, alpha<span class="op">=</span><span class="fl">0.8</span>))</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>ax2.set_ylim(<span class="dv">0</span>, <span class="bu">max</span>(samples_per_second) <span class="op">*</span> <span class="fl">1.35</span>) <span class="co"># Increase headroom</span></span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Inference with Fine-Tuned Gemma 3 270M on NVIDIA DGX Spark"</span>)</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'inference_benchmark.png'</span>, dpi<span class="op">=</span><span class="dv">150</span>)</span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We get a 4-6x speedup when using batches!</p>
+<p>At 10 samples per second, that means we can inference on ~800k samples in a day.</p>
+<div id="73d696b6-f7fb-4d5f-8a39-76a88feedbfa" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>samples_per_second <span class="op">=</span> <span class="bu">round</span>(<span class="bu">len</span>(dataset[<span class="st">"test"</span>]) <span class="op">/</span> <span class="bu">min</span>(timing_dict.values()), <span class="dv">2</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>seconds_in_a_day <span class="op">=</span> <span class="dv">86_400</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>samples_per_day <span class="op">=</span> seconds_in_a_day <span class="op">*</span> samples_per_second</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Number of samples per second: </span><span class="sc">{</span>samples_per_second<span class="sc">}</span><span class="ss"> | Number of samples per day: </span><span class="sc">{</span>samples_per_day<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="tk---extensions" class="level2">
+<h2 class="anchored" data-anchor-id="tk---extensions">TK - Extensions</h2>
+<p>TK - next: vllm inference for faster modelling</p>
 
 
 </section>
