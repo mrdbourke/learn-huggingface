@@ -443,52 +443,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#prompting-vs-rag-vs-fine-tuning" id="toc-prompting-vs-rag-vs-fine-tuning" class="nav-link" data-scroll-target="#prompting-vs-rag-vs-fine-tuning"><span class="header-section-number">1.5</span> Prompting vs RAG vs Fine-tuning</a></li>
   <li><a href="#definitions" id="toc-definitions" class="nav-link" data-scroll-target="#definitions"><span class="header-section-number">1.6</span> Definitions</a></li>
   </ul></li>
-  <li><a href="#import-dependencies" id="toc-import-dependencies" class="nav-link" data-scroll-target="#import-dependencies"><span class="header-section-number">2</span> Import dependencies</a></li>
-  <li><a href="#setup-base-model" id="toc-setup-base-model" class="nav-link" data-scroll-target="#setup-base-model"><span class="header-section-number">3</span> Setup Base Model</a>
+  <li><a href="#getting-setup" id="toc-getting-setup" class="nav-link" data-scroll-target="#getting-setup"><span class="header-section-number">2</span> Getting Setup</a></li>
+  <li><a href="#import-dependencies" id="toc-import-dependencies" class="nav-link" data-scroll-target="#import-dependencies"><span class="header-section-number">3</span> Import dependencies</a></li>
+  <li><a href="#setup-base-model" id="toc-setup-base-model" class="nav-link" data-scroll-target="#setup-base-model"><span class="header-section-number">4</span> Setup Base Model</a>
   <ul class="collapse">
-  <li><a href="#counting-the-number-of-parameters-in-our-model" id="toc-counting-the-number-of-parameters-in-our-model" class="nav-link" data-scroll-target="#counting-the-number-of-parameters-in-our-model"><span class="header-section-number">3.1</span> Counting the number of parameters in our model</a></li>
+  <li><a href="#counting-the-number-of-parameters-in-our-model" id="toc-counting-the-number-of-parameters-in-our-model" class="nav-link" data-scroll-target="#counting-the-number-of-parameters-in-our-model"><span class="header-section-number">4.1</span> Counting the number of parameters in our model</a></li>
   </ul></li>
-  <li><a href="#getting-a-dataset" id="toc-getting-a-dataset" class="nav-link" data-scroll-target="#getting-a-dataset"><span class="header-section-number">4</span> Getting a dataset</a>
+  <li><a href="#getting-a-dataset" id="toc-getting-a-dataset" class="nav-link" data-scroll-target="#getting-a-dataset"><span class="header-section-number">5</span> Getting a dataset</a>
   <ul class="collapse">
-  <li><a href="#assigning-tags-to-our-samples" id="toc-assigning-tags-to-our-samples" class="nav-link" data-scroll-target="#assigning-tags-to-our-samples"><span class="header-section-number">4.1</span> Assigning tags to our samples</a></li>
-  <li><a href="#format-the-dataset-into-llm-style-inputsoutputs" id="toc-format-the-dataset-into-llm-style-inputsoutputs" class="nav-link" data-scroll-target="#format-the-dataset-into-llm-style-inputsoutputs"><span class="header-section-number">4.2</span> Format the dataset into LLM-style inputs/outputs</a></li>
-  <li><a href="#creating-a-traintest-split" id="toc-creating-a-traintest-split" class="nav-link" data-scroll-target="#creating-a-traintest-split"><span class="header-section-number">4.3</span> Creating a train/test split</a></li>
-  <li><a href="#try-the-model-with-a-pipeline" id="toc-try-the-model-with-a-pipeline" class="nav-link" data-scroll-target="#try-the-model-with-a-pipeline"><span class="header-section-number">4.4</span> Try the model with a pipeline</a></li>
-  <li><a href="#what-is-a-chat-template" id="toc-what-is-a-chat-template" class="nav-link" data-scroll-target="#what-is-a-chat-template"><span class="header-section-number">4.5</span> What is a chat template?</a></li>
-  <li><a href="#try-the-model-on-one-of-our-sequences" id="toc-try-the-model-on-one-of-our-sequences" class="nav-link" data-scroll-target="#try-the-model-on-one-of-our-sequences"><span class="header-section-number">4.6</span> Try the model on one of our sequences</a></li>
-  <li><a href="#attempt-1-lets-try-to-prompt-the-model" id="toc-attempt-1-lets-try-to-prompt-the-model" class="nav-link" data-scroll-target="#attempt-1-lets-try-to-prompt-the-model"><span class="header-section-number">4.7</span> Attempt 1: Let’s try to prompt the model</a></li>
-  <li><a href="#trying-our-formatted-prompt-with-the-model" id="toc-trying-our-formatted-prompt-with-the-model" class="nav-link" data-scroll-target="#trying-our-formatted-prompt-with-the-model"><span class="header-section-number">4.8</span> Trying our formatted prompt with the model</a></li>
+  <li><a href="#assigning-tags-to-our-samples" id="toc-assigning-tags-to-our-samples" class="nav-link" data-scroll-target="#assigning-tags-to-our-samples"><span class="header-section-number">5.1</span> Assigning tags to our samples</a></li>
+  <li><a href="#format-the-dataset-into-llm-style-inputsoutputs" id="toc-format-the-dataset-into-llm-style-inputsoutputs" class="nav-link" data-scroll-target="#format-the-dataset-into-llm-style-inputsoutputs"><span class="header-section-number">5.2</span> Format the dataset into LLM-style inputs/outputs</a></li>
+  <li><a href="#creating-a-traintest-split" id="toc-creating-a-traintest-split" class="nav-link" data-scroll-target="#creating-a-traintest-split"><span class="header-section-number">5.3</span> Creating a train/test split</a></li>
+  <li><a href="#try-the-model-with-a-pipeline" id="toc-try-the-model-with-a-pipeline" class="nav-link" data-scroll-target="#try-the-model-with-a-pipeline"><span class="header-section-number">5.4</span> Try the model with a pipeline</a></li>
+  <li><a href="#what-is-a-chat-template" id="toc-what-is-a-chat-template" class="nav-link" data-scroll-target="#what-is-a-chat-template"><span class="header-section-number">5.5</span> What is a chat template?</a></li>
+  <li><a href="#try-the-model-on-one-of-our-sequences" id="toc-try-the-model-on-one-of-our-sequences" class="nav-link" data-scroll-target="#try-the-model-on-one-of-our-sequences"><span class="header-section-number">5.6</span> Try the model on one of our sequences</a></li>
+  <li><a href="#attempt-1-lets-try-to-prompt-the-model" id="toc-attempt-1-lets-try-to-prompt-the-model" class="nav-link" data-scroll-target="#attempt-1-lets-try-to-prompt-the-model"><span class="header-section-number">5.7</span> Attempt 1: Let’s try to prompt the model</a></li>
+  <li><a href="#trying-our-formatted-prompt-with-the-model" id="toc-trying-our-formatted-prompt-with-the-model" class="nav-link" data-scroll-target="#trying-our-formatted-prompt-with-the-model"><span class="header-section-number">5.8</span> Trying our formatted prompt with the model</a></li>
   </ul></li>
-  <li><a href="#fine-tuning-our-model" id="toc-fine-tuning-our-model" class="nav-link" data-scroll-target="#fine-tuning-our-model"><span class="header-section-number">5</span> Fine-tuning our model</a>
+  <li><a href="#fine-tuning-our-model" id="toc-fine-tuning-our-model" class="nav-link" data-scroll-target="#fine-tuning-our-model"><span class="header-section-number">6</span> Fine-tuning our model</a>
   <ul class="collapse">
-  <li><a href="#evaluate-our-model" id="toc-evaluate-our-model" class="nav-link" data-scroll-target="#evaluate-our-model"><span class="header-section-number">5.1</span> Evaluate our model</a></li>
-  <li><a href="#inspect-our-models-loss-curves" id="toc-inspect-our-models-loss-curves" class="nav-link" data-scroll-target="#inspect-our-models-loss-curves"><span class="header-section-number">5.2</span> Inspect our model’s loss curves</a></li>
-  <li><a href="#save-the-best-model" id="toc-save-the-best-model" class="nav-link" data-scroll-target="#save-the-best-model"><span class="header-section-number">5.3</span> Save the best model</a></li>
-  <li><a href="#optional-remove-checkpoints" id="toc-optional-remove-checkpoints" class="nav-link" data-scroll-target="#optional-remove-checkpoints"><span class="header-section-number">5.4</span> Optional: Remove checkpoints</a></li>
+  <li><a href="#evaluate-our-model" id="toc-evaluate-our-model" class="nav-link" data-scroll-target="#evaluate-our-model"><span class="header-section-number">6.1</span> Evaluate our model</a></li>
+  <li><a href="#inspect-our-models-loss-curves" id="toc-inspect-our-models-loss-curves" class="nav-link" data-scroll-target="#inspect-our-models-loss-curves"><span class="header-section-number">6.2</span> Inspect our model’s loss curves</a></li>
+  <li><a href="#save-the-best-model" id="toc-save-the-best-model" class="nav-link" data-scroll-target="#save-the-best-model"><span class="header-section-number">6.3</span> Save the best model</a></li>
+  <li><a href="#optional-remove-checkpoints" id="toc-optional-remove-checkpoints" class="nav-link" data-scroll-target="#optional-remove-checkpoints"><span class="header-section-number">6.4</span> Optional: Remove checkpoints</a></li>
   </ul></li>
-  <li><a href="#load-the-trained-model-back-in-and-see-how-it-performs" id="toc-load-the-trained-model-back-in-and-see-how-it-performs" class="nav-link" data-scroll-target="#load-the-trained-model-back-in-and-see-how-it-performs"><span class="header-section-number">6</span> Load the trained model back in and see how it performs</a>
+  <li><a href="#load-the-trained-model-back-in-and-see-how-it-performs" id="toc-load-the-trained-model-back-in-and-see-how-it-performs" class="nav-link" data-scroll-target="#load-the-trained-model-back-in-and-see-how-it-performs"><span class="header-section-number">7</span> Load the trained model back in and see how it performs</a>
   <ul class="collapse">
-  <li><a href="#performing-inference-with-our-fine-tuned-model-on-the-test-dataset" id="toc-performing-inference-with-our-fine-tuned-model-on-the-test-dataset" class="nav-link" data-scroll-target="#performing-inference-with-our-fine-tuned-model-on-the-test-dataset"><span class="header-section-number">6.1</span> Performing inference with our fine-tuned model on the test dataset</a></li>
-  <li><a href="#attempt-2-testing-our-model-on-unformatted-text" id="toc-attempt-2-testing-our-model-on-unformatted-text" class="nav-link" data-scroll-target="#attempt-2-testing-our-model-on-unformatted-text"><span class="header-section-number">6.2</span> Attempt 2: Testing our model on unformatted text</a></li>
+  <li><a href="#performing-inference-with-our-fine-tuned-model-on-the-test-dataset" id="toc-performing-inference-with-our-fine-tuned-model-on-the-test-dataset" class="nav-link" data-scroll-target="#performing-inference-with-our-fine-tuned-model-on-the-test-dataset"><span class="header-section-number">7.1</span> Performing inference with our fine-tuned model on the test dataset</a></li>
+  <li><a href="#attempt-2-testing-our-model-on-unformatted-text" id="toc-attempt-2-testing-our-model-on-unformatted-text" class="nav-link" data-scroll-target="#attempt-2-testing-our-model-on-unformatted-text"><span class="header-section-number">7.2</span> Attempt 2: Testing our model on unformatted text</a></li>
   </ul></li>
-  <li><a href="#uploading-our-fine-tuned-model-to-the-hugging-face-hub" id="toc-uploading-our-fine-tuned-model-to-the-hugging-face-hub" class="nav-link" data-scroll-target="#uploading-our-fine-tuned-model-to-the-hugging-face-hub"><span class="header-section-number">7</span> Uploading our fine-tuned model to the Hugging Face Hub</a>
+  <li><a href="#uploading-our-fine-tuned-model-to-the-hugging-face-hub" id="toc-uploading-our-fine-tuned-model-to-the-hugging-face-hub" class="nav-link" data-scroll-target="#uploading-our-fine-tuned-model-to-the-hugging-face-hub"><span class="header-section-number">8</span> Uploading our fine-tuned model to the Hugging Face Hub</a>
   <ul class="collapse">
-  <li><a href="#create-a-readme.md-for-our-model" id="toc-create-a-readme.md-for-our-model" class="nav-link" data-scroll-target="#create-a-readme.md-for-our-model"><span class="header-section-number">7.1</span> Create a README.md for our model</a></li>
-  <li><a href="#upload-the-contents-of-our-checkpoint-model-folder-to-the-hugging-face-hub" id="toc-upload-the-contents-of-our-checkpoint-model-folder-to-the-hugging-face-hub" class="nav-link" data-scroll-target="#upload-the-contents-of-our-checkpoint-model-folder-to-the-hugging-face-hub"><span class="header-section-number">7.2</span> Upload the contents of our checkpoint model folder to the Hugging Face Hub</a></li>
+  <li><a href="#create-a-readme.md-for-our-model" id="toc-create-a-readme.md-for-our-model" class="nav-link" data-scroll-target="#create-a-readme.md-for-our-model"><span class="header-section-number">8.1</span> Create a README.md for our model</a></li>
+  <li><a href="#upload-the-contents-of-our-checkpoint-model-folder-to-the-hugging-face-hub" id="toc-upload-the-contents-of-our-checkpoint-model-folder-to-the-hugging-face-hub" class="nav-link" data-scroll-target="#upload-the-contents-of-our-checkpoint-model-folder-to-the-hugging-face-hub"><span class="header-section-number">8.2</span> Upload the contents of our checkpoint model folder to the Hugging Face Hub</a></li>
   </ul></li>
-  <li><a href="#turning-our-model-into-a-demo" id="toc-turning-our-model-into-a-demo" class="nav-link" data-scroll-target="#turning-our-model-into-a-demo"><span class="header-section-number">8</span> Turning our model into a demo</a>
+  <li><a href="#turning-our-model-into-a-demo" id="toc-turning-our-model-into-a-demo" class="nav-link" data-scroll-target="#turning-our-model-into-a-demo"><span class="header-section-number">9</span> Turning our model into a demo</a>
   <ul class="collapse">
-  <li><a href="#creating-the-app.py-file" id="toc-creating-the-app.py-file" class="nav-link" data-scroll-target="#creating-the-app.py-file"><span class="header-section-number">8.1</span> Creating the <code>app.py</code> file</a></li>
-  <li><a href="#create-the-readme.md-file" id="toc-create-the-readme.md-file" class="nav-link" data-scroll-target="#create-the-readme.md-file"><span class="header-section-number">8.2</span> Create the <code>README.md</code> file</a></li>
-  <li><a href="#creating-a-requirements.txt-file" id="toc-creating-a-requirements.txt-file" class="nav-link" data-scroll-target="#creating-a-requirements.txt-file"><span class="header-section-number">8.3</span> Creating a <code>requirements.txt</code> file</a></li>
-  <li><a href="#uploading-our-demo-to-the-hugging-face-hub" id="toc-uploading-our-demo-to-the-hugging-face-hub" class="nav-link" data-scroll-target="#uploading-our-demo-to-the-hugging-face-hub"><span class="header-section-number">8.4</span> Uploading our demo to the Hugging Face Hub</a></li>
-  <li><a href="#trying-our-demo-right-from-within-our-notebook" id="toc-trying-our-demo-right-from-within-our-notebook" class="nav-link" data-scroll-target="#trying-our-demo-right-from-within-our-notebook"><span class="header-section-number">8.5</span> Trying our demo right from within our notebook</a></li>
+  <li><a href="#creating-the-app.py-file" id="toc-creating-the-app.py-file" class="nav-link" data-scroll-target="#creating-the-app.py-file"><span class="header-section-number">9.1</span> Creating the <code>app.py</code> file</a></li>
+  <li><a href="#create-the-readme.md-file" id="toc-create-the-readme.md-file" class="nav-link" data-scroll-target="#create-the-readme.md-file"><span class="header-section-number">9.2</span> Create the <code>README.md</code> file</a></li>
+  <li><a href="#creating-a-requirements.txt-file" id="toc-creating-a-requirements.txt-file" class="nav-link" data-scroll-target="#creating-a-requirements.txt-file"><span class="header-section-number">9.3</span> Creating a <code>requirements.txt</code> file</a></li>
+  <li><a href="#uploading-our-demo-to-the-hugging-face-hub" id="toc-uploading-our-demo-to-the-hugging-face-hub" class="nav-link" data-scroll-target="#uploading-our-demo-to-the-hugging-face-hub"><span class="header-section-number">9.4</span> Uploading our demo to the Hugging Face Hub</a></li>
+  <li><a href="#trying-our-demo-right-from-within-our-notebook" id="toc-trying-our-demo-right-from-within-our-notebook" class="nav-link" data-scroll-target="#trying-our-demo-right-from-within-our-notebook"><span class="header-section-number">9.5</span> Trying our demo right from within our notebook</a></li>
   </ul></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">9</span> Summary</a>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">10</span> Summary</a>
   <ul class="collapse">
-  <li><a href="#extensions" id="toc-extensions" class="nav-link" data-scroll-target="#extensions"><span class="header-section-number">9.1</span> Extensions</a></li>
-  <li><a href="#extra-curriculum" id="toc-extra-curriculum" class="nav-link" data-scroll-target="#extra-curriculum"><span class="header-section-number">9.2</span> Extra-curriculum</a></li>
-  <li><a href="#extra-resources" id="toc-extra-resources" class="nav-link" data-scroll-target="#extra-resources"><span class="header-section-number">9.3</span> Extra resources</a></li>
+  <li><a href="#extensions" id="toc-extensions" class="nav-link" data-scroll-target="#extensions"><span class="header-section-number">10.1</span> Extensions</a></li>
+  <li><a href="#extra-curriculum" id="toc-extra-curriculum" class="nav-link" data-scroll-target="#extra-curriculum"><span class="header-section-number">10.2</span> Extra-curriculum</a></li>
+  <li><a href="#extra-resources" id="toc-extra-resources" class="nav-link" data-scroll-target="#extra-resources"><span class="header-section-number">10.3</span> Extra resources</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/mrdbourke/learn-huggingface/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -530,12 +531,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
 <p>In this project, we’re going to fine-tune a base Small Language Model (SLM) to extract food and drink items from text.</p>
 <p>Why?</p>
-<p>This is often referred to as *structured data extraction**.</p>
+<p>This is often referred to as <strong>structured data extraction</strong>.</p>
 <p>It’s a very common problem throughout many businesses.</p>
 <p>For example, say you were getting a large volume of emails in plain text and needed to extract customer details from them.</p>
 <p>Or you wanted to analyze a large number of news reports for specific details.</p>
 <p>Or in our case, say you were building an app like <a href="https://nutrify.app">Nutrify</a> and you wanted to filter a large dataset of image captions for food/drink items (see the dataset <a href="https://huggingface.co/datasets/mrdbourke/Recap-DataComp-1B-FoodOrDrink"><code>mrdbourke/Recap-DataComp-1B-FoodOrDrink</code></a> for a real-life example of this).</p>
-<p>Essentially, structured data extraction can be used anywhere you have unstructured data such as raw notes or plain text and would like to turn it into structured information you can analyze with Google Sheets or pandas or other data analysis tool.</p>
+<p>Essentially, structured data extraction can be used anywhere you have unstructured data such as raw notes or plain text and would like to turn it into structured information (e.g.&nbsp;JSON) you can analyze with Google Sheets or pandas or other data analysis tool.</p>
 <figure style="text-align: center;" class="figure">
 <!-- figtemplate -->
 <img src="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/learn-hf-fine-tune-llm/00-learn-hf-fine-tune-llm-overview.png" alt="
@@ -701,6 +702,13 @@ Note
 <p>Use RAG if you need your model to output specific referenced knowledge.</p>
 <p>And fine-tune a model directly if you want it to perform specific tasks like structured data extraction in a certain way over and over again.</p>
 <p>You can even mix and match the techniques.</p>
+<figure style="text-align: center;" class="figure">
+<!-- figtemplate -->
+<img src="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/learn-hf-fine-tune-llm/05-learn-hf-fine-tune-llm-rag-vs-llm-fine-tuning-vs-prompting.png" alt="This humorous educational meme uses a sword-fighting scene from 'Pirates of the Caribbean' to compare three different AI strategies: 'Fine-tuning', 'RAG' (Retrieval-Augmented Generation), and 'Prompting'. Each character represents a method, with text overhead suggesting specific use cases: 'Fine-tuning' for 'specific tasks', 'RAG' for 'specific knowledge', and 'Prompting' as the 'Start here' point. The caption 'But also mix and match...' floats between them, while a pink arrow points to a treasure chest on the sand with the note 'All fighting for the same thing...', implying that while these methods compete or differ, they all aim to achieve the same goal of optimized model performance." style="width: 100%; max-width: 900px; height: auto;" class="figure-img">
+<figcaption>
+There is much debate on using prompting, RAG or fine-tuning and the pros and cons of each. But like many software systems, the answer is not one and only, there is room for multiple options. They can all be used for separate tasks and can even be combined in the same system. After all, they are all techniques trying to achieve the goal of getting the right outputs from a target model.
+</figcaption>
+</figure>
 <p>For our FoodExtract system, we could create synthetic data by prompting a larger model to extract food/drinks from raw texts (I did this with <code>gpt-oss-120b</code>) to create an initial dataset. We could use RAG if we wanted our model to be able to reference nutrition data from a database (e.g.&nbsp;retrieve the matching foods in the nutrition database based on the foods extracted with the FoodExtract model). Finally, we could use fine-tuning to guide our model to output our desired data structure given a raw text input (this is the premise of the whole notebook).</p>
 <p>In essence, prompting, RAG and fine-tuning all have a shared goal: getting the ideal outputs out of your model.</p>
 <table class="caption-top table">
@@ -739,13 +747,6 @@ Note
 </tr>
 </tbody>
 </table>
-<figure style="text-align: center;" class="figure">
-<!-- figtemplate -->
-<img src="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/learn-hf-fine-tune-llm/05-learn-hf-fine-tune-llm-rag-vs-llm-fine-tuning-vs-prompting.png" alt="This humorous educational meme uses a sword-fighting scene from 'Pirates of the Caribbean' to compare three different AI strategies: 'Fine-tuning', 'RAG' (Retrieval-Augmented Generation), and 'Prompting'. Each character represents a method, with text overhead suggesting specific use cases: 'Fine-tuning' for 'specific tasks', 'RAG' for 'specific knowledge', and 'Prompting' as the 'Start here' point. The caption 'But also mix and match...' floats between them, while a pink arrow points to a treasure chest on the sand with the note 'All fighting for the same thing...', implying that while these methods compete or differ, they all aim to achieve the same goal of optimized model performance." style="width: 100%; max-width: 900px; height: auto;" class="figure-img">
-<figcaption>
-There is much debate on using prompting, RAG or fine-tuning and the pros and cons of each. But like many software systems, the answer is not one and only, there is room for multiple options. They can all be used for separate tasks and can even be combined in the same system. After all, they are all techniques trying to achieve the goal of getting the right outputs from a target model.
-</figcaption>
-</figure>
 </section>
 <section id="definitions" class="level3" data-number="1.6">
 <h3 data-number="1.6" class="anchored" data-anchor-id="definitions"><span class="header-section-number">1.6</span> Definitions</h3>
@@ -759,8 +760,14 @@ There is much debate on using prompting, RAG or fine-tuning and the pros and con
 </ul>
 </section>
 </section>
-<section id="import-dependencies" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="import-dependencies"><span class="header-section-number">2</span> Import dependencies</h2>
+<section id="getting-setup" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="getting-setup"><span class="header-section-number">2</span> Getting Setup</h2>
+<p>If you are following along with the code locally on your own comptuer or with Google Colab, be sure to follow the setup steps on the <a href="https://www.learnhuggingface.com/extras/setup">Setup page</a>.</p>
+<p>After completing those steps, we can proceed with the rest of the sections.</p>
+<p>If you’re happy just to keep reading, feel free to jump ahead.</p>
+</section>
+<section id="import-dependencies" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="import-dependencies"><span class="header-section-number">3</span> Import dependencies</h2>
 <blockquote class="blockquote">
 <p><strong>Note:</strong> If you’re in Google Colab, you may have to install <code>trl</code>, <code>accelerate</code> and <code>gradio</code>.</p>
 </blockquote>
@@ -820,8 +827,8 @@ Free Memory:      128524.03 MB | 128.52 GB</code></pre>
 </div>
 </div>
 </section>
-<section id="setup-base-model" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="setup-base-model"><span class="header-section-number">3</span> Setup Base Model</h2>
+<section id="setup-base-model" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="setup-base-model"><span class="header-section-number">4</span> Setup Base Model</h2>
 <p>The base model we’ll be using is <a href="https://huggingface.co/google/gemma-3-270m-it/tree/main"><code>gemma-3-270m-it</code></a> (the <code>-it</code> stands for “Instruction-Tuned”). I’ve tried with the base model (<a href="https://huggingface.co/google/gemma-3-270m/tree/main"><code>gemma-3-270m</code></a>) as well and found fine-tuning each gives largely similar results.</p>
 <p>It’s the same architecture style as larger LLMs such as Gemini but at a <em>much</em> smaller scale.</p>
 <p>This is why we refer to it as a “Small Language Model” or SLM.</p>
@@ -887,8 +894,8 @@ Note
 </div>
 <p>Feel free to inspec the <code>'logits'</code> and <code>'past_key_values'</code> our model outputs, however, these aren’t necessarily valuable to use yet.</p>
 <p>We’ll need to convert them back into tokens so we can read them.</p>
-<section id="counting-the-number-of-parameters-in-our-model" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="counting-the-number-of-parameters-in-our-model"><span class="header-section-number">3.1</span> Counting the number of parameters in our model</h3>
+<section id="counting-the-number-of-parameters-in-our-model" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="counting-the-number-of-parameters-in-our-model"><span class="header-section-number">4.1</span> Counting the number of parameters in our model</h3>
 <p>Let’s confirm our model is a smaller model by counting the number of parameters in it.</p>
 <div id="760465ec" class="cell" data-execution_count="6">
 <div class="cell-label cell-label-in">In [6]:</div>
@@ -947,8 +954,8 @@ Note
 <p>By fine-tuning Gemma 3 270M we distill the capabilities of a 120B parameter teacher model (<code>gpt-oss-120b</code>) into a model ~448x smaller.</p>
 </section>
 </section>
-<section id="getting-a-dataset" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="getting-a-dataset"><span class="header-section-number">4</span> Getting a dataset</h2>
+<section id="getting-a-dataset" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="getting-a-dataset"><span class="header-section-number">5</span> Getting a dataset</h2>
 <p>Our dataset is located here on Hugging Face under <a href="https://huggingface.co/datasets/mrdbourke/FoodExtract-1k"><code>mrdbourke/FoodExtract-1k</code></a>.</p>
 <p>It was created from image captions + random strings and then using <code>gpt-oss-120b</code> (a powerful open-source LLM) to do synthetic labelling into our target format.</p>
 <p>For more on the dataset you can read the <a href="https://huggingface.co/datasets/mrdbourke/FoodExtract-1k">README.md</a> file explaining it.</p>
@@ -1011,8 +1018,8 @@ foods:
 drinks:</code></pre>
 </div>
 </div>
-<section id="assigning-tags-to-our-samples" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="assigning-tags-to-our-samples"><span class="header-section-number">4.1</span> Assigning tags to our samples</h3>
+<section id="assigning-tags-to-our-samples" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="assigning-tags-to-our-samples"><span class="header-section-number">5.1</span> Assigning tags to our samples</h3>
 <p>Because we’d like to use our model to potentially filter a large corpus of data, we get it to assign various tags to the text as well.</p>
 <p>These tags could be anything we’d like to define. Because of the nature of our language model, it will be able to learn which tag it should assign to a given piece of text based on its training data.</p>
 <p>We can use these tags later to find particular types of texts, for example, if we wanted specifically <code>nutrition_panel</code> related texts, we’d filter for the <code>np</code> tag.</p>
@@ -1047,8 +1054,8 @@ Note
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a> <span class="st">'fp'</span>: <span class="st">'food_packaging'</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="format-the-dataset-into-llm-style-inputsoutputs" class="level3" data-number="4.2">
-<h3 data-number="4.2" class="anchored" data-anchor-id="format-the-dataset-into-llm-style-inputsoutputs"><span class="header-section-number">4.2</span> Format the dataset into LLM-style inputs/outputs</h3>
+<section id="format-the-dataset-into-llm-style-inputsoutputs" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="format-the-dataset-into-llm-style-inputsoutputs"><span class="header-section-number">5.2</span> Format the dataset into LLM-style inputs/outputs</h3>
 <p>Right now we have examples of string-based inputs and structured outputs.</p>
 <p>However, our LLMs generally want things in the format of:</p>
 <pre><code>{"user": "Hello my name is Daniel",
@@ -1148,8 +1155,8 @@ Note
 </div>
 <p>Notice how we now have a <code>"messages"</code> key in our dataset samples.</p>
 </section>
-<section id="creating-a-traintest-split" class="level3" data-number="4.3">
-<h3 data-number="4.3" class="anchored" data-anchor-id="creating-a-traintest-split"><span class="header-section-number">4.3</span> Creating a train/test split</h3>
+<section id="creating-a-traintest-split" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="creating-a-traintest-split"><span class="header-section-number">5.3</span> Creating a train/test split</h3>
 <p>Time to turn our data into a training/test split.</p>
 <p>Our model will be trained on the training split.</p>
 <p>And then evaluated on the test split.</p>
@@ -1184,8 +1191,8 @@ Note
 <p>We’ve got a training/test split of our dataset.</p>
 <p>How about we try our model on an example sample?</p>
 </section>
-<section id="try-the-model-with-a-pipeline" class="level3" data-number="4.4">
-<h3 data-number="4.4" class="anchored" data-anchor-id="try-the-model-with-a-pipeline"><span class="header-section-number">4.4</span> Try the model with a pipeline</h3>
+<section id="try-the-model-with-a-pipeline" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="try-the-model-with-a-pipeline"><span class="header-section-number">5.4</span> Try the model with a pipeline</h3>
 <p>Let’s write a quick helper function to format some text to turn it into message format.</p>
 <div id="ea2738c3" class="cell" data-execution_count="15">
 <div class="cell-label cell-label-in">In [15]:</div>
@@ -1277,8 +1284,8 @@ Secrets it will keep.</code></pre>
 <p>But just beware, you will likely get different outputs each time.</p>
 <p>This is because of nondeterminism of LLMs (for more on this concept and ways around it, refer to the blog post <a href="https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/"><em>Defeating Nondeterminism in LLM Inference</em></a> by Thinking Machines).</p>
 </section>
-<section id="what-is-a-chat-template" class="level3" data-number="4.5">
-<h3 data-number="4.5" class="anchored" data-anchor-id="what-is-a-chat-template"><span class="header-section-number">4.5</span> What is a chat template?</h3>
+<section id="what-is-a-chat-template" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="what-is-a-chat-template"><span class="header-section-number">5.5</span> What is a chat template?</h3>
 <p>Depending on the model you use, it may have been trained in a certain way to expect a certain kind of input.</p>
 <p>The input formatter can be referred to as many things:</p>
 <ul>
@@ -1344,8 +1351,8 @@ Secrets it will keep.</code></pre>
 </div>
 <p>Notice how the chat template filters through different types of messages and gets them ready for use with a model?</p>
 </section>
-<section id="try-the-model-on-one-of-our-sequences" class="level3" data-number="4.6">
-<h3 data-number="4.6" class="anchored" data-anchor-id="try-the-model-on-one-of-our-sequences"><span class="header-section-number">4.6</span> Try the model on one of our sequences</h3>
+<section id="try-the-model-on-one-of-our-sequences" class="level3" data-number="5.6">
+<h3 data-number="5.6" class="anchored" data-anchor-id="try-the-model-on-one-of-our-sequences"><span class="header-section-number">5.6</span> Try the model on one of our sequences</h3>
 <p>Okay, we’ve gotten the model to write a machine learning poem.</p>
 <p>How about we get to perform on one of our samples?</p>
 <div id="39394d8b" class="cell" data-execution_count="18">
@@ -1390,8 +1397,8 @@ This is a beautiful and detailed image of a small glass bowl. It's a beautiful a
 <p>However, this response type is not what we want. We want our model to respond with <strong>structured data</strong> based on the input.</p>
 <p>Good news is we can adjust the patterns in our model to do just that.</p>
 </section>
-<section id="attempt-1-lets-try-to-prompt-the-model" class="level3" data-number="4.7">
-<h3 data-number="4.7" class="anchored" data-anchor-id="attempt-1-lets-try-to-prompt-the-model"><span class="header-section-number">4.7</span> Attempt 1: Let’s try to prompt the model</h3>
+<section id="attempt-1-lets-try-to-prompt-the-model" class="level3" data-number="5.7">
+<h3 data-number="5.7" class="anchored" data-anchor-id="attempt-1-lets-try-to-prompt-the-model"><span class="header-section-number">5.7</span> Attempt 1: Let’s try to prompt the model</h3>
 <p>We want a model to extract food and drink items from text.</p>
 <p>By default the model will just reply to any text input with a generic response based on what it has seen in its training data.</p>
 <p>However, we can try and get our ideal outputs via prompting.</p>
@@ -1470,8 +1477,8 @@ Target input text: small glass bowl by japanese glass artist yumi nozaki</code><
 </div>
 </div>
 </section>
-<section id="trying-our-formatted-prompt-with-the-model" class="level3" data-number="4.8">
-<h3 data-number="4.8" class="anchored" data-anchor-id="trying-our-formatted-prompt-with-the-model"><span class="header-section-number">4.8</span> Trying our formatted prompt with the model</h3>
+<section id="trying-our-formatted-prompt-with-the-model" class="level3" data-number="5.8">
+<h3 data-number="5.8" class="anchored" data-anchor-id="trying-our-formatted-prompt-with-the-model"><span class="header-section-number">5.8</span> Trying our formatted prompt with the model</h3>
 <p>Let’s pass our instructional based prompt formatted with our target sample to see if the model can extract details in the format we’d like.</p>
 <div id="22ed0f84" class="cell" data-execution_count="20">
 <div class="cell-label cell-label-in">In [20]:</div>
@@ -1620,8 +1627,8 @@ drinks:</code></pre>
 <p>For now, let’s move onto fine-tuning.</p>
 </section>
 </section>
-<section id="fine-tuning-our-model" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="fine-tuning-our-model"><span class="header-section-number">5</span> Fine-tuning our model</h2>
+<section id="fine-tuning-our-model" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="fine-tuning-our-model"><span class="header-section-number">6</span> Fine-tuning our model</h2>
 <p>Time to fine-tune our own model!</p>
 <p>To do so, we’re going to need a couple of ingredients:</p>
 <ul>
@@ -1799,8 +1806,8 @@ The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and g
 <pre><code>There were missing keys in the checkpoint model loaded: ['lm_head.weight'].</code></pre>
 </div>
 </div>
-<section id="evaluate-our-model" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="evaluate-our-model"><span class="header-section-number">5.1</span> Evaluate our model</h3>
+<section id="evaluate-our-model" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="evaluate-our-model"><span class="header-section-number">6.1</span> Evaluate our model</h3>
 <p>We can evaluate our model within the trainer instance using <code>trainer.evaluate</code>.</p>
 <p>This will run our model across the <code>eval_dataset</code> (we set this to be <code>dataset["test"]</code>) and record metrics.</p>
 <div id="56aa74fe" class="cell" data-execution_count="25">
@@ -1846,8 +1853,8 @@ The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and g
 <p>Remember that this metric includes the actual tokens output by our model, including the format specific tokens.</p>
 <p>So our model’s accuracy metric will go up when it generates the token <code>food:</code> or <code>drink:</code> correctly, the number goes up. Every correctly generated token contributes to the accuracy. We can inspect field-level token performance metrics (e.g.&nbsp;which specific <code>food_items</code> were generated) later on.</p>
 </section>
-<section id="inspect-our-models-loss-curves" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="inspect-our-models-loss-curves"><span class="header-section-number">5.2</span> Inspect our model’s loss curves</h3>
+<section id="inspect-our-models-loss-curves" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="inspect-our-models-loss-curves"><span class="header-section-number">6.2</span> Inspect our model’s loss curves</h3>
 <p>Woohoo! Looks like mean token accuracy went up and our loss values trended down.</p>
 <p>Let’s inspect the loss curves, we can do so by extracting the values from the <code>trainer.state.log_history</code> attribute.</p>
 <div id="0e176da4" class="cell" data-execution_count="27">
@@ -1882,8 +1889,8 @@ The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and g
 </div>
 </div>
 </section>
-<section id="save-the-best-model" class="level3" data-number="5.3">
-<h3 data-number="5.3" class="anchored" data-anchor-id="save-the-best-model"><span class="header-section-number">5.3</span> Save the best model</h3>
+<section id="save-the-best-model" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="save-the-best-model"><span class="header-section-number">6.3</span> Save the best model</h3>
 <p>We can save our best model to file using <a href="transformers.Trainer.save_model"><code>trl.SFTTrainer.save_model</code></a>.</p>
 <div id="ab9d8bbd" class="cell" data-execution_count="28">
 <div class="cell-label cell-label-in">In [28]:</div>
@@ -1891,8 +1898,8 @@ The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and g
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>trainer.save_model()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="optional-remove-checkpoints" class="level3" data-number="5.4">
-<h3 data-number="5.4" class="anchored" data-anchor-id="optional-remove-checkpoints"><span class="header-section-number">5.4</span> Optional: Remove checkpoints</h3>
+<section id="optional-remove-checkpoints" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="optional-remove-checkpoints"><span class="header-section-number">6.4</span> Optional: Remove checkpoints</h3>
 <p>When we upload our model to Hugging Face, a typical practice is to upload a certain folder (e.g.&nbsp;<code>checkpoint_models/</code>) including all the contents so we get the artifacts such as <code>config.json</code>, <code>generation_config.json</code>, <code>tokenizer.json</code> and more.</p>
 <p>However, if we’ve got a large number of checkpoints from a training run, this could lead to uploading too many files.</p>
 <div id="eeb7fa9e" class="cell" data-execution_count="29">
@@ -1953,8 +1960,8 @@ generation_config.json  special_tokens_map.json  training_args.bin</code></pre>
 <p>Let’s load our fine-tuned model back in and inspect its performance on the test dataset and if it goes well, we’ll upload it to the Hugging Face Hub.</p>
 </section>
 </section>
-<section id="load-the-trained-model-back-in-and-see-how-it-performs" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="load-the-trained-model-back-in-and-see-how-it-performs"><span class="header-section-number">6</span> Load the trained model back in and see how it performs</h2>
+<section id="load-the-trained-model-back-in-and-see-how-it-performs" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="load-the-trained-model-back-in-and-see-how-it-performs"><span class="header-section-number">7</span> Load the trained model back in and see how it performs</h2>
 <p>We’ve now fine-tuned our own Gemma 3 270M to do a specific food and drink extraction task, let’s load it back in and see how it performs.</p>
 <div id="c2ebfeae" class="cell" data-execution_count="32">
 <div class="cell-label cell-label-in">In [32]:</div>
@@ -2039,8 +2046,8 @@ generation_config.json  special_tokens_map.json  training_args.bin</code></pre>
 <pre><code>&lt;transformers.pipelines.text_generation.TextGenerationPipeline at 0xe58321dc5640&gt;</code></pre>
 </div>
 </div>
-<section id="performing-inference-with-our-fine-tuned-model-on-the-test-dataset" class="level3" data-number="6.1">
-<h3 data-number="6.1" class="anchored" data-anchor-id="performing-inference-with-our-fine-tuned-model-on-the-test-dataset"><span class="header-section-number">6.1</span> Performing inference with our fine-tuned model on the test dataset</h3>
+<section id="performing-inference-with-our-fine-tuned-model-on-the-test-dataset" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="performing-inference-with-our-fine-tuned-model-on-the-test-dataset"><span class="header-section-number">7.1</span> Performing inference with our fine-tuned model on the test dataset</h3>
 <p>Let’s now perform inference with our fine-tuned model on a random sample from the test dataset, <code>dataset["test"]</code> (our model has never seen these samples).</p>
 <p>If our model training went well, the outputs of our fine-tuned model should be aligned with the ground truth labels.</p>
 <div id="ee88d7fa" class="cell" data-execution_count="34">
@@ -2111,8 +2118,8 @@ drinks:</code></pre>
 <p>Nice!! Looks like our fine-tuned model is doing quite well to reproduce the target labels.</p>
 <p>We could keep going here and inspect the predictions against the ground truth (in fact, I’d encourage you to sample at least 25 different test items and inspect them), however, let’s now upload our model to the Hugging Face Hub so it’s reusable.</p>
 </section>
-<section id="attempt-2-testing-our-model-on-unformatted-text" class="level3" data-number="6.2">
-<h3 data-number="6.2" class="anchored" data-anchor-id="attempt-2-testing-our-model-on-unformatted-text"><span class="header-section-number">6.2</span> Attempt 2: Testing our model on unformatted text</h3>
+<section id="attempt-2-testing-our-model-on-unformatted-text" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="attempt-2-testing-our-model-on-unformatted-text"><span class="header-section-number">7.2</span> Attempt 2: Testing our model on unformatted text</h3>
 <p>Machine learning models often want to predict on data in the same format they’ve been trained on.</p>
 <p>For example, our model is capable of making predictions on raw text, however, it was trained to do food and drink extraction specifically on formatted text.</p>
 <div id="19a31938" class="cell" data-execution_count="35">
@@ -2243,8 +2250,8 @@ drinks: tea
 <p>Let’s upload it to the Hugging Face Hub.</p>
 </section>
 </section>
-<section id="uploading-our-fine-tuned-model-to-the-hugging-face-hub" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="uploading-our-fine-tuned-model-to-the-hugging-face-hub"><span class="header-section-number">7</span> Uploading our fine-tuned model to the Hugging Face Hub</h2>
+<section id="uploading-our-fine-tuned-model-to-the-hugging-face-hub" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="uploading-our-fine-tuned-model-to-the-hugging-face-hub"><span class="header-section-number">8</span> Uploading our fine-tuned model to the Hugging Face Hub</h2>
 <p>Uploading our fine-tuned model to the Hugging Face Hub means we can easily load it in to another environment later on or share it with others so they can test it out.</p>
 <p>To do so, we’ll use the <a href="https://huggingface.co/docs/huggingface_hub/en/index"><code>huggingface_hub</code></a> library.</p>
 <p>We’ll use the <a href="https://huggingface.co/docs/huggingface_hub/en/package_reference/hf_api#huggingface_hub.HfApi.create_repo"><code>huggingface_hub.create_repo</code></a> to create a repository to store our model.</p>
@@ -2292,8 +2299,8 @@ login()</code></pre>
 <pre><code>RepoUrl('https://huggingface.co/mrdbourke/FoodExtract-gemma-3-270m-fine-tune-v1', endpoint='https://huggingface.co', repo_type='model', repo_id='mrdbourke/FoodExtract-gemma-3-270m-fine-tune-v1')</code></pre>
 </div>
 </div>
-<section id="create-a-readme.md-for-our-model" class="level3" data-number="7.1">
-<h3 data-number="7.1" class="anchored" data-anchor-id="create-a-readme.md-for-our-model"><span class="header-section-number">7.1</span> Create a README.md for our model</h3>
+<section id="create-a-readme.md-for-our-model" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="create-a-readme.md-for-our-model"><span class="header-section-number">8.1</span> Create a README.md for our model</h3>
 <p>Now we’ll create a <code>README.md</code> file for our model so people know how it was trained and how to use it.</p>
 <p>Adding a README to a model is often referred to as a model card.</p>
 <p>We can add some front matter to our <a href="https://huggingface.co/docs/hub/model-cards">model card</a>.</p>
@@ -2560,8 +2567,8 @@ license: gemma
 <span id="cb95-249"><a href="#cb95-249" aria-hidden="true" tabindex="-1"></a>    f.write(model_readme)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="upload-the-contents-of-our-checkpoint-model-folder-to-the-hugging-face-hub" class="level3" data-number="7.2">
-<h3 data-number="7.2" class="anchored" data-anchor-id="upload-the-contents-of-our-checkpoint-model-folder-to-the-hugging-face-hub"><span class="header-section-number">7.2</span> Upload the contents of our checkpoint model folder to the Hugging Face Hub</h3>
+<section id="upload-the-contents-of-our-checkpoint-model-folder-to-the-hugging-face-hub" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="upload-the-contents-of-our-checkpoint-model-folder-to-the-hugging-face-hub"><span class="header-section-number">8.2</span> Upload the contents of our checkpoint model folder to the Hugging Face Hub</h3>
 <p>Now we’ve created a model repository (repo for short) and model card, let’s upload our <code>checkpoint_models/</code> folder contents to the Hugging Face Hub.</p>
 <p>To do so, we’ll use the <a href="https://huggingface.co/docs/huggingface_hub/en/package_reference/hf_api#huggingface_hub.HfApi.upload_folder"><code>upload_folder</code></a> method.</p>
 <p>This may take a few minutes depending on your internet connection.</p>
@@ -2605,8 +2612,8 @@ A Model Card is similar to a README.md file. It’s a place to communicate detai
 <p>Now not only can we redownload it and use it again, others can download it and use it for themselves (of course you can make the model private if you like too).</p>
 </section>
 </section>
-<section id="turning-our-model-into-a-demo" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="turning-our-model-into-a-demo"><span class="header-section-number">8</span> Turning our model into a demo</h2>
+<section id="turning-our-model-into-a-demo" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="turning-our-model-into-a-demo"><span class="header-section-number">9</span> Turning our model into a demo</h2>
 <p>Right now our model seems to be working quite well for our specific use case.</p>
 <p>However, it takes some coding to be able to use it.</p>
 <p>What if we wanted to allow someone who wasn’t familiar with programming to try it out?</p>
@@ -2652,8 +2659,8 @@ To disable this warning, you can either:
     - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)</code></pre>
 </div>
 </div>
-<section id="creating-the-app.py-file" class="level3" data-number="8.1">
-<h3 data-number="8.1" class="anchored" data-anchor-id="creating-the-app.py-file"><span class="header-section-number">8.1</span> Creating the <code>app.py</code> file</h3>
+<section id="creating-the-app.py-file" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="creating-the-app.py-file"><span class="header-section-number">9.1</span> Creating the <code>app.py</code> file</h3>
 <p>When running our app on Hugging Face Spaces, we have the option to run our model on a GPU thanks to Hugging Face’s <a href="https://huggingface.co/docs/hub/en/spaces-zerogpu">ZeroGPU</a> feature.</p>
 <p>This is optional, however, it’s highly recommend you run a model such as Gemma 3 270M on a GPU as we’ll see significant speedups as compared to running on CPU.</p>
 <p>You can run a function on a GPU by importing <code>spaces</code> and then using the <code>@spaces.GPU</code> decorator on your target function.</p>
@@ -2767,8 +2774,8 @@ Most modern models will often see speedup benefits from using a GPU. A very nice
 </div>
 </div>
 </section>
-<section id="create-the-readme.md-file" class="level3" data-number="8.2">
-<h3 data-number="8.2" class="anchored" data-anchor-id="create-the-readme.md-file"><span class="header-section-number">8.2</span> Create the <code>README.md</code> file</h3>
+<section id="create-the-readme.md-file" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="create-the-readme.md-file"><span class="header-section-number">9.2</span> Create the <code>README.md</code> file</h3>
 <p>The <code>README.md</code> file will tell people what our app does.</p>
 <p>We could add more information here if we wanted to but for now we’ll keep it simple.</p>
 <p>Notice the special text at the top of the file below (the text between the <code>---</code>), these are some settings for the Space, you can see the <a href="https://huggingface.co/docs/hub/en/spaces-config-reference">settings for these in the docs</a>.</p>
@@ -2831,8 +2838,8 @@ Most modern models will often see speedup benefits from using a GPU. A very nice
 </div>
 </div>
 </section>
-<section id="creating-a-requirements.txt-file" class="level3" data-number="8.3">
-<h3 data-number="8.3" class="anchored" data-anchor-id="creating-a-requirements.txt-file"><span class="header-section-number">8.3</span> Creating a <code>requirements.txt</code> file</h3>
+<section id="creating-a-requirements.txt-file" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="creating-a-requirements.txt-file"><span class="header-section-number">9.3</span> Creating a <code>requirements.txt</code> file</h3>
 <p>This will tell the Hugging Face Space what libraries we’d like it to run inside.</p>
 <div id="d7e17c94-07bf-4c40-a045-f64f58256a0a" class="cell" data-execution_count="45">
 <div class="cell-label cell-label-in">In [45]:</div>
@@ -2847,8 +2854,8 @@ Most modern models will often see speedup benefits from using a GPU. A very nice
 </div>
 </div>
 </section>
-<section id="uploading-our-demo-to-the-hugging-face-hub" class="level3" data-number="8.4">
-<h3 data-number="8.4" class="anchored" data-anchor-id="uploading-our-demo-to-the-hugging-face-hub"><span class="header-section-number">8.4</span> Uploading our demo to the Hugging Face Hub</h3>
+<section id="uploading-our-demo-to-the-hugging-face-hub" class="level3" data-number="9.4">
+<h3 data-number="9.4" class="anchored" data-anchor-id="uploading-our-demo-to-the-hugging-face-hub"><span class="header-section-number">9.4</span> Uploading our demo to the Hugging Face Hub</h3>
 <p>We can upload our demo to the Hugging Face Hub in a similar way to uploading our model.</p>
 <p>We could also upload it file by file via the Hugging Face Spaces interface.</p>
 <p>But let’s stick to the code-first approach.</p>
@@ -2914,8 +2921,8 @@ Most modern models will often see speedup benefits from using a GPU. A very nice
 <p>Nice!</p>
 <p>It looks like our demo upload worked!</p>
 </section>
-<section id="trying-our-demo-right-from-within-our-notebook" class="level3" data-number="8.5">
-<h3 data-number="8.5" class="anchored" data-anchor-id="trying-our-demo-right-from-within-our-notebook"><span class="header-section-number">8.5</span> Trying our demo right from within our notebook</h3>
+<section id="trying-our-demo-right-from-within-our-notebook" class="level3" data-number="9.5">
+<h3 data-number="9.5" class="anchored" data-anchor-id="trying-our-demo-right-from-within-our-notebook"><span class="header-section-number">9.5</span> Trying our demo right from within our notebook</h3>
 <p>We can try it out via the URL (in my case, it’s: <a href="https://huggingface.co/spaces/mrdbourke/FoodExtract-v1">https://huggingface.co/spaces/mrdbourke/FoodExtract-v1</a>).</p>
 <p>And we can even embed it right in our notebook by going to the three dots on the Hugging Face Space and then clicking “Embed this Space”.</p>
 <div id="5dc1a559-079a-49cd-9197-2b1b06f64c5b" class="cell" data-execution_count="48">
@@ -2939,8 +2946,8 @@ Most modern models will often see speedup benefits from using a GPU. A very nice
 <p>We’ve now got a sharable demo of a fine-tuned LLM which anyone can try out for themselves.</p>
 </section>
 </section>
-<section id="summary" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="summary"><span class="header-section-number">9</span> Summary</h2>
+<section id="summary" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="summary"><span class="header-section-number">10</span> Summary</h2>
 <p>Congratulations!</p>
 <p>You’ve now officially fine-tuned your own SLM for structured data extraction!</p>
 <p>We’ve come a long way from the base Gemma 3 270M model, fine-tuning it on our custom dataset and then evaluating it for our specific task.</p>
@@ -2949,8 +2956,8 @@ Most modern models will often see speedup benefits from using a GPU. A very nice
 <p>The data -&gt; model -&gt; demo workflow is complete!</p>
 <p>One of the biggest takeaways is that language models (large and small) operate on the premise of <strong>tokens in and tokens out</strong>.</p>
 <p>This means, if you can get the right input tokens (image captions in our case) and desired output tokens (structured extracted food data) lined up, you can likely find a way to train a model to repeat the process.</p>
-<section id="extensions" class="level3" data-number="9.1">
-<h3 data-number="9.1" class="anchored" data-anchor-id="extensions"><span class="header-section-number">9.1</span> Extensions</h3>
+<section id="extensions" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="extensions"><span class="header-section-number">10.1</span> Extensions</h3>
 <p>Our model works quite well for our given task.</p>
 <p>However, if we wanted to improve the overall workflow, there are several avenues we could explore next.</p>
 <ol type="1">
@@ -2961,8 +2968,8 @@ Most modern models will often see speedup benefits from using a GPU. A very nice
 <li><strong>Try an inference engine for performance increase</strong> - Right now we’re using Hugging Face’s <code>transformers</code> library to run our model which is based on PyTorch. However, there are dedicated inference engines such as <a href="https://docs.vllm.ai/en/latest/getting_started/quickstart/">vLLM</a> which are engineered to improve the throughput of our model. In my experience, I’ve often found a 5-10x or more improvement on throughput speed (e.g.&nbsp;200 samples/second with vLLM rather than 20 samples/second with pure <code>transformers</code>) when using a dedicated inference engine. For more, I’d try searching “vllm gemma 3 example”.</li>
 </ol>
 </section>
-<section id="extra-curriculum" class="level3" data-number="9.2">
-<h3 data-number="9.2" class="anchored" data-anchor-id="extra-curriculum"><span class="header-section-number">9.2</span> Extra-curriculum</h3>
+<section id="extra-curriculum" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="extra-curriculum"><span class="header-section-number">10.2</span> Extra-curriculum</h3>
 <p>If you want to learn more or continue the current project, I’d recommend trying the following.</p>
 <ul>
 <li><a href="https://www.learnhuggingface.com/notebooks/hugging_face_llm_batched_inference_with_transformers"><strong>Batched inference with Hugging Face Transformers</strong></a> - Let’s say you wanted to perform inference with the model across ~1 billion samples. Doing this 1 by 1 would take quite a long time. To fix this, you can perform batched inference, meaning the model predicts on multiple samples at a time (e.g.&nbsp;16 samples at once instead of 1). This often dramatically speeds up inference time per sample and is highly recommended in practice.</li>
@@ -2976,8 +2983,8 @@ Most modern models will often see speedup benefits from using a GPU. A very nice
 </ul></li>
 </ul>
 </section>
-<section id="extra-resources" class="level3" data-number="9.3">
-<h3 data-number="9.3" class="anchored" data-anchor-id="extra-resources"><span class="header-section-number">9.3</span> Extra resources</h3>
+<section id="extra-resources" class="level3" data-number="10.3">
+<h3 data-number="10.3" class="anchored" data-anchor-id="extra-resources"><span class="header-section-number">10.3</span> Extra resources</h3>
 <ul>
 <li>For more on LLM evaluations, I’d highly recommend checking out Hamel Husain’s blog on <a href="https://hamel.dev/blog/posts/evals-faq/"><em>LLM Evals: Everything You Need to Know</em></a>, also, the rest of Hamel’s blog is full of incredible resources so dig around.</li>
 <li>For more on LLM training in general, the <a href="https://tokens-for-thoughts.notion.site/post-training-101"><em>Post Training 101</em></a> blog post by <a href="https://hanfang.info/">Han Fang</a> and <a href="https://karthikabinavs.xyz/">Karthik Abinav Sankararaman</a> is an excellent read and guide to various different training techniques to improve a base LLM model.</li>
