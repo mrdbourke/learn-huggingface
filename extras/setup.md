@@ -1,5 +1,9 @@
 ---
 title: "Setup 🤗"
+description: "Get your local environment ready for the Learn Hugging Face course."
+toc: true
+toc-depth: 3
+code-copy: true    
 ---
 
 # Getting setup for the Hugging Face ecosystem
@@ -252,6 +256,102 @@ print('matplotlib', matplotlib.__version__)
 print('huggingface_hub', huggingface_hub.__version__)
 
 print('uv env ready! Good to code!')
+"
+```
+
+If these work, we're good to go!!
+
+### Activate a Jupyter instance and get started
+
+```bash
+jupyter lab
+```
+
+Alternatively, you can also start writing Python scripts to follow along and learn.
+
+## macOS + Conda local setup
+
+Install [Miniconda](https://www.anaconda.com/docs/getting-started/miniconda/install/overview) to get the conda package manager.
+
+### Clone the course repository
+
+```bash
+git clone https://github.com/mrdbourke/learn-huggingface
+cd learn-huggingface
+```
+
+### Create and activate conda environment
+
+Create environment:
+
+```bash
+conda create -n learn-hf python=3.12 -y
+```
+
+**Note:** This setup has been tested with Python 3.12. If you'd like, you can use a different/later version.
+
+Activate it:
+
+```bash
+conda activate learn-hf
+```
+
+### Install PyTorch
+
+```bash
+python -m pip install torch torchvision torchaudio
+```
+
+**Note:** On macOS, the default PyTorch install includes MPS (Metal Performance Shaders) support. No special index URL is needed.
+
+### Install Hugging Face CLI and Login
+
+Install Hugging Face CLI:
+
+```bash
+python -m pip install -U "huggingface_hub[cli]"
+```
+
+Login with your Hugging Face account to authenticate your local machine:
+
+```bash
+hf auth login
+```
+
+### Install dependencies
+
+Install dependencies we'll need for the projects:
+
+```bash
+python -m pip install transformers datasets evaluate accelerate gradio trl matplotlib jupyter
+```
+
+**Note:** If you run into any dependency issues during running the projects, you can always install them via `pip install [DEPENDENCY_NAME]`.
+
+### Check that the imports work
+
+```bash
+python -c "
+import torch, transformers, datasets, accelerate, gradio, trl, matplotlib, huggingface_hub
+
+assert torch.backends.mps.is_available(), 'MPS not available'
+
+print('torch', torch.__version__)
+print('mps_available', torch.backends.mps.is_available())
+print('mps_built', torch.backends.mps.is_built())
+
+x = torch.tensor([1.0, 2.0]).to('mps')
+print('mps_tensor_device', x.device)
+
+print('transformers', transformers.__version__)
+print('datasets', datasets.__version__)
+print('accelerate', accelerate.__version__)
+print('gradio', gradio.__version__)
+print('trl', trl.__version__)
+print('matplotlib', matplotlib.__version__)
+print('huggingface_hub', huggingface_hub.__version__)
+
+print('Conda env ready! Good to code!')
 "
 ```
 
