@@ -1,6 +1,6 @@
 ---
 title: "Setup 🤗"
-description: "Get your local environment ready for the Learn Hugging Face course."
+description: "Get your Google Colab instance/local environment ready for the Learn Hugging Face course."
 toc: true
 toc-depth: 3
 code-copy: true    
