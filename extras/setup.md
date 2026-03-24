@@ -63,10 +63,10 @@ And enter your token in the box that appears (**note:** this token will only be 
 
 | Hardware | Package Manager | Backend | Setup Guide |
 |----------|----------------|---------|-------------|
-| NVIDIA GPU | Conda | CUDA | [NVIDIA GPU + Conda](#nvidia-gpu--conda-local-setup) |
-| NVIDIA GPU | uv (pip) | CUDA | [NVIDIA GPU + uv](#nvidia-gpu--uv-pip-local-setup) |
-| macOS (Apple Silicon) | Conda | MPS | [macOS + Conda](#macos--conda-local-setup) |
-| macOS (Apple Silicon) | uv (pip) | MPS | [macOS + uv](#macos--uv-pip-local-setup) |
+| NVIDIA GPU | Conda | CUDA | [NVIDIA GPU + Conda](#nvidia-conda) |
+| NVIDIA GPU | uv (pip) | CUDA | [NVIDIA GPU + uv](#nvidia-uv) |
+| macOS (Apple Silicon) | Conda | MPS | [macOS + Conda](#macos-conda) |
+| macOS (Apple Silicon) | uv (pip) | MPS | [macOS + uv](#macos-uv) |
 
 ## Global Hugging Face library requirements
 
@@ -78,7 +78,7 @@ Depending on your environment/local hardware, there are a handful of foundation 
 * [`accelerate`](https://huggingface.co/docs/accelerate/basic_tutorials/install) - a library for training machine learning models faster, you can install it via `pip install accelerate`.
 * [`gradio`](https://www.gradio.app/guides/quickstart#installation) - a library for creating interactive demos of machine learning models, you can install it via `pip install gradio`.
 
-## NVIDIA GPU + Conda local setup
+## NVIDIA GPU + Conda local setup {#nvidia-conda}
 
 Install [Miniconda](https://www.anaconda.com/docs/getting-started/miniconda/install/overview) to get the conda package manager.
 
@@ -190,7 +190,7 @@ code .
 
 Alternatively, you can also start writing Python scripts to follow along and learn.
 
-## NVIDIA GPU + uv (pip) local setup
+## NVIDIA GPU + uv (pip) local setup {#nvidia-uv}
 
 Install [uv](https://docs.astral.sh/uv/getting-started/installation/) to get a fast Python package manager.
 
@@ -300,7 +300,7 @@ code .
 
 Alternatively, you can also start writing Python scripts to follow along and learn.
 
-## macOS + Conda local setup
+## macOS + Conda local setup {#macos-conda}
 
 Install [Miniconda](https://www.anaconda.com/docs/getting-started/miniconda/install/overview) to get the conda package manager.
 
@@ -417,7 +417,7 @@ code .
 
 Alternatively, you can also start writing Python scripts to follow along and learn.
 
-## macOS + uv (pip) local setup
+## macOS + uv (pip) local setup {#macos-uv}
 
 Install [uv](https://docs.astral.sh/uv/getting-started/installation/) to get a fast Python package manager.
 
