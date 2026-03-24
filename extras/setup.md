@@ -1,3 +1,7 @@
+---
+title: "Setup 🤗"
+---
+
 # Getting setup for the Hugging Face ecosystem
 
 The following steps are to help you get started with the Hugging Face ecosystem.
@@ -48,15 +52,14 @@ huggingface_hub.login()
 
 And enter your token in the box that appears (**note:** this token will only be active for the current notebook session and will delete when your Google Colab instance terminates).
 
-## TK - Getting started locally
+## Getting started locally
 
 1. Follow the steps in Start here.
-2. Install the Hugging Face CLI with `pip install -U "huggingface_hub[cli]"`.
-3. Follow the setup steps mentioned in <https://huggingface.co/docs/huggingface_hub/en/guides/cli>. 
+2. Follow your specific hardware steps below.
 
-## Installing Hugging Face libraries
+## Global Hugging Face library requirements
 
-We'll need to install the following libraries from the Hugging Face ecosystem:
+Depending on your environment/local hardware, there are a handful of foundation libraries we'll need to install from the Hugging Face ecosystem:
 
 * [`transformers`](https://huggingface.co/docs/transformers/en/installation) - comes pre-installed on Google Colab but if you're running on your local machine, you can install it via `pip install transformers`.
 * [`datasets`](https://huggingface.co/docs/datasets/installation) - a library for accessing and manipulating datasets on and off the Hugging Face Hub, you can install it via `pip install datasets`.
@@ -64,3 +67,200 @@ We'll need to install the following libraries from the Hugging Face ecosystem:
 * [`accelerate`](https://huggingface.co/docs/accelerate/basic_tutorials/install) - a library for training machine learning models faster, you can install it via `pip install accelerate`.
 * [`gradio`](https://www.gradio.app/guides/quickstart#installation) - a library for creating interactive demos of machine learning models, you can install it via `pip install gradio`.
 
+## NVIDIA GPU + Conda local setup
+
+Install [Miniconda](https://www.anaconda.com/docs/getting-started/miniconda/install/overview) to get the conda package manager.
+
+### Clone the course repository
+
+```bash
+git clone https://github.com/mrdbourke/learn-huggingface
+```
+
+Change into the target directory:
+
+```
+cd learn-huggingface
+```
+
+### Create and activate conda environment
+
+Create environment:
+
+```bash
+conda create -n learn-hf python=3.12 -y
+```
+
+**Note:** This setup has been test with Python 3.12. If you'd like, you can use a different/later version. 
+
+Activate it:
+
+```bash
+conda activate learn-hf
+```
+
+### Install PyTorch 
+
+```bash
+python -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+```
+
+### Install Hugging Face CLI and Login
+
+Install Hugging Face CLI:
+
+```
+python -m pip install -U "huggingface_hub[cli]"
+```
+
+Login with your Hugging Face account to authenticate your local machine:
+
+```bash
+hf auth login
+```
+
+### Install dependencies
+
+Install dependenies we'll need for the projects:
+
+```bash
+python -m pip install transformers datasets evaluate accelerate gradio trl matplotlib jupyter
+```
+
+**Note:** If you run into any dependency issues during running the projects, you can always install them via `pip install [DEPENDENCY_NAME]`. 
+
+### Check that the imports work
+
+```bash
+python -c "
+import torch, transformers, datasets, accelerate, gradio, trl, matplotlib, huggingface_hub
+
+assert torch.cuda.is_available(), 'CUDA GPU not available'
+
+print('torch', torch.__version__)
+print('cuda_available', torch.cuda.is_available())
+print('cuda_device_count', torch.cuda.device_count())
+print('cuda_device', torch.cuda.get_device_name(0))
+
+x = torch.tensor([1.0, 2.0]).to('cuda')
+print('cuda_tensor_device', x.device)
+
+print('transformers', transformers.__version__)
+print('datasets', datasets.__version__)
+print('accelerate', accelerate.__version__)
+print('gradio', gradio.__version__)
+print('trl', trl.__version__)
+print('matplotlib', matplotlib.__version__)
+print('huggingface_hub', huggingface_hub.__version__)
+
+print('Conda env ready! Good to code!')
+"
+```
+
+If these work, we're good to go!!
+
+### Activate a Jupyter instance and get started
+
+```bash
+jupyter lab
+```
+
+Alternatively, you can also start writing Python scripts to follow along and learn.
+
+## NVIDIA GPU + uv (pip) local setup
+
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) to get a fast Python package manager.
+
+### Clone the course repository
+
+```bash
+git clone https://github.com/mrdbourke/learn-huggingface
+```
+
+Change into the target directory:
+
+```
+cd learn-huggingface
+```
+
+### Create and activate virtual environment
+
+Create environment:
+
+```bash
+uv venv learn-hf --python 3.12
+```
+
+**Note:** This setup has been tested with Python 3.12. If you'd like, you can use a different/later version.
+
+Activate it:
+
+```bash
+source learn-hf/bin/activate
+```
+
+### Install PyTorch
+
+```bash
+uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+```
+
+### Install Hugging Face CLI and Login
+
+Install Hugging Face CLI:
+```bash
+uv pip install -U "huggingface_hub[cli]"
+```
+
+Login with your Hugging Face account to authenticate your local machine:
+```bash
+huggingface-cli login
+```
+
+### Install dependencies
+
+Install dependencies we'll need for the projects:
+
+```bash
+uv pip install transformers datasets evaluate accelerate gradio trl matplotlib jupyter
+```
+
+**Note:** If you run into any dependency issues during running the projects, you can always install them via `uv pip install [DEPENDENCY_NAME]`.
+
+### Check that the imports work
+
+```bash
+python -c "
+import torch, transformers, datasets, accelerate, gradio, trl, matplotlib, huggingface_hub
+
+assert torch.cuda.is_available(), 'CUDA GPU not available'
+
+print('torch', torch.__version__)
+print('cuda_available', torch.cuda.is_available())
+print('cuda_device_count', torch.cuda.device_count())
+print('cuda_device', torch.cuda.get_device_name(0))
+
+x = torch.tensor([1.0, 2.0]).to('cuda')
+print('cuda_tensor_device', x.device)
+
+print('transformers', transformers.__version__)
+print('datasets', datasets.__version__)
+print('accelerate', accelerate.__version__)
+print('gradio', gradio.__version__)
+print('trl', trl.__version__)
+print('matplotlib', matplotlib.__version__)
+print('huggingface_hub', huggingface_hub.__version__)
+
+print('uv env ready! Good to code!')
+"
+```
+
+If these work, we're good to go!!
+
+### Activate a Jupyter instance and get started
+
+```bash
+jupyter lab
+```
+
+Alternatively, you can also start writing Python scripts to follow along and learn.
