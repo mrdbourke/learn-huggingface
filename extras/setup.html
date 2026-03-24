@@ -455,6 +455,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#install-dependencies-1" id="toc-install-dependencies-1" class="nav-link" data-scroll-target="#install-dependencies-1">Install dependencies</a></li>
   <li><a href="#check-that-the-imports-work-1" id="toc-check-that-the-imports-work-1" class="nav-link" data-scroll-target="#check-that-the-imports-work-1">Check that the imports work</a></li>
   <li><a href="#get-started-1" id="toc-get-started-1" class="nav-link" data-scroll-target="#get-started-1">Get started</a></li>
+  </ul></li>
+  <li><a href="#macos-conda-local-setup" id="toc-macos-conda-local-setup" class="nav-link" data-scroll-target="#macos-conda-local-setup">macOS + Conda local setup</a>
+  <ul class="collapse">
   <li><a href="#clone-the-course-repository-2" id="toc-clone-the-course-repository-2" class="nav-link" data-scroll-target="#clone-the-course-repository-2">Clone the course repository</a></li>
   <li><a href="#create-and-activate-conda-environment-1" id="toc-create-and-activate-conda-environment-1" class="nav-link" data-scroll-target="#create-and-activate-conda-environment-1">Create and activate conda environment</a></li>
   <li><a href="#install-pytorch-2" id="toc-install-pytorch-2" class="nav-link" data-scroll-target="#install-pytorch-2">Install PyTorch</a></li>
@@ -558,6 +561,42 @@ For accessing models and datasets from the Hugging Face Hub (both read and write
 <li>Follow the steps in Start here.</li>
 <li>Follow your specific hardware steps below.</li>
 </ol>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Hardware</th>
+<th>Package Manager</th>
+<th>Backend</th>
+<th>Setup Guide</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>NVIDIA GPU</td>
+<td>Conda</td>
+<td>CUDA</td>
+<td><a href="#nvidia-gpu--conda-local-setup">NVIDIA GPU + Conda</a></td>
+</tr>
+<tr class="even">
+<td>NVIDIA GPU</td>
+<td>uv (pip)</td>
+<td>CUDA</td>
+<td><a href="#nvidia-gpu--uv-pip-local-setup">NVIDIA GPU + uv</a></td>
+</tr>
+<tr class="odd">
+<td>macOS (Apple Silicon)</td>
+<td>Conda</td>
+<td>MPS</td>
+<td><a href="#macos--conda-local-setup">macOS + Conda</a></td>
+</tr>
+<tr class="even">
+<td>macOS (Apple Silicon)</td>
+<td>uv (pip)</td>
+<td>MPS</td>
+<td><a href="#macos--uv-pip-local-setup">macOS + uv</a></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="global-hugging-face-library-requirements" class="level2">
 <h2 class="anchored" data-anchor-id="global-hugging-face-library-requirements">Global Hugging Face library requirements</h2>
@@ -640,7 +679,6 @@ For accessing models and datasets from the Hugging Face Hub (both read and write
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Note:</strong> This requires <a href="https://code.visualstudio.com/">VS Code</a> installed locally with the <a href="https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter">Jupyter extension</a> so you can run <code>.ipynb</code> notebooks directly in VS Code.</p>
 <p>Alternatively, you can also start writing Python scripts to follow along and learn.</p>
-<p>Alternatively, you can also start writing Python scripts to follow along and learn.</p>
 </section>
 </section>
 <section id="nvidia-gpu-uv-pip-local-setup" class="level2">
@@ -712,9 +750,13 @@ For accessing models and datasets from the Hugging Face Hub (both read and write
 <p>Open the project in VS Code:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Note:</strong> This requires <a href="https://code.visualstudio.com/">VS Code</a> installed locally with the <a href="https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter">Jupyter extension</a> so you can run <code>.ipynb</code> notebooks directly in VS Code.</p>
-<p>Alternatively, you can also start writing Python scripts to follow along and learn. ## macOS + Conda local setup</p>
-<p>Install <a href="https://www.anaconda.com/docs/getting-started/miniconda/install/overview">Miniconda</a> to get the conda package manager.</p>
+<p>Alternatively, you can also start writing Python scripts to follow along and learn.</p>
 </section>
+</section>
+<section id="macos-conda-local-setup" class="level2">
+<h2 class="anchored" data-anchor-id="macos-conda-local-setup">macOS + Conda local setup</h2>
+<p>Install <a href="https://www.anaconda.com/docs/getting-started/miniconda/install/overview">Miniconda</a> to get the conda package manager.</p>
+<p><strong>Note:</strong> macOS uses the MPS (Metal Performance Shaders) backend for GPU acceleration on Apple Silicon. Training on MPS is generally much slower than on NVIDIA GPUs with CUDA, however, inference works quite well. MPS is great for learning and experimentation but if you need faster training, consider using a cloud GPU (e.g.&nbsp;Google Colab) or an NVIDIA GPU machine.</p>
 <section id="clone-the-course-repository-2" class="level3">
 <h3 class="anchored" data-anchor-id="clone-the-course-repository-2">Clone the course repository</h3>
 <p>Clone the <code>learn-huggingface</code> repo:</p>
@@ -788,6 +830,7 @@ For accessing models and datasets from the Hugging Face Hub (both read and write
 <section id="macos-uv-pip-local-setup" class="level2">
 <h2 class="anchored" data-anchor-id="macos-uv-pip-local-setup">macOS + uv (pip) local setup</h2>
 <p>Install <a href="https://docs.astral.sh/uv/getting-started/installation/">uv</a> to get a fast Python package manager.</p>
+<p><strong>Note:</strong> macOS uses the MPS (Metal Performance Shaders) backend for GPU acceleration on Apple Silicon. Training on MPS is generally much slower than on NVIDIA GPUs with CUDA, however, inference works quite well. MPS is great for learning and experimentation but if you need faster training, consider using a cloud GPU (e.g.&nbsp;Google Colab) or an NVIDIA GPU machine.</p>
 <section id="clone-the-course-repository-3" class="level3">
 <h3 class="anchored" data-anchor-id="clone-the-course-repository-3">Clone the course repository</h3>
 <p>Clone the <code>learn-huggingface</code> repo:</p>
