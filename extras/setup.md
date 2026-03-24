@@ -163,11 +163,25 @@ print('Conda env ready! Good to code!')
 
 If these work, we're good to go!!
 
-### Activate a Jupyter instance and get started
+### Get started
+
+**Option A: Jupyter Lab**
 
 ```bash
 jupyter lab
 ```
+
+**Option B: VS Code**
+
+Open the project in VS Code:
+
+```bash
+code .
+```
+
+**Note:** This requires [VS Code](https://code.visualstudio.com/) installed locally with the [Jupyter extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) so you can run `.ipynb` notebooks directly in VS Code.
+
+Alternatively, you can also start writing Python scripts to follow along and learn.
 
 Alternatively, you can also start writing Python scripts to follow along and learn.
 
@@ -261,22 +275,40 @@ print('uv env ready! Good to code!')
 
 If these work, we're good to go!!
 
-### Activate a Jupyter instance and get started
+### Get started
+
+**Option A: Jupyter Lab**
 
 ```bash
 jupyter lab
 ```
 
-Alternatively, you can also start writing Python scripts to follow along and learn.
+**Option B: VS Code**
 
+Open the project in VS Code:
+
+```bash
+code .
+```
+
+**Note:** This requires [VS Code](https://code.visualstudio.com/) installed locally with the [Jupyter extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) so you can run `.ipynb` notebooks directly in VS Code.
+
+Alternatively, you can also start writing Python scripts to follow along and learn.
 ## macOS + Conda local setup
 
 Install [Miniconda](https://www.anaconda.com/docs/getting-started/miniconda/install/overview) to get the conda package manager.
 
 ### Clone the course repository
 
+Clone the `learn-huggingface` repo:
+
 ```bash
 git clone https://github.com/mrdbourke/learn-huggingface
+```
+
+Change into the target directory:
+
+```bash
 cd learn-huggingface
 ```
 
@@ -299,7 +331,7 @@ conda activate learn-hf
 ### Install PyTorch
 
 ```bash
-python -m pip install torch torchvision torchaudio
+python -m pip install torch torchvision
 ```
 
 **Note:** On macOS, the default PyTorch install includes MPS (Metal Performance Shaders) support. No special index URL is needed.
@@ -351,16 +383,143 @@ print('trl', trl.__version__)
 print('matplotlib', matplotlib.__version__)
 print('huggingface_hub', huggingface_hub.__version__)
 
-print('Conda env ready! Good to code!')
+print('macOS Conda env ready! Good to code!')
 "
 ```
 
 If these work, we're good to go!!
 
-### Activate a Jupyter instance and get started
+### Get started
+
+**Option A: Jupyter Lab**
 
 ```bash
 jupyter lab
 ```
+
+**Option B: VS Code**
+
+Open the project in VS Code:
+
+```bash
+code .
+```
+
+**Note:** This requires [VS Code](https://code.visualstudio.com/) installed locally with the [Jupyter extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) so you can run `.ipynb` notebooks directly in VS Code.
+
+Alternatively, you can also start writing Python scripts to follow along and learn.
+
+## macOS + uv (pip) local setup
+
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) to get a fast Python package manager.
+
+### Clone the course repository
+
+Clone the `learn-huggingface` repo:
+
+```bash
+git clone https://github.com/mrdbourke/learn-huggingface
+```
+
+Change into the target directory:
+
+```bash
+cd learn-huggingface
+```
+
+### Create and activate virtual environment
+
+Create environment:
+
+```bash
+uv venv learn-hf --python 3.12
+```
+
+**Note:** This setup has been tested with Python 3.12. If you'd like, you can use a different/later version.
+
+Activate it:
+
+```bash
+source learn-hf/bin/activate
+```
+
+### Install PyTorch
+
+```bash
+uv pip install torch torchvision
+```
+
+**Note:** On macOS, the default PyTorch install includes MPS (Metal Performance Shaders) support. No special index URL is needed.
+
+### Install Hugging Face CLI and Login
+
+Install Hugging Face CLI:
+
+```bash
+uv pip install -U "huggingface_hub[cli]"
+```
+
+Login with your Hugging Face account to authenticate your local machine:
+
+```bash
+huggingface-cli login
+```
+
+### Install dependencies
+
+Install dependencies we'll need for the projects:
+
+```bash
+uv pip install transformers datasets evaluate accelerate gradio trl matplotlib jupyter
+```
+
+**Note:** If you run into any dependency issues during running the projects, you can always install them via `uv pip install [DEPENDENCY_NAME]`.
+
+### Check that the imports work
+
+```bash
+python -c "
+import torch, transformers, datasets, accelerate, gradio, trl, matplotlib, huggingface_hub
+
+assert torch.backends.mps.is_available(), 'MPS not available'
+
+print('torch', torch.__version__)
+print('mps_available', torch.backends.mps.is_available())
+print('mps_built', torch.backends.mps.is_built())
+
+x = torch.tensor([1.0, 2.0]).to('mps')
+print('mps_tensor_device', x.device)
+
+print('transformers', transformers.__version__)
+print('datasets', datasets.__version__)
+print('accelerate', accelerate.__version__)
+print('gradio', gradio.__version__)
+print('trl', trl.__version__)
+print('matplotlib', matplotlib.__version__)
+print('huggingface_hub', huggingface_hub.__version__)
+
+print('macOS uv env ready! Good to code!')
+"
+```
+
+If these work, we're good to go!!
+
+### Get started
+
+**Option A: Jupyter Lab**
+
+```bash
+jupyter lab
+```
+
+**Option B: VS Code**
+
+Open the project in VS Code:
+
+```bash
+code .
+```
+
+**Note:** This requires [VS Code](https://code.visualstudio.com/) installed locally with the [Jupyter extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) so you can run `.ipynb` notebooks directly in VS Code.
 
 Alternatively, you can also start writing Python scripts to follow along and learn.
