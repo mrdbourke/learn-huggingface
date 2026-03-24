@@ -436,7 +436,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#getting-setup-on-google-colab" id="toc-getting-setup-on-google-colab" class="nav-link" data-scroll-target="#getting-setup-on-google-colab">Getting setup on Google Colab</a></li>
   <li><a href="#getting-started-locally" id="toc-getting-started-locally" class="nav-link" data-scroll-target="#getting-started-locally">Getting started locally</a></li>
   <li><a href="#global-hugging-face-library-requirements" id="toc-global-hugging-face-library-requirements" class="nav-link" data-scroll-target="#global-hugging-face-library-requirements">Global Hugging Face library requirements</a></li>
-  <li><a href="#nvidia-gpu-conda-local-setup" id="toc-nvidia-gpu-conda-local-setup" class="nav-link" data-scroll-target="#nvidia-gpu-conda-local-setup">NVIDIA GPU + Conda local setup</a>
+  <li><a href="#nvidia-conda" id="toc-nvidia-conda" class="nav-link" data-scroll-target="#nvidia-conda">NVIDIA GPU + Conda local setup</a>
   <ul class="collapse">
   <li><a href="#clone-the-course-repository" id="toc-clone-the-course-repository" class="nav-link" data-scroll-target="#clone-the-course-repository">Clone the course repository</a></li>
   <li><a href="#create-and-activate-conda-environment" id="toc-create-and-activate-conda-environment" class="nav-link" data-scroll-target="#create-and-activate-conda-environment">Create and activate conda environment</a></li>
@@ -446,7 +446,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#check-that-the-imports-work" id="toc-check-that-the-imports-work" class="nav-link" data-scroll-target="#check-that-the-imports-work">Check that the imports work</a></li>
   <li><a href="#get-started" id="toc-get-started" class="nav-link" data-scroll-target="#get-started">Get started</a></li>
   </ul></li>
-  <li><a href="#nvidia-gpu-uv-pip-local-setup" id="toc-nvidia-gpu-uv-pip-local-setup" class="nav-link" data-scroll-target="#nvidia-gpu-uv-pip-local-setup">NVIDIA GPU + uv (pip) local setup</a>
+  <li><a href="#nvidia-uv" id="toc-nvidia-uv" class="nav-link" data-scroll-target="#nvidia-uv">NVIDIA GPU + uv (pip) local setup</a>
   <ul class="collapse">
   <li><a href="#clone-the-course-repository-1" id="toc-clone-the-course-repository-1" class="nav-link" data-scroll-target="#clone-the-course-repository-1">Clone the course repository</a></li>
   <li><a href="#create-and-activate-virtual-environment" id="toc-create-and-activate-virtual-environment" class="nav-link" data-scroll-target="#create-and-activate-virtual-environment">Create and activate virtual environment</a></li>
@@ -456,7 +456,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#check-that-the-imports-work-1" id="toc-check-that-the-imports-work-1" class="nav-link" data-scroll-target="#check-that-the-imports-work-1">Check that the imports work</a></li>
   <li><a href="#get-started-1" id="toc-get-started-1" class="nav-link" data-scroll-target="#get-started-1">Get started</a></li>
   </ul></li>
-  <li><a href="#macos-conda-local-setup" id="toc-macos-conda-local-setup" class="nav-link" data-scroll-target="#macos-conda-local-setup">macOS + Conda local setup</a>
+  <li><a href="#macos-conda" id="toc-macos-conda" class="nav-link" data-scroll-target="#macos-conda">macOS + Conda local setup</a>
   <ul class="collapse">
   <li><a href="#clone-the-course-repository-2" id="toc-clone-the-course-repository-2" class="nav-link" data-scroll-target="#clone-the-course-repository-2">Clone the course repository</a></li>
   <li><a href="#create-and-activate-conda-environment-1" id="toc-create-and-activate-conda-environment-1" class="nav-link" data-scroll-target="#create-and-activate-conda-environment-1">Create and activate conda environment</a></li>
@@ -466,7 +466,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#check-that-the-imports-work-2" id="toc-check-that-the-imports-work-2" class="nav-link" data-scroll-target="#check-that-the-imports-work-2">Check that the imports work</a></li>
   <li><a href="#get-started-2" id="toc-get-started-2" class="nav-link" data-scroll-target="#get-started-2">Get started</a></li>
   </ul></li>
-  <li><a href="#macos-uv-pip-local-setup" id="toc-macos-uv-pip-local-setup" class="nav-link" data-scroll-target="#macos-uv-pip-local-setup">macOS + uv (pip) local setup</a>
+  <li><a href="#macos-uv" id="toc-macos-uv" class="nav-link" data-scroll-target="#macos-uv">macOS + uv (pip) local setup</a>
   <ul class="collapse">
   <li><a href="#clone-the-course-repository-3" id="toc-clone-the-course-repository-3" class="nav-link" data-scroll-target="#clone-the-course-repository-3">Clone the course repository</a></li>
   <li><a href="#create-and-activate-virtual-environment-1" id="toc-create-and-activate-virtual-environment-1" class="nav-link" data-scroll-target="#create-and-activate-virtual-environment-1">Create and activate virtual environment</a></li>
@@ -575,25 +575,25 @@ For accessing models and datasets from the Hugging Face Hub (both read and write
 <td>NVIDIA GPU</td>
 <td>Conda</td>
 <td>CUDA</td>
-<td><a href="#nvidia-gpu--conda-local-setup">NVIDIA GPU + Conda</a></td>
+<td><a href="#nvidia-conda">NVIDIA GPU + Conda</a></td>
 </tr>
 <tr class="even">
 <td>NVIDIA GPU</td>
 <td>uv (pip)</td>
 <td>CUDA</td>
-<td><a href="#nvidia-gpu--uv-pip-local-setup">NVIDIA GPU + uv</a></td>
+<td><a href="#nvidia-uv">NVIDIA GPU + uv</a></td>
 </tr>
 <tr class="odd">
 <td>macOS (Apple Silicon)</td>
 <td>Conda</td>
 <td>MPS</td>
-<td><a href="#macos--conda-local-setup">macOS + Conda</a></td>
+<td><a href="#macos-conda">macOS + Conda</a></td>
 </tr>
 <tr class="even">
 <td>macOS (Apple Silicon)</td>
 <td>uv (pip)</td>
 <td>MPS</td>
-<td><a href="#macos--uv-pip-local-setup">macOS + uv</a></td>
+<td><a href="#macos-uv">macOS + uv</a></td>
 </tr>
 </tbody>
 </table>
@@ -609,8 +609,8 @@ For accessing models and datasets from the Hugging Face Hub (both read and write
 <li><a href="https://www.gradio.app/guides/quickstart#installation"><code>gradio</code></a> - a library for creating interactive demos of machine learning models, you can install it via <code>pip install gradio</code>.</li>
 </ul>
 </section>
-<section id="nvidia-gpu-conda-local-setup" class="level2">
-<h2 class="anchored" data-anchor-id="nvidia-gpu-conda-local-setup">NVIDIA GPU + Conda local setup</h2>
+<section id="nvidia-conda" class="level2">
+<h2 class="anchored" data-anchor-id="nvidia-conda">NVIDIA GPU + Conda local setup</h2>
 <p>Install <a href="https://www.anaconda.com/docs/getting-started/miniconda/install/overview">Miniconda</a> to get the conda package manager.</p>
 <section id="clone-the-course-repository" class="level3">
 <h3 class="anchored" data-anchor-id="clone-the-course-repository">Clone the course repository</h3>
@@ -681,8 +681,8 @@ For accessing models and datasets from the Hugging Face Hub (both read and write
 <p>Alternatively, you can also start writing Python scripts to follow along and learn.</p>
 </section>
 </section>
-<section id="nvidia-gpu-uv-pip-local-setup" class="level2">
-<h2 class="anchored" data-anchor-id="nvidia-gpu-uv-pip-local-setup">NVIDIA GPU + uv (pip) local setup</h2>
+<section id="nvidia-uv" class="level2">
+<h2 class="anchored" data-anchor-id="nvidia-uv">NVIDIA GPU + uv (pip) local setup</h2>
 <p>Install <a href="https://docs.astral.sh/uv/getting-started/installation/">uv</a> to get a fast Python package manager.</p>
 <section id="clone-the-course-repository-1" class="level3">
 <h3 class="anchored" data-anchor-id="clone-the-course-repository-1">Clone the course repository</h3>
@@ -753,8 +753,8 @@ For accessing models and datasets from the Hugging Face Hub (both read and write
 <p>Alternatively, you can also start writing Python scripts to follow along and learn.</p>
 </section>
 </section>
-<section id="macos-conda-local-setup" class="level2">
-<h2 class="anchored" data-anchor-id="macos-conda-local-setup">macOS + Conda local setup</h2>
+<section id="macos-conda" class="level2">
+<h2 class="anchored" data-anchor-id="macos-conda">macOS + Conda local setup</h2>
 <p>Install <a href="https://www.anaconda.com/docs/getting-started/miniconda/install/overview">Miniconda</a> to get the conda package manager.</p>
 <p><strong>Note:</strong> macOS uses the MPS (Metal Performance Shaders) backend for GPU acceleration on Apple Silicon. Training on MPS is generally much slower than on NVIDIA GPUs with CUDA, however, inference works quite well. MPS is great for learning and experimentation but if you need faster training, consider using a cloud GPU (e.g.&nbsp;Google Colab) or an NVIDIA GPU machine.</p>
 <section id="clone-the-course-repository-2" class="level3">
@@ -827,8 +827,8 @@ For accessing models and datasets from the Hugging Face Hub (both read and write
 <p>Alternatively, you can also start writing Python scripts to follow along and learn.</p>
 </section>
 </section>
-<section id="macos-uv-pip-local-setup" class="level2">
-<h2 class="anchored" data-anchor-id="macos-uv-pip-local-setup">macOS + uv (pip) local setup</h2>
+<section id="macos-uv" class="level2">
+<h2 class="anchored" data-anchor-id="macos-uv">macOS + uv (pip) local setup</h2>
 <p>Install <a href="https://docs.astral.sh/uv/getting-started/installation/">uv</a> to get a fast Python package manager.</p>
 <p><strong>Note:</strong> macOS uses the MPS (Metal Performance Shaders) backend for GPU acceleration on Apple Silicon. Training on MPS is generally much slower than on NVIDIA GPUs with CUDA, however, inference works quite well. MPS is great for learning and experimentation but if you need faster training, consider using a cloud GPU (e.g.&nbsp;Google Colab) or an NVIDIA GPU machine.</p>
 <section id="clone-the-course-repository-3" class="level3">
