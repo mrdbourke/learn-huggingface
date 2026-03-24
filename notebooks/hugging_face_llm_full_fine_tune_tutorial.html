@@ -532,11 +532,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In this project, we’re going to fine-tune a base Small Language Model (SLM) to extract food and drink items from text.</p>
 <p>Why?</p>
 <p>This is often referred to as <strong>structured data extraction</strong>.</p>
-<p>It’s a very common problem throughout many businesses.</p>
-<p>For example, say you were getting a large volume of emails in plain text and needed to extract customer details from them.</p>
-<p>Or you wanted to analyze a large number of news reports for specific details.</p>
-<p>Or in our case, say you were building an app like <a href="https://nutrify.app">Nutrify</a> and you wanted to filter a large dataset of image captions for food/drink items (see the dataset <a href="https://huggingface.co/datasets/mrdbourke/Recap-DataComp-1B-FoodOrDrink"><code>mrdbourke/Recap-DataComp-1B-FoodOrDrink</code></a> for a real-life example of this).</p>
-<p>Essentially, structured data extraction can be used anywhere you have unstructured data such as raw notes or plain text and would like to turn it into structured information (e.g.&nbsp;JSON) you can analyze with Google Sheets or pandas or other data analysis tool.</p>
 <figure style="text-align: center;" class="figure">
 <!-- figtemplate -->
 <img src="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/learn-hf-fine-tune-llm/00-learn-hf-fine-tune-llm-overview.png" alt="
@@ -545,6 +540,11 @@ The FoodExtract project demonstrates a structured data extraction workflow where
 We’re going to fine-tune the Gemma 3 270M model for structured data extraction from plain text.
 </figcaption>
 </figure>
+<p>Structured data extraction is a very common problem throughout many businesses.</p>
+<p>For example, say you were getting a large volume of emails in plain text and needed to extract customer details from them.</p>
+<p>Or you wanted to analyze a large number of news reports for specific details.</p>
+<p>Or in our case, say you were building an app like <a href="https://nutrify.app">Nutrify</a> and you wanted to filter a large dataset of image captions for food/drink items (see the dataset <a href="https://huggingface.co/datasets/mrdbourke/Recap-DataComp-1B-FoodOrDrink"><code>mrdbourke/Recap-DataComp-1B-FoodOrDrink</code></a> for a real-life example of this).</p>
+<p>Essentially, structured data extraction can be used anywhere you have unstructured data such as raw notes or plain text and would like to turn it into structured information (e.g.&nbsp;JSON) you can analyze with Google Sheets or pandas or other data analysis tool.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
