@@ -90,7 +90,7 @@ git clone https://github.com/mrdbourke/learn-huggingface
 
 Change into the target directory:
 
-```
+```bash
 cd learn-huggingface
 ```
 
@@ -202,7 +202,7 @@ git clone https://github.com/mrdbourke/learn-huggingface
 
 Change into the target directory:
 
-```
+```bash
 cd learn-huggingface
 ```
 
