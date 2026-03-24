@@ -61,6 +61,13 @@ And enter your token in the box that appears (**note:** this token will only be 
 1. Follow the steps in Start here.
 2. Follow your specific hardware steps below.
 
+| Hardware | Package Manager | Backend | Setup Guide |
+|----------|----------------|---------|-------------|
+| NVIDIA GPU | Conda | CUDA | [NVIDIA GPU + Conda](#nvidia-gpu--conda-local-setup) |
+| NVIDIA GPU | uv (pip) | CUDA | [NVIDIA GPU + uv](#nvidia-gpu--uv-pip-local-setup) |
+| macOS (Apple Silicon) | Conda | MPS | [macOS + Conda](#macos--conda-local-setup) |
+| macOS (Apple Silicon) | uv (pip) | MPS | [macOS + uv](#macos--uv-pip-local-setup) |
+
 ## Global Hugging Face library requirements
 
 Depending on your environment/local hardware, there are a handful of foundation libraries we'll need to install from the Hugging Face ecosystem:
@@ -183,8 +190,6 @@ code .
 
 Alternatively, you can also start writing Python scripts to follow along and learn.
 
-Alternatively, you can also start writing Python scripts to follow along and learn.
-
 ## NVIDIA GPU + uv (pip) local setup
 
 Install [uv](https://docs.astral.sh/uv/getting-started/installation/) to get a fast Python package manager.
@@ -294,9 +299,12 @@ code .
 **Note:** This requires [VS Code](https://code.visualstudio.com/) installed locally with the [Jupyter extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) so you can run `.ipynb` notebooks directly in VS Code.
 
 Alternatively, you can also start writing Python scripts to follow along and learn.
+
 ## macOS + Conda local setup
 
 Install [Miniconda](https://www.anaconda.com/docs/getting-started/miniconda/install/overview) to get the conda package manager.
+
+**Note:** macOS uses the MPS (Metal Performance Shaders) backend for GPU acceleration on Apple Silicon. Training on MPS is generally much slower than on NVIDIA GPUs with CUDA, however, inference works quite well. MPS is great for learning and experimentation but if you need faster training, consider using a cloud GPU (e.g. Google Colab) or an NVIDIA GPU machine.
 
 ### Clone the course repository
 
@@ -412,6 +420,8 @@ Alternatively, you can also start writing Python scripts to follow along and lea
 ## macOS + uv (pip) local setup
 
 Install [uv](https://docs.astral.sh/uv/getting-started/installation/) to get a fast Python package manager.
+
+**Note:** macOS uses the MPS (Metal Performance Shaders) backend for GPU acceleration on Apple Silicon. Training on MPS is generally much slower than on NVIDIA GPUs with CUDA, however, inference works quite well. MPS is great for learning and experimentation but if you need faster training, consider using a cloud GPU (e.g. Google Colab) or an NVIDIA GPU machine.
 
 ### Clone the course repository
 
