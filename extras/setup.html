@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Get your local environment ready for the Learn Hugging Face course.">
 
 <title>Setup 🤗 – Learn Hugging Face 🤗</title>
 <style>
@@ -80,9 +81,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-176b38be48070efe3d434d0a95bef3fe.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-5a2213502f85daea686aa1cdd4926b51.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-eddc3f7aa973a476b342fc507c90630b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-5a2213502f85daea686aa1cdd4926b51.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-e663bf6a8742b3d2d914b49e03e32d40.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-282bc1886297d40147007084ec672229.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-e663bf6a8742b3d2d914b49e03e32d40.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -114,11 +115,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <link rel="stylesheet" href="../styles/custom.css">
 <meta property="og:title" content="Setup 🤗 – Learn Hugging Face 🤗">
-<meta property="og:description" content="Practical hands-on machine learning tutorials using the Hugging Face ecosystem.">
+<meta property="og:description" content="Get your local environment ready for the Learn Hugging Face course.">
 <meta property="og:image" content="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/misc/learn_hf_cover_image.png">
 <meta property="og:site_name" content="Learn Hugging Face 🤗">
 <meta name="twitter:title" content="Setup 🤗 – Learn Hugging Face 🤗">
-<meta name="twitter:description" content="Practical hands-on machine learning tutorials using the Hugging Face ecosystem.">
+<meta name="twitter:description" content="Get your local environment ready for the Learn Hugging Face course.">
 <meta name="twitter:image" content="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/misc/learn_hf_cover_image.png">
 <meta name="twitter:card" content="summary_large_image">
 </head>
@@ -455,6 +456,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#check-that-the-imports-work-1" id="toc-check-that-the-imports-work-1" class="nav-link" data-scroll-target="#check-that-the-imports-work-1">Check that the imports work</a></li>
   <li><a href="#activate-a-jupyter-instance-and-get-started-1" id="toc-activate-a-jupyter-instance-and-get-started-1" class="nav-link" data-scroll-target="#activate-a-jupyter-instance-and-get-started-1">Activate a Jupyter instance and get started</a></li>
   </ul></li>
+  <li><a href="#macos-conda-local-setup" id="toc-macos-conda-local-setup" class="nav-link" data-scroll-target="#macos-conda-local-setup">macOS + Conda local setup</a>
+  <ul class="collapse">
+  <li><a href="#clone-the-course-repository-2" id="toc-clone-the-course-repository-2" class="nav-link" data-scroll-target="#clone-the-course-repository-2">Clone the course repository</a></li>
+  <li><a href="#create-and-activate-conda-environment-1" id="toc-create-and-activate-conda-environment-1" class="nav-link" data-scroll-target="#create-and-activate-conda-environment-1">Create and activate conda environment</a></li>
+  <li><a href="#install-pytorch-2" id="toc-install-pytorch-2" class="nav-link" data-scroll-target="#install-pytorch-2">Install PyTorch</a></li>
+  <li><a href="#install-hugging-face-cli-and-login-2" id="toc-install-hugging-face-cli-and-login-2" class="nav-link" data-scroll-target="#install-hugging-face-cli-and-login-2">Install Hugging Face CLI and Login</a></li>
+  <li><a href="#install-dependencies-2" id="toc-install-dependencies-2" class="nav-link" data-scroll-target="#install-dependencies-2">Install dependencies</a></li>
+  <li><a href="#check-that-the-imports-work-2" id="toc-check-that-the-imports-work-2" class="nav-link" data-scroll-target="#check-that-the-imports-work-2">Check that the imports work</a></li>
+  <li><a href="#activate-a-jupyter-instance-and-get-started-2" id="toc-activate-a-jupyter-instance-and-get-started-2" class="nav-link" data-scroll-target="#activate-a-jupyter-instance-and-get-started-2">Activate a Jupyter instance and get started</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/mrdbourke/learn-huggingface/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -468,6 +479,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1 class="title">Setup 🤗</h1>
 </div>
 
+<div>
+  <div class="description">
+    Get your local environment ready for the Learn Hugging Face course.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta column-body">
@@ -678,6 +694,72 @@ For accessing models and datasets from the Hugging Face Hub (both read and write
 <section id="activate-a-jupyter-instance-and-get-started-1" class="level3">
 <h3 class="anchored" data-anchor-id="activate-a-jupyter-instance-and-get-started-1">Activate a Jupyter instance and get started</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> lab</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Alternatively, you can also start writing Python scripts to follow along and learn.</p>
+</section>
+</section>
+<section id="macos-conda-local-setup" class="level2">
+<h2 class="anchored" data-anchor-id="macos-conda-local-setup">macOS + Conda local setup</h2>
+<p>Install <a href="https://www.anaconda.com/docs/getting-started/miniconda/install/overview">Miniconda</a> to get the conda package manager.</p>
+<section id="clone-the-course-repository-2" class="level3">
+<h3 class="anchored" data-anchor-id="clone-the-course-repository-2">Clone the course repository</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/mrdbourke/learn-huggingface</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> learn-huggingface</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="create-and-activate-conda-environment-1" class="level3">
+<h3 class="anchored" data-anchor-id="create-and-activate-conda-environment-1">Create and activate conda environment</h3>
+<p>Create environment:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> learn-hf python=3.12 <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Note:</strong> This setup has been tested with Python 3.12. If you’d like, you can use a different/later version.</p>
+<p>Activate it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate learn-hf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="install-pytorch-2" class="level3">
+<h3 class="anchored" data-anchor-id="install-pytorch-2">Install PyTorch</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install torch torchvision torchaudio</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Note:</strong> On macOS, the default PyTorch install includes MPS (Metal Performance Shaders) support. No special index URL is needed.</p>
+</section>
+<section id="install-hugging-face-cli-and-login-2" class="level3">
+<h3 class="anchored" data-anchor-id="install-hugging-face-cli-and-login-2">Install Hugging Face CLI and Login</h3>
+<p>Install Hugging Face CLI:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">-U</span> <span class="st">"huggingface_hub[cli]"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Login with your Hugging Face account to authenticate your local machine:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">hf</span> auth login</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="install-dependencies-2" class="level3">
+<h3 class="anchored" data-anchor-id="install-dependencies-2">Install dependencies</h3>
+<p>Install dependencies we’ll need for the projects:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install transformers datasets evaluate accelerate gradio trl matplotlib jupyter</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Note:</strong> If you run into any dependency issues during running the projects, you can always install them via <code>pip install [DEPENDENCY_NAME]</code>.</p>
+</section>
+<section id="check-that-the-imports-work-2" class="level3">
+<h3 class="anchored" data-anchor-id="check-that-the-imports-work-2">Check that the imports work</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="st">import torch, transformers, datasets, accelerate, gradio, trl, matplotlib, huggingface_hub</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="st">assert torch.backends.mps.is_available(), 'MPS not available'</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="st">print('torch', torch.__version__)</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="st">print('mps_available', torch.backends.mps.is_available())</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="st">print('mps_built', torch.backends.mps.is_built())</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="st">x = torch.tensor([1.0, 2.0]).to('mps')</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="st">print('mps_tensor_device', x.device)</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="st">print('transformers', transformers.__version__)</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="st">print('datasets', datasets.__version__)</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="st">print('accelerate', accelerate.__version__)</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="st">print('gradio', gradio.__version__)</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="st">print('trl', trl.__version__)</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a><span class="st">print('matplotlib', matplotlib.__version__)</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="st">print('huggingface_hub', huggingface_hub.__version__)</span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="st">print('Conda env ready! Good to code!')</span></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If these work, we’re good to go!!</p>
+</section>
+<section id="activate-a-jupyter-instance-and-get-started-2" class="level3">
+<h3 class="anchored" data-anchor-id="activate-a-jupyter-instance-and-get-started-2">Activate a Jupyter instance and get started</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> lab</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Alternatively, you can also start writing Python scripts to follow along and learn.</p>
 
 
