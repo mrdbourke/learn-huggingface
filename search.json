@@ -807,7 +807,7 @@
     "href": "notebooks/hugging_face_llm_full_fine_tune_tutorial.html#getting-setup",
     "title": "Fully Fine-tune a Small Language Model with Hugging Face Tutorial",
     "section": "2 Getting Setup",
-    "text": "2 Getting Setup\nIf you are following along with the code locally on your own comptuer or with Google Colab, be sure to follow the setup steps on the Setup page.\nAfter completing those steps, we can proceed with the rest of the sections.\nIf you’re happy just to keep reading, feel free to jump ahead.",
+    "text": "2 Getting Setup\nIf you are following along with the code locally on your own comptuer or with Google Colab, be sure to follow the setup steps on the Setup page. For the best experience, it’s best if you run this notebook with a GPU backend.\nAfter completing those steps, we can proceed with the rest of the sections.\nIf you’re happy just to keep reading, feel free to jump ahead.",
     "crumbs": [
       "Home",
       "Natural Language Processing (NLP)",
