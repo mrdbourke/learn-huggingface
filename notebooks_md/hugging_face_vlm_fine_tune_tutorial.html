@@ -1,0 +1,2014 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Learn how to fine-tune a Vision Language Model on a custom dataset with Hugging Face Transformers.">
+
+<title>Fine-tune a Vision Language Model with Hugging Face Tutorial – Learn Hugging Face 🤗</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../images/learn-hf-favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-176b38be48070efe3d434d0a95bef3fe.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-176b38be48070efe3d434d0a95bef3fe.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-176b38be48070efe3d434d0a95bef3fe.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-dfc0effb09dd5cc6e33f38d720975800.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-d8220c68c9e7653e91c8046700cde25d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-dfc0effb09dd5cc6e33f38d720975800.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles/custom.css">
+<meta property="og:title" content="Fine-tune a Vision Language Model with Hugging Face Tutorial – Learn Hugging Face 🤗">
+<meta property="og:description" content="Learn how to fine-tune a Vision Language Model on a custom dataset with Hugging Face Transformers.">
+<meta property="og:image" content="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/learn-hf-text-classification/00-project-food-not-food-overview.png">
+<meta property="og:site_name" content="Learn Hugging Face 🤗">
+<meta name="twitter:title" content="Fine-tune a Vision Language Model with Hugging Face Tutorial – Learn Hugging Face 🤗">
+<meta name="twitter:description" content="Learn how to fine-tune a Vision Language Model on a custom dataset with Hugging Face Transformers.">
+<meta name="twitter:image" content="https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/learn-hf-text-classification/00-project-food-not-food-overview.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Learn Hugging Face 🤗</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../extras/setup.html"> 
+<span class="menu-text">Setup</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../extras/glossary.html"> 
+<span class="menu-text">Glossary</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
+    <a href="https://github.com/mrdbourke/learn-huggingface" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Fine-tune a Vision Language Model with Hugging Face Tutorial</li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Natural Language Processing (NLP)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/hugging_face_llm_full_fine_tune_tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fully fine-tune an LLM to do structrued data extraction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/hugging_face_text_classification_tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Build a custom text classification model and demo</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Computer Vision</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/hugging_face_object_detection_tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Build a custom object detection model and demo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/hugging_face_vlm_fine_tune_tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fine-tune a Small VLM to do structured data extraction</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">RAG - Retrieval-Augmented Generation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/hugging_face_multimodal_rag_tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Build a multimodal RAG pipeline with NVIDIA Nemotron models</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">0.1</span> Overview</a></li>
+  <li><a href="#what-is-a-vision-language-model" id="toc-what-is-a-vision-language-model" class="nav-link" data-scroll-target="#what-is-a-vision-language-model"><span class="header-section-number">0.2</span> What is a Vision Language Model?</a></li>
+  <li><a href="#why-fine-tune-a-small-vision-language-model" id="toc-why-fine-tune-a-small-vision-language-model" class="nav-link" data-scroll-target="#why-fine-tune-a-small-vision-language-model"><span class="header-section-number">0.3</span> Why fine-tune a Small Vision Language Model?</a></li>
+  <li><a href="#vlmllm-fine-tuning-mindset" id="toc-vlmllm-fine-tuning-mindset" class="nav-link" data-scroll-target="#vlmllm-fine-tuning-mindset"><span class="header-section-number">0.4</span> VLM/LLM Fine-tuning Mindset</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">0.5</span> Resources</a>
+  <ul class="collapse">
+  <li><a href="#videos" id="toc-videos" class="nav-link" data-scroll-target="#videos"><span class="header-section-number">0.5.1</span> Videos</a></li>
+  <li><a href="#hardware" id="toc-hardware" class="nav-link" data-scroll-target="#hardware"><span class="header-section-number">0.5.2</span> Hardware</a></li>
+  <li><a href="#models-data-and-demos" id="toc-models-data-and-demos" class="nav-link" data-scroll-target="#models-data-and-demos"><span class="header-section-number">0.5.3</span> Models, data and demos</a></li>
+  <li><a href="#documentation-and-extras" id="toc-documentation-and-extras" class="nav-link" data-scroll-target="#documentation-and-extras"><span class="header-section-number">0.5.4</span> Documentation and extras</a></li>
+  </ul></li>
+  <li><a href="#definitions" id="toc-definitions" class="nav-link" data-scroll-target="#definitions"><span class="header-section-number">0.6</span> Definitions</a></li>
+  <li><a href="#import-dependencies" id="toc-import-dependencies" class="nav-link" data-scroll-target="#import-dependencies"><span class="header-section-number">0.7</span> Import Dependencies</a></li>
+  <li><a href="#load-dataset" id="toc-load-dataset" class="nav-link" data-scroll-target="#load-dataset"><span class="header-section-number">0.8</span> Load dataset</a></li>
+  <li><a href="#format-data-for-use-with-a-vlm" id="toc-format-data-for-use-with-a-vlm" class="nav-link" data-scroll-target="#format-data-for-use-with-a-vlm"><span class="header-section-number">0.9</span> Format data for use with a VLM</a></li>
+  <li><a href="#create-helper-function-to-map-our-inputoutput-samples-to-conversational-format" id="toc-create-helper-function-to-map-our-inputoutput-samples-to-conversational-format" class="nav-link" data-scroll-target="#create-helper-function-to-map-our-inputoutput-samples-to-conversational-format"><span class="header-section-number">1</span> Create helper function to map our input/output samples to conversational format</a>
+  <ul class="collapse">
+  <li><a href="#create-a-training-and-validation-split" id="toc-create-a-training-and-validation-split" class="nav-link" data-scroll-target="#create-a-training-and-validation-split"><span class="header-section-number">1.0.1</span> Create a training and validation split</a></li>
+  <li><a href="#running-a-sample-through-a-base-model" id="toc-running-a-sample-through-a-base-model" class="nav-link" data-scroll-target="#running-a-sample-through-a-base-model"><span class="header-section-number">1.1</span> Running a sample through a base model</a>
+  <ul class="collapse">
+  <li><a href="#loading-a-base-model" id="toc-loading-a-base-model" class="nav-link" data-scroll-target="#loading-a-base-model"><span class="header-section-number">1.1.1</span> Loading a base model</a></li>
+  </ul></li>
+  <li><a href="#load-the-model-without-using-pipeline" id="toc-load-the-model-without-using-pipeline" class="nav-link" data-scroll-target="#load-the-model-without-using-pipeline"><span class="header-section-number">1.2</span> Load the model without using pipeline</a></li>
+  <li><a href="#prepare-model-for-training" id="toc-prepare-model-for-training" class="nav-link" data-scroll-target="#prepare-model-for-training"><span class="header-section-number">1.3</span> Prepare model for training</a></li>
+  <li><a href="#creating-a-data-collator" id="toc-creating-a-data-collator" class="nav-link" data-scroll-target="#creating-a-data-collator"><span class="header-section-number">1.4</span> Creating a data collator</a></li>
+  <li><a href="#setup-sftconfig" id="toc-setup-sftconfig" class="nav-link" data-scroll-target="#setup-sftconfig"><span class="header-section-number">1.5</span> Setup SFTConfig</a></li>
+  <li><a href="#train-the-model-with-sfttrainer" id="toc-train-the-model-with-sfttrainer" class="nav-link" data-scroll-target="#train-the-model-with-sfttrainer"><span class="header-section-number">1.6</span> Train the model with SFTTrainer</a>
+  <ul class="collapse">
+  <li><a href="#plot-the-trainingvalidation-loss-curves" id="toc-plot-the-trainingvalidation-loss-curves" class="nav-link" data-scroll-target="#plot-the-trainingvalidation-loss-curves"><span class="header-section-number">1.6.1</span> Plot the training/validation loss curves</a></li>
+  </ul></li>
+  <li><a href="#upload-the-fine-tuned-model-to-the-hugging-face-hub" id="toc-upload-the-fine-tuned-model-to-the-hugging-face-hub" class="nav-link" data-scroll-target="#upload-the-fine-tuned-model-to-the-hugging-face-hub"><span class="header-section-number">1.7</span> Upload the fine-tuned model to the Hugging Face Hub</a></li>
+  <li><a href="#test-the-fine-tuned-model-against-the-base-model" id="toc-test-the-fine-tuned-model-against-the-base-model" class="nav-link" data-scroll-target="#test-the-fine-tuned-model-against-the-base-model"><span class="header-section-number">1.8</span> Test the fine-tuned model against the base model</a></li>
+  <li><a href="#optional-training-stage-2-unfreezing-the-vision-encoder" id="toc-optional-training-stage-2-unfreezing-the-vision-encoder" class="nav-link" data-scroll-target="#optional-training-stage-2-unfreezing-the-vision-encoder"><span class="header-section-number">1.9</span> Optional: Training Stage 2: Unfreezing the vision encoder</a></li>
+  <li><a href="#create-a-demo-with-gradio" id="toc-create-a-demo-with-gradio" class="nav-link" data-scroll-target="#create-a-demo-with-gradio"><span class="header-section-number">1.10</span> Create a demo with Gradio</a></li>
+  <li><a href="#upload-the-demo-to-the-hugging-face-hub" id="toc-upload-the-demo-to-the-hugging-face-hub" class="nav-link" data-scroll-target="#upload-the-demo-to-the-hugging-face-hub"><span class="header-section-number">1.11</span> Upload the demo to the Hugging Face Hub</a></li>
+  <li><a href="#embed-the-demo-into-the-notebook" id="toc-embed-the-demo-into-the-notebook" class="nav-link" data-scroll-target="#embed-the-demo-into-the-notebook"><span class="header-section-number">1.12</span> Embed the demo into the notebook</a></li>
+  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes"><span class="header-section-number">1.13</span> Notes</a></li>
+  <li><a href="#extensions" id="toc-extensions" class="nav-link" data-scroll-target="#extensions"><span class="header-section-number">1.14</span> Extensions</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/mrdbourke/learn-huggingface/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Fine-tune a Vision Language Model with Hugging Face Tutorial</h1>
+</div>
+
+<div>
+  <div class="description">
+    Learn how to fine-tune a Vision Language Model on a custom dataset with Hugging Face Transformers.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-body">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a target="_blank" href="https://colab.research.google.com/github/mrdbourke/learn-huggingface/blob/main/notebooks/hugging_face_vlm_fine_tune_tutorial.ipynb"> <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"> </a></p>
+<blockquote class="blockquote">
+<p><strong>Note:</strong> If you’re running in Google Colab, make sure to enable GPU usage by going to Runtime -&gt; Change runtime type -&gt; select GPU.</p>
+</blockquote>
+<p><a href="https://github.com/mrdbourke/learn-huggingface/blob/main/notebooks/hugging_face_vlm_fine_tune_tutorial.ipynb">Source Code</a></p>
+<section id="overview" class="level2" data-number="0.1">
+<h2 data-number="0.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">0.1</span> Overview</h2>
+<p>Let’s fine-tune a Small Vision Language Model (VLM) for a structured data extraction task.</p>
+<p>More specifically, we’ll fine-tune a VLM for extracting food and drink items from images to JSON.</p>
+<p>Goal:</p>
+<ul>
+<li>Input: Food or not food image</li>
+<li>Output: Structured data for whether or not the image is food or not + food/drink tags</li>
+</ul>
+<p>For example:</p>
+<ul>
+<li>Input (image): A photo of a pork ribs, tomato, grilled onions, carrots and cilantro.</li>
+<li>Output:</li>
+</ul>
+<pre><code>{
+    "is_food": 1,
+    "image_title": "grilled ribs roasted carrots grilled onions tomato salsa",
+    "food_items": [
+        "rib meat",
+        "onion",
+        "grilled onion slice",
+        "garlic",
+        "rib bone",
+        "cilantro",
+        "cherry tomato",
+        "carrot"
+    ],
+    "drink_items": []
+}</code></pre>
+<p>TK image - of input + output</p>
+</section>
+<section id="what-is-a-vision-language-model" class="level2" data-number="0.2">
+<h2 data-number="0.2" class="anchored" data-anchor-id="what-is-a-vision-language-model"><span class="header-section-number">0.2</span> What is a Vision Language Model?</h2>
+<p>A Vision Language Model combines vision with language in a single model.</p>
+<p>Sometimes this is called a “Multi-Modal Language Model” or MLLM (you can also see these models on Hugging Face as <code>Image-Text-to-Text</code>) .</p>
+<p>A VLM allows LLMs to interact with images (and sometimes videos), essentially allowing them to see.</p>
+<p>A VLM brings the generality of LLMs to the visual world for use cases such as:</p>
+<ul>
+<li>Extracting information from documents.</li>
+<li>Inferring what foods/drinks are in an image for a nutrition tracking task.</li>
+<li>Picking up on potential visual issues in a manufacturing plant.</li>
+<li>Monitoring an area for security purposes.</li>
+</ul>
+</section>
+<section id="why-fine-tune-a-small-vision-language-model" class="level2" data-number="0.3">
+<h2 data-number="0.3" class="anchored" data-anchor-id="why-fine-tune-a-small-vision-language-model"><span class="header-section-number">0.3</span> Why fine-tune a Small Vision Language Model?</h2>
+<ol type="1">
+<li><p>Ownership - Own the model, can run on own hardware (data stays local + private)</p></li>
+<li><p>Simple - Our task is simple enough to just use a small language model (save $$)</p></li>
+<li><p>Infinite inference - No API calls needed (can be run offline if needed, save $$)</p></li>
+<li><p>Batch mode for scale - Can run in batch mode to get much faster inference than single API calls (can do this with APIs, however, still requires an API usage)</p></li>
+<li><p>Make base models <em>much</em> better - Model by default wasn’t very good at our task but now since fine-tuning, can be <em>very good</em></p></li>
+</ol>
+<blockquote class="blockquote">
+<p><strong>Note:</strong> You can often use traditional computer vision models such as ViT (Vision Transformer) for many tasks. However, the benefit of a VLM is the introduction of it being able to generalize to <em>many</em> different tasks as long as you specify the inputs and outputs.</p>
+</blockquote>
+</section>
+<section id="vlmllm-fine-tuning-mindset" class="level2" data-number="0.4">
+<h2 data-number="0.4" class="anchored" data-anchor-id="vlmllm-fine-tuning-mindset"><span class="header-section-number">0.4</span> VLM/LLM Fine-tuning Mindset</h2>
+<p>In LLM/VLM world, data inputs are tokens and data outputs are tokens.</p>
+<p>A token is a numerical representation of some kind of data.</p>
+<p>Computers like numbers (not images, text, videos, etc).</p>
+<p>Everything must be turned into numbers.</p>
+<p>And data = a very broad term.</p>
+<p>It could be text, images, video (series of images), audio, DNA sequences, Excel spreadsheets, you name it.</p>
+<p>The goal of the VLM/LLM is to be given an input sequence of tokens and then predict the following tokens.</p>
+<p>So with this mindset, you can think of any problem as <strong>tokens in, tokens out</strong>.</p>
+<p>Ask yourself: <em>What tokens do I want to put in and what tokens do I want my model to return?</em></p>
+<p>In our case, we want to put in almost any image + string input.</p>
+<p>And we want to get back structured information specifically related to food and drinks.</p>
+<p>This a very specific use case, however, the beauty of LLMs being so general is that you can apply this <strong>tokens in, tokens out</strong> mindset to almost anything.</p>
+<p>If you’ve got an existing dataset (no problem if you don’t, you can create one, let me know if you’d like a guide on this), chances are, you can fine-tune an VLM/LLM to do pretty well on it.</p>
+</section>
+<section id="resources" class="level2" data-number="0.5">
+<h2 data-number="0.5" class="anchored" data-anchor-id="resources"><span class="header-section-number">0.5</span> Resources</h2>
+<section id="videos" class="level3" data-number="0.5.1">
+<h3 data-number="0.5.1" class="anchored" data-anchor-id="videos"><span class="header-section-number">0.5.1</span> Videos</h3>
+<p>This notebook was created over a series of YouTube livestreams, feel free to watch these for raw unedited coding and problem solving.</p>
+<ul>
+<li><a href="https://youtube.com/live/X-nYCCviCyI?feature=share">Part 1</a> - Creating a VLM dataset</li>
+<li><a href="https://youtube.com/live/Lgcp9hBqWEM?feature=share">Part 2</a> - Fine-tuning a VLM with LoRA and QLoRA and getting many errors (mostly my fault)</li>
+<li><a href="https://youtube.com/live/cZVU559BLLM?feature=share">Part 3</a> - Switching from using LoRA and QLoRA (we’ll do these in a future video) to fine-tuning a smaller model (SmolVLM2) successfully, uploading it to the Hugging Face Hub and then creating an publishing a demo.</li>
+</ul>
+</section>
+<section id="hardware" class="level3" data-number="0.5.2">
+<h3 data-number="0.5.2" class="anchored" data-anchor-id="hardware"><span class="header-section-number">0.5.2</span> Hardware</h3>
+<p>I’m running this notebook/tutorial locally on a <a href="https://nvda.ws/4iQXZU4">NVIDIA DGX Spark</a>.</p>
+<p>However, you can also run it in Google Colab.</p>
+<p>It is recommended you use a NVIDIA GPU.</p>
+</section>
+<section id="models-data-and-demos" class="level3" data-number="0.5.3">
+<h3 data-number="0.5.3" class="anchored" data-anchor-id="models-data-and-demos"><span class="header-section-number">0.5.3</span> Models, data and demos</h3>
+<ul>
+<li>Dataset we’ll be using - <a href="https://huggingface.co/datasets/mrdbourke/FoodExtract-1k-Vision">FoodExtract-1k-Vision</a></li>
+<li>Base model we’ll be fine-tuning - <a href="https://huggingface.co/HuggingFaceTB/SmolVLM2-500M-Video-Instruct">SmolVLM2-500M-Video-Instruct</a></li>
+<li>Example demo we’ll be creating - <a href="https://huggingface.co/spaces/mrdbourke/FoodExtract-Vision-v1">FoodExtract-Vision-v1</a></li>
+<li>Fine-tuned model we’ll be creating - <a href="https://huggingface.co/mrdbourke/FoodExtract-Vision-SmolVLM2-500M-fine-tune-v1">FoodExtract-Vision-SmolVLM2-500M-fine-tune-v1</a></li>
+</ul>
+</section>
+<section id="documentation-and-extras" class="level3" data-number="0.5.4">
+<h3 data-number="0.5.4" class="anchored" data-anchor-id="documentation-and-extras"><span class="header-section-number">0.5.4</span> Documentation and extras</h3>
+<ul>
+<li>Dataset format for VLM fine-tuning: <a href="https://huggingface.co/docs/trl/en/dataset_formats#vision-datasets">Vision Datasets</a></li>
+<li>Hugging Face blog post of what is a VLM: <a href="https://huggingface.co/blog/vlms-2025">VLMs 2025</a></li>
+<li>Hugging Face docs of fine-tuning SmolVLM: <a href="https://github.com/huggingface/smollm/blob/main/vision/finetuning/Smol_VLM_FT.ipynb">Smol_VLM_FT.ipynb</a></li>
+<li>Google Docs example of fine-tuning a VLM: <a href="https://ai.google.dev/gemma/docs/core/huggingface_vision_finetune_qlora">Hugging Face Vision Fine-tune QLoRA</a></li>
+<li>Another doc example of inference with a VLM: <a href="https://github.com/google-gemini/gemma-cookbook/blob/main/Gemma/%5BGemma_3n%5DMultimodal_understanding_with_HF.ipynb">Gemma 3n Multimodal Understanding with HF</a></li>
+<li>LoRA without regret blog post: <a href="https://huggingface.co/docs/trl/main/en/lora_without_regret">LoRA Without Regret</a>
+<ul>
+<li>Thinking Machines blog: <a href="https://thinkingmachines.ai/blog/lora/">LoRA</a></li>
+</ul></li>
+<li>Example of LoRA in the wild on iOS devices using Apple Intelligence: <a href="https://developer.apple.com/apple-intelligence/foundation-models-adapter/">Apple Intelligence Foundation Models Adapter</a></li>
+<li>PEFT (Parameter Efficient Fine-tuning) GitHub - <a href="https://github.com/huggingface/peft">huggingface/peft</a></li>
+<li>SmolVLM Docling paper - <a href="https://arxiv.org/pdf/2503.11576">arXiv:2503.11576</a>
+<ul>
+<li>Notes:
+<ul>
+<li>LLM alignment: To align the LLM part we freeze the vision encoder and train only the remaining network to adapt it to the new output format which it hasn’t seen before.</li>
+<li>Unfreeze vision encoder: After LLM alignment, unfreeze vision encoder and train the model on pretraining datasets (section 4.1) along with all task-specific conversion datasets including tables, code, equations and charts.</li>
+<li>Workflow:
+<ul>
+<li>Stage 1 (frozen vision encoder): Freeze the vision encoder and teach the LLM part to output our desired structure (e.g.&nbsp;JSON for food/drink)
+<ul>
+<li>Note: Create a Trainer instance (SFTTrainer) with one optimizer to get the state of the model and optimize it with a frozen vision backbone.</li>
+</ul></li>
+<li>Stage 2 (unfrozen whole model): Unfreeze the vision encoder and teach the whole model to converge to your desired structure.
+<ul>
+<li>Note: Create a 2nd Trainer instance (e.g.&nbsp;<code>Trainer_2</code>) with a <em>new</em> optimizer to get the state of the whole model (with unfrozen backbone) and optimize it with the whole model as trainable.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="definitions" class="level2" data-number="0.6">
+<h2 data-number="0.6" class="anchored" data-anchor-id="definitions"><span class="header-section-number">0.6</span> Definitions</h2>
+<ul>
+<li>Base Model = A model which has been trained by someone else (e.g.&nbsp;a company, group of researchers or individual) we can download from a location such as Hugging Face and fine-tune/customize to our own liking.</li>
+<li>Small Vision Language Model = A Vision Language Model (VLM) with a number of parameters under 1B (1 billion), this kind of Vision Language Model is small enough to be deployed to mobile/edge devices.
+<ul>
+<li><strong>Note:</strong> Models larger than 1B can be deployed to edge devices, however, I specifically reserve the <em>small</em> title for models under 1B parameters.</li>
+</ul></li>
+<li>PEFT = Parameter Efficient Fine-Tuning (only train a subset of the model parameters + hopefully still get good results)</li>
+<li>LoRA = Low Rank Adaptation (LoRA = a form of PEFT) - https://arxiv.org/abs/2106.09685
+<ul>
+<li>You basically fine-tune an adapter model for your original model and optionally apply the adatper to the original model</li>
+<li>Benefits of LoRA = you can train multiple adapters only and run those at different times depending on the required use case of your model</li>
+</ul></li>
+<li>QLoRA = Quantized LoRA (fine-tune an adapter)
+<ul>
+<li>Train with quantized weights (even smaller than LoRA) for even more parameter efficient fine-tuning</li>
+</ul></li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>Note:</strong> We’re not using PEFT in this notebook as our model is small enough to fine-tune a significant portion of it. In my experience, PEFT is better suited to larger models which are harder to fully fine-tune without significant hardware.</p>
+<p>We’ll use PEFT in a future tutorial where we customize a larger model (with more than 1B parameters) for a specific task.</p>
+</blockquote>
+</section>
+<section id="import-dependencies" class="level2" data-number="0.7">
+<h2 data-number="0.7" class="anchored" data-anchor-id="import-dependencies"><span class="header-section-number">0.7</span> Import Dependencies</h2>
+<p>If you are running this notebook in Google Colab, you may need to install the following.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> transformers</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> trl</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: I'm running this locally on a NVIDIA DGX Spark, if you are running on Google Colab, make sure you've activate a GPU</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> <span class="st">"cuda"</span> <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Using device: </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="load-dataset" class="level2" data-number="0.8">
+<h2 data-number="0.8" class="anchored" data-anchor-id="load-dataset"><span class="header-section-number">0.8</span> Load dataset</h2>
+<p>VLM datasets follow the main structure of “image + text pairs”.</p>
+<p>For example, you in put an image, what text do you want out?</p>
+<p>I created this dataset to be:</p>
+<ul>
+<li>1000 food images (from Food101)</li>
+<li>500 not food images (randomly sampled from the internet)</li>
+</ul>
+<p>The images were labelled to extract food/drink items with <a href="https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct"><code>Qwen3-VL-8B-Instruct</code></a> (a larger VLM) and then turned into a <a href="https://huggingface.co/docs/datasets/en/image_dataset#imagefolder">Hugging Face Image Dataset</a>.</p>
+<blockquote class="blockquote">
+<p><strong>Resource:</strong> If you’d like to see how I created this dataset, refer to the <a href="https://www.youtube.com/live/X-nYCCviCyI?si=kPKhTxXbc7pUztAC">livestream I did on YouTube</a> where I build the dataset and uploaded it to Hugging Face.</p>
+</blockquote>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> load_dataset(<span class="st">"mrdbourke/FoodExtract-1k-Vision"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>dataset</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>example_sample <span class="op">=</span> dataset[<span class="st">"train"</span>][<span class="dv">0</span>]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>example_sample</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We get some details back from our dataset, the main two fields we’re going to focus on are:</p>
+<ul>
+<li><code>image</code> - This is an image we’d like to input into our model and get back structured data from.</li>
+<li><code>output_label_json</code> - This is the structured data we’d like our fine-tuned model to return. This is JSON but our model will return strings (text). We can train our model to return valid JSON so we can easily extract detials from the string output and put them into a database.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>example_input <span class="op">=</span> example_sample[<span class="st">"image"</span>]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>example_output <span class="op">=</span> example_sample[<span class="st">"output_label_json"</span>]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Example desired output:</span><span class="ch">\n</span><span class="sc">{</span>example_output<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Example image input:"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>example_input</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="format-data-for-use-with-a-vlm" class="level2" data-number="0.9">
+<h2 data-number="0.9" class="anchored" data-anchor-id="format-data-for-use-with-a-vlm"><span class="header-section-number">0.9</span> Format data for use with a VLM</h2>
+<p>Our VLM input requires our data to be formatted in a conversational style.</p>
+<p>We’ll use two prompts to try and help the model:</p>
+<pre><code>SYSYTEM_MESSAGE = """You are an expert food and drink image extractor.
+You provide structured data to visual inputs classifying them as edible food/drink or not.
+As well as titling the image with a simple food/drink related caption.
+Finally you extract any and all visible food/drink items to lists.
+"""</code></pre>
+<p>And</p>
+<pre><code>USER_PROMPT = """Classify the given input image into food or not and if edible food or drink items are present, extract those to a list. If no food/drink items are visible, return empty lists.
+
+Only return valid JSON in the following form:
+
+```json
+{
+  'is_food': 0, # int - 0 or 1 based on whether food/drinks are present (0 = no foods visible, 1 = foods visible)
+  'image_title': '', # str - short food-related title for what foods/drinks are visible in the image, leave blank if no foods present
+  'food_items': [], # list[str] - list of visible edible food item nouns
+  'drink_items': [] # list[str] - list of visible edible drink item nouns
+}
+```
+"""</code></pre>
+<p>To begin, we’ll see how the base model performs using just these prompts.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># System message</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>SYSYTEM_MESSAGE <span class="op">=</span> <span class="st">"""You are an expert food and drink image extractor.</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">You provide structured data to visual inputs classifying them as edible food/drink or not.</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">As well as titling the image with a simple food/drink related caption.</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">Finally you extract any and all visible food/drink items to lists.</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># User prompt with image input as well as desired output</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>USER_PROMPT <span class="op">=</span> <span class="st">"""Classify the given input image into food or not and if edible food or drink items are present, extract those to a list. If no food/drink items are visible, return empty lists.</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="st">Only return valid JSON in the following form:</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="st">```json</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="st">{</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="st">  'is_food': 0, # int - 0 or 1 based on whether food/drinks are present (0 = no foods visible, 1 = foods visible)</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="st">  'image_title': '', # str - short food-related title for what foods/drinks are visible in the image, leave blank if no foods present</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="st">  'food_items': [], # list[str] - list of visible edible food item nouns</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="st">  'drink_items': [] # list[str] - list of visible edible drink item nouns</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>““”</p>
+</section>
+<section id="create-helper-function-to-map-our-inputoutput-samples-to-conversational-format" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Create helper function to map our input/output samples to conversational format</h1>
+<p>def format_data(sample): return { “messages”: [</p>
+<pre><code>        # Message 0 - [SYSTEM] System Prompt (setting the scene)
+        {
+            "role": "system",
+            "content": [{"type": "text", "text": SYSYTEM_MESSAGE}]
+        },
+
+        # Message 1 - [USER] User input (image + prompt pair)
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "image",
+                    "image": sample["image"],
+                },
+                {
+                    "type": "text",
+                    "text": USER_PROMPT # Note: In a future extension, you might train the model to not require any text input and just go straight from image -&gt; text output
+                }
+            ],
+        },
+
+        # Message 2 - [MODEL] Ideal model output (e.g. our structured data format)
+        {
+            "role": "assistant",
+            "content": [{"type": "text", "text": sample["output_label_json"]}]
+        }
+    ]
+}</code></pre>
+<p>formatted_sample = format_data(sample=example_sample) formatted_sample</p>
+<pre><code>
+
+```python
+# Format each item in the original dataset keeping the PIL image type
+# Note: We're using a for loop here instead of dataset.map() as seen below because map() seems to get jammed.
+dataset_processed = [format_data(sample) for sample in dataset["train"]]
+dataset_processed[0]</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: Tried .map() but it seems to get stuck and took too long. We can investigate this in the future... skipping for now</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># dataset = dataset.map(format_data)</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># dataset["train"][0]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Wonderful! Our data is now in chat message format, let’s see what happens when we run a sample through a base model (this model hasn’t been fine-tuned our data yet).</p>
+<section id="create-a-training-and-validation-split" class="level3" data-number="1.0.1">
+<h3 data-number="1.0.1" class="anchored" data-anchor-id="create-a-training-and-validation-split"><span class="header-section-number">1.0.1</span> Create a training and validation split</h3>
+<p>Let’s split our data into training/validation.</p>
+<p>We will fine-tune on the training data and then evaluate our model on the validation data.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>random.seed(<span class="dv">42</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>dataset_shuffled <span class="op">=</span> random.sample(dataset_processed, k<span class="op">=</span><span class="bu">len</span>(dataset_processed))</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Use 80% split for training, 20% for validation</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>train_split <span class="op">=</span> <span class="bu">round</span>(<span class="fl">0.8</span> <span class="op">*</span> <span class="bu">len</span>(dataset_shuffled))</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> dataset_shuffled[:train_split]</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>val_dataset <span class="op">=</span> dataset_shuffled[train_split:]</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Number of total samples: </span><span class="sc">{</span><span class="bu">len</span>(dataset_processed)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Number of train samples: </span><span class="sc">{</span><span class="bu">len</span>(train_dataset)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Number of eval samples: </span><span class="sc">{</span><span class="bu">len</span>(val_dataset)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">[INFO] Example training sample:</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>pprint(train_dataset[<span class="dv">0</span>])</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">[INFO] Example validation sample:</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>pprint(val_dataset[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="running-a-sample-through-a-base-model" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="running-a-sample-through-a-base-model"><span class="header-section-number">1.1</span> Running a sample through a base model</h2>
+<p>Let’s see how a non-fine-tuned model performs on our task.</p>
+<ul>
+<li>Let’s fine-tune SmolVLM2-256M or SmolVLM2-500M
+<ul>
+<li>See collection: https://huggingface.co/collections/HuggingFaceTB/smolvlm2-smallest-video-lm-ever</li>
+</ul></li>
+<li>Previous efforts we tried gemma-3n-E3B-it but it was already too good:
+<ul>
+<li>~To begin with we’ll try out Gemma-3n-E2B-it - https://huggingface.co/google/gemma-3n-E2B-it~</li>
+</ul></li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a base model input example</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We only want our model to see the user system/user inputs (not the desired response) so we index on the correct amount of messages</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>example_base_model_input <span class="op">=</span> dataset_processed[<span class="dv">0</span>][<span class="st">"messages"</span>][:<span class="dv">2</span>] <span class="co"># the "assistant" text output is what we want our model to predict</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>example_base_model_input</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="loading-a-base-model" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="loading-a-base-model"><span class="header-section-number">1.1.1</span> Loading a base model</h3>
+<p>There are many different VLMs we could try.</p>
+<p>But for this project, we’re going to focus on small (under 1B parameters).</p>
+<p>In previous experiments I tried <code>google/gemma-3n-e2b-it</code> (5B parameters) and it performed quite well on our task.</p>
+<p>For now we’ll stick with <a href="https://huggingface.co/HuggingFaceTB/SmolVLM2-500M-Video-Instruct"><code>HuggingFaceTB/SmolVLM2-500M-Video-Instruct</code></a>, a model 10x smaller than <code>google/gemma-3n-e2b-it</code>.</p>
+<p>So it’s a good place to start to try and make it perform on par with a larger model.</p>
+<blockquote class="blockquote">
+<p><strong>Resource:</strong> You can find many base models the Hugging Face Models page under the <code>Image-Text-to-Text</code> filter: https://huggingface.co/models?pipeline_tag=image-text-to-text</p>
+</blockquote>
+<p>We can load a model and perform inference quite quickly using the <code>transformers.pipeline</code> class.</p>
+<blockquote class="blockquote">
+<p><strong>Note:</strong> <code>transformers.pipeline</code> is mainly for getting quick inference from a model. For fine-tuning, we’ll be using the <code>transformers.AutoModelForImageTextToText</code> class.</p>
+</blockquote>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Other models to try</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># MODEL_ID = "google/gemma-3n-e2b-it" # note: this model is 5B parameters and performs quite well, however, it's not quite as "small" as we'd like</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># MODEL_ID = "HuggingFaceTB/SmolVLM2-256M-Video-Instruct"</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>MODEL_ID <span class="op">=</span> <span class="st">"HuggingFaceTB/SmolVLM2-500M-Video-Instruct"</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>pipe <span class="op">=</span> pipeline(</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"image-text-to-text"</span>,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>MODEL_ID,</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    device<span class="op">=</span><span class="st">"cuda"</span>,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    dtype<span class="op">=</span>torch.bfloat16</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>example_base_model_input</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test the base model on an example input image</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>base_model_output <span class="op">=</span> pipe(text<span class="op">=</span>example_base_model_input,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                         max_new_tokens<span class="op">=</span><span class="dv">256</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'[INFO] Base model input (text only):</span><span class="ch">\n</span><span class="sc">{</span>example_base_model_input<span class="sc">}</span><span class="ch">\n</span><span class="ss">'</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'[INFO] Base model output:</span><span class="ch">\n</span><span class="sc">{</span>base_model_output[<span class="dv">0</span>][<span class="st">"generated_text"</span>][<span class="op">-</span><span class="dv">1</span>][<span class="st">"content"</span>]<span class="sc">}</span><span class="ch">\n</span><span class="ss">'</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'[INFO] Desired output:</span><span class="ch">\n</span><span class="sc">{</span>dataset_processed[<span class="dv">0</span>][<span class="st">"messages"</span>][<span class="op">-</span><span class="dv">1</span>][<span class="st">"content"</span>][<span class="dv">0</span>][<span class="st">"text"</span>]<span class="sc">}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Hmmm… doesn’t look like our base model outputs what we’d like.</p>
+<p>It seems as though it’s outputing an empty list.</p>
+<p>But I’m pretty sure our image has food items in it…</p>
+<p>Let’s check it.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check example input image</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>example_base_model_input[<span class="dv">1</span>][<span class="st">"content"</span>][<span class="dv">0</span>][<span class="st">"image"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>It definitely does have food in it!</p>
+<p>Ideally our model would output something like:</p>
+<pre><code>{'is_food': 1, 
+ 'image_title': 
+ 'cheese plate', 
+ 'food_items': ['toast', 'herb garnish', 'dipping sauce', 'cheese wedge'], 
+ 'drink_items': []}</code></pre>
+<p>But alas… it did not.</p>
+<p>Let’s see if fine-tuning helps!</p>
+</section>
+</section>
+<section id="load-the-model-without-using-pipeline" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="load-the-model-without-using-pipeline"><span class="header-section-number">1.2</span> Load the model without using pipeline</h2>
+<p><code>transformers.pipeline</code> allows simple loading and inference of the model.</p>
+<p>But for more customization we’ll want to load the model directly.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoProcessor, AutoModelForImageTextToText</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Using model: </span><span class="sc">{</span>MODEL_ID<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Define model init args </span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>model_kwargs <span class="op">=</span> <span class="bu">dict</span>(</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    attn_implementation<span class="op">=</span><span class="st">"eager"</span>, <span class="co"># Note: could also use flash_attention_2 here for faster models, requires `pip install flash-attn` (see: https://github.com/Dao-AILab/flash-attention)</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    dtype<span class="op">=</span>torch.bfloat16,</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    device_map<span class="op">=</span><span class="st">"auto"</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model and tokenizer/processor</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> AutoModelForImageTextToText.from_pretrained(MODEL_ID,</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>                                                    <span class="op">**</span>model_kwargs)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>processor <span class="op">=</span> AutoProcessor.from_pretrained(MODEL_ID)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We can inspect our model’s architecture for modification later on.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect our model's architecture</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>model</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Take note of the major components:</p>
+<ul>
+<li><code>vision_model</code> - This will encode our image, in the case of SmolVLM2, it uses the <a href="https://huggingface.co/google/siglip-base-patch16-512">SigLIP</a> vision language model as an encoder.</li>
+<li><code>text_model</code> - This will encode our text into a numerical representation. Under the hood SmolVLM2 uses <a href="https://huggingface.co/HuggingFaceTB/SmolLM2-360M-Instruct">SmolLM2-360M-Instruct</a>.</li>
+<li><code>connector</code> - This module will connect the individual <code>vision_model</code> and <code>text_model</code> and combine them into the same feature space.</li>
+<li><code>lm_head</code> - This module will output tokens that have been conditioned on both vision and language data.</li>
+</ul>
+<p>To begin, we will fine-tune all components <em>except</em> the <code>vision_model</code> as this is what is reflected in the <a href="https://arxiv.org/abs/2503.11576">literature</a> as well as what I’ve found to work in practice.</p>
+<p>Let’s run a single sample through our <code>model</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the chat template </span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>example_chat_template_input <span class="op">=</span> processor.apply_chat_template(</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    [example_base_model_input[<span class="dv">1</span>]], <span class="co"># Note: if we are running this way, format the system_prompt to either be removed or folded into the user_prompt</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    add_generation_prompt<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    tokenize<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    return_dict<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    return_tensors<span class="op">=</span><span class="st">"pt"</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>).to(device)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Chat template:</span><span class="ch">\n</span><span class="sc">{</span>example_chat_template_input<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Measure how long our input prompt is (our model will generate tokens *after* the input prompt)</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>input_len <span class="op">=</span> example_chat_template_input[<span class="st">"input_ids"</span>].shape[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Input length: </span><span class="sc">{</span>input_len<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform inference with the base model</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    generation_output_full <span class="op">=</span> model.generate(<span class="op">**</span>example_chat_template_input,</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>                                            max_new_tokens<span class="op">=</span><span class="dv">256</span>,</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>                                            do_sample<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>    generation_output_short <span class="op">=</span> generation_output_full[<span class="dv">0</span>][input_len:]</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Decode the outputs from tokens -&gt; readable text</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>decoded_outputs <span class="op">=</span> processor.decode(generation_output_short,</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>                                   skip_special_tokens<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Print inputs and outputs</span></span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span><span class="op">+</span><span class="st">"-"</span><span class="op">*</span><span class="dv">50</span><span class="op">+</span><span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] This is the raw token (numerical) intput to our model:</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(example_chat_template_input[<span class="st">"input_ids"</span>][<span class="dv">0</span>])</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span><span class="op">+</span><span class="st">"-"</span><span class="op">*</span><span class="dv">50</span><span class="op">+</span><span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] This is the raw pixel values (numerical) intput to our model:</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(example_chat_template_input[<span class="st">"pixel_values"</span>][<span class="dv">0</span>])</span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span><span class="op">+</span><span class="st">"-"</span><span class="op">*</span><span class="dv">50</span><span class="op">+</span><span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] This is the input to our model in human-readable form (note: our model will not see in the input like this):</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(processor.decode(example_chat_template_input[<span class="st">"input_ids"</span>][<span class="dv">0</span>]))</span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span><span class="op">+</span><span class="st">"-"</span><span class="op">*</span><span class="dv">50</span><span class="op">+</span><span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Outputs from the base model:</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(decoded_outputs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Okay… so it looks like our base <code>model</code> is outputting an empty list just like our <code>pipe</code> from before.</p>
+<p>We’ll try to improve this via fine-tuning.</p>
+<blockquote class="blockquote">
+<p><strong>Note:</strong> Notice the <code>&lt;image&gt;</code> special tokens which represent our image in text format which will go into the model. In this form, the token here is just a placeholder token. The actual feature values of the <code>&lt;image&gt;</code> token will come from the <code>vision_model</code> in the <code>example_chat_template_input["pixel_values"]</code> key.</p>
+</blockquote>
+</section>
+<section id="prepare-model-for-training" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="prepare-model-for-training"><span class="header-section-number">1.3</span> Prepare model for training</h2>
+<p>As per the <a href="https://arxiv.org/pdf/2503.11576">SmolDocling paper (section 5.1)</a>, we’re going to freeze the <code>vision_model</code> and train the rest of the model (the LLM parts).</p>
+<p>If we had a larger dataset (our dataset is quite small at ~1000 training samples), we could potentially perform two stage training by:</p>
+<ol type="1">
+<li>Training with a frozen vision encoder to align the LLM portions of the model to the output (our desired format).</li>
+<li>Training the whole model to align all features to our target dataset.</li>
+</ol>
+<p>For now, we are going to focus on stage one.</p>
+<p>Let’s count the overall parameters and trainable parameters in our model before and after freezing the vision encoder.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Freeze the vision backbone and only train the LLM parts</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_parameters(model):</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> <span class="bu">sum</span>(p.numel() <span class="cf">for</span> p <span class="kw">in</span> model.parameters())</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    trainable <span class="op">=</span> <span class="bu">sum</span>(p.numel() <span class="cf">for</span> p <span class="kw">in</span> model.parameters() <span class="cf">if</span> p.requires_grad)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    frozen <span class="op">=</span> total <span class="op">-</span> trainable</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> total, trainable, frozen </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Before freezing parameters</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>total_params, trainable_params, frozen_params <span class="op">=</span> count_parameters(model)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Params Total (before freezing the vision model): </span><span class="sc">{</span>total_params<span class="sc">:,}</span><span class="ss"> | Params Trainable: </span><span class="sc">{</span>trainable_params<span class="sc">:,}</span><span class="ss"> | Params Frozen: </span><span class="sc">{</span>frozen_params<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Freeze the vision encoder</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> param <span class="kw">in</span> model.model.vision_model.parameters():</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Turn off graidents in the vision model</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    param.requires_grad <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co"># After freezing parameters</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>total_params, trainable_params, frozen_params <span class="op">=</span> count_parameters(model)</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Params Total (after freezing the vision model): </span><span class="sc">{</span>total_params<span class="sc">:,}</span><span class="ss"> | Params Trainable: </span><span class="sc">{</span>trainable_params<span class="sc">:,}</span><span class="ss"> | Params Frozen: </span><span class="sc">{</span>frozen_params<span class="sc">:,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="creating-a-data-collator" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="creating-a-data-collator"><span class="header-section-number">1.4</span> Creating a data collator</h2>
+<p>A data collator helps stack our image + text samples into batches.</p>
+<p>This tells the <code>transformer.Trainer</code> how to put multiple samples into a batch for more efficient training.</p>
+<p>To do this we’ll create two functions:</p>
+<ol type="1">
+<li><code>convert_message_to_list_of_images</code> - Extracts the images from an input list of messages (our image + text pairs) to a list.</li>
+<li><code>collate_fn</code> - Preprocesses groups of image and text pairs into batches for our model to train on.</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> convert_message_to_list_of_images(messages: <span class="bu">list</span>[<span class="bu">dict</span>]) <span class="op">-&gt;</span> <span class="bu">list</span>[Image.Image]:</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Helper function to turn our message samples into lists of images.</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Note: this comes from here: https://ai.google.dev/gemma/docs/core/huggingface_vision_finetune_qlora"""</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    image_inputs <span class="op">=</span> []</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Iterate through each conversation</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> msg <span class="kw">in</span> messages:</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Get content (ensure it's a list)</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>        content <span class="op">=</span> msg.get(<span class="st">"content"</span>, [])</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(content, <span class="bu">list</span>):</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>            content <span class="op">=</span> [content]</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Check each content element for images</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> element <span class="kw">in</span> content:</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">isinstance</span>(element, <span class="bu">dict</span>) <span class="kw">and</span> (</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>                <span class="st">"image"</span> <span class="kw">in</span> element <span class="kw">or</span> element.get(<span class="st">"type"</span>) <span class="op">==</span> <span class="st">"image"</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>            ):</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Get the image and convert to RGB</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="st">"image"</span> <span class="kw">in</span> element:</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>                    image <span class="op">=</span> element[<span class="st">"image"</span>]</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span>:</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>                    image <span class="op">=</span> element</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>                image_inputs.append(image.convert(<span class="st">"RGB"</span>))</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> image_inputs</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> collate_fn(examples):</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Helper function to stack together image + text pairs into batches."""</span></span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create empty lists for batches of text and images</span></span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>    texts <span class="op">=</span> []</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>    images <span class="op">=</span> []</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Loop through examples and preprocess them</span></span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> example <span class="kw">in</span> examples:</span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>        image_inputs <span class="op">=</span> convert_message_to_list_of_images(example[<span class="st">"messages"</span>])</span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>        text <span class="op">=</span> processor.apply_chat_template(</span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>            example[<span class="st">"messages"</span>], add_generation_prompt<span class="op">=</span><span class="va">False</span>, tokenize<span class="op">=</span><span class="va">False</span></span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>        texts.append(text.strip())</span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a>        images.append(image_inputs)</span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Tokenize the texts and process the images</span></span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a>    batch_input <span class="op">=</span> processor(text<span class="op">=</span>texts, </span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>                            images<span class="op">=</span>images, </span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a>                            return_tensors<span class="op">=</span><span class="st">"pt"</span>,</span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a>                            padding<span class="op">=</span><span class="va">True</span>) </span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The labels are the input_ids and we mask the padding tokens and image tokens in the loss computation</span></span>
+<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> batch_input[<span class="st">"input_ids"</span>].clone()</span>
+<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the image token</span></span>
+<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a>    image_token_id <span class="op">=</span> processor.tokenizer.additional_special_tokens_ids[</span>
+<span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a>            processor.tokenizer.additional_special_tokens.index(<span class="st">"&lt;image&gt;"</span>)]</span>
+<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-57"><a href="#cb23-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Mask tokens for not being used in the loss computation</span></span>
+<span id="cb23-58"><a href="#cb23-58" aria-hidden="true" tabindex="-1"></a>    labels[labels <span class="op">==</span> processor.tokenizer.pad_token_id] <span class="op">=</span> <span class="op">-</span><span class="dv">100</span> <span class="co"># pad_token_id = 2</span></span>
+<span id="cb23-59"><a href="#cb23-59" aria-hidden="true" tabindex="-1"></a>    labels[labels <span class="op">==</span> image_token_id] <span class="op">=</span> <span class="op">-</span><span class="dv">100</span> <span class="co"># image_token_id = 49190, this is the `&lt;image&gt;` token which is a placeholder, we don't need our model to learn to predict those</span></span>
+<span id="cb23-60"><a href="#cb23-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-61"><a href="#cb23-61" aria-hidden="true" tabindex="-1"></a>    batch_input[<span class="st">"labels"</span>] <span class="op">=</span> labels</span>
+<span id="cb23-62"><a href="#cb23-62" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-63"><a href="#cb23-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> batch_input</span>
+<span id="cb23-64"><a href="#cb23-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-65"><a href="#cb23-65" aria-hidden="true" tabindex="-1"></a><span class="co"># For SmolVLM2, check the image token</span></span>
+<span id="cb23-66"><a href="#cb23-66" aria-hidden="true" tabindex="-1"></a>image_token_id <span class="op">=</span> processor.tokenizer.additional_special_tokens_ids[</span>
+<span id="cb23-67"><a href="#cb23-67" aria-hidden="true" tabindex="-1"></a>            processor.tokenizer.additional_special_tokens.index(<span class="st">"&lt;image&gt;"</span>)]</span>
+<span id="cb23-68"><a href="#cb23-68" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] SmolVLM2 uses the following for the image_token_id: </span><span class="sc">{</span>image_token_id<span class="sc">}</span><span class="ss">, we mask this token as it is only a placeholder in our sequence of tokens (we don't need the model to learn to predict it)."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p><strong>Note:</strong> When fine-tuning a model be sure to take note of what tokens a different tokenizer uses for different items.</p>
+<p>If you use the wrong tokenizer/wrong tokens for a certain model</p>
+</blockquote>
+</section>
+<section id="setup-sftconfig" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="setup-sftconfig"><span class="header-section-number">1.5</span> Setup SFTConfig</h2>
+<p>We’re going to use SFT (Supervised Fine-Tuning) which is a method of training where we provide input + output pairs for our model.</p>
+<p>Given an input and output pair, our model will be directly trained to predict the output based on the input.</p>
+<p>To enable SFT training, we’re going to use the following two classes:</p>
+<ol type="1">
+<li>Setup <code>SFTConfig</code> (Supervised Fine-Tuning Config) - these are hyperparameter settings which tell our model <em>how</em> to train, see docs: https://huggingface.co/docs/trl/en/sft_trainer#trl.SFTConfig</li>
+<li>Setup <code>SFTTrainer</code> (Supervised Fine-Tuning Trainer) - this will tell our model <em>what</em> to train on, see docs: https://huggingface.co/docs/trl/en/sft_trainer#trl.SFTTrainer</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> trl <span class="im">import</span> SFTConfig</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: Many of these hyperparameters have been taken from the SmolDocling paper: https://arxiv.org/abs/2503.11576</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>training_args <span class="op">=</span> SFTConfig(</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    output_dir<span class="op">=</span><span class="st">"smolvlm2-500m-FoodExtract-Vision-v1-VIDEO"</span>,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    num_train_epochs<span class="op">=</span><span class="dv">1</span>, <span class="co"># depending on how much data you have you may want to train for shorter/longer</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    per_device_train_batch_size<span class="op">=</span><span class="dv">4</span>, <span class="co"># adjust based on the size of your GPU</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    per_device_eval_batch_size<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    gradient_accumulation_steps<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    gradient_checkpointing<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    optim<span class="op">=</span><span class="st">"adamw_torch_fused"</span>,</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    logging_steps<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    eval_strategy<span class="op">=</span><span class="st">"epoch"</span>,</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    save_strategy<span class="op">=</span><span class="st">"epoch"</span>,</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    learning_rate<span class="op">=</span><span class="fl">2e-4</span>,</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    bf16<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    save_total_limit<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    max_grad_norm<span class="op">=</span><span class="fl">1.0</span>, </span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    warmup_ratio<span class="op">=</span><span class="fl">0.03</span>, </span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    lr_scheduler_type<span class="op">=</span><span class="st">"constant"</span>,</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    push_to_hub<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>    report_to<span class="op">=</span><span class="st">"none"</span>,</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>    gradient_checkpointing_kwargs<span class="op">=</span>{</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">"use_reentrant"</span>: <span class="va">False</span></span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>    dataset_text_field<span class="op">=</span><span class="st">""</span>,</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>    dataset_kwargs<span class="op">=</span>{<span class="st">"skip_prepare_dataset"</span>: <span class="va">True</span>},</span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>    load_best_model_at_end<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>    remove_unused_columns <span class="op">=</span> <span class="va">False</span> </span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="train-the-model-with-sfttrainer" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="train-the-model-with-sfttrainer"><span class="header-section-number">1.6</span> Train the model with SFTTrainer</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(train_dataset), <span class="bu">len</span>(val_dataset)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> trl <span class="im">import</span> SFTTrainer</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>trainer <span class="op">=</span> SFTTrainer(</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>model,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    args<span class="op">=</span>training_args,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># train_dataset=train_dataset[:1000],</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># eval_dataset=val_dataset[:100], </span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    train_dataset<span class="op">=</span>train_dataset[:<span class="dv">50</span>], <span class="co"># Lowered for the video (faster)</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    eval_dataset<span class="op">=</span>val_dataset[:<span class="dv">10</span>], <span class="co"># Lowered for the video (faster)</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># peft_config=peft_config, # Note: We are not using PEFT but if we did, we could pass it in here</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    processing_class<span class="op">=</span>processor,</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    data_collator<span class="op">=</span>collate_fn</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>trainer.train()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You should see an output similar to this:</p>
+<pre><code>[252/252 1:31:40, Epoch 4/4]
+Epoch   Training Loss   Validation Loss Entropy Num Tokens  Mean Token Accuracy
+1   0.085500    0.078648    0.761998    1279540.000000  0.981073
+2   0.061000    0.076550    0.863953    2559080.000000  0.982080
+3   0.039000    0.079153    1.057484    3838620.000000  0.982037
+4   0.027800    0.083432    1.019404    5118160.000000  0.981700</code></pre>
+<p>This model is available here: https://huggingface.co/mrdbourke/FoodExtract-Vision-SmolVLM2-500M-fine-tune-v1 (in the video demo, I dramatically lowered the number of samples used to speed up training time)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the model to file </span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>trainer.save_model()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="plot-the-trainingvalidation-loss-curves" class="level3" data-number="1.6.1">
+<h3 data-number="1.6.1" class="anchored" data-anchor-id="plot-the-trainingvalidation-loss-curves"><span class="header-section-number">1.6.1</span> Plot the training/validation loss curves</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Access the log history</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>log_history <span class="op">=</span> trainer.state.log_history</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract training / validation loss</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>train_losses <span class="op">=</span> [log[<span class="st">"loss"</span>] <span class="cf">for</span> log <span class="kw">in</span> log_history <span class="cf">if</span> <span class="st">"loss"</span> <span class="kw">in</span> log]</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>epoch_train <span class="op">=</span> [log[<span class="st">"epoch"</span>] <span class="cf">for</span> log <span class="kw">in</span> log_history <span class="cf">if</span> <span class="st">"loss"</span> <span class="kw">in</span> log]</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>eval_losses <span class="op">=</span> [log[<span class="st">"eval_loss"</span>] <span class="cf">for</span> log <span class="kw">in</span> log_history <span class="cf">if</span> <span class="st">"eval_loss"</span> <span class="kw">in</span> log]</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>epoch_eval <span class="op">=</span> [log[<span class="st">"epoch"</span>] <span class="cf">for</span> log <span class="kw">in</span> log_history <span class="cf">if</span> <span class="st">"eval_loss"</span> <span class="kw">in</span> log]</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the training loss</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>plt.plot(epoch_train, train_losses, label<span class="op">=</span><span class="st">"Training Loss"</span>)</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>plt.plot(epoch_eval, eval_losses, label<span class="op">=</span><span class="st">"Validation Loss"</span>)</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Epoch"</span>)</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Loss"</span>)</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Training and Validation Loss per Epoch"</span>)</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="upload-the-fine-tuned-model-to-the-hugging-face-hub" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="upload-the-fine-tuned-model-to-the-hugging-face-hub"><span class="header-section-number">1.7</span> Upload the fine-tuned model to the Hugging Face Hub</h2>
+<blockquote class="blockquote">
+<p><strong>Note:</strong> Make sure you are authenticated to the Hugging Face Hub via the <a href="https://huggingface.co/docs/huggingface_hub/en/guides/cli"><code>huggingface_hub</code> package</a> to enable smooth uploads.</p>
+<p>See the <a href="https://huggingface.co/docs/huggingface_hub/en/guides/cli#hf-auth-login"><code>hf auth login</code> command</a> for details on how to obtain an authorization token to link your computer to your Hugging Face profile via a <a href="https://huggingface.co/docs/hub/security-tokens">User Access Token</a>.</p>
+</blockquote>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional: Remove the checkpoints from the saved directory (after the model is saved)</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>rm <span class="op">-</span>rf smolvlm2<span class="op">-</span><span class="dv">500</span><span class="er">m</span><span class="op">-</span>FoodExtract<span class="op">-</span>Vision<span class="op">-</span>v1<span class="op">-</span>VIDEO<span class="op">/</span>checkpoint<span class="op">-*</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Upload to Hugging Face</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> huggingface_hub <span class="im">import</span> HfApi, create_repo </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>api <span class="op">=</span> HfApi()</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Give our model a name (this is in the format [Hugging Face Username]/[Target Model Name]</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>repo_id <span class="op">=</span> <span class="st">"mrdbourke/FoodExtract-Vision-SmolVLM2-500M-fine-tune-v1-VIDEO"</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the repo</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>create_repo(repo_id, </span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>            repo_type<span class="op">=</span><span class="st">"model"</span>, </span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>            exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Upload the entire model folder containing our model files</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>api.upload_folder(</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>    folder_path<span class="op">=</span><span class="st">"./smolvlm2-500m-FoodExtract-Vision-v1-VIDEO/"</span>,</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>    repo_id<span class="op">=</span>repo_id,</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>    repo_type<span class="op">=</span><span class="st">"model"</span></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="test-the-fine-tuned-model-against-the-base-model" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="test-the-fine-tuned-model-against-the-base-model"><span class="header-section-number">1.8</span> Test the fine-tuned model against the base model</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete the existing model and trainer and clear the cache for fresh inference</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> model</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> trainer</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>torch.cuda.empty_cache()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use this for the model that was just trained</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>CHECKPOINT_DIR_NAME <span class="op">=</span> training_args.output_dir</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional: Load fine-tuned model from the Hugging Face Hub</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>CHECKPOINT_DIR_NAME <span class="op">=</span> <span class="st">"mrdbourke/FoodExtract-Vision-SmolVLM2-500M-fine-tune-v1"</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Using fine-tuned checkpoint: </span><span class="sc">{</span>CHECKPOINT_DIR_NAME<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Using base model checkpoint: </span><span class="sc">{</span>MODEL_ID<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Let’s load the original base model and our fine-tuned model and compare them.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the base model (pt_pipe stands for "pretrained pipeline", 'pretrained model' is another word for 'base model'</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>pt_pipe <span class="op">=</span> pipeline(</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"image-text-to-text"</span>,</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>MODEL_ID,</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    dtype<span class="op">=</span>torch.bfloat16</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="co"># `do_sample = False` for deterministic responses</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>pt_pipe.model.generation_config.do_sample <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>pt_pipe.model.generation_config.pad_token_id <span class="op">=</span> processor.tokenizer.eos_token_id</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the fine-tuned model</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>ft_pipe <span class="op">=</span> pipeline(</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"image-text-to-text"</span>,</span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>CHECKPOINT_DIR_NAME,</span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>    dtype<span class="op">=</span>torch.bfloat16</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a><span class="co"># `do_sample = False` for deterministic responses</span></span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>ft_pipe.model.generation_config.do_sample <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>ft_pipe.model.generation_config.pad_token_id <span class="op">=</span> processor.tokenizer.eos_token_id</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now we’ll pick a random sample from the validation set and check out the original base model and the fine-tuned model side by side.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick a random sample from the validation dataset</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>random_val_sample <span class="op">=</span> random.choice(val_dataset)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>random_val_sample_model_input <span class="op">=</span> random_val_sample[<span class="st">"messages"</span>][<span class="dv">1</span>]</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>random_val_sample_image <span class="op">=</span> random_val_sample_model_input[<span class="st">"content"</span>][<span class="dv">0</span>][<span class="st">"image"</span>]</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>random_val_sample_model_output <span class="op">=</span> random_val_sample[<span class="st">"messages"</span>][<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the ideal input and outputs</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Example model input:</span><span class="ch">\n</span><span class="sc">{</span>random_val_sample_model_input<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Example model ideal output:</span><span class="ch">\n</span><span class="sc">{</span>random_val_sample_model_output[<span class="st">"content"</span>][<span class="dv">0</span>][<span class="st">"text"</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform a forward pass with the base model</span></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>pt_pipe_output <span class="op">=</span> pt_pipe(text<span class="op">=</span>[random_val_sample_model_input],</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>                         max_new_tokens<span class="op">=</span><span class="dv">256</span>)</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>pt_pipe_output_text <span class="op">=</span> pt_pipe_output[<span class="dv">0</span>][<span class="st">"generated_text"</span>][<span class="op">-</span><span class="dv">1</span>][<span class="st">"content"</span>]</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">[INFO] Generated output text from pre-trained model:</span><span class="ch">\n</span><span class="sc">{</span>pt_pipe_output_text<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform a forward pass with the fine-tuned model</span></span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>ft_pipe_output <span class="op">=</span> ft_pipe(text<span class="op">=</span>[random_val_sample_model_input],</span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>                         max_new_tokens<span class="op">=</span><span class="dv">256</span>)</span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>ft_pipe_output_text <span class="op">=</span> ft_pipe_output[<span class="dv">0</span>][<span class="st">"generated_text"</span>][<span class="op">-</span><span class="dv">1</span>][<span class="st">"content"</span>]</span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">[INFO] Generated output text from fine-tuned model:</span><span class="ch">\n</span><span class="sc">{</span>ft_pipe_output_text<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Intput image:"</span>)</span>
+<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a>random_val_sample_image.resize(size<span class="op">=</span>(<span class="dv">500</span>, <span class="dv">500</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="optional-training-stage-2-unfreezing-the-vision-encoder" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="optional-training-stage-2-unfreezing-the-vision-encoder"><span class="header-section-number">1.9</span> Optional: Training Stage 2: Unfreezing the vision encoder</h2>
+<p>Let’s unfreeze the vision encoder and see if it provides any improvements to our model.</p>
+<p>To do so, we’ll have to create another instance of <code>transformers.Trainer</code> to exstablish a new optimizer.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># model_stage_1 = ft_pipe.model</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co"># # Unfreeze vision encoder</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># total_params, trainable_params, frozen_params = count_parameters(model_stage_1)</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># print(f"[INFO] Params Total: {total_params:,} | Params Trainable: {trainable_params:,} | Params Frozen: {frozen_params:,}")</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co"># # Unfreeze the vision encoder</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="co"># for param in model_stage_1.model.vision_model.parameters():</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Turn off graidents in the vision model</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co">#     param.requires_grad = True</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="co"># # After freezing parameters</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="co"># total_params, trainable_params, frozen_params = count_parameters(model_stage_1)</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="co"># print(f"[INFO] Params Total: {total_params:,} | Params Trainable: {trainable_params:,} | Params Frozen: {frozen_params:,}")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># from trl import SFTConfig</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># training_args_stage_2 = SFTConfig(</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co">#     output_dir="smolvlm2-256m-FoodExtract-Vision-stage-2-v1",</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     num_train_epochs=1,</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co">#     per_device_train_batch_size=4,</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co">#     per_device_eval_batch_size=4,</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="co">#     gradient_accumulation_steps=4,</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co">#     gradient_checkpointing=True,</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co">#     optim="adamw_torch_fused",</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="co">#     logging_steps=1,</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="co">#     eval_strategy="epoch",</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="co">#     save_strategy="epoch",</span></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="co">#     learning_rate=2e-6,</span></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="co">#     bf16=True,</span></span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a><span class="co">#     save_total_limit=1,</span></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     max_grad_norm=1.0, </span></span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     warmup_ratio=0.03, </span></span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="co">#     lr_scheduler_type="constant",</span></span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="co">#     push_to_hub=False,</span></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a><span class="co">#     report_to="none",</span></span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a><span class="co">#     gradient_checkpointing_kwargs={</span></span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a><span class="co">#         "use_reentrant": False</span></span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a><span class="co">#     },</span></span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a><span class="co">#     dataset_text_field="",</span></span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a><span class="co">#     dataset_kwargs={"skip_prepare_dataset": True},</span></span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a><span class="co">#     load_best_model_at_end=True</span></span>
+<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
+<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a><span class="co"># training_args_stage_2.remove_unused_columns = False # important for collator</span></span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a><span class="co"># from trl import SFTTrainer</span></span>
+<span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-33"><a href="#cb37-33" aria-hidden="true" tabindex="-1"></a><span class="co"># trainer_stage_2 = SFTTrainer(</span></span>
+<span id="cb37-34"><a href="#cb37-34" aria-hidden="true" tabindex="-1"></a><span class="co">#     model=model_stage_1,</span></span>
+<span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a><span class="co">#     args=training_args_stage_2,</span></span>
+<span id="cb37-36"><a href="#cb37-36" aria-hidden="true" tabindex="-1"></a><span class="co">#     train_dataset=train_dataset[:1000],</span></span>
+<span id="cb37-37"><a href="#cb37-37" aria-hidden="true" tabindex="-1"></a><span class="co">#     eval_dataset=val_dataset[:100],</span></span>
+<span id="cb37-38"><a href="#cb37-38" aria-hidden="true" tabindex="-1"></a><span class="co">#     # peft_config=peft_config, # Note: if the model is already PEFT-ified, don't need to re-pass the PEFT config </span></span>
+<span id="cb37-39"><a href="#cb37-39" aria-hidden="true" tabindex="-1"></a><span class="co">#     processing_class=processor,</span></span>
+<span id="cb37-40"><a href="#cb37-40" aria-hidden="true" tabindex="-1"></a><span class="co">#     data_collator=collate_fn</span></span>
+<span id="cb37-41"><a href="#cb37-41" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
+<span id="cb37-42"><a href="#cb37-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-43"><a href="#cb37-43" aria-hidden="true" tabindex="-1"></a><span class="co"># trainer_stage_2.train()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ft_pipe_stage_2 = pipeline(</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co">#     "image-text-to-text",</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co">#     model=CHECKPOINT_DIR_NAME_STAGE_2,</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co">#     dtype=torch.bfloat16</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="co"># processor = AutoProcessor.from_pretrained(CHECKPOINT_DIR_NAME_STAGE_2)</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="co"># # `do_sample = False` for deterministic responses</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ft_pipe_stage_2.model.generation_config.do_sample = True</span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="co"># ft_pipe_stage_2.model.generation_config.pad_token_id = processor.tokenizer.eos_token_id</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: test the stage 2 model on a test image (this can be done in the same way as comparing the base model to the fine-tuned model)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="create-a-demo-with-gradio" class="level2" data-number="1.10">
+<h2 data-number="1.10" class="anchored" data-anchor-id="create-a-demo-with-gradio"><span class="header-section-number">1.10</span> Create a demo with Gradio</h2>
+<p>We need 3 files:</p>
+<ul>
+<li><code>app.py</code> - Entry point for our app to load on Hugging Face Spaces.</li>
+<li><code>requirements.txt</code> - The requirements we’d like Hugging Face Spaces to install upon loading.</li>
+<li><code>README.md</code> - Some details about our demo.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a directory to store our demos</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>mkdir demos<span class="op">/</span>FoodExtract<span class="op">-</span>Vision<span class="op">-</span>v1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile demos<span class="op">/</span>FoodExtract<span class="op">-</span>Vision<span class="op">-</span>v1<span class="op">/</span>app.py</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gradio <span class="im">as</span> gr</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> spaces</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>BASE_MODEL_ID <span class="op">=</span> <span class="st">"HuggingFaceTB/SmolVLM2-500M-Video-Instruct"</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>FINE_TUNED_MODEL_ID <span class="op">=</span> <span class="st">"mrdbourke/FoodExtract-Vision-SmolVLM2-500M-fine-tune-v1"</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>OUTPUT_TOKENS <span class="op">=</span> <span class="dv">256</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Load original base model (no fine-tuning)</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Loading Original Model"</span>)</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>original_pipeline <span class="op">=</span> pipeline(</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"image-text-to-text"</span>,</span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>BASE_MODEL_ID,</span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>    dtype<span class="op">=</span>torch.bfloat16,</span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>    device_map<span class="op">=</span><span class="st">"auto"</span></span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Load fine-tuned model</span></span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Loading Fine-tuned Model"</span>)</span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>ft_pipe <span class="op">=</span> pipeline(</span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"image-text-to-text"</span>,</span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>FINE_TUNED_MODEL_ID,</span>
+<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a>    dtype<span class="op">=</span>torch.bfloat16,</span>
+<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a>    device_map<span class="op">=</span><span class="st">"auto"</span></span>
+<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_message(input_image):</span>
+<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [{<span class="st">'role'</span>: <span class="st">'user'</span>,</span>
+<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a> <span class="st">'content'</span>: [{<span class="st">'type'</span>: <span class="st">'image'</span>,</span>
+<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a>   <span class="st">'image'</span>: input_image},</span>
+<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a>  {<span class="st">'type'</span>: <span class="st">'text'</span>,</span>
+<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a>   <span class="st">'text'</span>: <span class="st">"Classify the given input image into food or not and if edible food or drink items are present, extract those to a list. If no food/drink items are visible, return empty lists.</span><span class="ch">\n\n</span><span class="st">Only return valid JSON in the following form:</span><span class="ch">\n\n</span><span class="st">```json</span><span class="ch">\n</span><span class="st">{</span><span class="ch">\n</span><span class="st">  'is_food': 0, # int - 0 or 1 based on whether food/drinks are present (0 = no foods visible, 1 = foods visible)</span><span class="ch">\n</span><span class="st">  'image_title': '', # str - short food-related title for what foods/drinks are visible in the image, leave blank if no foods present</span><span class="ch">\n</span><span class="st">  'food_items': [], # list[str] - list of visible edible food item nouns</span><span class="ch">\n</span><span class="st">  'drink_items': [] # list[str] - list of visible edible drink item nouns</span><span class="ch">\n</span><span class="st">}</span><span class="ch">\n</span><span class="st">```</span><span class="ch">\n</span><span class="st">"</span>}]}]</span>
+<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a><span class="at">@spaces.GPU</span></span>
+<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_foods_from_image(input_image):</span>
+<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a>    input_image <span class="op">=</span> input_image.resize(size<span class="op">=</span>(<span class="dv">512</span>, <span class="dv">512</span>))</span>
+<span id="cb41-40"><a href="#cb41-40" aria-hidden="true" tabindex="-1"></a>    input_message <span class="op">=</span> create_message(input_image<span class="op">=</span>input_image)</span>
+<span id="cb41-41"><a href="#cb41-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-42"><a href="#cb41-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get outputs from base model (not fine-tuned)</span></span>
+<span id="cb41-43"><a href="#cb41-43" aria-hidden="true" tabindex="-1"></a>    original_pipeline_output <span class="op">=</span> original_pipeline(text<span class="op">=</span>[input_message],</span>
+<span id="cb41-44"><a href="#cb41-44" aria-hidden="true" tabindex="-1"></a>                                                 max_new_tokens<span class="op">=</span>OUTPUT_TOKENS)</span>
+<span id="cb41-45"><a href="#cb41-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-46"><a href="#cb41-46" aria-hidden="true" tabindex="-1"></a>    outputs_pretrained <span class="op">=</span> original_pipeline_output[<span class="dv">0</span>][<span class="dv">0</span>][<span class="st">"generated_text"</span>][<span class="op">-</span><span class="dv">1</span>][<span class="st">"content"</span>]</span>
+<span id="cb41-47"><a href="#cb41-47" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb41-48"><a href="#cb41-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get outputs from fine-tuned model (fine-tuned on food images)</span></span>
+<span id="cb41-49"><a href="#cb41-49" aria-hidden="true" tabindex="-1"></a>    ft_pipe_output <span class="op">=</span> ft_pipe(text<span class="op">=</span>[input_message],</span>
+<span id="cb41-50"><a href="#cb41-50" aria-hidden="true" tabindex="-1"></a>                             max_new_tokens<span class="op">=</span>OUTPUT_TOKENS)</span>
+<span id="cb41-51"><a href="#cb41-51" aria-hidden="true" tabindex="-1"></a>    outputs_fine_tuned <span class="op">=</span> ft_pipe_output[<span class="dv">0</span>][<span class="dv">0</span>][<span class="st">"generated_text"</span>][<span class="op">-</span><span class="dv">1</span>][<span class="st">"content"</span>]</span>
+<span id="cb41-52"><a href="#cb41-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-53"><a href="#cb41-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> outputs_pretrained, outputs_fine_tuned</span>
+<span id="cb41-54"><a href="#cb41-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-55"><a href="#cb41-55" aria-hidden="true" tabindex="-1"></a>demo_title <span class="op">=</span> <span class="st">"🥑➡️📝 FoodExtract-Vision with a fine-tuned SmolVLM2-500M"</span></span>
+<span id="cb41-56"><a href="#cb41-56" aria-hidden="true" tabindex="-1"></a>demo_description <span class="op">=</span> <span class="st">"""* **Base model:** https://huggingface.co/HuggingFaceTB/SmolVLM-500M-Instruct</span></span>
+<span id="cb41-57"><a href="#cb41-57" aria-hidden="true" tabindex="-1"></a><span class="st">* **Fine-tuning dataset:** https://huggingface.co/datasets/mrdbourke/FoodExtract-1k-Vision (1k food images and 500 not food images)</span></span>
+<span id="cb41-58"><a href="#cb41-58" aria-hidden="true" tabindex="-1"></a><span class="st">* **Fine-tuned model:** https://huggingface.co/mrdbourke/FoodExtract-Vision-SmolVLM2-500M-fine-tune-v1</span></span>
+<span id="cb41-59"><a href="#cb41-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-60"><a href="#cb41-60" aria-hidden="true" tabindex="-1"></a><span class="st">## Overview</span></span>
+<span id="cb41-61"><a href="#cb41-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-62"><a href="#cb41-62" aria-hidden="true" tabindex="-1"></a><span class="st">Extract food and drink items in a structured way from images.</span></span>
+<span id="cb41-63"><a href="#cb41-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-64"><a href="#cb41-64" aria-hidden="true" tabindex="-1"></a><span class="st">The original model outputs fail to capture the desired structure. But the fine-tuned model sticks to the output structure quite well.</span></span>
+<span id="cb41-65"><a href="#cb41-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-66"><a href="#cb41-66" aria-hidden="true" tabindex="-1"></a><span class="st">However, the fine-tuned model could definitely be improved with respects to its ability to extract the right food/drink items.</span></span>
+<span id="cb41-67"><a href="#cb41-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-68"><a href="#cb41-68" aria-hidden="true" tabindex="-1"></a><span class="st">Both models use the input prompt:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Classify the given input image into food or not and if edible food or drink items are present, extract those to a list. If no food/drink items are visible, return empty lists.</p>
+<p>Only return valid JSON in the following form:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="er">'is_food'</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span> <span class="er">#</span> <span class="er">int</span> <span class="er">-</span> <span class="er">0</span> <span class="er">or</span> <span class="er">1</span> <span class="er">based</span> <span class="er">on</span> <span class="er">whether</span> <span class="er">food/drinks</span> <span class="er">are</span> <span class="er">present</span> <span class="er">(0</span> <span class="er">=</span> <span class="er">no</span> <span class="er">foods</span> <span class="er">visible,</span> <span class="er">1</span> <span class="er">=</span> <span class="er">foods</span> <span class="er">visible)</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="er">'image_title'</span><span class="fu">:</span> <span class="er">''</span><span class="fu">,</span> <span class="er">#</span> <span class="er">str</span> <span class="er">-</span> <span class="er">short</span> <span class="er">food-related</span> <span class="er">title</span> <span class="er">for</span> <span class="er">what</span> <span class="er">foods/drinks</span> <span class="er">are</span> <span class="er">visible</span> <span class="er">in</span> <span class="er">the</span> <span class="er">image,</span> <span class="er">leave</span> <span class="er">blank</span> <span class="er">if</span> <span class="er">no</span> <span class="er">foods</span> <span class="er">present</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="er">'food_items'</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span> <span class="er">#</span> <span class="er">list[str]</span> <span class="er">-</span> <span class="er">list</span> <span class="er">of</span> <span class="er">visible</span> <span class="er">edible</span> <span class="er">food</span> <span class="er">item</span> <span class="er">nouns</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="er">'drink_items'</span><span class="fu">:</span> <span class="ot">[]</span> <span class="er">#</span> <span class="er">list</span><span class="ot">[</span><span class="er">str</span><span class="ot">]</span> <span class="er">-</span> <span class="er">list</span> <span class="er">of</span> <span class="er">visible</span> <span class="er">edible</span> <span class="er">drink</span> <span class="er">item</span> <span class="er">nouns</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>````</p>
+<p>Except one model has been fine-tuned on the structured data whereas the other hasn’t.</p>
+<p>Notable next steps would be: * <strong>Remove the input prompt:</strong> Just train the model to go straight from image -&gt; text (no text prompt on input), this would save on inference tokens. * <strong>Fine-tune on more real-world data:</strong> Right now the model is only trained on 1k food images (from Food101) and 500 not food (random internet images), training on real world data would likely significantly improve performance. * <strong>Fix the repetitive generation:</strong> The model can sometimes get stuck in a repetitive generation pattern, e.g.&nbsp;“onions”, “onions”, “onions”, etc. We could look into patterns to help reduce this. ““”</p>
+<p>demo = gr.Interface( fn=extract_foods_from_image, inputs=gr.Image(type=“pil”), title=demo_title, description=demo_description, outputs=[gr.Textbox(lines=4, label=“Original Model (not fine-tuned)”), gr.Textbox(lines=4, label=“Fine-tuned Model”)], examples=[[“examples/camera.jpeg”], [“examples/Tandoori-Chicken.jpg”], [“examples/fries.jpeg”]], )</p>
+<p>if <strong>name</strong> == “<strong>main</strong>”: demo.launch(share=False)</p>
+<pre><code>
+
+```python
+%%writefile demos/FoodExtract-Vision-v1/README.md
+---
+title: FoodExtract-Vision Fine-tuned VLM Structued Data Extractor
+emoji: 🍟➡️📝
+colorFrom: green
+colorTo: blue
+sdk: gradio
+app_file: app.py
+pinned: false
+license: apache-2.0
+---
+
+Fine-tuned SmolVLM2-500M to extract food and drink items from images.
+
+Input can be any kind of image and output will be a formatted string such as the following:
+
+```json
+{'is_food': 0, 'image_title': '', 'food_items': [], 'drink_items': []}</code></pre>
+<p>Or for an image of food:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="er">'is_food'</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span> <span class="er">'image_title'</span><span class="fu">:</span> <span class="er">'fried</span> <span class="er">calamari'</span><span class="fu">,</span> <span class="er">'food_items'</span><span class="fu">:</span> <span class="ot">[</span><span class="er">'fried</span> <span class="er">calamari'</span><span class="ot">]</span><span class="fu">,</span> <span class="er">'drink_items'</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Note: This README.md was authored in a live tutorial recorded for YouTube (link coming soon).</p>
+<pre><code>
+
+```python
+%%writefile demos/FoodExtract-Vision-v1/requirements.txt
+num2words
+transformers
+torch
+accelerate
+gradio
+torchvision</code></pre>
+</section>
+<section id="upload-the-demo-to-the-hugging-face-hub" class="level2" data-number="1.11">
+<h2 data-number="1.11" class="anchored" data-anchor-id="upload-the-demo-to-the-hugging-face-hub"><span class="header-section-number">1.11</span> Upload the demo to the Hugging Face Hub</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Import the required methods for uploading to the Hugging Face Hub</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> huggingface_hub <span class="im">import</span> (</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    create_repo,</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    get_full_repo_name,</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    upload_file, <span class="co"># for uploading a single file (if necessary)</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>    upload_folder <span class="co"># for uploading multiple files (in a folder)</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Define the parameters we'd like to use for the upload</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>LOCAL_DEMO_FOLDER_PATH_TO_UPLOAD <span class="op">=</span> <span class="st">"demos/FoodExtract-Vision-v1/"</span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>HF_TARGET_SPACE_NAME <span class="op">=</span> <span class="st">"FoodExtract-Vision-v1"</span></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>HF_REPO_TYPE <span class="op">=</span> <span class="st">"space"</span> <span class="co"># we're creating a Hugging Face Space</span></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>HF_SPACE_SDK <span class="op">=</span> <span class="st">"gradio"</span></span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>HF_TOKEN <span class="op">=</span> <span class="st">""</span> <span class="co"># optional: set to your Hugging Face token (but I'd advise storing this as an environment variable as previously discussed)</span></span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Create a Space repository on Hugging Face Hub </span></span>
+<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Creating repo on Hugging Face Hub with name: </span><span class="sc">{</span>HF_TARGET_SPACE_NAME<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb46-18"><a href="#cb46-18" aria-hidden="true" tabindex="-1"></a>create_repo(</span>
+<span id="cb46-19"><a href="#cb46-19" aria-hidden="true" tabindex="-1"></a>    repo_id<span class="op">=</span>HF_TARGET_SPACE_NAME,</span>
+<span id="cb46-20"><a href="#cb46-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># token=HF_TOKEN, # optional: set token manually (though it will be automatically recognized if it's available as an environment variable)</span></span>
+<span id="cb46-21"><a href="#cb46-21" aria-hidden="true" tabindex="-1"></a>    repo_type<span class="op">=</span>HF_REPO_TYPE,</span>
+<span id="cb46-22"><a href="#cb46-22" aria-hidden="true" tabindex="-1"></a>    private<span class="op">=</span><span class="va">False</span>, <span class="co"># set to True if you don't want your Space to be accessible to others</span></span>
+<span id="cb46-23"><a href="#cb46-23" aria-hidden="true" tabindex="-1"></a>    space_sdk<span class="op">=</span>HF_SPACE_SDK,</span>
+<span id="cb46-24"><a href="#cb46-24" aria-hidden="true" tabindex="-1"></a>    exist_ok<span class="op">=</span><span class="va">True</span>, <span class="co"># set to False if you want an error to raise if the repo_id already exists </span></span>
+<span id="cb46-25"><a href="#cb46-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-26"><a href="#cb46-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-27"><a href="#cb46-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Get the full repository name (e.g. {username}/{model_id} or {username}/{space_name})</span></span>
+<span id="cb46-28"><a href="#cb46-28" aria-hidden="true" tabindex="-1"></a>full_hf_repo_name <span class="op">=</span> get_full_repo_name(model_id<span class="op">=</span>HF_TARGET_SPACE_NAME)</span>
+<span id="cb46-29"><a href="#cb46-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Full Hugging Face Hub repo name: </span><span class="sc">{</span>full_hf_repo_name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb46-30"><a href="#cb46-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-31"><a href="#cb46-31" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Upload our demo folder</span></span>
+<span id="cb46-32"><a href="#cb46-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Uploading </span><span class="sc">{</span>LOCAL_DEMO_FOLDER_PATH_TO_UPLOAD<span class="sc">}</span><span class="ss"> to repo: </span><span class="sc">{</span>full_hf_repo_name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb46-33"><a href="#cb46-33" aria-hidden="true" tabindex="-1"></a>folder_upload_url <span class="op">=</span> upload_folder(</span>
+<span id="cb46-34"><a href="#cb46-34" aria-hidden="true" tabindex="-1"></a>    repo_id<span class="op">=</span>full_hf_repo_name,</span>
+<span id="cb46-35"><a href="#cb46-35" aria-hidden="true" tabindex="-1"></a>    folder_path<span class="op">=</span>LOCAL_DEMO_FOLDER_PATH_TO_UPLOAD,</span>
+<span id="cb46-36"><a href="#cb46-36" aria-hidden="true" tabindex="-1"></a>    path_in_repo<span class="op">=</span><span class="st">"."</span>, <span class="co"># upload our folder to the root directory ("." means "base" or "root", this is the default)</span></span>
+<span id="cb46-37"><a href="#cb46-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># token=HF_TOKEN, # optional: set token manually</span></span>
+<span id="cb46-38"><a href="#cb46-38" aria-hidden="true" tabindex="-1"></a>    repo_type<span class="op">=</span>HF_REPO_TYPE,</span>
+<span id="cb46-39"><a href="#cb46-39" aria-hidden="true" tabindex="-1"></a>    commit_message<span class="op">=</span><span class="st">"Uploading FoodExtract-Vision demo app.py from YouTube tutorial video"</span></span>
+<span id="cb46-40"><a href="#cb46-40" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-41"><a href="#cb46-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Demo folder successfully uploaded with commit URL: </span><span class="sc">{</span>folder_upload_url<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="embed-the-demo-into-the-notebook" class="level2" data-number="1.12">
+<h2 data-number="1.12" class="anchored" data-anchor-id="embed-the-demo-into-the-notebook"><span class="header-section-number">1.12</span> Embed the demo into the notebook</h2>
+<p>We can embed our demo with HTML right into our notebook.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> HTML</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>html_code <span class="op">=</span> <span class="st">"""&lt;iframe</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="st">    src="https://mrdbourke-foodextract-vision-v1.hf.space"</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="st">    frameborder="0"</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="st">    width="1500"</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="st">    height="1500"</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="st">&gt;&lt;/iframe&gt;</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>display(HTML(html_code))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="notes" class="level2" data-number="1.13">
+<h2 data-number="1.13" class="anchored" data-anchor-id="notes"><span class="header-section-number">1.13</span> Notes</h2>
+<ul>
+<li><strong>Datatypes:</strong> Make sure model inputs are the same dtype as the model loaded (e.g.&nbsp;if model is quantized, inputs should be quantized too or if model is bfloat16, inputs should be bfloat16 as well)</li>
+<li><strong>Prompt inputs:</strong> If not using <code>transformers.pipeline</code> beware that the system_prompt may have to be folded into the user_prompt, otherwise there will be errors.</li>
+</ul>
+</section>
+<section id="extensions" class="level2" data-number="1.14">
+<h2 data-number="1.14" class="anchored" data-anchor-id="extensions"><span class="header-section-number">1.14</span> Extensions</h2>
+<ol type="1">
+<li><p><strong>Formalise evaluations</strong> - How does our model compare to a model such as Qwen3-VL-8B?</p></li>
+<li><p><strong>Improve/scale the data sampling</strong> - if our model makes mistakes, could we improve the input data (more samples + more diverse samples)? For example, introduce 1000+ real life food images (on top of Food101).</p></li>
+<li><p><strong>Remove the input prompt</strong> - right now our model is fine-tuned with an input prompt (text) as well as an image. In the future, we could just have it go straight from image -&gt; JSON to save on input tokens.</p></li>
+<li><p><strong>Fix the repetitive generation</strong> - Sometimes our model produces outputs such as “onion”, “onion”, “onion”, “onion”. What are some ways we could fix this? Perhaps we’d need to introduce RL for avoiding repetitive generation.</p></li>
+<li><p><strong>Try the fine-tune process on another dataset</strong> - Practice fine-tuning a small model for another structured data task such as extracting details from an invoice or from a poster (like Apple’s Visual Intelligence). The model likely has seen more of these samples in training so it may be better at this task.</p></li>
+</ol>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/www\.learnhuggingface\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/mrdbourke/learn-huggingface/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.mrdbourke.com">
+      <i class="bi bi-globe" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mrdbourke/learn-huggingface">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.youtube.com/channel/UCr8O8l5cCX85Oem1d18EezQ">
+      <i class="bi bi-youtube" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/mrdbourke">
+      <i class="bi bi-twitter-x" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/mrdbourke/">
+      <i class="bi bi-linkedin" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
