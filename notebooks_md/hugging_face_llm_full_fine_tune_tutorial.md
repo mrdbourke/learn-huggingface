@@ -371,13 +371,64 @@ We can pass these tokens directly too our model.
 ```python
 import torch 
 
-outputs = model(torch.tensor(tokenizer("Hello my name is Daniel")["input_ids"]).unsqueeze(0).to(DEVICE))
+input_string = "Hello my name is Daniel"
+print(f"[INFO] Input string: {input_string}")
+
+token_tensor = torch.tensor(tokenizer(input_string)["input_ids"]).unsqueeze(0).to(DEVICE)
+print(f"[INFO] Token tensor shape: {token_tensor.shape}")
+print(f"[INFO] Token tensor dtype: {token_tensor.dtype}")
+print(f"[INFO] Token tensor device: {token_tensor.device}")
+print(f"[INFO] Token tensor: {token_tensor}")
+
+outputs = model(token_tensor)
 outputs.keys()
 ```
 
 Feel free to inspec the `'logits'` and `'past_key_values'` our model outputs, however, these aren't necessarily valuable to use yet.
 
 We'll need to convert them back into tokens so we can read them.
+
+
+```python
+# Get the logits shape
+logits = outputs.logits
+print(f"[INFO] Logits shape: {logits.shape}")
+```
+
+This comes in the form `[batch_size, num_tokens, vocab_size]` where `vocab_size` is the number of unique tokens in our model's tokenizer. Each one maps to a specific sequence.
+
+### Tokens in, tokens out
+
+We input tokens into our model and it output some values called `"logits"`.
+
+These are raw outputs from the model.
+
+To make them understandable, we'll have to convert them to tokens and then from tokens back to text.
+
+To go from logits to *most likely token* we can take the maximum logit value across the `vocab_size` (also called the vocab dimension).
+
+Then we can use our tokenizer's built-in methods of `convert_ids_to_tokens` and `decode` to get text-based outputs.
+
+
+
+```python
+# Get the predicted token IDs by taking argmax over the vocab dimension
+predicted_ids = outputs.logits.argmax(dim=-1)  # shape: [1, seq_len]
+print(f"[INFO] Predicted token IDs shape: {predicted_ids.shape}")
+print(f"[INFO] Predicted token IDs: {predicted_ids}")
+
+# Decode back to text
+predicted_tokens = tokenizer.convert_ids_to_tokens(predicted_ids[0])
+predicted_text = tokenizer.decode(predicted_ids[0])
+
+print(f"[INFO] Token IDs: {predicted_ids[0].tolist()}")
+print(f"[INFO] Tokens: {predicted_tokens}")
+print(f"[INFO] Decoded text: {predicted_text}")
+
+print(f"\n[INFO] Original input string: {input_string}")
+```
+
+Hmm... it doesn't seem our model's outputs are very good for what we input. Perhaps there's a missing preprocessing step? We'll investigate this later on.
 
 ### Counting the number of parameters in our model
 
