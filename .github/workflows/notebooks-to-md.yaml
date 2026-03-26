@@ -43,7 +43,7 @@ jobs:
 
           for nb in $CHANGED; do
             if [ -f "$nb" ]; then
-              jupyter nbconvert --to markdown --no-output "$nb" --output-dir notebooks_md/
+              jupyter nbconvert --to markdown --ClearOutputPreprocessor.enabled=True "$nb" --output-dir notebooks_md/
               echo "Converted: $nb"
             fi
           done
