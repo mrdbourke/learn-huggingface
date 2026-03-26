@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - "!notebooks_md/"
 
 website:
   title: "Learn Hugging Face 🤗"

@@ -1,0 +1,57 @@
+# .github/workflows/notebooks-to-md.yaml
+# Converts any changed .ipynb files in notebooks/ to clean .md on push to main
+
+name: Convert Notebooks to Markdown
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'notebooks/**.ipynb'
+
+permissions:
+  contents: write
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install nbconvert
+        run: pip install jupyter nbconvert
+
+      - name: Convert changed notebooks to Markdown (no outputs)
+        run: |
+          mkdir -p notebooks_md
+
+          CHANGED=$(git diff --name-only HEAD~1 HEAD -- 'notebooks/**.ipynb' 2>/dev/null || true)
+
+          if [ -z "$CHANGED" ]; then
+            CHANGED=$(find notebooks -name '*.ipynb' -not -path '*/.ipynb_checkpoints/*')
+          fi
+
+          echo "Converting: $CHANGED"
+
+          for nb in $CHANGED; do
+            if [ -f "$nb" ]; then
+              jupyter nbconvert --to markdown --no-output "$nb" --output-dir notebooks_md/
+              echo "Converted: $nb"
+            fi
+          done
+
+      - name: Commit and push .md files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add notebooks_md/
+          git diff --cached --quiet || git commit -m "Auto-generate .md from notebooks [skip ci]"
+          git push
