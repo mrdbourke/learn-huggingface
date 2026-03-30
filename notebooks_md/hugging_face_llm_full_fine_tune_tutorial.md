@@ -1329,6 +1329,9 @@ Otherwise, you'll likely get strange or incorrect outputs.
 
 :::
 
+
+### Making a helper function to precict on any given sample
+
 Okay let's make another helper function to predict on any given sample input.
 
 We'll also return the inference time of our model so we can see how long things take (a working model is one thing but if it takes too long, well then it might not be as useful as we'd like).
