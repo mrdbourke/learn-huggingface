@@ -464,10 +464,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#fine-tuning-our-model" id="toc-fine-tuning-our-model" class="nav-link" data-scroll-target="#fine-tuning-our-model"><span class="header-section-number">6</span> Fine-tuning our model</a>
   <ul class="collapse">
-  <li><a href="#evaluate-our-model" id="toc-evaluate-our-model" class="nav-link" data-scroll-target="#evaluate-our-model"><span class="header-section-number">6.1</span> Evaluate our model</a></li>
-  <li><a href="#inspect-our-models-loss-curves" id="toc-inspect-our-models-loss-curves" class="nav-link" data-scroll-target="#inspect-our-models-loss-curves"><span class="header-section-number">6.2</span> Inspect our model’s loss curves</a></li>
-  <li><a href="#save-the-best-model" id="toc-save-the-best-model" class="nav-link" data-scroll-target="#save-the-best-model"><span class="header-section-number">6.3</span> Save the best model</a></li>
-  <li><a href="#optional-remove-checkpoints" id="toc-optional-remove-checkpoints" class="nav-link" data-scroll-target="#optional-remove-checkpoints"><span class="header-section-number">6.4</span> Optional: Remove checkpoints</a></li>
+  <li><a href="#setting-up-sftconfig-the-hyperparameters-for-our-model-training" id="toc-setting-up-sftconfig-the-hyperparameters-for-our-model-training" class="nav-link" data-scroll-target="#setting-up-sftconfig-the-hyperparameters-for-our-model-training"><span class="header-section-number">6.1</span> Setting up SFTConfig, the hyperparameters for our model training</a></li>
+  <li><a href="#setting-up-sfttrainer-the-conductor-of-our-model-training" id="toc-setting-up-sfttrainer-the-conductor-of-our-model-training" class="nav-link" data-scroll-target="#setting-up-sfttrainer-the-conductor-of-our-model-training"><span class="header-section-number">6.2</span> Setting up SFTTrainer, the conductor of our model training</a></li>
+  <li><a href="#evaluating-our-fine-tuned-model" id="toc-evaluating-our-fine-tuned-model" class="nav-link" data-scroll-target="#evaluating-our-fine-tuned-model"><span class="header-section-number">6.3</span> Evaluating our fine-tuned model</a></li>
+  <li><a href="#inspect-our-models-loss-curves" id="toc-inspect-our-models-loss-curves" class="nav-link" data-scroll-target="#inspect-our-models-loss-curves"><span class="header-section-number">6.4</span> Inspect our model’s loss curves</a></li>
+  <li><a href="#save-the-best-model" id="toc-save-the-best-model" class="nav-link" data-scroll-target="#save-the-best-model"><span class="header-section-number">6.5</span> Save the best model</a></li>
+  <li><a href="#optional-remove-checkpoints" id="toc-optional-remove-checkpoints" class="nav-link" data-scroll-target="#optional-remove-checkpoints"><span class="header-section-number">6.6</span> Optional: Remove checkpoints</a></li>
   </ul></li>
   <li><a href="#load-the-trained-model-back-in-and-see-how-it-performs" id="toc-load-the-trained-model-back-in-and-see-how-it-performs" class="nav-link" data-scroll-target="#load-the-trained-model-back-in-and-see-how-it-performs"><span class="header-section-number">7</span> Load the trained model back in and see how it performs</a>
   <ul class="collapse">
@@ -1860,7 +1862,9 @@ Note
 <p>For more on this, I’d suggest reading through the documentation for 30-60 minutes.</p>
 </div>
 </div>
-<p>There are many settings in the <code>SFTConfig</code>, however, we’re going to focus on a few:</p>
+<section id="setting-up-sftconfig-the-hyperparameters-for-our-model-training" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="setting-up-sftconfig-the-hyperparameters-for-our-model-training"><span class="header-section-number">6.1</span> Setting up SFTConfig, the hyperparameters for our model training</h3>
+<p>There are many settings (often referred to as <strong>hyperparameters</strong>) in the <code>SFTConfig</code>, however, we’re going to focus on a few:</p>
 <ul>
 <li><code>output_dir</code> - This is where we’ll save our model/model checkpoints.</li>
 <li><code>max_length</code> - This is maximum length of tokens our model will accept as input, anything longer than this we will cut off.</li>
@@ -1923,6 +1927,9 @@ Note
 [INFO] Using learning rate: 5e-05</code></pre>
 </div>
 </div>
+</section>
+<section id="setting-up-sfttrainer-the-conductor-of-our-model-training" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="setting-up-sfttrainer-the-conductor-of-our-model-training"><span class="header-section-number">6.2</span> Setting up SFTTrainer, the conductor of our model training</h3>
 <p>Config setup, now we can train our model with <code>trl.SFTTrainer</code>!</p>
 <p>We’ll pass in the following arguments:</p>
 <ul>
@@ -2024,8 +2031,9 @@ The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and g
 <pre><code>There were missing keys in the checkpoint model loaded: ['lm_head.weight'].</code></pre>
 </div>
 </div>
-<section id="evaluate-our-model" class="level3" data-number="6.1">
-<h3 data-number="6.1" class="anchored" data-anchor-id="evaluate-our-model"><span class="header-section-number">6.1</span> Evaluate our model</h3>
+</section>
+<section id="evaluating-our-fine-tuned-model" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="evaluating-our-fine-tuned-model"><span class="header-section-number">6.3</span> Evaluating our fine-tuned model</h3>
 <p>We can evaluate our model within the trainer instance using <code>trainer.evaluate</code>.</p>
 <p>This will run our model across the <code>eval_dataset</code> (we set this to be <code>dataset["test"]</code>) and record metrics.</p>
 <div id="56aa74fe" class="cell" data-execution_count="25">
@@ -2071,8 +2079,8 @@ The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and g
 <p>Remember that this metric includes the actual tokens output by our model, including the format specific tokens.</p>
 <p>So our model’s accuracy metric will go up when it generates the token <code>food:</code> or <code>drink:</code> correctly, the number goes up. Every correctly generated token contributes to the accuracy. We can inspect field-level token performance metrics (e.g.&nbsp;which specific <code>food_items</code> were generated) later on.</p>
 </section>
-<section id="inspect-our-models-loss-curves" class="level3" data-number="6.2">
-<h3 data-number="6.2" class="anchored" data-anchor-id="inspect-our-models-loss-curves"><span class="header-section-number">6.2</span> Inspect our model’s loss curves</h3>
+<section id="inspect-our-models-loss-curves" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="inspect-our-models-loss-curves"><span class="header-section-number">6.4</span> Inspect our model’s loss curves</h3>
 <p>Woohoo! Looks like mean token accuracy went up and our loss values trended down.</p>
 <p>Let’s inspect the loss curves, we can do so by extracting the values from the <code>trainer.state.log_history</code> attribute.</p>
 <div id="0e176da4" class="cell" data-execution_count="27">
@@ -2107,8 +2115,8 @@ The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and g
 </div>
 </div>
 </section>
-<section id="save-the-best-model" class="level3" data-number="6.3">
-<h3 data-number="6.3" class="anchored" data-anchor-id="save-the-best-model"><span class="header-section-number">6.3</span> Save the best model</h3>
+<section id="save-the-best-model" class="level3" data-number="6.5">
+<h3 data-number="6.5" class="anchored" data-anchor-id="save-the-best-model"><span class="header-section-number">6.5</span> Save the best model</h3>
 <p>We can save our best model to file using <a href="transformers.Trainer.save_model"><code>trl.SFTTrainer.save_model</code></a>.</p>
 <div id="ab9d8bbd" class="cell" data-execution_count="28">
 <div class="cell-label cell-label-in">In [28]:</div>
@@ -2116,8 +2124,8 @@ The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and g
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>trainer.save_model()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="optional-remove-checkpoints" class="level3" data-number="6.4">
-<h3 data-number="6.4" class="anchored" data-anchor-id="optional-remove-checkpoints"><span class="header-section-number">6.4</span> Optional: Remove checkpoints</h3>
+<section id="optional-remove-checkpoints" class="level3" data-number="6.6">
+<h3 data-number="6.6" class="anchored" data-anchor-id="optional-remove-checkpoints"><span class="header-section-number">6.6</span> Optional: Remove checkpoints</h3>
 <p>When we upload our model to Hugging Face, a typical practice is to upload a certain folder (e.g.&nbsp;<code>checkpoint_models/</code>) including all the contents so we get the artifacts such as <code>config.json</code>, <code>generation_config.json</code>, <code>tokenizer.json</code> and more.</p>
 <p>However, if we’ve got a large number of checkpoints from a training run, this could lead to uploading too many files.</p>
 <div id="eeb7fa9e" class="cell" data-execution_count="29">

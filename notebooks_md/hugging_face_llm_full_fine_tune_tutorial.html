@@ -469,6 +469,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#performing-inference-with-our-fine-tuned-model-on-the-test-dataset" id="toc-performing-inference-with-our-fine-tuned-model-on-the-test-dataset" class="nav-link" data-scroll-target="#performing-inference-with-our-fine-tuned-model-on-the-test-dataset"><span class="header-section-number">0.7.1</span> Performing inference with our fine-tuned model on the test dataset</a></li>
   <li><a href="#attempt-2-testing-our-model-on-unformatted-text" id="toc-attempt-2-testing-our-model-on-unformatted-text" class="nav-link" data-scroll-target="#attempt-2-testing-our-model-on-unformatted-text"><span class="header-section-number">0.7.2</span> Attempt 2: Testing our model on unformatted text</a></li>
+  <li><a href="#making-a-helper-function-to-precict-on-any-given-sample" id="toc-making-a-helper-function-to-precict-on-any-given-sample" class="nav-link" data-scroll-target="#making-a-helper-function-to-precict-on-any-given-sample"><span class="header-section-number">0.7.3</span> Making a helper function to precict on any given sample</a></li>
   </ul></li>
   <li><a href="#uploading-our-fine-tuned-model-to-the-hugging-face-hub" id="toc-uploading-our-fine-tuned-model-to-the-hugging-face-hub" class="nav-link" data-scroll-target="#uploading-our-fine-tuned-model-to-the-hugging-face-hub"><span class="header-section-number">0.8</span> Uploading our fine-tuned model to the Hugging Face Hub</a>
   <ul class="collapse">
@@ -1689,6 +1690,9 @@ Tip
 <p>Otherwise, you’ll likely get strange or incorrect outputs.</p>
 </div>
 </div>
+</section>
+<section id="making-a-helper-function-to-precict-on-any-given-sample" class="level3" data-number="0.7.3">
+<h3 data-number="0.7.3" class="anchored" data-anchor-id="making-a-helper-function-to-precict-on-any-given-sample"><span class="header-section-number">0.7.3</span> Making a helper function to precict on any given sample</h3>
 <p>Okay let’s make another helper function to predict on any given sample input.</p>
 <p>We’ll also return the inference time of our model so we can see how long things take (a working model is one thing but if it takes too long, well then it might not be as useful as we’d like).</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
