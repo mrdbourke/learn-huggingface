@@ -1097,6 +1097,14 @@ trainer = SFTTrainer(
 training_ouput = trainer.train()
 ```
 
+::: {.callout-note}
+Don't worry if the numbers on your end aren't the exact same as what we've got here. This is due to the natural randomness of machine learning.
+
+The direction here is more important.
+
+As in, does your training loss head downward? If so, your model is likely learning!
+:::
+
 ### Evaluating our fine-tuned model
 
 We can evaluate our model within the trainer instance using `trainer.evaluate`.
