@@ -1004,7 +1004,10 @@ It offers many methods to train language models such as Supervised Fine-Tuning (
 For more on this, I'd suggest reading through the documentation for 30-60 minutes.
 :::
 
-There are many settings in the `SFTConfig`, however, we're going to focus on a few:
+
+### Setting up SFTConfig, the hyperparameters for our model training
+
+There are many settings (often referred to as **hyperparameters**) in the `SFTConfig`, however, we're going to focus on a few:
 
 * `output_dir` - This is where we'll save our model/model checkpoints.
 * `max_length` - This is maximum length of tokens our model will accept as input, anything longer than this we will cut off.
@@ -1064,6 +1067,8 @@ sft_config = SFTConfig(
 # sft_config
 ```
 
+### Setting up SFTTrainer, the conductor of our model training
+
 Config setup, now we can train our model with `trl.SFTTrainer`!
 
 We'll pass in the following arguments:
@@ -1092,7 +1097,7 @@ trainer = SFTTrainer(
 training_ouput = trainer.train()
 ```
 
-### Evaluate our model
+### Evaluating our fine-tuned model
 
 We can evaluate our model within the trainer instance using `trainer.evaluate`.
 
