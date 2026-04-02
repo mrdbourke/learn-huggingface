@@ -18,7 +18,7 @@
     "href": "index.html#updates",
     "title": "Learn Hugging Face 🤗",
     "section": "Updates",
-    "text": "Updates\n\n26 Feb 2026 - Update links to LLM fine-tuning, VLM fine-tuning, Multimodal RAG notebooks (these all work, however, I’m in the process of tidying them up). Add dark mode to notebooks.\n08 Jan 2026 - Add first iteration of full fine-tuning notebook for Gemma 3 270M (fully fine-tune a Small Language Model for structured data extraction)\n07 Nov 2025 - Videos for the object detection project are now available on ZTM in the Hugging Face Bootcamp!\n18 June 2025 - All code has been completed for the object detection project, train a custom object detection model and make a demo with it for others to try! (video course to come soon)\n1 Oct 2024 - Video course version of text classification is live on ZTM! Inside, we’ll walkthrough every line of code building the text classification project with Hugging Face Datasets, Transformers and Spaces."
+    "text": "Updates\n\n1 Apr 2026 - Fully finished LLM fine-tuning notebook, recorded all video course videos for the notebook, they will be available soon on ZTM.\n26 Feb 2026 - Update links to LLM fine-tuning, VLM fine-tuning, Multimodal RAG notebooks (these all work, however, I’m in the process of tidying them up). Add dark mode to notebooks.\n08 Jan 2026 - Add first iteration of full fine-tuning notebook for Gemma 3 270M (fully fine-tune a Small Language Model for structured data extraction)\n07 Nov 2025 - Videos for the object detection project are now available on ZTM in the Hugging Face Bootcamp!\n18 June 2025 - All code has been completed for the object detection project, train a custom object detection model and make a demo with it for others to try! (video course to come soon)\n1 Oct 2024 - Video course version of text classification is live on ZTM! Inside, we’ll walkthrough every line of code building the text classification project with Hugging Face Datasets, Transformers and Spaces."
   },
   {
     "objectID": "index.html#who-is-it-for",
@@ -1789,7 +1789,7 @@
     "href": "notebooks_md/hugging_face_llm_full_fine_tune_tutorial.html",
     "title": "Fully Fine-tune a Small Language Model with Hugging Face Tutorial",
     "section": "",
-    "text": "Source Code | Markdown version | Walkthrough video on YouTube | Slides"
+    "text": "Source Code | Markdown version | Walkthrough video on YouTube | Slides | Video course (coming soon)"
   },
   {
     "objectID": "notebooks_md/hugging_face_llm_full_fine_tune_tutorial.html#overview",
