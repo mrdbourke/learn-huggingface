@@ -1,4 +1,4 @@
-# Work in progress: Batched LLM inference
+# Work in progress: Batched LLM inference with Hugging Face Transformers
 
 Note: This notebook is a work in progress.
 
@@ -13,7 +13,17 @@ print(f"Last updated: {time.ctime()}")
 
 ## Bonus: Speeding up our model with batched inference
 
-TK - split this into another notebook
+UPTOHERE TODO:
+
+- Get the code working end to end
+- Add intro explaining this requires knowledge from the previous notebook
+- Break this notebook into sections
+    - Goal
+    - Intro
+    - Step by step code to reproduce the workflow
+    - Where to go next
+
+--
 
 Right now our model only inferences on one sample at a time but as is the case with many machine learning models, we could perform inference on multiple samples (also referred to as a batch) to significantly improve throughout.
 
@@ -64,6 +74,45 @@ dataset = dataset["train"].train_test_split(test_size=0.2,
 dataset
 ```
 
+## TK - Load the model
+
+
+```python
+# Load the fine-tuned model and see how it goes
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+MODEL_ID = "mrdbourke/FoodExtract-gemma-3-270m-fine-tune-v1"
+
+print(f"[INFO] Loading in model from: {MODEL_ID}")
+
+# Load tokenizer
+tokenizer = AutoTokenizer.from_pretrained(
+    pretrained_model_name_or_path=MODEL_ID,
+)
+
+# Load trained model
+loaded_model = AutoModelForCausalLM.from_pretrained(
+    pretrained_model_name_or_path=MODEL_ID,
+    dtype="auto",
+    device_map="auto",
+    attn_implementation="eager"
+);
+
+# Check our loaded model (it's the same architecture as before except this time with updated weights)
+loaded_model
+```
+
+
+```python
+from transformers import pipeline
+
+loaded_model_pipeline = pipeline("text-generation",
+                                 model=loaded_model,
+                                 tokenizer=tokenizer)
+
+loaded_model_pipeline
+```
+
 
 ```python
 # Step 1: Need to turn our samples into batches (e.g. lists of samples)
@@ -79,6 +128,8 @@ test_input_prompts = [
 print(f"[INFO] Number of test sample prompts: {len(test_input_prompts)}")
 test_input_prompts[0]
 ```
+
+## TK - Run batch predictions with manual batching
 
 
 ```python
@@ -113,6 +164,140 @@ for CHUNK_SIZE in chunk_sizes_to_test:
     print(f"[INFO] Total time for batch size {CHUNK_SIZE}: {total_time:.2f}s")
     print("="*80 + "\n\n")
 ```
+
+
+```python
+# TK - What does all_outputs do?
+print(len(all_outputs))
+```
+
+## TK - Run batch predictions with `pipeline`'s automatic batching
+
+
+```python
+import time
+
+chunk_sizes_to_test = [1, 4, 8, 16, 32, 64, 128]
+timing_dict = {}
+
+for batch_size in chunk_sizes_to_test:
+    print(f"[INFO] Running with batch_size={batch_size}")
+    start_time = time.time()
+
+    outputs = loaded_model_pipeline(
+        test_input_prompts,
+        batch_size=batch_size,
+        max_new_tokens=256,
+    )
+
+    elapsed = time.time() - start_time
+    timing_dict[batch_size] = elapsed
+    print(f"[INFO] batch_size={batch_size}: {elapsed:.2f}s | {len(test_input_prompts)/elapsed:.1f} samples/s\n")
+
+print(timing_dict)
+```
+
+
+```python
+batch_size
+```
+
+## TK - Run with KeyDataset
+
+
+```python
+# Run in the same script/notebook where loaded_model_pipeline, test_input_prompts, and ds are defined
+import time
+from datasets import Dataset
+from transformers.pipelines.pt_utils import KeyDataset
+from tqdm.auto import tqdm
+
+chunk_sizes_to_test = [1, 4, 8, 16, 32, 64, 128]
+timing_dict = {}
+all_outputs = {}
+
+ds = Dataset.from_dict({"text": test_input_prompts})
+
+for batch_size in chunk_sizes_to_test:
+    print(f"[INFO] Running with batch_size={batch_size}")
+    start_time = time.time()
+
+    outputs = []
+    for out in tqdm(
+        loaded_model_pipeline(KeyDataset(ds, "text"), batch_size=batch_size, max_new_tokens=256),
+        total=len(test_input_prompts),
+        desc=f"batch_size={batch_size}",
+    ):
+        outputs.append(out)
+
+    elapsed = time.time() - start_time
+    timing_dict[batch_size] = elapsed
+    all_outputs[batch_size] = outputs
+    print(f"[INFO] batch_size={batch_size}: {elapsed:.2f}s | {len(test_input_prompts)/elapsed:.1f} samples/s\n")
+
+# --- Verification: compare all batch sizes against batch_size=1 as baseline ---
+baseline_size = chunk_sizes_to_test[0]
+baseline_outputs = all_outputs[baseline_size]
+
+print(f"{'Batch Size':<12} {'Length Match':<14} {'Outputs Match':<16} {'Time (s)':<10} {'Speedup vs bs=1'}")
+print("=" * 70)
+
+for batch_size in chunk_sizes_to_test:
+    outputs = all_outputs[batch_size]
+    len_match = len(outputs) == len(baseline_outputs)
+    outputs_match = outputs == baseline_outputs
+    speedup = timing_dict[baseline_size] / timing_dict[batch_size]
+
+    print(f"{batch_size:<12} {str(len_match):<14} {str(outputs_match):<16} {timing_dict[batch_size]:<10.2f} {speedup:.2f}x")
+```
+
+## TK - Compare the results of batch (token size)
+
+
+```python
+# Run in the same script/notebook, after the benchmarking loop above
+from difflib import SequenceMatcher
+
+def extract_generated_text(output):
+    """Extract the generated text string from a pipeline output.
+    Adjust the key access depending on your pipeline's output format."""
+    if isinstance(output, list):
+        return output[0]["generated_text"]
+    return output["generated_text"]
+
+def token_similarity(text_a, text_b):
+    """Simple token-level overlap: proportion of matching tokens."""
+    tokens_a = text_a.split()
+    tokens_b = text_b.split()
+    matcher = SequenceMatcher(None, tokens_a, tokens_b)
+    return matcher.ratio()  # 0.0 to 1.0
+
+# Compare all batch sizes against batch_size=1
+baseline_size = chunk_sizes_to_test[0]
+baseline_texts = [extract_generated_text(o) for o in all_outputs[baseline_size]]
+
+print(f"{'Batch Size':<12} {'Length Match':<14} {'Avg Token Sim':<16} {'Time (s)':<10} {'Speedup vs bs=1'}")
+print("=" * 70)
+
+for batch_size in chunk_sizes_to_test:
+    outputs = all_outputs[batch_size]
+    candidate_texts = [extract_generated_text(o) for o in outputs]
+
+    len_match = len(candidate_texts) == len(baseline_texts)
+
+    similarities = [
+        token_similarity(base, cand)
+        for base, cand in zip(baseline_texts, candidate_texts)
+    ]
+    avg_sim = sum(similarities) / len(similarities) * 100
+
+    speedup = timing_dict[baseline_size] / timing_dict[batch_size]
+
+    sim_str = f"{avg_sim:.2f}%"
+    print(f"{batch_size:<12} {str(len_match):<14} {sim_str:<16} {timing_dict[batch_size]:<10.2f} {speedup:.2f}x")
+```
+
+## TK - Compare the results of batching (speed wise)
 
 Batched inference complete! Let's make a plot comparing different batch sizes.
 
