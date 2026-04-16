@@ -34,10 +34,10 @@ website:
     style: "docked"
     search: true
     contents:
-      - section: "Natural Language Processing (NLP)"
+      - section: "LLMs/Natural Language Processing (NLP)"
         contents:
           - href: notebooks/hugging_face_llm_full_fine_tune_tutorial.ipynb
-            text: Fully fine-tune an LLM to do structrued data extraction
+            text: Fully fine-tune a (small) LLM to do structrued data extraction
           - href: notebooks/hugging_face_llm_batched_inference_with_transformers.ipynb
             text: Perform faster inference with LLMs using batched inference with transformers
           - href: notebooks/hugging_face_text_classification_tutorial.ipynb

@@ -37,7 +37,7 @@ This will be our (rough) workflow:
 
 | Extension | Description |
 | ----- | ----- |
-| Perform batched inference with an LLM and Hugging Face Transformers | Take an existing LLM and learn how to speed up prediction times by batching together samples. This is helpful if you need to perform inference over a large dataset. Uses a small model to run on Google Colab or locally. |
+| [Perform batched inference with an LLM and Hugging Face Transformers](https://www.learnhuggingface.com/notebooks/hugging_face_llm_batched_inference_with_transformers) | Take an existing LLM and learn how to speed up prediction times by batching together samples. This is helpful if you need to perform inference over a large dataset. Uses a small model to run on Google Colab or locally. |
 
 : {tbl-colwidths="[15,40,5,5,5,5]"}
 
