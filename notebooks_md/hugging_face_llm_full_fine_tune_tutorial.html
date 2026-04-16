@@ -374,6 +374,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../notebooks/hugging_face_llm_batched_inference_with_transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Perform faster inference with LLMs using batched inference with transformers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../notebooks/hugging_face_text_classification_tutorial.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Build a custom text classification model and demo</span></a>
   </div>
@@ -2331,8 +2337,8 @@ The tags map to the following items:
 <p>If you want to learn more or continue the current project, I’d recommend trying the following.</p>
 <ul>
 <li><a href="https://www.learnhuggingface.com/notebooks/hugging_face_llm_batched_inference_with_transformers"><strong>Batched inference with Hugging Face Transformers</strong></a> - Let’s say you wanted to perform inference with the model across ~1 billion samples. Doing this 1 by 1 would take quite a long time. To fix this, you can perform batched inference, meaning the model predicts on multiple samples at a time (e.g.&nbsp;16 samples at once instead of 1). This often dramatically speeds up inference time per sample and is highly recommended in practice.</li>
-<li><a href="https://www.learnhuggingface.com/notebooks/hugging_face_llm_structured_data_extraction_evals"><strong>Structured data extraction evaluation</strong></a> - In this notebook we evaluated our model’s output after fine-tuning by manually inspecting samples. And so far this <em>looks</em> good. However, in practice or a production setting, you’ll likely want to evaluate your models outputs in a more structured way. This notebook focuses on doing just that. Validating our model’s output structure as well as applying metrics to actual extraction values compared to the ground truth. Having these specific insights we can plan out how to improve our model’s performance in the future.</li>
-<li><a href="https://www.learnhuggingface.com/notebooks/hugging_face_llm_inference_with_vllm"><strong>vLLM batched inference</strong></a> - If you want to step things up even further with faster inference, you’ll likely want to use a dedicated inference engine such as vLLM. Because vLLM is designed for fast inference, you’ll often see significant speed increases compared to using native Hugging Face <code>transformers</code>.</li>
+<li><a href="https://www.learnhuggingface.com/notebooks/hugging_face_llm_structured_data_extraction_evals"><strong>LLM structured data extraction evaluation</strong></a> - In this notebook we evaluated our model’s output after fine-tuning by manually inspecting samples. And so far this <em>looks</em> good. However, in practice or a production setting, you’ll likely want to evaluate your models outputs in a more structured way. This notebook focuses on doing just that. Validating our model’s output structure as well as applying metrics to actual extraction values compared to the ground truth. Having these specific insights we can plan out how to improve our model’s performance in the future.</li>
+<li><a href="https://www.learnhuggingface.com/notebooks/hugging_face_llm_inference_with_vllm"><strong>Speeding up batched inference with vLLM</strong></a> - If you want to step things up even further with faster inference, you’ll likely want to use a dedicated inference engine such as vLLM. Because vLLM is designed for fast inference, you’ll often see significant speed increases compared to using native Hugging Face <code>transformers</code>.</li>
 <li><strong>Advance your model with Reinforcement Learning (RL)</strong> - In this notebook we’ve used Supervised Fine-tuning (SFT) to get to produce certain outputs given certain inputs. However, for more advanced input and output pairs, you might want to look into reinforcement learning (RL). RL is a technique which uses reward functions to train a model to reproduce certain behaviours. For example, if you were using RL to improve a model’s ability to solve a math problem, it might get a +1 for getting the right answer. This is a simplified overview but RL is a potential next step in the training journey of our model. For more resources on this, look into:
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Reinforcement_learning_from_human_feedback">Reinforcement Learning from Human Feedback (RLHF)</a> - If you want your model to sound a particular way, this is a popular technique to train a model to learn to replicate human preferences.</li>

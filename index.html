@@ -338,6 +338,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./notebooks/hugging_face_llm_batched_inference_with_transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Perform faster inference with LLMs using batched inference with transformers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./notebooks/hugging_face_text_classification_tutorial.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Build a custom text classification model and demo</span></a>
   </div>
@@ -394,7 +400,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#contents" id="toc-contents" class="nav-link active" data-scroll-target="#contents">Contents</a></li>
+  <li><a href="#contents" id="toc-contents" class="nav-link active" data-scroll-target="#contents">Contents</a>
+  <ul class="collapse">
+  <li><a href="#extensions" id="toc-extensions" class="nav-link" data-scroll-target="#extensions">Extensions</a></li>
+  </ul></li>
   <li><a href="#updates" id="toc-updates" class="nav-link" data-scroll-target="#updates">Updates</a></li>
   <li><a href="#who-is-it-for" id="toc-who-is-it-for" class="nav-link" data-scroll-target="#who-is-it-for">Who is it for?</a></li>
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
@@ -444,14 +453,6 @@ A general Hugging Face workflow from idea to shared model and demo using tools f
 <section id="contents" class="level2">
 <h2 class="anchored" data-anchor-id="contents">Contents</h2>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 15%">
-<col style="width: 40%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 5%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Project</th>
@@ -513,6 +514,26 @@ A general Hugging Face workflow from idea to shared model and demo using tools f
 </tr>
 </tbody>
 </table>
+<section id="extensions" class="level3">
+<h3 class="anchored" data-anchor-id="extensions">Extensions</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Extension</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Perform batched inference with an LLM and Hugging Face Transformers</td>
+<td>Take an existing LLM and learn how to speed up prediction times by batching together samples. This is helpful if you need to perform inference over a large dataset. Uses a small model to run on Google Colab or locally.</td>
+</tr>
+</tbody>
+</table>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -528,9 +549,11 @@ A general Hugging Face workflow from idea to shared model and demo using tools f
 </div>
 </div>
 </section>
+</section>
 <section id="updates" class="level2">
 <h2 class="anchored" data-anchor-id="updates">Updates</h2>
 <ul>
+<li><strong>16 Apr 2026</strong> - Add batched inference with Hugging Face Transformers Notebook, this extends from the LLM fine-tuning notebook and helps speedup inference significantly.</li>
 <li><strong>1 Apr 2026</strong> - Fully finished <a href="https://www.learnhuggingface.com/notebooks/hugging_face_llm_full_fine_tune_tutorial">LLM fine-tuning notebook</a>, recorded all video course videos for the notebook, they will be available soon on ZTM.</li>
 <li><strong>26 Feb 2026</strong> - Update links to LLM fine-tuning, VLM fine-tuning, Multimodal RAG notebooks (these all work, however, I’m in the process of tidying them up). Add dark mode to notebooks.</li>
 <li><strong>08 Jan 2026</strong> - Add first iteration of <a href="https://www.learnhuggingface.com/notebooks/hugging_face_llm_full_fine_tune_tutorial">full fine-tuning notebook for Gemma 3 270M</a> (fully fine-tune a Small Language Model for structured data extraction)</li>
