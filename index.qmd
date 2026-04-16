@@ -33,6 +33,12 @@ This will be our (rough) workflow:
 | 4 - [Multimodal RAG (Retrieval Augmented Generation)](https://www.learnhuggingface.com/notebooks/hugging_face_multimodal_rag_tutorial) | Level up your text-based RAG pipelines and learn how to embed text and images of documents into a shared embedding space. This allows you to query over a dataset of combined images and text. | [Dataset](https://huggingface.co/datasets/mrdbourke/recipe-synthetic-images-10k) | Model ([embed](https://huggingface.co/nvidia/llama-nemotron-embed-vl-1b-v2)) / Model ([rerank](https://huggingface.co/nvidia/llama-nemotron-rerank-vl-1b-v2)) | [Demo](https://huggingface.co/spaces/mrdbourke/multimodal-rag-with-nemotron) | [YouTube](https://youtu.be/7GQPFS7NQrA) | 
 | More to come soon! | Let me know if you'd like to see anything specific by [leaving an issue](https://github.com/mrdbourke/learn-huggingface/issues). | | | | |
 
+### Extensions
+
+| Extension | Description |
+| ----- | ----- |
+| Perform batched inference with an LLM and Hugging Face Transformers | Take an existing LLM and learn how to speed up prediction times by batching together samples. This is helpful if you need to perform inference over a large dataset. Uses a small model to run on Google Colab or locally. |
+
 : {tbl-colwidths="[15,40,5,5,5,5]"}
 
 :::{.callout-tip}
@@ -44,6 +50,7 @@ You can sign up and go through them at your own liesure.
 
 ## Updates
 
+* **16 Apr 2026** - Add batched inference with Hugging Face Transformers Notebook, this extends from the LLM fine-tuning notebook and helps speedup inference significantly.
 * **1 Apr 2026** - Fully finished [LLM fine-tuning notebook](https://www.learnhuggingface.com/notebooks/hugging_face_llm_full_fine_tune_tutorial), recorded all video course videos for the notebook, they will be available soon on ZTM.
 * **26 Feb 2026** - Update links to LLM fine-tuning, VLM fine-tuning, Multimodal RAG notebooks (these all work, however, I'm in the process of tidying them up). Add dark mode to notebooks. 
 * **08 Jan 2026** - Add first iteration of [full fine-tuning notebook for Gemma 3 270M](https://www.learnhuggingface.com/notebooks/hugging_face_llm_full_fine_tune_tutorial) (fully fine-tune a Small Language Model for structured data extraction)
