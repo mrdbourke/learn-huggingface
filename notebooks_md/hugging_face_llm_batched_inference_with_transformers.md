@@ -15,6 +15,15 @@ toc-expand: 2 # expand toc to multiple levels
 code-block-border-left: true
 code-block-bg: true
 ---
+<a target="_blank" href="https://colab.research.google.com/github/mrdbourke/learn-huggingface/blob/main/notebooks/hugging_face_llm_batched_inference_with_transformers.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a>
+
+> **Note:** If you're running in Google Colab, make sure to enable GPU usage by going to Runtime -> Change runtime type -> select GPU.
+
+[Source Code](https://github.com/mrdbourke/learn-huggingface/blob/main/notebooks/hugging_face_llm_batched_inference_with_transformers.ipynb) | [Markdown version](https://github.com/mrdbourke/learn-huggingface/blob/main/notebooks_md/hugging_face_llm_batched_inference_with_transformers.md) | [Slides](https://huggingface.co/datasets/mrdbourke/learn-hf-images/resolve/main/learn-hf-fine-tune-llm/learn-hf-fine-tune-llm-keynote-slides.pdf) | Video course (coming soon)
+
+
 
 ```python
 import time
