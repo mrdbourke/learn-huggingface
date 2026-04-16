@@ -51,7 +51,7 @@ You can sign up and go through them at your own liesure.
 
 ## Updates
 
-* **16 Apr 2026** - Add batched inference with Hugging Face Transformers Notebook, this extends from the LLM fine-tuning notebook and helps speedup inference significantly.
+* **16 Apr 2026** - Add [batched inference with Hugging Face Transformers Notebook](https://www.learnhuggingface.com/notebooks/hugging_face_llm_batched_inference_with_transformers), this extends from the LLM fine-tuning notebook and helps speedup inference significantly.
 * **1 Apr 2026** - Fully finished [LLM fine-tuning notebook](https://www.learnhuggingface.com/notebooks/hugging_face_llm_full_fine_tune_tutorial), recorded all video course videos for the notebook, they will be available soon on ZTM.
 * **26 Feb 2026** - Update links to LLM fine-tuning, VLM fine-tuning, Multimodal RAG notebooks (these all work, however, I'm in the process of tidying them up). Add dark mode to notebooks. 
 * **08 Jan 2026** - Add first iteration of [full fine-tuning notebook for Gemma 3 270M](https://www.learnhuggingface.com/notebooks/hugging_face_llm_full_fine_tune_tutorial) (fully fine-tune a Small Language Model for structured data extraction)
