@@ -1377,7 +1377,7 @@
     "href": "notebooks/hugging_face_llm_batched_inference_with_transformers.html",
     "title": "Batched LLM Inference with Hugging Face Transformers Tutorial",
     "section": "",
-    "text": "import time\n\nprint(f\"[INFO] Last updated: {time.ctime()}\")\n\nLast updated: Wed Apr 15 01:57:59 2026",
+    "text": "Source Code | Markdown version | Slides | Video course (coming soon)\nimport time\n\nprint(f\"[INFO] Last updated: {time.ctime()}\")\n\nLast updated: Wed Apr 15 01:57:59 2026",
     "crumbs": [
       "Home",
       "LLMs/Natural Language Processing (NLP)",
