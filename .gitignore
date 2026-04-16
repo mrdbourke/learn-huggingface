@@ -24,3 +24,5 @@ scratch_pad.md
 *.log.gz
 nvidia-bug-report.log.gz
 notebooks/smolvlm2-500m-*/
+
+**/*.quarto_ipynb
