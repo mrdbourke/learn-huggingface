@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -76,14 +76,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-176b38be48070efe3d434d0a95bef3fe.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-176b38be48070efe3d434d0a95bef3fe.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-176b38be48070efe3d434d0a95bef3fe.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f81f3c79f694eaf6f88ebcce70241f9e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f81f3c79f694eaf6f88ebcce70241f9e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f81f3c79f694eaf6f88ebcce70241f9e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9083b9421b3a5e2f6b88d0bc2ac4380b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-dafc173ff2a93f68ae32fcdd54ecb4c9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-9083b9421b3a5e2f6b88d0bc2ac4380b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-1820cc8ccb08b226558e0d016c493fbd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-253c12691707f3da75410415c6496657.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-1820cc8ccb08b226558e0d016c493fbd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -3194,8 +3194,8 @@ Most modern models will often see speedup benefits from using a GPU. A very nice
 <p>If you want to learn more or continue the current project, I’d recommend trying the following.</p>
 <ul>
 <li><a href="https://www.learnhuggingface.com/notebooks/hugging_face_llm_batched_inference_with_transformers"><strong>Batched inference with Hugging Face Transformers</strong></a> - Let’s say you wanted to perform inference with the model across ~1 billion samples. Doing this 1 by 1 would take quite a long time. To fix this, you can perform batched inference, meaning the model predicts on multiple samples at a time (e.g.&nbsp;16 samples at once instead of 1). This often dramatically speeds up inference time per sample and is highly recommended in practice.</li>
-<li><a href="https://www.learnhuggingface.com/notebooks/hugging_face_llm_structured_data_extraction_evals"><strong>Structured data extraction evaluation</strong></a> - In this notebook we evaluated our model’s output after fine-tuning by manually inspecting samples. And so far this <em>looks</em> good. However, in practice or a production setting, you’ll likely want to evaluate your models outputs in a more structured way. This notebook focuses on doing just that. Validating our model’s output structure as well as applying metrics to actual extraction values compared to the ground truth. Having these specific insights we can plan out how to improve our model’s performance in the future.</li>
-<li><a href="https://www.learnhuggingface.com/notebooks/hugging_face_llm_inference_with_vllm"><strong>vLLM batched inference</strong></a> - If you want to step things up even further with faster inference, you’ll likely want to use a dedicated inference engine such as vLLM. Because vLLM is designed for fast inference, you’ll often see significant speed increases compared to using native Hugging Face <code>transformers</code>.</li>
+<li><a href="https://www.learnhuggingface.com/notebooks/hugging_face_llm_structured_data_extraction_evals"><strong>LLM structured data extraction evaluation</strong></a> - In this notebook we evaluated our model’s output after fine-tuning by manually inspecting samples. And so far this <em>looks</em> good. However, in practice or a production setting, you’ll likely want to evaluate your models outputs in a more structured way. This notebook focuses on doing just that. Validating our model’s output structure as well as applying metrics to actual extraction values compared to the ground truth. Having these specific insights we can plan out how to improve our model’s performance in the future.</li>
+<li><a href="https://www.learnhuggingface.com/notebooks/hugging_face_llm_inference_with_vllm"><strong>Speeding up batched inference with vLLM</strong></a> - If you want to step things up even further with faster inference, you’ll likely want to use a dedicated inference engine such as vLLM. Because vLLM is designed for fast inference, you’ll often see significant speed increases compared to using native Hugging Face <code>transformers</code>.</li>
 <li><strong>Advance your model with Reinforcement Learning (RL)</strong> - In this notebook we’ve used Supervised Fine-tuning (SFT) to get to produce certain outputs given certain inputs. However, for more advanced input and output pairs, you might want to look into reinforcement learning (RL). RL is a technique which uses reward functions to train a model to reproduce certain behaviours. For example, if you were using RL to improve a model’s ability to solve a math problem, it might get a +1 for getting the right answer. This is a simplified overview but RL is a potential next step in the training journey of our model. For more resources on this, look into:
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Reinforcement_learning_from_human_feedback">Reinforcement Learning from Human Feedback (RLHF)</a> - If you want your model to sound a particular way, this is a popular technique to train a model to learn to replicate human preferences.</li>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -75,14 +75,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-176b38be48070efe3d434d0a95bef3fe.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-176b38be48070efe3d434d0a95bef3fe.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-176b38be48070efe3d434d0a95bef3fe.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f81f3c79f694eaf6f88ebcce70241f9e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f81f3c79f694eaf6f88ebcce70241f9e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f81f3c79f694eaf6f88ebcce70241f9e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d49a02adf2a8ae296321e5821c38be4e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-e7f67672d96b75452e3881ea256eedce.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-d49a02adf2a8ae296321e5821c38be4e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a73487d1050d4d71c22469d6e8f27f02.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-3b4062e1461b9895ae78d31b6baff675.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-a73487d1050d4d71c22469d6e8f27f02.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -429,9 +429,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#work-in-progress-batched-llm-inference" id="toc-work-in-progress-batched-llm-inference" class="nav-link active" data-scroll-target="#work-in-progress-batched-llm-inference">Work in progress: Batched LLM inference</a>
+  <li><a href="#work-in-progress-batched-llm-inference-with-hugging-face-transformers" id="toc-work-in-progress-batched-llm-inference-with-hugging-face-transformers" class="nav-link active" data-scroll-target="#work-in-progress-batched-llm-inference-with-hugging-face-transformers">Work in progress: Batched LLM inference with Hugging Face Transformers</a>
   <ul class="collapse">
   <li><a href="#bonus-speeding-up-our-model-with-batched-inference" id="toc-bonus-speeding-up-our-model-with-batched-inference" class="nav-link" data-scroll-target="#bonus-speeding-up-our-model-with-batched-inference">Bonus: Speeding up our model with batched inference</a></li>
+  <li><a href="#tk---load-the-model" id="toc-tk---load-the-model" class="nav-link" data-scroll-target="#tk---load-the-model">TK - Load the model</a></li>
+  <li><a href="#tk---run-batch-predictions-with-manual-batching" id="toc-tk---run-batch-predictions-with-manual-batching" class="nav-link" data-scroll-target="#tk---run-batch-predictions-with-manual-batching">TK - Run batch predictions with manual batching</a></li>
+  <li><a href="#tk---run-batch-predictions-with-pipelines-automatic-batching" id="toc-tk---run-batch-predictions-with-pipelines-automatic-batching" class="nav-link" data-scroll-target="#tk---run-batch-predictions-with-pipelines-automatic-batching">TK - Run batch predictions with <code>pipeline</code>’s automatic batching</a></li>
+  <li><a href="#tk---run-with-keydataset" id="toc-tk---run-with-keydataset" class="nav-link" data-scroll-target="#tk---run-with-keydataset">TK - Run with KeyDataset</a></li>
+  <li><a href="#tk---compare-the-results-of-batch-token-size" id="toc-tk---compare-the-results-of-batch-token-size" class="nav-link" data-scroll-target="#tk---compare-the-results-of-batch-token-size">TK - Compare the results of batch (token size)</a></li>
+  <li><a href="#tk---compare-the-results-of-batching-speed-wise" id="toc-tk---compare-the-results-of-batching-speed-wise" class="nav-link" data-scroll-target="#tk---compare-the-results-of-batching-speed-wise">TK - Compare the results of batching (speed wise)</a></li>
   <li><a href="#tk---extensions" id="toc-tk---extensions" class="nav-link" data-scroll-target="#tk---extensions">TK - Extensions</a></li>
   </ul></li>
   </ul>
@@ -444,8 +450,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="work-in-progress-batched-llm-inference" class="level1">
-<h1>Work in progress: Batched LLM inference</h1>
+<section id="work-in-progress-batched-llm-inference-with-hugging-face-transformers" class="level1">
+<h1>Work in progress: Batched LLM inference with Hugging Face Transformers</h1>
 <p>Note: This notebook is a work in progress.</p>
 <ul>
 <li>TK - this notebook builds off of the LLM fine-tuning tutorial - https://www.learnhuggingface.com/notebooks/hugging_face_llm_full_fine_tune_tutorial</li>
@@ -455,7 +461,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Last updated: </span><span class="sc">{</span>time<span class="sc">.</span>ctime()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="bonus-speeding-up-our-model-with-batched-inference" class="level2">
 <h2 class="anchored" data-anchor-id="bonus-speeding-up-our-model-with-batched-inference">Bonus: Speeding up our model with batched inference</h2>
-<p>TK - split this into another notebook</p>
+<p>UPTOHERE TODO:</p>
+<ul>
+<li>Get the code working end to end</li>
+<li>Add intro explaining this requires knowledge from the previous notebook</li>
+<li>Break this notebook into sections
+<ul>
+<li>Goal</li>
+<li>Intro</li>
+<li>Step by step code to reproduce the workflow</li>
+<li>Where to go next</li>
+</ul></li>
+</ul>
+<p>–</p>
 <p>Right now our model only inferences on one sample at a time but as is the case with many machine learning models, we could perform inference on multiple samples (also referred to as a batch) to significantly improve throughout.</p>
 <p>In batched inference mode, your model performs predictions on X number of samples at once, this can dramatically improve sample throughput.</p>
 <p>The number of samples you can predict on at once will depend on a few factors:</p>
@@ -503,153 +521,306 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Always train on the train set and test on the test set</span></span>
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co"># This gives us an indication of how our model will perform in the real world</span></span>
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>dataset</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Need to turn our samples into batches (e.g. lists of samples)</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Formatting test samples into list prompts..."</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>test_input_prompts <span class="op">=</span> [</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    loaded_model_pipeline.tokenizer.apply_chat_template(</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        item[<span class="st">"messages"</span>][:<span class="dv">1</span>],</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        tokenize<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        add_generation_prompt<span class="op">=</span><span class="va">True</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> item <span class="kw">in</span> dataset[<span class="st">"test"</span>]</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Number of test sample prompts: </span><span class="sc">{</span><span class="bu">len</span>(test_input_prompts)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>test_input_prompts[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Need to perform batched inference and time each step</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm.auto <span class="im">import</span> tqdm</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>all_outputs <span class="op">=</span> []</span>
+</section>
+<section id="tk---load-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="tk---load-the-model">TK - Load the model</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the fine-tuned model and see how it goes</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer, AutoModelForCausalLM</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>MODEL_ID <span class="op">=</span> <span class="st">"mrdbourke/FoodExtract-gemma-3-270m-fine-tune-v1"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Loading in model from: </span><span class="sc">{</span>MODEL_ID<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Load tokenizer</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    pretrained_model_name_or_path<span class="op">=</span>MODEL_ID,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Load trained model</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>loaded_model <span class="op">=</span> AutoModelForCausalLM.from_pretrained(</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    pretrained_model_name_or_path<span class="op">=</span>MODEL_ID,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    dtype<span class="op">=</span><span class="st">"auto"</span>,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    device_map<span class="op">=</span><span class="st">"auto"</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    attn_implementation<span class="op">=</span><span class="st">"eager"</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Check our loaded model (it's the same architecture as before except this time with updated weights)</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>loaded_model</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>loaded_model_pipeline <span class="op">=</span> pipeline(<span class="st">"text-generation"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                                 model<span class="op">=</span>loaded_model,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                                 tokenizer<span class="op">=</span>tokenizer)</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's write a list of batch sizes to test</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>chunk_sizes_to_test <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>, <span class="dv">64</span>, <span class="dv">128</span>]</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>timing_dict <span class="op">=</span> {}</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each batch size and time the inference</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> CHUNK_SIZE <span class="kw">in</span> chunk_sizes_to_test:</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"[INFO] Making predictions with batch size: </span><span class="sc">{</span>CHUNK_SIZE<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    start_time <span class="op">=</span> time.time()</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> chunk_number <span class="kw">in</span> tqdm(<span class="bu">range</span>(<span class="bu">round</span>(<span class="bu">len</span>(test_input_prompts) <span class="op">/</span> CHUNK_SIZE))):</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        batched_inputs <span class="op">=</span> test_input_prompts[(CHUNK_SIZE <span class="op">*</span> chunk_number): CHUNK_SIZE <span class="op">*</span> (chunk_number <span class="op">+</span> <span class="dv">1</span>)]</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        batched_outputs <span class="op">=</span> loaded_model_pipeline(text_inputs<span class="op">=</span>batched_inputs,</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                                                batch_size<span class="op">=</span>CHUNK_SIZE,</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                                                max_new_tokens<span class="op">=</span><span class="dv">256</span>,</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>                                                disable_compile<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        all_outputs <span class="op">+=</span> batched_outputs</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    end_time <span class="op">=</span> time.time()</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    total_time <span class="op">=</span> end_time <span class="op">-</span> start_time</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    timing_dict[CHUNK_SIZE] <span class="op">=</span> total_time</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"[INFO] Total time for batch size </span><span class="sc">{</span>CHUNK_SIZE<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>total_time<span class="sc">:.2f}</span><span class="ss">s"</span>)</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"="</span><span class="op">*</span><span class="dv">80</span> <span class="op">+</span> <span class="st">"</span><span class="ch">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>loaded_model_pipeline</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Need to turn our samples into batches (e.g. lists of samples)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Formatting test samples into list prompts..."</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>test_input_prompts <span class="op">=</span> [</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    loaded_model_pipeline.tokenizer.apply_chat_template(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        item[<span class="st">"messages"</span>][:<span class="dv">1</span>],</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        tokenize<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        add_generation_prompt<span class="op">=</span><span class="va">True</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> item <span class="kw">in</span> dataset[<span class="st">"test"</span>]</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Number of test sample prompts: </span><span class="sc">{</span><span class="bu">len</span>(test_input_prompts)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>test_input_prompts[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="tk---run-batch-predictions-with-manual-batching" class="level2">
+<h2 class="anchored" data-anchor-id="tk---run-batch-predictions-with-manual-batching">TK - Run batch predictions with manual batching</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Need to perform batched inference and time each step</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm.auto <span class="im">import</span> tqdm</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>all_outputs <span class="op">=</span> []</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's write a list of batch sizes to test</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>chunk_sizes_to_test <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>, <span class="dv">64</span>, <span class="dv">128</span>]</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>timing_dict <span class="op">=</span> {}</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each batch size and time the inference</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> CHUNK_SIZE <span class="kw">in</span> chunk_sizes_to_test:</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"[INFO] Making predictions with batch size: </span><span class="sc">{</span>CHUNK_SIZE<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    start_time <span class="op">=</span> time.time()</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> chunk_number <span class="kw">in</span> tqdm(<span class="bu">range</span>(<span class="bu">round</span>(<span class="bu">len</span>(test_input_prompts) <span class="op">/</span> CHUNK_SIZE))):</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        batched_inputs <span class="op">=</span> test_input_prompts[(CHUNK_SIZE <span class="op">*</span> chunk_number): CHUNK_SIZE <span class="op">*</span> (chunk_number <span class="op">+</span> <span class="dv">1</span>)]</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        batched_outputs <span class="op">=</span> loaded_model_pipeline(text_inputs<span class="op">=</span>batched_inputs,</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>                                                batch_size<span class="op">=</span>CHUNK_SIZE,</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>                                                max_new_tokens<span class="op">=</span><span class="dv">256</span>,</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>                                                disable_compile<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>        all_outputs <span class="op">+=</span> batched_outputs</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    end_time <span class="op">=</span> time.time()</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    total_time <span class="op">=</span> end_time <span class="op">-</span> start_time</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    timing_dict[CHUNK_SIZE] <span class="op">=</span> total_time</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"[INFO] Total time for batch size </span><span class="sc">{</span>CHUNK_SIZE<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>total_time<span class="sc">:.2f}</span><span class="ss">s"</span>)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"="</span><span class="op">*</span><span class="dv">80</span> <span class="op">+</span> <span class="st">"</span><span class="ch">\n\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># TK - What does all_outputs do?</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(all_outputs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="tk---run-batch-predictions-with-pipelines-automatic-batching" class="level2">
+<h2 class="anchored" data-anchor-id="tk---run-batch-predictions-with-pipelines-automatic-batching">TK - Run batch predictions with <code>pipeline</code>’s automatic batching</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>chunk_sizes_to_test <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>, <span class="dv">64</span>, <span class="dv">128</span>]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>timing_dict <span class="op">=</span> {}</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> batch_size <span class="kw">in</span> chunk_sizes_to_test:</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"[INFO] Running with batch_size=</span><span class="sc">{</span>batch_size<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    start_time <span class="op">=</span> time.time()</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    outputs <span class="op">=</span> loaded_model_pipeline(</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        test_input_prompts,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        batch_size<span class="op">=</span>batch_size,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>        max_new_tokens<span class="op">=</span><span class="dv">256</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    elapsed <span class="op">=</span> time.time() <span class="op">-</span> start_time</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    timing_dict[batch_size] <span class="op">=</span> elapsed</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"[INFO] batch_size=</span><span class="sc">{</span>batch_size<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>elapsed<span class="sc">:.2f}</span><span class="ss">s | </span><span class="sc">{</span><span class="bu">len</span>(test_input_prompts)<span class="op">/</span>elapsed<span class="sc">:.1f}</span><span class="ss"> samples/s</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(timing_dict)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>batch_size</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="tk---run-with-keydataset" class="level2">
+<h2 class="anchored" data-anchor-id="tk---run-with-keydataset">TK - Run with KeyDataset</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run in the same script/notebook where loaded_model_pipeline, test_input_prompts, and ds are defined</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datasets <span class="im">import</span> Dataset</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers.pipelines.pt_utils <span class="im">import</span> KeyDataset</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm.auto <span class="im">import</span> tqdm</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>chunk_sizes_to_test <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>, <span class="dv">64</span>, <span class="dv">128</span>]</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>timing_dict <span class="op">=</span> {}</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>all_outputs <span class="op">=</span> {}</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> Dataset.from_dict({<span class="st">"text"</span>: test_input_prompts})</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> batch_size <span class="kw">in</span> chunk_sizes_to_test:</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"[INFO] Running with batch_size=</span><span class="sc">{</span>batch_size<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    start_time <span class="op">=</span> time.time()</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    outputs <span class="op">=</span> []</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> out <span class="kw">in</span> tqdm(</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>        loaded_model_pipeline(KeyDataset(ds, <span class="st">"text"</span>), batch_size<span class="op">=</span>batch_size, max_new_tokens<span class="op">=</span><span class="dv">256</span>),</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        total<span class="op">=</span><span class="bu">len</span>(test_input_prompts),</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        desc<span class="op">=</span><span class="ss">f"batch_size=</span><span class="sc">{</span>batch_size<span class="sc">}</span><span class="ss">"</span>,</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    ):</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        outputs.append(out)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    elapsed <span class="op">=</span> time.time() <span class="op">-</span> start_time</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    timing_dict[batch_size] <span class="op">=</span> elapsed</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    all_outputs[batch_size] <span class="op">=</span> outputs</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"[INFO] batch_size=</span><span class="sc">{</span>batch_size<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>elapsed<span class="sc">:.2f}</span><span class="ss">s | </span><span class="sc">{</span><span class="bu">len</span>(test_input_prompts)<span class="op">/</span>elapsed<span class="sc">:.1f}</span><span class="ss"> samples/s</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Verification: compare all batch sizes against batch_size=1 as baseline ---</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>baseline_size <span class="op">=</span> chunk_sizes_to_test[<span class="dv">0</span>]</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>baseline_outputs <span class="op">=</span> all_outputs[baseline_size]</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Batch Size'</span><span class="sc">:&lt;12}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'Length Match'</span><span class="sc">:&lt;14}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'Outputs Match'</span><span class="sc">:&lt;16}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'Time (s)'</span><span class="sc">:&lt;10}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'Speedup vs bs=1'</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">70</span>)</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> batch_size <span class="kw">in</span> chunk_sizes_to_test:</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>    outputs <span class="op">=</span> all_outputs[batch_size]</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    len_match <span class="op">=</span> <span class="bu">len</span>(outputs) <span class="op">==</span> <span class="bu">len</span>(baseline_outputs)</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>    outputs_match <span class="op">=</span> outputs <span class="op">==</span> baseline_outputs</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>    speedup <span class="op">=</span> timing_dict[baseline_size] <span class="op">/</span> timing_dict[batch_size]</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>batch_size<span class="sc">:&lt;12}</span><span class="ss"> </span><span class="sc">{</span><span class="bu">str</span>(len_match)<span class="sc">:&lt;14}</span><span class="ss"> </span><span class="sc">{</span><span class="bu">str</span>(outputs_match)<span class="sc">:&lt;16}</span><span class="ss"> </span><span class="sc">{</span>timing_dict[batch_size]<span class="sc">:&lt;10.2f}</span><span class="ss"> </span><span class="sc">{</span>speedup<span class="sc">:.2f}</span><span class="ss">x"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="tk---compare-the-results-of-batch-token-size" class="level2">
+<h2 class="anchored" data-anchor-id="tk---compare-the-results-of-batch-token-size">TK - Compare the results of batch (token size)</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run in the same script/notebook, after the benchmarking loop above</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> difflib <span class="im">import</span> SequenceMatcher</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_generated_text(output):</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Extract the generated text string from a pipeline output.</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Adjust the key access depending on your pipeline's output format."""</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(output, <span class="bu">list</span>):</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> output[<span class="dv">0</span>][<span class="st">"generated_text"</span>]</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> output[<span class="st">"generated_text"</span>]</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> token_similarity(text_a, text_b):</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Simple token-level overlap: proportion of matching tokens."""</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    tokens_a <span class="op">=</span> text_a.split()</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    tokens_b <span class="op">=</span> text_b.split()</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    matcher <span class="op">=</span> SequenceMatcher(<span class="va">None</span>, tokens_a, tokens_b)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> matcher.ratio()  <span class="co"># 0.0 to 1.0</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare all batch sizes against batch_size=1</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>baseline_size <span class="op">=</span> chunk_sizes_to_test[<span class="dv">0</span>]</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>baseline_texts <span class="op">=</span> [extract_generated_text(o) <span class="cf">for</span> o <span class="kw">in</span> all_outputs[baseline_size]]</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="st">'Batch Size'</span><span class="sc">:&lt;12}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'Length Match'</span><span class="sc">:&lt;14}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'Avg Token Sim'</span><span class="sc">:&lt;16}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'Time (s)'</span><span class="sc">:&lt;10}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'Speedup vs bs=1'</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">70</span>)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> batch_size <span class="kw">in</span> chunk_sizes_to_test:</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    outputs <span class="op">=</span> all_outputs[batch_size]</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    candidate_texts <span class="op">=</span> [extract_generated_text(o) <span class="cf">for</span> o <span class="kw">in</span> outputs]</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>    len_match <span class="op">=</span> <span class="bu">len</span>(candidate_texts) <span class="op">==</span> <span class="bu">len</span>(baseline_texts)</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    similarities <span class="op">=</span> [</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>        token_similarity(base, cand)</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> base, cand <span class="kw">in</span> <span class="bu">zip</span>(baseline_texts, candidate_texts)</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>    avg_sim <span class="op">=</span> <span class="bu">sum</span>(similarities) <span class="op">/</span> <span class="bu">len</span>(similarities) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    speedup <span class="op">=</span> timing_dict[baseline_size] <span class="op">/</span> timing_dict[batch_size]</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>    sim_str <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>avg_sim<span class="sc">:.2f}</span><span class="ss">%"</span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>batch_size<span class="sc">:&lt;12}</span><span class="ss"> </span><span class="sc">{</span><span class="bu">str</span>(len_match)<span class="sc">:&lt;14}</span><span class="ss"> </span><span class="sc">{</span>sim_str<span class="sc">:&lt;16}</span><span class="ss"> </span><span class="sc">{</span>timing_dict[batch_size]<span class="sc">:&lt;10.2f}</span><span class="ss"> </span><span class="sc">{</span>speedup<span class="sc">:.2f}</span><span class="ss">x"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="tk---compare-the-results-of-batching-speed-wise" class="level2">
+<h2 class="anchored" data-anchor-id="tk---compare-the-results-of-batching-speed-wise">TK - Compare the results of batching (speed wise)</h2>
 <p>Batched inference complete! Let’s make a plot comparing different batch sizes.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Data</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> timing_dict</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>total_samples <span class="op">=</span> <span class="bu">len</span>(dataset[<span class="st">"test"</span>])</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>batch_sizes <span class="op">=</span> <span class="bu">list</span>(data.keys())</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>inference_times <span class="op">=</span> <span class="bu">list</span>(data.values())</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>samples_per_second <span class="op">=</span> [total_samples <span class="op">/</span> time <span class="cf">for</span> bs, time <span class="kw">in</span> data.items()]</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create side-by-side plots</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Left plot: Total Inference Time ---</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>ax1.bar([<span class="bu">str</span>(bs) <span class="cf">for</span> bs <span class="kw">in</span> batch_sizes], inference_times, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'Batch Size'</span>)</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Total Inference Time (s)'</span>)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'Inference Time by Batch Size'</span>)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, v <span class="kw">in</span> <span class="bu">enumerate</span>(inference_times):</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    ax1.text(i, v <span class="op">+</span> <span class="dv">1</span>, <span class="ss">f'</span><span class="sc">{</span>v<span class="sc">:.1f}</span><span class="ss">'</span>, ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co"># --- ARROW LOGIC (Left) ---</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Identify Start (Slowest) and End (Fastest)</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>start_val <span class="op">=</span> <span class="bu">max</span>(inference_times)</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>end_val <span class="op">=</span> <span class="bu">min</span>(inference_times)</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>start_idx <span class="op">=</span> inference_times.index(start_val)</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>end_idx <span class="op">=</span> inference_times.index(end_val)</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>speedup <span class="op">=</span> start_val <span class="op">/</span> end_val</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Draw Arrow (No Text)</span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="co"># connectionstyle "rad=-0.3" arcs the arrow upwards</span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>ax1.annotate(<span class="st">""</span>,</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>             xy<span class="op">=</span>(end_idx, end_val<span class="op">+</span>(<span class="fl">0.5</span><span class="op">*</span>end_val)),</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>             xytext<span class="op">=</span>(start_idx<span class="op">+</span><span class="fl">0.25</span>, start_val<span class="op">+</span><span class="dv">10</span>),</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>             arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-&gt;"</span>, color<span class="op">=</span><span class="st">'green'</span>, lw<span class="op">=</span><span class="fl">1.5</span>, connectionstyle<span class="op">=</span><span class="st">"arc3,rad=-0.3"</span>))</span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Place Text at Midpoint</span></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>mid_x <span class="op">=</span> (start_idx <span class="op">+</span> end_idx) <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Place text slightly above the highest point of the two bars</span></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>text_y <span class="op">=</span> <span class="bu">max</span>(start_val, end_val) <span class="op">+</span> (<span class="bu">max</span>(inference_times) <span class="op">*</span> <span class="fl">0.1</span>)</span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>ax1.text(mid_x<span class="op">+</span><span class="fl">0.5</span>, text_y<span class="op">-</span><span class="dv">150</span>, <span class="ss">f"</span><span class="sc">{</span>speedup<span class="sc">:.1f}</span><span class="ss">x speedup"</span>,</span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>         ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'bottom'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>         bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">"round,pad=0.3"</span>, fc<span class="op">=</span><span class="st">"white"</span>, ec<span class="op">=</span><span class="st">"none"</span>, alpha<span class="op">=</span><span class="fl">0.8</span>))</span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(<span class="dv">0</span>, <span class="bu">max</span>(inference_times) <span class="op">*</span> <span class="fl">1.35</span>) <span class="co"># Increase headroom for text</span></span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Right plot: Samples per Second ---</span></span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>ax2.bar([<span class="bu">str</span>(bs) <span class="cf">for</span> bs <span class="kw">in</span> batch_sizes], samples_per_second, color<span class="op">=</span><span class="st">'coral'</span>)</span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'Batch Size'</span>)</span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Samples per Second'</span>)</span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'Throughput by Batch Size'</span>)</span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, v <span class="kw">in</span> <span class="bu">enumerate</span>(samples_per_second):</span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>    ax2.text(i, v <span class="op">+</span> <span class="fl">0.05</span>, <span class="ss">f'</span><span class="sc">{</span>v<span class="sc">:.2f}</span><span class="ss">'</span>, ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="co"># --- ARROW LOGIC (Right) ---</span></span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Identify Start (Slowest) and End (Fastest)</span></span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>start_val_t <span class="op">=</span> <span class="bu">min</span>(samples_per_second)</span>
-<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>end_val_t <span class="op">=</span> <span class="bu">max</span>(samples_per_second)</span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>start_idx_t <span class="op">=</span> samples_per_second.index(start_val_t)</span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>end_idx_t <span class="op">=</span> samples_per_second.index(end_val_t)</span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>speedup_t <span class="op">=</span> end_val_t <span class="op">/</span> start_val_t</span>
-<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Draw Arrow (No Text)</span></span>
-<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>ax2.annotate(<span class="st">""</span>,</span>
-<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>             xy<span class="op">=</span>(end_idx_t<span class="op">-</span>(<span class="fl">0.05</span><span class="op">*</span>end_idx_t), end_val_t<span class="op">+</span>(<span class="fl">0.025</span><span class="op">*</span>end_val_t)),</span>
-<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>             xytext<span class="op">=</span>(start_idx_t, start_val_t<span class="op">+</span><span class="fl">0.6</span>),</span>
-<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>             arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-&gt;"</span>, color<span class="op">=</span><span class="st">'green'</span>, lw<span class="op">=</span><span class="fl">1.5</span>, connectionstyle<span class="op">=</span><span class="st">"arc3,rad=-0.3"</span>))</span>
-<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Place Text at Midpoint</span></span>
-<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>mid_x_t <span class="op">=</span> (start_idx_t <span class="op">+</span> end_idx_t) <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>text_y_t <span class="op">=</span> <span class="bu">max</span>(start_val_t, end_val_t) <span class="op">+</span> (<span class="bu">max</span>(samples_per_second) <span class="op">*</span> <span class="fl">0.1</span>)</span>
-<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>ax2.text(mid_x_t<span class="op">-</span><span class="fl">0.5</span>, text_y_t<span class="op">-</span><span class="fl">4.5</span>, <span class="ss">f"</span><span class="sc">{</span>speedup_t<span class="sc">:.1f}</span><span class="ss">x speedup"</span>,</span>
-<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>         ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'bottom'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
-<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>         bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">"round,pad=0.3"</span>, fc<span class="op">=</span><span class="st">"white"</span>, ec<span class="op">=</span><span class="st">"none"</span>, alpha<span class="op">=</span><span class="fl">0.8</span>))</span>
-<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>ax2.set_ylim(<span class="dv">0</span>, <span class="bu">max</span>(samples_per_second) <span class="op">*</span> <span class="fl">1.35</span>) <span class="co"># Increase headroom</span></span>
-<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Inference with Fine-Tuned Gemma 3 270M on NVIDIA DGX Spark"</span>)</span>
-<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'inference_benchmark.png'</span>, dpi<span class="op">=</span><span class="dv">150</span>)</span>
-<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Data</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> timing_dict</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>total_samples <span class="op">=</span> <span class="bu">len</span>(dataset[<span class="st">"test"</span>])</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>batch_sizes <span class="op">=</span> <span class="bu">list</span>(data.keys())</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>inference_times <span class="op">=</span> <span class="bu">list</span>(data.values())</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>samples_per_second <span class="op">=</span> [total_samples <span class="op">/</span> time <span class="cf">for</span> bs, time <span class="kw">in</span> data.items()]</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create side-by-side plots</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Left plot: Total Inference Time ---</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>ax1.bar([<span class="bu">str</span>(bs) <span class="cf">for</span> bs <span class="kw">in</span> batch_sizes], inference_times, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'Batch Size'</span>)</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Total Inference Time (s)'</span>)</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'Inference Time by Batch Size'</span>)</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, v <span class="kw">in</span> <span class="bu">enumerate</span>(inference_times):</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    ax1.text(i, v <span class="op">+</span> <span class="dv">1</span>, <span class="ss">f'</span><span class="sc">{</span>v<span class="sc">:.1f}</span><span class="ss">'</span>, ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="co"># --- ARROW LOGIC (Left) ---</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Identify Start (Slowest) and End (Fastest)</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>start_val <span class="op">=</span> <span class="bu">max</span>(inference_times)</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>end_val <span class="op">=</span> <span class="bu">min</span>(inference_times)</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>start_idx <span class="op">=</span> inference_times.index(start_val)</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>end_idx <span class="op">=</span> inference_times.index(end_val)</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>speedup <span class="op">=</span> start_val <span class="op">/</span> end_val</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Draw Arrow (No Text)</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="co"># connectionstyle "rad=-0.3" arcs the arrow upwards</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>ax1.annotate(<span class="st">""</span>,</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>             xy<span class="op">=</span>(end_idx, end_val<span class="op">+</span>(<span class="fl">0.5</span><span class="op">*</span>end_val)),</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>             xytext<span class="op">=</span>(start_idx<span class="op">+</span><span class="fl">0.25</span>, start_val<span class="op">+</span><span class="dv">10</span>),</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>             arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-&gt;"</span>, color<span class="op">=</span><span class="st">'green'</span>, lw<span class="op">=</span><span class="fl">1.5</span>, connectionstyle<span class="op">=</span><span class="st">"arc3,rad=-0.3"</span>))</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Place Text at Midpoint</span></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>mid_x <span class="op">=</span> (start_idx <span class="op">+</span> end_idx) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Place text slightly above the highest point of the two bars</span></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>text_y <span class="op">=</span> <span class="bu">max</span>(start_val, end_val) <span class="op">+</span> (<span class="bu">max</span>(inference_times) <span class="op">*</span> <span class="fl">0.1</span>)</span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>ax1.text(mid_x<span class="op">+</span><span class="fl">0.5</span>, text_y<span class="op">-</span><span class="dv">150</span>, <span class="ss">f"</span><span class="sc">{</span>speedup<span class="sc">:.1f}</span><span class="ss">x speedup"</span>,</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>         ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'bottom'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>         bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">"round,pad=0.3"</span>, fc<span class="op">=</span><span class="st">"white"</span>, ec<span class="op">=</span><span class="st">"none"</span>, alpha<span class="op">=</span><span class="fl">0.8</span>))</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(<span class="dv">0</span>, <span class="bu">max</span>(inference_times) <span class="op">*</span> <span class="fl">1.35</span>) <span class="co"># Increase headroom for text</span></span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Right plot: Samples per Second ---</span></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>ax2.bar([<span class="bu">str</span>(bs) <span class="cf">for</span> bs <span class="kw">in</span> batch_sizes], samples_per_second, color<span class="op">=</span><span class="st">'coral'</span>)</span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'Batch Size'</span>)</span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Samples per Second'</span>)</span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'Throughput by Batch Size'</span>)</span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, v <span class="kw">in</span> <span class="bu">enumerate</span>(samples_per_second):</span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>    ax2.text(i, v <span class="op">+</span> <span class="fl">0.05</span>, <span class="ss">f'</span><span class="sc">{</span>v<span class="sc">:.2f}</span><span class="ss">'</span>, ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a><span class="co"># --- ARROW LOGIC (Right) ---</span></span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Identify Start (Slowest) and End (Fastest)</span></span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>start_val_t <span class="op">=</span> <span class="bu">min</span>(samples_per_second)</span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>end_val_t <span class="op">=</span> <span class="bu">max</span>(samples_per_second)</span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>start_idx_t <span class="op">=</span> samples_per_second.index(start_val_t)</span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>end_idx_t <span class="op">=</span> samples_per_second.index(end_val_t)</span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>speedup_t <span class="op">=</span> end_val_t <span class="op">/</span> start_val_t</span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Draw Arrow (No Text)</span></span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>ax2.annotate(<span class="st">""</span>,</span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>             xy<span class="op">=</span>(end_idx_t<span class="op">-</span>(<span class="fl">0.05</span><span class="op">*</span>end_idx_t), end_val_t<span class="op">+</span>(<span class="fl">0.025</span><span class="op">*</span>end_val_t)),</span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>             xytext<span class="op">=</span>(start_idx_t, start_val_t<span class="op">+</span><span class="fl">0.6</span>),</span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>             arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-&gt;"</span>, color<span class="op">=</span><span class="st">'green'</span>, lw<span class="op">=</span><span class="fl">1.5</span>, connectionstyle<span class="op">=</span><span class="st">"arc3,rad=-0.3"</span>))</span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Place Text at Midpoint</span></span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a>mid_x_t <span class="op">=</span> (start_idx_t <span class="op">+</span> end_idx_t) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>text_y_t <span class="op">=</span> <span class="bu">max</span>(start_val_t, end_val_t) <span class="op">+</span> (<span class="bu">max</span>(samples_per_second) <span class="op">*</span> <span class="fl">0.1</span>)</span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a>ax2.text(mid_x_t<span class="op">-</span><span class="fl">0.5</span>, text_y_t<span class="op">-</span><span class="fl">4.5</span>, <span class="ss">f"</span><span class="sc">{</span>speedup_t<span class="sc">:.1f}</span><span class="ss">x speedup"</span>,</span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>         ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'bottom'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a>         bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">"round,pad=0.3"</span>, fc<span class="op">=</span><span class="st">"white"</span>, ec<span class="op">=</span><span class="st">"none"</span>, alpha<span class="op">=</span><span class="fl">0.8</span>))</span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a>ax2.set_ylim(<span class="dv">0</span>, <span class="bu">max</span>(samples_per_second) <span class="op">*</span> <span class="fl">1.35</span>) <span class="co"># Increase headroom</span></span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Inference with Fine-Tuned Gemma 3 270M on NVIDIA DGX Spark"</span>)</span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'inference_benchmark.png'</span>, dpi<span class="op">=</span><span class="dv">150</span>)</span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We get a 4-6x speedup when using batches!</p>
 <p>At 10 samples per second, that means we can inference on ~800k samples in a day.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>samples_per_second <span class="op">=</span> <span class="bu">round</span>(<span class="bu">len</span>(dataset[<span class="st">"test"</span>]) <span class="op">/</span> <span class="bu">min</span>(timing_dict.values()), <span class="dv">2</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>seconds_in_a_day <span class="op">=</span> <span class="dv">86_400</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>samples_per_day <span class="op">=</span> seconds_in_a_day <span class="op">*</span> samples_per_second</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Number of samples per second: </span><span class="sc">{</span>samples_per_second<span class="sc">}</span><span class="ss"> | Number of samples per day: </span><span class="sc">{</span>samples_per_day<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>samples_per_second <span class="op">=</span> <span class="bu">round</span>(<span class="bu">len</span>(dataset[<span class="st">"test"</span>]) <span class="op">/</span> <span class="bu">min</span>(timing_dict.values()), <span class="dv">2</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>seconds_in_a_day <span class="op">=</span> <span class="dv">86_400</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>samples_per_day <span class="op">=</span> seconds_in_a_day <span class="op">*</span> samples_per_second</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Number of samples per second: </span><span class="sc">{</span>samples_per_second<span class="sc">}</span><span class="ss"> | Number of samples per day: </span><span class="sc">{</span>samples_per_day<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="tk---extensions" class="level2">
 <h2 class="anchored" data-anchor-id="tk---extensions">TK - Extensions</h2>
 <p>TK - next: vllm inference for faster modelling</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>
