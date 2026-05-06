@@ -263,8 +263,6 @@ To do so, we'll add an extra column called `"formatted_prompt"`.
 
 
 ```python
-from pprint import pprint
-
 def format_input_prompt(sample):
     """Helper function to add the tokenizer chat template to the input prompt."""
     formatted_prompt = loaded_model_pipeline.tokenizer.apply_chat_template(sample["prompt"],
