@@ -856,20 +856,16 @@ drinks:</code></pre>
 <p>By default, our model comes with an assumed chat template for inputs.</p>
 <p>Let’s assign that chat template to every sample in the test dataset.</p>
 <p>To do so, we’ll add an extra column called <code>"formatted_prompt"</code>.</p>
-<div id="370e95a6" class="cell" data-execution_count="44">
-<div class="cell-label cell-label-in">In [44]:</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> format_input_prompt(sample):</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Helper function to add the tokenizer chat template to the input prompt."""</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    formatted_prompt <span class="op">=</span> loaded_model_pipeline.tokenizer.apply_chat_template(sample[<span class="st">"prompt"</span>],</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>                                                                           tokenize<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>                                                                           add_generation_prompt<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">"formatted_prompt"</span>: formatted_prompt}</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Input prompt (prior to formatting with chat template):</span><span class="ch">\n\n</span><span class="sc">{</span>test_dataset[<span class="dv">7</span>][<span class="st">'prompt'</span>][<span class="dv">0</span>][<span class="st">'content'</span>]<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Input prompt (after formatting with chat template):</span><span class="ch">\n\n</span><span class="sc">{</span>format_input_prompt(test_dataset[<span class="dv">7</span>])<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-label cell-label-out">Out [44]:</div>
+<div id="370e95a6" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> format_input_prompt(sample):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Helper function to add the tokenizer chat template to the input prompt."""</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    formatted_prompt <span class="op">=</span> loaded_model_pipeline.tokenizer.apply_chat_template(sample[<span class="st">"prompt"</span>],</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                                                                           tokenize<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                                                                           add_generation_prompt<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">"formatted_prompt"</span>: formatted_prompt}</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Input prompt (prior to formatting with chat template):</span><span class="ch">\n\n</span><span class="sc">{</span>test_dataset[<span class="dv">7</span>][<span class="st">'prompt'</span>][<span class="dv">0</span>][<span class="st">'content'</span>]<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[INFO] Input prompt (after formatting with chat template):</span><span class="ch">\n\n</span><span class="sc">{</span>format_input_prompt(test_dataset[<span class="dv">7</span>])<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[INFO] Input prompt (prior to formatting with chat template):
 
