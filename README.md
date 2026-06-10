@@ -56,7 +56,7 @@ information on each of the tools in the
 |----|----|----|----|----|----|
 | 0 - [Text classification](https://www.learnhuggingface.com/notebooks/hugging_face_text_classification_tutorial) | Build project “Food Not Food”, a text classification model to classify image captions into “food” if they’re about food or “not_food” if they’re not about food. This is the ideal place to get started if you’ve never used the Hugging Face ecosystem. | [Dataset](https://huggingface.co/datasets/mrdbourke/learn_hf_food_not_food_image_captions) | [Model](https://huggingface.co/mrdbourke/learn_hf_food_not_food_text_classifier-distilbert-base-uncased) | [Demo](https://huggingface.co/spaces/mrdbourke/learn_hf_food_not_food_text_classifier_demo) | [Video Course](https://dbourke.link/ZTMHuggingFace) |
 | 1 - [Object Detection](https://www.learnhuggingface.com/notebooks/hugging_face_object_detection_tutorial) | Build Trashify 🚮, an object detection model to detect “trash”, “hand”, “bin” to incentivize people to clean up their local area. Start with a dataset, customize an open-source object detection model and turn it into a demo application that others can use and try out on their own images. | [Dataset](https://huggingface.co/datasets/mrdbourke/trashify_manual_labelled_images) | [Model](https://huggingface.co/mrdbourke/rt_detrv2_finetuned_trashify_box_detector_v1) | [Demo](https://huggingface.co/spaces/mrdbourke/trashify_demo_v4) | [Video Course](https://dbourke.link/ZTMHuggingFace) |
-| 2 - [LLM Full Fine-tuning](https://www.learnhuggingface.com/notebooks/hugging_face_llm_full_fine_tune_tutorial) | Fully fine-tune Google’s Gemma 3 270M model to perform structured data extraction on any kind of text. | [Dataset](https://huggingface.co/datasets/mrdbourke/FoodExtract-1k) | [Model](https://huggingface.co/mrdbourke/FoodExtract-gemma-3-270m-fine-tune-v1) | [Demo](https://huggingface.co/spaces/mrdbourke/FoodExtract-v1) | [YouTube](https://youtu.be/2hoNAr-id-E) |
+| 2 - [LLM Full Fine-tuning](https://www.learnhuggingface.com/notebooks/hugging_face_llm_full_fine_tune_tutorial) | Fully fine-tune Google’s Gemma 3 270M model to perform structured data extraction on any kind of text. | [Dataset](https://huggingface.co/datasets/mrdbourke/FoodExtract-1k) | [Model](https://huggingface.co/mrdbourke/FoodExtract-gemma-3-270m-fine-tune-v1) | [Demo](https://huggingface.co/spaces/mrdbourke/FoodExtract-v1) | [Video Course](https://dbourke.link/ZTMHuggingFace) |
 | 3 - [VLM Fine-tuning](https://www.learnhuggingface.com/notebooks/hugging_face_vlm_fine_tune_tutorial) | Fine-tune a small VLM model, SmolVLM2-500M for structured data extraction from images. | [Dataset](https://huggingface.co/datasets/mrdbourke/FoodExtract-1k-Vision) | [Model](https://huggingface.co/mrdbourke/FoodExtract-Vision-SmolVLM2-500M-fine-tune-v1) | [Demo](https://huggingface.co/spaces/mrdbourke/FoodExtract-Vision-v1) | [YouTube](https://youtu.be/_EMfJSmLSKE) |
 | 4 - [Multimodal RAG (Retrieval Augmented Generation)](https://www.learnhuggingface.com/notebooks/hugging_face_multimodal_rag_tutorial) | Level up your text-based RAG pipelines and learn how to embed text and images of documents into a shared embedding space. This allows you to query over a dataset of combined images and text. | [Dataset](https://huggingface.co/datasets/mrdbourke/recipe-synthetic-images-10k) | Model ([embed](https://huggingface.co/nvidia/llama-nemotron-embed-vl-1b-v2)) / Model ([rerank](https://huggingface.co/nvidia/llama-nemotron-rerank-vl-1b-v2)) | [Demo](https://huggingface.co/spaces/mrdbourke/multimodal-rag-with-nemotron) | [YouTube](https://youtu.be/7GQPFS7NQrA) |
 | More to come soon! | Let me know if you’d like to see anything specific by [leaving an issue](https://github.com/mrdbourke/learn-huggingface/issues). |  |  |  |  |
@@ -69,6 +69,10 @@ information on each of the tools in the
 
 ## Updates
 
+- **10 June 2026** - All videos for the LLM fine-tuning course are [live
+  on the ZTM website](https://dbourke.link/ZTMHuggingFace), sign up to
+  learn how to fine-tune a Small Language Model (SLM) on your own custom
+  data.
 - **16 Apr 2026** - Add [batched inference with Hugging Face
   Transformers
   Notebook](https://www.learnhuggingface.com/notebooks/hugging_face_llm_batched_inference_with_transformers),
@@ -104,8 +108,9 @@ information on each of the tools in the
 
 Ideal for:
 
-- Beginners who love things explained in detail.
-- Someone who wants to create more of their own end-to-end machine
+- Beginners who love things explained in detail and would like to
+  fine-tune their own AI models.
+- Someone who wants to create more of their own end-to-end AI/machine
   learning projects.
 
 Not ideal for:
